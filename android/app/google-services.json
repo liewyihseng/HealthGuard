@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "860372481278",
+    "firebase_url": "https://healthguard-2c4ac.firebaseio.com",
+    "project_id": "healthguard-2c4ac",
+    "storage_bucket": "healthguard-2c4ac.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:860372481278:android:eadf364d318e47fac8a1af",
+        "android_client_info": {
+          "package_name": "com.example.HealthGuard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "860372481278-eria9ov1574lahhgupbm3vb7i9d3umtb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCa5l8bxJILIzZKS-p6bdCdv2-NNO9JkGo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "860372481278-eria9ov1574lahhgupbm3vb7i9d3umtb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
