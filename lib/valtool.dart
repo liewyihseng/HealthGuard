@@ -56,21 +56,21 @@ String validateConfirmPassword(String password, String confirmPassword) {
 ProgressDialog progressDialog;
 
 showProgress(BuildContext context, String message, bool isDismissible) async {
-  progressDialog = new ProgressDialog(context, type: ProgressDialogType.Normal, isDismissible: isDismissible);
+  progressDialog = new ProgressDialog(context,
+      type: ProgressDialogType.Normal, isDismissible: isDismissible);
   progressDialog.style(
-    message: message,
-    borderRadius: 10.0,
-    backgroundColor: Colors.white,
-    progressWidget: Container(
-      padding: EdgeInsets.all(8.0),
-      child: CircularProgressIndicator(
-        backgroundColor: Colors.blue,
-      )
-    ),
-    elevation: 10.0,
+      message: message,
+      borderRadius: 10.0,
+      backgroundColor: Colors.white,
+      progressWidget: Container(
+          padding: EdgeInsets.all(8.0),
+          child: CircularProgressIndicator(
+            backgroundColor: Colors.blue,
+          )),
+      elevation: 10.0,
       insetAnimCurve: Curves.easeInOut,
-    messageTextStyle: TextStyle(
-      color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.w600));
+      messageTextStyle: TextStyle(
+          color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.w600));
   await progressDialog.show();
 }
 
@@ -81,7 +81,6 @@ updateProgress(String message) {
 hideProgress() async {
   await progressDialog.hide();
 }
-
 
 //helper method to show alert dialog
 showAlertDialog(BuildContext context, String title, String content) {
@@ -122,7 +121,7 @@ push(BuildContext context, Widget destination) {
 pushAndRemoveUntil(BuildContext context, Widget destination, bool predict) {
   Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(builder: (context) => destination),
-          (Route<dynamic> route) => predict);
+      (Route<dynamic> route) => predict);
 }
 
 Widget displayCircleImage(String picUrl, double size, hasBorder) =>
@@ -136,24 +135,24 @@ Widget displayCircleImage(String picUrl, double size, hasBorder) =>
             _getPlaceholderOrErrorImage(size, hasBorder));
 
 Widget _getPlaceholderOrErrorImage(double size, hasBorder) => Container(
-  width: size,
-  height: size,
-  decoration: BoxDecoration(
-    color: const Color(0xff7c94b6),
-    borderRadius: new BorderRadius.all(new Radius.circular(size / 2)),
-    border: new Border.all(
-      color: Colors.white,
-      width: hasBorder ? 2.0 : 0.0,
-    ),
-  ),
-  child: ClipOval(
-      child: Image.asset(
-        'assets/images/placeholder.jpg',
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        color: const Color(0xff7c94b6),
+        borderRadius: new BorderRadius.all(new Radius.circular(size / 2)),
+        border: new Border.all(
+          color: Colors.white,
+          width: hasBorder ? 2.0 : 0.0,
+        ),
+      ),
+      child: ClipOval(
+          child: Image.asset(
+        'assets/placeholder.jpg',
         fit: BoxFit.cover,
         height: size,
         width: size,
       )),
-);
+    );
 
 Widget _getCircularImageProvider(
     ImageProvider provider, double size, bool hasBorder) {
@@ -172,7 +171,7 @@ Widget _getCircularImageProvider(
         child: FadeInImage(
             fit: BoxFit.cover,
             placeholder: Image.asset(
-              'assets/images/placeholder.jpg',
+              'assets/placeholder.jpg',
               fit: BoxFit.cover,
               height: size,
               width: size,
