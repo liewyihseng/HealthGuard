@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:HealthGuard/pedometer_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -28,13 +29,39 @@ class home extends StatefulWidget {
 
 // ignore: camel_case_types
 class _home extends State<home>{
+
   final OUser.User user;
+
+  int _selectedIndex = 0; //temp
+  static List<Widget> _bottomNavBarOptions; // temp
 
   _home(this.user);
 
-  @override
+  //temp
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+
+    // collection of widgets for bottom nav bar (temp)
+    _bottomNavBarOptions = <Widget>[
+      HomeOption(
+          user: user,
+      ),
+      Center(
+        child: RaisedButton(
+          child: Text("pedometer"),
+          onPressed: (){
+            push(context, Pedometer());
+          },
+        )
+      )
+    ];
+
     return Scaffold(
       drawer: Drawer(
         child: ListView(
@@ -78,31 +105,68 @@ class _home extends State<home>{
         backgroundColor: Colors.blue,
         centerTitle: true,
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-              displayCircleImage(user.profilePictureURL, 125, false),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(user.firstName),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(user.email),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(user.phoneNumber),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(user.userID),
-            ),
-          ],
-        ),
+      body: _bottomNavBarOptions.elementAt(_selectedIndex),
+
+      // temporally added to link up pages
+      // Todo - home page bottom navigation bar
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: "Home",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.category),
+            label: "Category1",
+          )
+        ],
+        onTap: _onItemTapped,
+        currentIndex: _selectedIndex,
+      ),
+    );
+  }
+}
+
+
+// temp home option widget in bottom nav bar (original body of home widget)
+class HomeOption extends StatefulWidget {
+  final OUser.User user;
+  HomeOption({Key key, @required this.user}):super(key: key);
+  @override
+  _HomeOptionState createState() => _HomeOptionState(user);
+}
+
+class _HomeOptionState extends State<HomeOption> {
+  final OUser.User user;
+
+  _HomeOptionState(this.user);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          displayCircleImage(user.profilePictureURL, 125, false),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(user.firstName),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(user.email),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(user.phoneNumber),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(user.userID),
+          ),
+        ],
       ),
     );
   }
