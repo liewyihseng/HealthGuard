@@ -117,7 +117,7 @@ class _home extends State<home>{
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.category),
-            label: "Category1",
+            label: "Health",
           )
         ],
         onTap: _onItemTapped,
