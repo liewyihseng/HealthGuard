@@ -148,7 +148,7 @@ Widget _getPlaceholderOrErrorImage(double size, hasBorder) => Container(
   ),
   child: ClipOval(
       child: Image.asset(
-        'assets/images/placeholder.jpg',
+        'assets/placeholder.jpg',
         fit: BoxFit.cover,
         height: size,
         width: size,
@@ -172,7 +172,7 @@ Widget _getCircularImageProvider(
         child: FadeInImage(
             fit: BoxFit.cover,
             placeholder: Image.asset(
-              'assets/images/placeholder.jpg',
+              'assets/placeholder.jpg',
               fit: BoxFit.cover,
               height: size,
               width: size,
