@@ -135,16 +135,16 @@ Widget displayCircleImage(String picUrl, double size, hasBorder) =>
             _getPlaceholderOrErrorImage(size, hasBorder));
 
 Widget _getPlaceholderOrErrorImage(double size, hasBorder) => Container(
-      width: size,
-      height: size,
-      decoration: BoxDecoration(
-        color: const Color(0xff7c94b6),
-        borderRadius: new BorderRadius.all(new Radius.circular(size / 2)),
-        border: new Border.all(
-          color: Colors.white,
-          width: hasBorder ? 2.0 : 0.0,
-        ),
-      ),
+  width: size,
+  height: size,
+  decoration: BoxDecoration(
+    color: const Color(0xff7c94b6),
+    borderRadius: new BorderRadius.all(new Radius.circular(size / 2)),
+    border: new Border.all(
+      color: Colors.white,
+      width: hasBorder ? 2.0 : 0.0,
+    ),
+  ),
       child: ClipOval(
           child: Image.asset(
         'assets/placeholder.jpg',

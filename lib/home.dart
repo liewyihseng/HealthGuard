@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'MedicalFeed.dart';
 import 'auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -100,6 +101,33 @@ class _home extends State<home>{
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(user.userID),
+            ),
+            Card(
+              elevation: 3.0,
+              child: new GestureDetector(
+                child: new Container(
+                  child: Column(
+                    children:<Widget>[
+                      Image.asset("assets/Logo.png",
+                      alignment: Alignment.center,
+                      width: 40.0,
+                      height: 40.0,
+                      ),
+                      new Padding(
+                        padding: EdgeInsets.all(15.0),
+                        child: Text("Health Articles",
+                        style: TextStyle(
+                          fontSize: 20.0, color: Colors.black),
+                        textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                onTap: () {
+                  push(context, new MedicalFeed());
+                }
+              )
             ),
           ],
         ),
