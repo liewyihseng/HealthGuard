@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:HealthGuard/pedometer_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -30,12 +31,26 @@ class home extends StatefulWidget {
 // ignore: camel_case_types
 class _home extends State<home> {
   final OUser.User user;
+  int _selectedIndex = 0;
+  static List<Widget> _bottomNavBarOptions;
 
   _home(this.user);
 
-  @override
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    _bottomNavBarOptions = <Widget>[
+      HomeOption(
+        user: user,
+      ),
+      Health(),
+    ];
+
     return Scaffold(
       drawer: Drawer(
         child: ListView(
@@ -88,58 +103,111 @@ class _home extends State<home> {
         backgroundColor: Colors.blue,
         centerTitle: true,
       ),
-      body: Center(
+      body: _bottomNavBarOptions.elementAt(_selectedIndex),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: "Home",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.category),
+            label: "Health",
+          )
+        ],
+        onTap: _onItemTapped,
+        currentIndex: _selectedIndex,
+      ),
+    );
+  }
+}
+
+class Health extends StatelessWidget {
+  const Health({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            displayCircleImage(user.profilePictureURL, 125, false),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(user.firstName),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(user.email),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(user.phoneNumber),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(user.userID),
-            ),
-            Card(
-                elevation: 3.0,
-                child: new GestureDetector(
-                    child: new Container(
-                      child: Column(
-                        children: <Widget>[
-                          Image.asset(
-                            "assets/Logo.png",
-                            alignment: Alignment.center,
-                            width: 40.0,
-                            height: 40.0,
-                          ),
-                          new Padding(
-                            padding: EdgeInsets.all(15.0),
-                            child: Text(
-                              "Health Articles",
-                              style: TextStyle(
-                                  fontSize: 20.0, color: Colors.black),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    onTap: () {
-                      Navigator.pushNamed(context, MedicalFeed.id);
-                    })),
-          ],
+      children: [
+        RaisedButton(
+          child: Text("pedometer"),
+          onPressed: () {
+            Navigator.pushNamed(context, PedometerPage.id);
+          },
         ),
+        Card(
+            elevation: 3.0,
+            child: GestureDetector(
+                child: Container(
+                  child: Column(
+                    children: <Widget>[
+                      Image.asset(
+                        "assets/Logo.png",
+                        alignment: Alignment.center,
+                        width: 40.0,
+                        height: 40.0,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(15.0),
+                        child: Text(
+                          "Health Articles",
+                          style: TextStyle(fontSize: 20.0, color: Colors.black),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                onTap: () {
+                  Navigator.pushNamed(context, MedicalFeed.id);
+                })),
+      ],
+    ));
+  }
+}
+
+// temp home option widget in bottom nav bar (original body of home widget)
+class HomeOption extends StatefulWidget {
+  final OUser.User user;
+  HomeOption({Key key, @required this.user}) : super(key: key);
+  @override
+  _HomeOptionState createState() => _HomeOptionState(user);
+}
+
+class _HomeOptionState extends State<HomeOption> {
+  final OUser.User user;
+
+  _HomeOptionState(this.user);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          displayCircleImage(user.profilePictureURL, 125, false),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(user.firstName),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(user.email),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(user.phoneNumber),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(user.userID),
+          ),
+        ],
       ),
     );
   }

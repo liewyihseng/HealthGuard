@@ -1,7 +1,6 @@
+import 'package:HealthGuard/widgets/round_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:pedometer/pedometer.dart';
-
-import 'widgets/round_progress_bar.dart';
 
 class PedometerPage extends StatefulWidget {
   static const String id = "PedometerPage";
@@ -28,7 +27,6 @@ class _PedometerPageState extends State<PedometerPage> {
   void onStepCount(StepCount event) {
     print(event);
     setState(() {
-      // _steps = event.steps.toString();
       _steps = event.steps.toString();
     });
   }
@@ -85,25 +83,25 @@ class _PedometerPageState extends State<PedometerPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  SizedBox(
-                    height: 20,
+                  RoundProgressBar(
+                    size: 100,
+                    color: Colors.orangeAccent,
+                    max: 100,
+                    value: 50,
+                    innerWidget: (percentage) {
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.local_fire_department),
+                          Text(((percentage * 10).ceil() / 10).toString()),
+                        ],
+                      );
+                    },
                   ),
                   RoundProgressBar(
                       max: 100,
                       size: 100,
-                      color: Colors.orangeAccent,
-                      innerWidget: (percentage) {
-                        return Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.local_fire_department),
-                            Text(((percentage * 10).ceil() / 10).toString()),
-                          ],
-                        );
-                      }),
-                  RoundProgressBar(
-                      max: 100,
-                      size: 100,
+                      value: 50,
                       color: Colors.blue[300],
                       innerWidget: (percentage) {
                         return Column(
