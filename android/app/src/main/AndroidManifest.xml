@@ -44,4 +44,5 @@
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
+    <permission android:name="android.permission.ACTIVITY_RECOGNITION" />
 </manifest>
