@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pedometer/pedometer.dart';
 
+import 'widgets/round_progress_bar.dart';
+
 class PedometerPage extends StatefulWidget {
   static const String id = "PedometerPage";
   @override
@@ -85,59 +87,58 @@ class _PedometerPageState extends State<PedometerPage> {
                 children: [
                   SizedBox(
                     height: 20,
-                  )
-                  // RoundProgressBar(
-                  //     max: 100,
-                  //     size: 100,
-                  //     color: Colors.orangeAccent,
-                  //     innerWidget: (percentage) {
-                  //       return Column(
-                  //         mainAxisAlignment: MainAxisAlignment.center,
-                  //         children: [
-                  //           Icon(Icons.local_fire_department),
-                  //           Text(((percentage * 10).ceil() / 10).toString()),
-                  //         ],
-                  //       );
-                  //     }),
-                  // RoundProgressBar(
-                  //     max: 100,
-                  //     size: 100,
-                  //     color: Colors.blue[300],
-                  //     innerWidget: (percentage) {
-                  //       return Column(
-                  //         mainAxisAlignment: MainAxisAlignment.center,
-                  //         children: [
-                  //           Icon(Icons.opacity),
-                  //           Text(((percentage * 10).ceil() / 10).toString()),
-                  //         ],
-                  //       );
-                  //     }),
+                  ),
+                  RoundProgressBar(
+                      max: 100,
+                      size: 100,
+                      color: Colors.orangeAccent,
+                      innerWidget: (percentage) {
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.local_fire_department),
+                            Text(((percentage * 10).ceil() / 10).toString()),
+                          ],
+                        );
+                      }),
+                  RoundProgressBar(
+                      max: 100,
+                      size: 100,
+                      color: Colors.blue[300],
+                      innerWidget: (percentage) {
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.opacity),
+                            Text(((percentage * 10).ceil() / 10).toString()),
+                          ],
+                        );
+                      }),
                 ],
               ),
             ),
             Center(
-              // child: RoundProgressBar(
-              //     value: _steps.toDouble(),
-              //     max: _stepGoal,
-              //     size: 300,
-              //     color: Colors.lightGreenAccent,
-              //     innerWidget: (percentage) {
-              //       return Column(
-              //         mainAxisAlignment: MainAxisAlignment.center,
-              //         children: [
-              //           Icon(
-              //             Icons.directions_run,
-              //             size: 50,
-              //           ),
-              //           SizedBox(
-              //             height: 5,
-              //           ),
-              //           Text("$_steps / ${_stepGoal.toInt()} steps"),
-              //           Text(percentage.toString())
-              //         ],
-              //       );
-              //     }),
-              child: Text(_steps),
+              child: RoundProgressBar(
+                  value: 50,
+                  max: _stepGoal,
+                  size: 300,
+                  color: Colors.lightGreenAccent,
+                  innerWidget: (percentage) {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.directions_run,
+                          size: 50,
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text("$_steps / ${_stepGoal.toInt()} steps"),
+                        Text(percentage.toString())
+                      ],
+                    );
+                  }),
             ),
           ],
         ),

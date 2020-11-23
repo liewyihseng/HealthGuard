@@ -1,4 +1,4 @@
-import 'package:HealthGuard/pedometer_page.dart';
+import 'package:HealthGuard/MedicalFeed.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -8,6 +8,7 @@ import 'User.dart' as OUser;
 import 'auth.dart';
 import 'home.dart';
 import 'login_page.dart';
+import 'pedometer_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,6 +32,7 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
         LoginPage.id: (context) => LoginPage(),
         home.id: (context) => home(),
         PedometerPage.id: (context) => PedometerPage(),
+        MedicalFeed.id: (context) => MedicalFeed(),
       },
       theme: ThemeData(accentColor: Colors.white),
     );
