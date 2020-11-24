@@ -31,11 +31,14 @@ class home extends StatefulWidget {
 // ignore: camel_case_types
 class _home extends State<home> {
   final OUser.User user;
+  // bottom nav bar selected index
   int _selectedIndex = 0;
+  // list of widgets to switch between for bottom nav bar
   static List<Widget> _bottomNavBarOptions;
 
   _home(this.user);
 
+  // bottom nav bar on item tap
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -44,11 +47,12 @@ class _home extends State<home> {
 
   @override
   Widget build(BuildContext context) {
+    // initialize options with widgets
     _bottomNavBarOptions = <Widget>[
       HomeOption(
         user: user,
       ),
-      Health(),
+      HealthOption(),
     ];
 
     return Scaffold(
@@ -122,8 +126,9 @@ class _home extends State<home> {
   }
 }
 
-class Health extends StatelessWidget {
-  const Health({
+// option 2 in bottom nav bar
+class HealthOption extends StatelessWidget {
+  const HealthOption({
     Key key,
   }) : super(key: key);
 
@@ -169,7 +174,7 @@ class Health extends StatelessWidget {
   }
 }
 
-// temp home option widget in bottom nav bar (original body of home widget)
+// home option in bottom nav bar
 class HomeOption extends StatefulWidget {
   final OUser.User user;
   HomeOption({Key key, @required this.user}) : super(key: key);

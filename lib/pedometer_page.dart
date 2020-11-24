@@ -2,6 +2,7 @@ import 'package:HealthGuard/widgets/round_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:pedometer/pedometer.dart';
 
+/// pedometer screen page
 class PedometerPage extends StatefulWidget {
   static const String id = "PedometerPage";
   @override

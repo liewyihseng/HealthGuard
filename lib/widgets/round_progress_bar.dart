@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
+/// widget for step counter display
 class RoundProgressBar extends StatelessWidget {
   final double value;
   final double max;
