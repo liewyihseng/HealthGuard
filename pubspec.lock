@@ -387,6 +387,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.3.4"
+  jiffy:
+    dependency: "direct main"
+    description:
+      name: jiffy
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.1"
   js:
     dependency: transitive
     description:
@@ -516,10 +523,12 @@ packages:
   pedometer:
     dependency: "direct main"
     description:
-      name: pedometer
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.2"
+      path: "packages/pedometer"
+      ref: HEAD
+      resolved-ref: "637b3b6be8bd5b1ea28fb15656be4b2da16a11e2"
+      url: "git://github.com/feelfreelinux/flutter-plugins.git"
+    source: git
+    version: "1.0.0"
   platform:
     dependency: transitive
     description:
