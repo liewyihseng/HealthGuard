@@ -22,13 +22,13 @@ class RoundProgressBar extends StatelessWidget {
         initialValue: value,
         innerWidget: innerWidget,
         appearance: CircularSliderAppearance(
-          animDurationMultiplier: 1.2,
+          animDurationMultiplier: 1,
           angleRange: 300,
           startAngle: 120,
           size: size,
           customWidths: CustomSliderWidths(
-            progressBarWidth: size / 15,
-            trackWidth: size / 20,
+            progressBarWidth: size / 16,
+            trackWidth: size / 15,
             handlerSize: 0,
             shadowWidth: size / 20,
           ),
