@@ -6,6 +6,8 @@ import 'login_page.dart';
 import 'auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'User.dart' as OUser;
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 
 void main() async{
 
