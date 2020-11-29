@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
-void main() => runApp(MyApp());
+void Map() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
