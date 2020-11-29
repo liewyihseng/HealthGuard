@@ -339,7 +339,7 @@ class _signupPageState extends State<signup_page> {
             lastName: lastName,
             settings: Settings(allowPushNotifications: true),
             profilePictureURL: profilePicUrl);
-        print("test1");
+
         await FireStoreUtils.firestore
             .collection(Constants.USERS)
             .doc(result.user.uid)
