@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'Bloodpressure1.dart';
 import 'MedicalFeed.dart';
 import 'User.dart' as OUser;
 import 'auth.dart';
@@ -266,7 +267,7 @@ class HealthOption extends StatelessWidget {
                   ),
                 ),
                 onTap: () {
-                  // Navigator.pushNamed(context, PedometerPage.id);
+                  Navigator.pushNamed(context, Bloodpressure1.id);
                 })),
         Card(
             elevation: 3.0,

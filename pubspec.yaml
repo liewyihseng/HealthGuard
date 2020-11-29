@@ -21,6 +21,7 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  charts_flutter: ^0.8.1
   intl: ^0.16.1
   syncfusion_flutter_datepicker: ^18.3.51-beta
   firebase_core: 0.5.0+1

@@ -1,10 +1,10 @@
+import 'package:HealthGuard/Bloodpressure1.dart';
 import 'package:HealthGuard/MedicalFeed.dart';
 import 'package:HealthGuard/emedical_report.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-
 import 'User.dart' as OUser;
 import 'auth.dart';
 import 'home.dart';
@@ -36,6 +36,8 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
         PedometerPage.id: (context) => PedometerPage(),
         MedicalFeed.id: (context) => MedicalFeed(),
         EmedicReport.id: (context) => EmedicReport(),
+        Bloodpressure1.id: (context) =>
+            Bloodpressure1(sys: 60, dia: 70, pul: 80),
       },
       theme: ThemeData(accentColor: Colors.white),
     );
