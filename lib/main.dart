@@ -1,4 +1,5 @@
 import 'package:HealthGuard/MedicalFeed.dart';
+import 'package:HealthGuard/emedical_report.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -30,9 +31,11 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
       initialRoute: LoginPage.id,
       routes: {
         LoginPage.id: (context) => LoginPage(),
+        // ignore: missing_required_param
         home.id: (context) => home(),
         PedometerPage.id: (context) => PedometerPage(),
         MedicalFeed.id: (context) => MedicalFeed(),
+        EmedicReport.id: (context) => EmedicReport(),
       },
       theme: ThemeData(accentColor: Colors.white),
     );

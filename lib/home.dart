@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:HealthGuard/emedical_report.dart';
 import 'package:HealthGuard/pedometer_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -137,6 +138,12 @@ class HealthOption extends StatelessWidget {
     return Center(
         child: Column(
       children: [
+        RaisedButton(
+          child: Text("emedical report"),
+          onPressed: () {
+            Navigator.pushNamed(context, EmedicReport.id);
+          },
+        ),
         RaisedButton(
           child: Text("pedometer"),
           onPressed: () {
