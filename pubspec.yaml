@@ -75,6 +75,13 @@ flutter:
     - placeholder.jpg
     - postImage.jpg
     - user.png
+    - Hospital Suggestions.png
+    - Pedometer.png
+    - Medication Reminder.png
+    - Medical News Update.png
+    - Blood Pressure Diary.png
+    - Chat with Doctor.png
+    - E-Medical Report.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

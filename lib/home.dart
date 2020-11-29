@@ -138,18 +138,6 @@ class HealthOption extends StatelessWidget {
     return Center(
         child: Column(
       children: [
-        RaisedButton(
-          child: Text("emedical report"),
-          onPressed: () {
-            Navigator.pushNamed(context, EmedicReport.id);
-          },
-        ),
-        RaisedButton(
-          child: Text("pedometer"),
-          onPressed: () {
-            Navigator.pushNamed(context, PedometerPage.id);
-          },
-        ),
         Card(
             elevation: 3.0,
             child: GestureDetector(
@@ -157,15 +145,67 @@ class HealthOption extends StatelessWidget {
                   child: Column(
                     children: <Widget>[
                       Image.asset(
-                        "assets/Logo.png",
+                        "assets/E-Medical Report.png",
                         alignment: Alignment.center,
-                        width: 40.0,
-                        height: 40.0,
+                        width: 100.0,
+                        height: 27.0,
                       ),
                       Padding(
                         padding: EdgeInsets.all(15.0),
                         child: Text(
-                          "Health Articles",
+                          "E-Medical Report",
+                          style: TextStyle(fontSize: 20.0, color: Colors.black),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                onTap: () {
+                  Navigator.pushNamed(context, EmedicReport.id);
+                })),
+        Card(
+            elevation: 3.0,
+            child: GestureDetector(
+                child: Container(
+                  child: Column(
+                    children: <Widget>[
+                      Image.asset(
+                        "assets/Pedometer.png",
+                        alignment: Alignment.center,
+                        width: 40.0,
+                        height: 27.0,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(15.0),
+                        child: Text(
+                          "Pedometer",
+                          style: TextStyle(fontSize: 20.0, color: Colors.black),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                onTap: () {
+                  Navigator.pushNamed(context, PedometerPage.id);
+                })),
+        Card(
+            elevation: 3.0,
+            child: GestureDetector(
+                child: Container(
+                  child: Column(
+                    children: <Widget>[
+                      Image.asset(
+                        "assets/Medical News Update.png",
+                        alignment: Alignment.center,
+                        width: 40.0,
+                        height: 27.0,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(15.0),
+                        child: Text(
+                          "Medical News Update",
                           style: TextStyle(fontSize: 20.0, color: Colors.black),
                           textAlign: TextAlign.center,
                         ),
@@ -175,6 +215,110 @@ class HealthOption extends StatelessWidget {
                 ),
                 onTap: () {
                   Navigator.pushNamed(context, MedicalFeed.id);
+                })),
+        Card(
+            elevation: 3.0,
+            child: GestureDetector(
+                child: Container(
+                  child: Column(
+                    children: <Widget>[
+                      Image.asset(
+                        "assets/Medication Reminder.png",
+                        alignment: Alignment.center,
+                        width: 40.0,
+                        height: 27.0,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(15.0),
+                        child: Text(
+                          "Medication Reminder",
+                          style: TextStyle(fontSize: 20.0, color: Colors.black),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                onTap: () {
+                  //Navigator.pushNamed(context, PedometerPage.id);
+                })),
+        Card(
+            elevation: 3.0,
+            child: GestureDetector(
+                child: Container(
+                  child: Column(
+                    children: <Widget>[
+                      Image.asset(
+                        "assets/Blood Pressure Diary.png",
+                        alignment: Alignment.center,
+                        width: 40.0,
+                        height: 27.0,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(15.0),
+                        child: Text(
+                          "Blood Pressure Diary",
+                          style: TextStyle(fontSize: 20.0, color: Colors.black),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                onTap: () {
+                  // Navigator.pushNamed(context, PedometerPage.id);
+                })),
+        Card(
+            elevation: 3.0,
+            child: GestureDetector(
+                child: Container(
+                  child: Column(
+                    children: <Widget>[
+                      Image.asset(
+                        "assets/Chat with Doctor.png",
+                        alignment: Alignment.center,
+                        width: 40.0,
+                        height: 27.0,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(15.0),
+                        child: Text(
+                          "Chat with Doctor",
+                          style: TextStyle(fontSize: 20.0, color: Colors.black),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                onTap: () {
+                  //Navigator.pushNamed(context, PedometerPage.id);
+                })),
+        Card(
+            elevation: 3.0,
+            child: GestureDetector(
+                child: Container(
+                  child: Column(
+                    children: <Widget>[
+                      Image.asset(
+                        "assets/Hospital Suggestions.png",
+                        alignment: Alignment.center,
+                        width: 40.0,
+                        height: 27.0,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(15.0),
+                        child: Text(
+                          "Hospital Suggestions",
+                          style: TextStyle(fontSize: 20.0, color: Colors.black),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                onTap: () {
+                  //Navigator.pushNamed(context, PedometerPage.id);
                 })),
       ],
     ));
