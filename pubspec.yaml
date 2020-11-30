@@ -34,7 +34,9 @@ dependencies:
   google_maps_flutter: ^1.0.6
   geolocation: ^1.1.2
   location: ^3.1.0
-
+  rxdart: ^0.22.0
+  provider: ^3.0.0+1
+  shared_preferences: ^0.5.2
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
@@ -42,7 +44,13 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+flutter_launcher_icons: "^0.7.2"
+  flutter_svg: ^0.17.1
 
+flutter_icons:
+  android: "launcher_icon" 
+  ios: false
+  image_path: "assets/logo/Mediminder_Logo.png"
 
   build_runner: 1.10.4
   json_serializable: 3.5.0
