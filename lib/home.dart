@@ -2,13 +2,13 @@ import 'dart:math';
 
 import 'package:HealthGuard/emedical_report.dart';
 import 'package:HealthGuard/pedometer_page.dart';
+import 'package:HealthGuard/medical_feed.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'Bloodpressure1.dart';
-import 'MedicalFeed.dart';
 import 'User.dart' as OUser;
 import 'auth.dart';
 import 'login_page.dart';

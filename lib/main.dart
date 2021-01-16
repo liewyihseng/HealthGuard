@@ -1,5 +1,5 @@
 import 'package:HealthGuard/Bloodpressure1.dart';
-import 'package:HealthGuard/MedicalFeed.dart';
+import 'package:HealthGuard/medical_feed.dart';
 import 'package:HealthGuard/emedical_report.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
