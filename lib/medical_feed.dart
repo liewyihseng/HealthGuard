@@ -7,7 +7,7 @@ import 'helper/news.dart';
 import 'model/article_model.dart';
 import 'model/category_model.dart';
 
-
+/// Medical Feed screen page widget class
 class MedicalFeed extends StatefulWidget{
   static const String id = "MedicalFeedPage";
   const MedicalFeed({Key key}) : super(key: key);
@@ -16,12 +16,14 @@ class MedicalFeed extends StatefulWidget{
 
 }
 
+/// Medical Feed screen page state class
 class _MedicalFeedState extends State<MedicalFeed>{
 
   List<CategoryModel> categories = new List<CategoryModel>();
   List<ArticleModel> articles = new List<ArticleModel>();
   bool _loading = true;
 
+  /// Overide init
   @override
   void initState(){
     super.initState();
@@ -29,6 +31,7 @@ class _MedicalFeedState extends State<MedicalFeed>{
     getNews();
   }
 
+  /// Method to fetch news
   getNews() async{
     News newsClass = News();
     await newsClass.getNews();
@@ -38,6 +41,7 @@ class _MedicalFeedState extends State<MedicalFeed>{
     });
   }
 
+  /// Build
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -134,6 +138,7 @@ class CategoryTile extends StatelessWidget{
   }
 }
 
+/// The box that holds each article in the medical feed page
 class BlogTile extends StatelessWidget {
 
   final String imageUrl, title, description, url;
@@ -141,7 +146,7 @@ class BlogTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context){
-    ///Anywhblogser tap (Article image, title and description) will redirect to web view
+    ///Any where user tap on the blog (Article image, title and description) will redirect to web view
     return GestureDetector(
       onTap: (){
         Navigator.push(context, MaterialPageRoute(

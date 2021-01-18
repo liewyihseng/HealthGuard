@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
+/// Validate if name contains invalid characters or null input
 String validateName(String value) {
   String pattern = r'(^[a-zA-Z ]*$)';
   RegExp regExp = new RegExp(pattern);
@@ -14,6 +15,7 @@ String validateName(String value) {
   return null;
 }
 
+/// Validate if mobile number contains invalid characters or null input
 String validateMobile(String value) {
   String pattern = r'(^[0-9]*$)';
   RegExp regExp = new RegExp(pattern);
@@ -25,13 +27,15 @@ String validateMobile(String value) {
   return null;
 }
 
+/// Validate if password contains insufficient number of characters
 String validatePassword(String value) {
-  if (value.length < 6)
+  if (value.length < 8)
     return 'Password must be more than 8 alphanumerical characters';
   else
     return null;
 }
 
+/// Validate if email contains invalid characters or symbols
 String validateEmail(String value) {
   Pattern pattern =
       r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
@@ -42,6 +46,7 @@ String validateEmail(String value) {
     return null;
 }
 
+/// Validate if both the password and confirm password input by users are the same
 String validateConfirmPassword(String password, String confirmPassword) {
   print("$password $confirmPassword");
   if (password != confirmPassword) {
@@ -82,9 +87,9 @@ hideProgress() async {
   await progressDialog.hide();
 }
 
-//helper method to show alert dialog
+///helper method to show alert dialog
 showAlertDialog(BuildContext context, String title, String content) {
-  // set up the AlertDialog
+  /// set up the AlertDialog
   Widget okButton = FlatButton(
     child: Text("OK"),
     onPressed: () {
@@ -99,7 +104,7 @@ showAlertDialog(BuildContext context, String title, String content) {
     ],
   );
 
-  // show the dialog
+  /// show the dialog
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -113,6 +118,7 @@ pushReplacement(BuildContext context, Widget destination) {
       new MaterialPageRoute(builder: (context) => destination));
 }
 
+/// Directing to next page
 push(BuildContext context, Widget destination) {
   Navigator.of(context)
       .push(new MaterialPageRoute(builder: (context) => destination));
@@ -124,6 +130,7 @@ pushAndRemoveUntil(BuildContext context, Widget destination, bool predict) {
       (Route<dynamic> route) => predict);
 }
 
+/// To display user uploaded profile image in a circle
 Widget displayCircleImage(String picUrl, double size, hasBorder) =>
     CachedNetworkImage(
         imageBuilder: (context, imageProvider) =>
@@ -133,6 +140,7 @@ Widget displayCircleImage(String picUrl, double size, hasBorder) =>
             _getPlaceholderOrErrorImage(size, hasBorder),
         errorWidget: (context, url, error) =>
             _getPlaceholderOrErrorImage(size, hasBorder));
+
 
 Widget _getPlaceholderOrErrorImage(double size, hasBorder) => Container(
   width: size,

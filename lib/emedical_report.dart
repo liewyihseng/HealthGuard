@@ -7,7 +7,7 @@ import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
 import 'home.dart';
 import 'main.dart';
-import 'valtool.dart';
+import 'validation_tool.dart';
 import 'package:flutter/cupertino.dart';
 import 'auth.dart';
 import 'package:flutter/material.dart';

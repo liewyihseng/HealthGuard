@@ -5,12 +5,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'constants.dart';
 import 'main.dart';
-import 'valtool.dart';
-import 'User.dart' as OUser;
+import 'validation_tool.dart';
+import 'User.dart' as OurUser;
 import 'package:firebase_storage/firebase_storage.dart';
 
-//rqwrqwrqrew
-// some random code
 
 class FireStoreUtils {
   static FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -18,18 +16,19 @@ class FireStoreUtils {
       firestore.collection(USERS).doc(MyAppState.currentUser.userID);
   StorageReference storage = FirebaseStorage.instance.ref();
 
-  Future<OUser.User> getCurrentUser(String uid) async {
+  /// Retrieving user's account information from our database (firebase)
+  Future<OurUser.User> getCurrentUser(String uid) async {
     DocumentSnapshot userDocument =
         await firestore.collection(USERS).doc(uid).get();
     if (userDocument != null && userDocument.exists) {
-      return OUser.User.fromJson(userDocument.data());
+      return OurUser.User.fromJson(userDocument.data());
     } else {
       return null;
     }
   }
 
-  Future<OUser.User> updateCurrentUser(
-      OUser.User user, BuildContext context) async {
+  Future<OurUser.User> updateCurrentUser(
+      OurUser.User user, BuildContext context) async {
     return await firestore
         .collection(USERS)
         .doc(user.userID)
@@ -43,6 +42,7 @@ class FireStoreUtils {
     });
   }
 
+  /// To upload user's profile picture into the database (firebase) named under their userID
   Future<String> uploadUserImageToFireStorage(File image, String userID) async {
     StorageReference upload = storage.child("images/$userID.png");
     StorageUploadTask uploadTask = upload.putFile(image);

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:HealthGuard/model/article_model.dart';
 import 'package:http/http.dart' as http;
 
+/// Displaying news from the default country (Malaysia)
 class News{
   List<ArticleModel> news = [];
 
@@ -34,6 +35,7 @@ class News{
   }
 }
 
+/// Displaying news of the country user selected to read
 class CategoryNews{
   List<ArticleModel> news = [];
 

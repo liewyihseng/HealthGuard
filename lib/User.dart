@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+/// Acting as a frame for the creation of user instances
 class User {
   String email = '';
   String firstName = '';
@@ -15,6 +16,7 @@ class User {
   bool selected = false;
   String appIdentifier = 'HealthGuard ${Platform.operatingSystem}';
 
+  /// User class Constructor
   User(
       {this.email,
       this.firstName,
@@ -26,10 +28,13 @@ class User {
       this.userID,
       this.profilePictureURL});
 
+
+  /// Combining user's first name and last name to form fullname
   String fullName() {
     return '$firstName $lastName';
   }
 
+  /// Passing user input data, then creating a new user containing these data
   factory User.fromJson(Map<String, dynamic> parsedJson) {
     return new User(
         email: parsedJson['email'] ?? "",

@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:HealthGuard/signup_page.dart';
-import 'package:HealthGuard/valtool.dart';
+import 'package:HealthGuard/validation_tool.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,21 +9,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'User.dart' as OUser;
+import 'User.dart' as OurUser;
 import 'auth.dart';
 import 'constants.dart' as Constants;
 import 'home.dart';
 import 'main.dart';
-import 'valtool.dart';
+import 'validation_tool.dart';
 
 final _fireStoreUtils = FireStoreUtils();
 
+/// Login screen page widget class
 class LoginPage extends StatefulWidget {
   static const String id = 'LoginPage';
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
+/// Login screen page state class
 class _LoginPageState extends State<LoginPage> {
   TextEditingController _emailController = new TextEditingController();
   TextEditingController _passwordController = new TextEditingController();
@@ -35,6 +37,7 @@ class _LoginPageState extends State<LoginPage> {
 
   List<Widget> buildInputs() {
     return [
+      /// Displaying the logo on the login screen page
       SizedBox(
         height: 155.0,
         child: Image.asset(
@@ -43,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
       SizedBox(height: 40.0),
-      //TextFormField FOR EMAIL
+      /// Field for user's email input
       TextFormField(
         validator: validateEmail,
         onSaved: (String val) {
@@ -61,7 +64,7 @@ class _LoginPageState extends State<LoginPage> {
       ),
 
       SizedBox(height: 20.0),
-      //TextFormField FOR PASSWORD
+      /// Field for user's password input
       TextFormField(
         validator: validatePassword,
         onSaved: (String val) {
@@ -83,6 +86,7 @@ class _LoginPageState extends State<LoginPage> {
     ];
   }
 
+  /// Button for user to submit their login credentials
   List<Widget> buildSubmitButtons() {
     return [
       Padding(
@@ -108,7 +112,7 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
       ),
-      // sign up here
+      /// Sign up here wording (User tap to redirect them to sign up page)
       Container(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -206,11 +210,11 @@ class _LoginPageState extends State<LoginPage> {
                     icon: FaIcon(FontAwesomeIcons.facebookF),
                     color: Colors.white,
                     onPressed: () {},
-                    //
-                    // Codes linking sign-in for Facebook
-                    // Should be here within the onPressed()
-                    //
-                    //
+                    ///
+                    /// Codes linking sign-in for Facebook
+                    /// Should be here within the onPressed()
+                    ///
+                    ///
                   ),
                 ),
               ),
@@ -227,11 +231,11 @@ class _LoginPageState extends State<LoginPage> {
                     icon: FaIcon(FontAwesomeIcons.google),
                     color: Colors.white,
                     onPressed: () {},
-                    //
-                    // Codes linking sign-in for Google
-                    // Should be here within the onPressed()
-                    //
-                    //
+                    ///
+                    /// Codes linking sign-in for Google
+                    /// Should be here within the onPressed()
+                    ///
+                    ///
                   ),
                 ),
               ),
@@ -242,6 +246,7 @@ class _LoginPageState extends State<LoginPage> {
     ];
   }
 
+  /// Forget password
   Widget forgetPassword() {
     return Container(
       child: Row(
@@ -269,11 +274,12 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  /// Directing user to their account
   onClick(String email, String password) async {
     if (_key.currentState.validate()) {
       _key.currentState.save();
       showProgress(context, 'Logging in, please wait...', false);
-      OUser.User user =
+      OurUser.User user =
           await loginWithUserNameAndPassword(email.trim(), password.trim());
 
       if (user != null) {
@@ -287,7 +293,10 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  Future<OUser.User> loginWithUserNameAndPassword(
+  /// Checking if user's input credential's validity
+  /// If valid, allow access to account
+  /// Else display error
+  Future<OurUser.User> loginWithUserNameAndPassword(
       String email, String password) async {
     try {
       UserCredential result = await FirebaseAuth.instance
@@ -297,9 +306,9 @@ class _LoginPageState extends State<LoginPage> {
           .collection(Constants.USERS)
           .doc(result.user.uid)
           .get();
-      OUser.User user;
+      OurUser.User user;
       if (documentSnapshot != null && documentSnapshot.exists) {
-        user = OUser.User.fromJson(documentSnapshot.data());
+        user = OurUser.User.fromJson(documentSnapshot.data());
         user.active = true;
         await _fireStoreUtils.updateCurrentUser(user, context);
         hideProgress();

@@ -9,17 +9,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'Bloodpressure1.dart';
-import 'User.dart' as OUser;
+import 'User.dart' as OurUser;
 import 'auth.dart';
 import 'login_page.dart';
 import 'main.dart';
-import 'valtool.dart';
+import 'validation_tool.dart';
 
 FireStoreUtils _fireStoreUtils = FireStoreUtils();
 
 class home extends StatefulWidget {
   static const String id = "homePage";
-  final OUser.User user;
+  final OurUser.User user;
 
   home({Key key, @required this.user}) : super(key: key);
 
@@ -32,15 +32,15 @@ class home extends StatefulWidget {
 
 // ignore: camel_case_types
 class _home extends State<home> {
-  final OUser.User user;
+  final OurUser.User user;
   // bottom nav bar selected index
   int _selectedIndex = 0;
-  // list of widgets to switch between for bottom nav bar
+  /// list of widgets to switch between for bottom nav bar
   static List<Widget> _bottomNavBarOptions;
 
   _home(this.user);
 
-  // bottom nav bar on item tap
+  /// bottom nav bar on item tap
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -49,7 +49,7 @@ class _home extends State<home> {
 
   @override
   Widget build(BuildContext context) {
-    // initialize options with widgets
+    /// initialize options with widgets
     _bottomNavBarOptions = <Widget>[
       HomeOption(
         user: user,
@@ -128,7 +128,7 @@ class _home extends State<home> {
   }
 }
 
-// option 2 in bottom nav bar
+/// option 2 in bottom nav bar
 class HealthOption extends StatelessWidget {
   const HealthOption({
     Key key,
@@ -326,16 +326,16 @@ class HealthOption extends StatelessWidget {
   }
 }
 
-// home option in bottom nav bar
+/// home option in bottom nav bar
 class HomeOption extends StatefulWidget {
-  final OUser.User user;
+  final OurUser.User user;
   HomeOption({Key key, @required this.user}) : super(key: key);
   @override
   _HomeOptionState createState() => _HomeOptionState(user);
 }
 
 class _HomeOptionState extends State<HomeOption> {
-  final OUser.User user;
+  final OurUser.User user;
 
   _HomeOptionState(this.user);
 

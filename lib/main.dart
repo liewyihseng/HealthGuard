@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'User.dart' as OUser;
+import 'User.dart' as OurUser;
 import 'auth.dart';
 import 'home.dart';
 import 'login_page.dart';
@@ -23,7 +23,7 @@ class MyApp extends StatefulWidget {
 }
 
 class MyAppState extends State<MyApp> with WidgetsBindingObserver {
-  static OUser.User currentUser;
+  static OurUser.User currentUser;
 
   @override
   Widget build(BuildContext context) {

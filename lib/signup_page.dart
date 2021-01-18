@@ -3,35 +3,36 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'home.dart';
 import 'main.dart';
-import 'valtool.dart';
+import 'validation_tool.dart';
 import 'package:flutter/cupertino.dart';
 import 'auth.dart';
 import 'package:flutter/material.dart';
 import 'User.dart';
 import 'constants.dart' as Constants;
-import 'User.dart' as OUser;
-
+import 'User.dart' as OurUser;
 import 'dart:io';
 
 File _image;
 
+/// Sign up screen page widget class
 class signup_page extends StatefulWidget {
   @override
   State createState() => _signupPageState();
 }
 
+/// Sign up screen page state class
 class _signupPageState extends State<signup_page> {
   TextEditingController _passwordController = new TextEditingController();
   GlobalKey<FormState> _key = new GlobalKey();
   bool _validate = false;
   String firstName, lastName, email, mobile, password, confirmPassword;
 
+  /// build
   @override
   Widget build(BuildContext context) {
     if (Platform.isAndroid) {
       retrieveLostData();
     }
-
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
@@ -45,6 +46,7 @@ class _signupPageState extends State<signup_page> {
             key: _key,
             autovalidate: _validate,
             child: signupForm(),
+            /// Calling sign up form
           ),
         ),
       ),
@@ -63,6 +65,7 @@ class _signupPageState extends State<signup_page> {
     }
   }
 
+  /// Serving the user after user clicked on the button to add profile picture
   _onCameraClick() {
     final action = CupertinoActionSheet(
       message: Text(
@@ -104,6 +107,7 @@ class _signupPageState extends State<signup_page> {
     showCupertinoModalPopup(context: context, builder: (context) => action);
   }
 
+  /// Sign up form
   Widget signupForm() {
     return new Column(
       children: <Widget>[
@@ -124,6 +128,7 @@ class _signupPageState extends State<signup_page> {
           child: Stack(
             alignment: Alignment.bottomCenter,
             children: <Widget>[
+              /// Circle to hold user profile picture
               CircleAvatar(
                 radius: 65,
                 backgroundColor: Colors.grey.shade400,
@@ -155,6 +160,7 @@ class _signupPageState extends State<signup_page> {
             ],
           ),
         ),
+        /// Field for user's first name input
         ConstrainedBox(
             constraints: BoxConstraints(minWidth: double.infinity),
             child: Padding(
@@ -175,6 +181,7 @@ class _signupPageState extends State<signup_page> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(32.0),
                         ))))),
+        /// Field for user's last name input
         ConstrainedBox(
             constraints: BoxConstraints(minWidth: double.infinity),
             child: Padding(
@@ -195,6 +202,7 @@ class _signupPageState extends State<signup_page> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(32.0),
                         ))))),
+        /// Field for user's mobile number input
         ConstrainedBox(
             constraints: BoxConstraints(minWidth: double.infinity),
             child: Padding(
@@ -216,6 +224,7 @@ class _signupPageState extends State<signup_page> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(32.0),
                         ))))),
+        /// Field for user's email address input
         ConstrainedBox(
             constraints: BoxConstraints(minWidth: double.infinity),
             child: Padding(
@@ -237,6 +246,7 @@ class _signupPageState extends State<signup_page> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(32.0),
                         ))))),
+        /// Field for user's password input
         ConstrainedBox(
             constraints: BoxConstraints(minWidth: double.infinity),
             child: Padding(
@@ -261,6 +271,7 @@ class _signupPageState extends State<signup_page> {
                         borderRadius: BorderRadius.circular(32.0),
                       ))),
             )),
+        /// Field for user's confirm password input
         ConstrainedBox(
           constraints: BoxConstraints(minWidth: double.infinity),
           child: Padding(
@@ -288,6 +299,7 @@ class _signupPageState extends State<signup_page> {
                     ))),
           ),
         ),
+        /// Button to press after user has finished filling in their account information
         Padding(
           padding: const EdgeInsets.only(right: 40.0, left: 40.0, top: 40.0),
           child: ConstrainedBox(
@@ -315,9 +327,11 @@ class _signupPageState extends State<signup_page> {
     );
   }
 
+  /// Sending user input information to server (firebase)
   _sendToServer() async {
     if (_key.currentState.validate()) {
       _key.currentState.save();
+      /// Alert box to show the user's account creation is under progress
       showProgress(context, 'Creating new account...', false);
       var profilePicUrl =
           'https://firebasestorage.googleapis.com/v0/b/healthguard-2c4ac.appspot.com/o/images%2Fplaceholder.jpg?alt=media&token=158e23bd-54ed-425e-bac5-c4694214bb3c';
@@ -330,7 +344,8 @@ class _signupPageState extends State<signup_page> {
               .uploadUserImageToFireStorage(_image, result.user.uid);
         }
 
-        OUser.User user = OUser.User(
+        /// Assigning all the user's input information to the user instance
+        OurUser.User user = OurUser.User(
             email: email,
             firstName: firstName,
             phoneNumber: mobile,
