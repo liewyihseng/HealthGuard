@@ -24,7 +24,7 @@ class News{
             description: element["description"],
             url: element["url"],
             urlToImage: element["urlToImage"],
-            //publishedAt: element["publishedAt"],
+            publishedAt: DateTime.parse(element["publishedAt"]),
             content: element["content"],
           );
 
@@ -39,7 +39,7 @@ class News{
 class CategoryNews{
   List<ArticleModel> news = [];
 
-  Future<void> getNews(String country) async{
+  Future<void> getNews(String country, String countryName) async{
     String url = "http://newsapi.org/v2/top-headlines?country=$country&category=health&apiKey=ec2aa1a842a0487ba1bcd325ec417d87";
 
     var response = await http.get(url);
@@ -56,7 +56,7 @@ class CategoryNews{
             description: element["description"],
             url: element["url"],
             urlToImage: element["urlToImage"],
-            //publishedAt: element["publishedAt"],
+            publishedAt: DateTime.parse(element["publishedAt"]),
             content: element["content"],
           );
 

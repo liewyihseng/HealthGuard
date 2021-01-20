@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:HealthGuard/view/article_view.dart';
 import 'package:HealthGuard/view/category_view.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -6,6 +8,7 @@ import 'helper/data.dart';
 import 'helper/news.dart';
 import 'model/article_model.dart';
 import 'model/category_model.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 /// Medical Feed screen page widget class
 class MedicalFeed extends StatefulWidget{
@@ -41,6 +44,7 @@ class _MedicalFeedState extends State<MedicalFeed>{
     });
   }
 
+
   /// Build
   @override
   Widget build(BuildContext context) {
@@ -69,6 +73,7 @@ class _MedicalFeedState extends State<MedicalFeed>{
                   itemBuilder: (context, index){
                     return CategoryTile(
                       imageUrl: categories[index].imageUrl,
+                      categoryCode: categories[index].categoryCode,
                       categoryName: categories[index].categoryName,
                     );
                   }),
@@ -87,6 +92,7 @@ class _MedicalFeedState extends State<MedicalFeed>{
                       title: articles[index].title,
                       description: articles[index].description,
                       url: articles[index].url,
+                      publishedAt: articles[index].publishedAt,
                     );
                   }
                 ),
@@ -101,8 +107,8 @@ class _MedicalFeedState extends State<MedicalFeed>{
 
 ///The category above articles
 class CategoryTile extends StatelessWidget{
-  final imageUrl, categoryName;
-  CategoryTile({this.imageUrl, this.categoryName});
+  final imageUrl, categoryName, categoryCode;
+  CategoryTile({this.imageUrl, this.categoryName, this.categoryCode});
 
   @override
   Widget build(BuildContext context){
@@ -110,7 +116,8 @@ class CategoryTile extends StatelessWidget{
       onTap: (){
         Navigator.push(context, MaterialPageRoute(
           builder: (context) => CategoryView(
-            category: categoryName.toLowerCase(),
+            category: categoryCode.toLowerCase(),
+            categoryName: categoryName,
           )
         ));
       },
@@ -142,7 +149,9 @@ class CategoryTile extends StatelessWidget{
 class BlogTile extends StatelessWidget {
 
   final String imageUrl, title, description, url;
-  BlogTile({@required this.imageUrl, @required this.title, @required this.description, @required this.url});
+  final DateTime publishedAt;
+
+  BlogTile({@required this.imageUrl, @required this.title, @required this.description, @required this.url, @required this.publishedAt});
 
   @override
   Widget build(BuildContext context){
@@ -155,27 +164,38 @@ class BlogTile extends StatelessWidget {
           )
         ));
       },
-      child: Container(
-        margin: EdgeInsets.only(bottom: 16),
-        child: Column(
-          children: <Widget>[
-            ///Frame for Article Image
-            ClipRRect(
-                borderRadius: BorderRadius.circular(6),
-                child: Image.network(imageUrl)
-            ),
-            ///Setting style for Article Title
-            Text(title, style: TextStyle(
-                fontSize: 18,
-                color: Colors.black87,
-                fontWeight: FontWeight.w600
-            ),),
-            SizedBox(height: 8),
-            ///Setting style for Article description
-            Text(description, style: TextStyle(color: Colors.black54),)
-          ],
+      child: Card(
+        elevation: 5,
+        child: new Padding(
+          padding: new EdgeInsets.all(10.0),
+          child: Column(
+            children: <Widget>[
+              ///Frame for Article Image
+              ClipRRect(
+                  borderRadius: BorderRadius.circular(6),
+                  child: Image.network(imageUrl)
+              ),
+              ///Setting style for Article Title
+              Text(title, style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.black87,
+                  fontWeight: FontWeight.w600
+              ),),
+              new Padding(
+                padding: new EdgeInsets.only(left: 1.0),
+                child: new Text(timeago.format(publishedAt), style: TextStyle(
+                  color: Colors.black54,
+                  fontWeight: FontWeight.w400,
+                ),),
+              ),
+              SizedBox(height: 8),
+              ///Setting style for Article description
+              Text(description, style: TextStyle(color: Colors.black54),)
+            ],
+          ),
         ),
       ),
     );
   }
+
 }
