@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:HealthGuard/emedical_report.dart';
 import 'package:HealthGuard/pedometer_page.dart';
 import 'package:HealthGuard/medical_feed.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -13,6 +12,7 @@ import 'User.dart' as OurUser;
 import 'auth.dart';
 import 'login_page.dart';
 import 'main.dart';
+import 'medical_report.dart';
 import 'validation_tool.dart';
 
 FireStoreUtils _fireStoreUtils = FireStoreUtils();
@@ -163,7 +163,7 @@ class HealthOption extends StatelessWidget {
                   ),
                 ),
                 onTap: () {
-                  Navigator.pushNamed(context, EmedicReport.id);
+                  Navigator.pushNamed(context, EMedicalReport.id);
                 })),
         Card(
             elevation: 3.0,

@@ -19,14 +19,15 @@ class User {
   /// User class Constructor
   User(
       {this.email,
-      this.firstName,
-      this.phoneNumber,
-      this.lastName,
-      this.active,
-      this.lastOnlineTimestamp,
-      this.settings,
-      this.userID,
-      this.profilePictureURL});
+        this.firstName,
+        this.phoneNumber,
+        this.lastName,
+        this.active,
+        this.lastOnlineTimestamp,
+        this.settings,
+        this.userID,
+        this.profilePictureURL}
+        );
 
 
   /// Combining user's first name and last name to form fullname

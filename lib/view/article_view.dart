@@ -24,7 +24,7 @@ class _ArticleViewState extends State<ArticleView>{
     return Scaffold(
       ///Displaying appbar even in webView
       appBar: AppBar(
-        title: Text("Medical Article"),
+        title: Text("HealthGuard"),
         centerTitle: true,
       ),
       body: Container(

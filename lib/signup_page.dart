@@ -41,7 +41,7 @@ class _signupPageState extends State<signup_page> {
       ),
       body: SingleChildScrollView(
         child: new Container(
-          margin: new EdgeInsets.only(left: 16.0, right: 16, bottom: 16),
+          margin: new EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
           child: new Form(
             key: _key,
             autovalidate: _validate,
@@ -358,7 +358,8 @@ class _signupPageState extends State<signup_page> {
         await FireStoreUtils.firestore
             .collection(Constants.USERS)
             .doc(result.user.uid)
-            .set(user.toJson());
+            .collection(Constants.ACC_INFO)
+            .add(user.toJson());
         hideProgress();
         MyAppState.currentUser = user;
         pushAndRemoveUntil(context, home(user: user), false);

@@ -1,6 +1,5 @@
 import 'package:HealthGuard/Bloodpressure1.dart';
 import 'package:HealthGuard/medical_feed.dart';
-import 'package:HealthGuard/emedical_report.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -9,6 +8,7 @@ import 'User.dart' as OurUser;
 import 'auth.dart';
 import 'home.dart';
 import 'login_page.dart';
+import 'medical_report.dart';
 import 'pedometer_page.dart';
 
 void main() async {
@@ -35,7 +35,7 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
         home.id: (context) => home(),
         PedometerPage.id: (context) => PedometerPage(),
         MedicalFeed.id: (context) => MedicalFeed(),
-        EmedicReport.id: (context) => EmedicReport(),
+        EMedicalReport.id: (context) => EMedicalReport(),
         Bloodpressure1.id: (context) =>
             Bloodpressure1(sys: 60, dia: 70, pul: 80),
       },
