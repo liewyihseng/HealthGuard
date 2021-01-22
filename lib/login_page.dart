@@ -10,7 +10,7 @@ import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'User.dart' as OurUser;
-import 'auth.dart';
+import 'authentication.dart';
 import 'constants.dart' as Constants;
 import 'home.dart';
 import 'main.dart';

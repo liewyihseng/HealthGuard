@@ -1,4 +1,4 @@
-import 'package:HealthGuard/auth.dart';
+import 'package:HealthGuard/authentication.dart';
 import 'package:HealthGuard/main.dart';
 import 'package:HealthGuard/validation_tool.dart';
 import 'package:flutter/material.dart';
@@ -24,8 +24,16 @@ class _medicalPageState extends State<EMedicalReport>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Text(
+          'E-Medical Report',
+          style: TextStyle(
+              color: Colors.white,
+              fontFamily: "Montserrat",
+              fontWeight: FontWeight.w900),
+        ),
+        iconTheme: IconThemeData(color: Colors.white),
+        backgroundColor: Colors.blue,
         centerTitle: true,
-        title: Text("E-Medical Report"),
       ),
       body: SingleChildScrollView(
         child: new Container(

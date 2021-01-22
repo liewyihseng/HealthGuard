@@ -50,7 +50,15 @@ class _MedicalFeedState extends State<MedicalFeed>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Medical Article"),
+        title: Text(
+          'Medical Article',
+          style: TextStyle(
+              color: Colors.white,
+              fontFamily: "Montserrat",
+              fontWeight: FontWeight.w900),
+        ),
+        iconTheme: IconThemeData(color: Colors.white),
+        backgroundColor: Colors.blue,
         centerTitle: true,
       ),
       body: _loading ? Center(
@@ -136,7 +144,7 @@ class CategoryTile extends StatelessWidget{
               borderRadius: BorderRadius.circular(6),
               color: Colors.black26,
             ),
-            child: Text(categoryName, style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w500),),
+            child: Text(categoryName, style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w900, fontFamily: "Montserrat",),),
           )
         ],
         ),

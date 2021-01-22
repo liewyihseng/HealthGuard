@@ -41,7 +41,15 @@ class _CategoryViewState extends State<CategoryView>{
   Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(
-        title: Text(" $_categoryName - Medical Article"),
+        title: Text(
+          " $_categoryName - Medical Article",
+          style: TextStyle(
+              color: Colors.white,
+              fontFamily: "Montserrat",
+              fontWeight: FontWeight.w900),
+        ),
+        iconTheme: IconThemeData(color: Colors.white),
+        backgroundColor: Colors.blue,
         centerTitle: true,
       ),
       body: _loading ? Center(
