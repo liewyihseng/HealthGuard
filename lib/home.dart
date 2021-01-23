@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:HealthGuard/pedometer_page.dart';
 import 'package:HealthGuard/medical_feed.dart';
+import 'package:HealthGuard/user_profile.dart';
 import 'package:HealthGuard/widgets/custom_clipper.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -10,13 +11,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
-import 'Bloodpressure1.dart';
-import 'User.dart' as OurUser;
-import 'authentication.dart';
-import 'login_page.dart';
-import 'main.dart';
-import 'medical_report.dart';
-import 'validation_tool.dart';
+import 'package:HealthGuard/Bloodpressure1.dart';
+import 'package:HealthGuard/User.dart' as OurUser;
+import 'package:HealthGuard/authentication.dart';
+import 'package:HealthGuard/login_page.dart';
+import 'package:HealthGuard/main.dart';
+import 'package:HealthGuard/medical_report.dart';
+import 'package:HealthGuard/validation_tool.dart';
 
 FireStoreUtils _fireStoreUtils = FireStoreUtils();
 
@@ -67,21 +68,26 @@ class _home extends State<home> {
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
-            DrawerHeader(
-              child: Text(
-                'Main Menu',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontFamily: "Montserrat",
-                    fontWeight: FontWeight.w900),
-              ),
-              decoration: BoxDecoration(
-                color: Colors.blue,
+            Container(
+              height: 130.0,
+              child: DrawerHeader(
+                padding: EdgeInsets.only(left: 50.0, top: 25.0),
+                child: Text(
+                  'Main Menu',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontFamily: "Montserrat",
+                      fontWeight: FontWeight.w900),
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                ),
               ),
             ),
             ListTile(
               title: Text(
-                'Logout',
+                'Log Out',
                 style: TextStyle(
                     color: Colors.black,
                     fontFamily: "Montserrat",
@@ -410,9 +416,9 @@ class _HomeOptionState extends State<HomeOption> {
         top: -30,
         child: ClipOval(
           child: Container(
-          color: Colors.black.withOpacity(0.05),
-          height: 220,
-          width: 220,
+            color: Colors.black.withOpacity(0.05),
+            height: 220,
+            width: 220,
           ),
         ),
       ),
@@ -433,7 +439,14 @@ class _HomeOptionState extends State<HomeOption> {
                     ),
                   ),
                 ),
-                displayCircleImage(user.profilePictureURL, 55, false),
+                GestureDetector(
+                  child: Container(
+                    child: displayCircleImage(user.profilePictureURL, 55, false)
+                  ),
+                  onTap: () {
+                    Navigator.pushNamed(context, UserProfile.id);
+                  }
+                ),
               ],
             ),
 

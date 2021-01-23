@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:HealthGuard/user_medic_info.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 /// Acting as a frame for the creation of user instances
@@ -26,7 +27,7 @@ class User {
         this.lastOnlineTimestamp,
         this.settings,
         this.userID,
-        this.profilePictureURL}
+        this.profilePictureURL,}
         );
 
 
@@ -61,7 +62,7 @@ class User {
       'active': this.active,
       'lastOnlineTimestamp': this.lastOnlineTimestamp,
       "profilePictureURL": this.profilePictureURL,
-      'appIdentifier': this.appIdentifier
+      'appIdentifier': this.appIdentifier,
     };
   }
 }

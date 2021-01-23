@@ -1,15 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import 'home.dart';
-import 'main.dart';
-import 'validation_tool.dart';
+import 'package:HealthGuard/home.dart';
+import 'package:HealthGuard/main.dart';
+import 'package:HealthGuard/validation_tool.dart';
 import 'package:flutter/cupertino.dart';
-import 'authentication.dart';
+import 'package:HealthGuard/authentication.dart';
 import 'package:flutter/material.dart';
-import 'User.dart';
-import 'constants.dart' as Constants;
-import 'User.dart' as OurUser;
+import 'package:HealthGuard/User.dart';
+import 'package:HealthGuard/constants.dart' as Constants;
+import 'package:HealthGuard/User.dart' as OurUser;
 import 'dart:io';
 
 File _image;

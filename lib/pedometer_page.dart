@@ -103,8 +103,16 @@ class _PedometerPageState extends State<PedometerPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Text(
+          'Pedometer',
+          style: TextStyle(
+              color: Colors.white,
+              fontFamily: "Montserrat",
+              fontWeight: FontWeight.w900),
+        ),
+        iconTheme: IconThemeData(color: Colors.white),
+        backgroundColor: Colors.blue,
         centerTitle: true,
-        title: Text("Pedometer"),
       ),
       body: Container(
         child: Column(

@@ -10,6 +10,7 @@ class user_medic_info{
   String emergencyContact = '';
 
 
+
 /// user_medic_info class constructor
 user_medic_info(
     {this.height,
@@ -31,7 +32,7 @@ user_medic_info(
       healthCondition: parsedJson['healthCondition'] ?? "",
       currentMedication: parsedJson['currentMedication'] ?? "",
       address: parsedJson['address'] ?? "",
-      emergencyContact: parsedJson['emergencyContact'] ?? ""
+      emergencyContact: parsedJson['emergencyContact'] ?? "",
     );
   }
 

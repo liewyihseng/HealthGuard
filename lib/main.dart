@@ -1,15 +1,20 @@
 import 'package:HealthGuard/Bloodpressure1.dart';
+import 'package:HealthGuard/help_center.dart';
 import 'package:HealthGuard/medical_feed.dart';
+import 'package:HealthGuard/my_account.dart';
+import 'package:HealthGuard/my_medical.dart';
+import 'package:HealthGuard/user_profile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'User.dart' as OurUser;
-import 'authentication.dart';
-import 'home.dart';
-import 'login_page.dart';
-import 'medical_report.dart';
-import 'pedometer_page.dart';
+import 'package:HealthGuard/User.dart' as OurUser;
+import 'package:HealthGuard/user_medic_info.dart' as OurMedic;
+import 'package:HealthGuard/authentication.dart';
+import 'package:HealthGuard/home.dart';
+import 'package:HealthGuard/login_page.dart';
+import 'package:HealthGuard/medical_report.dart';
+import 'package:HealthGuard/pedometer_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,8 +36,11 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
       initialRoute: LoginPage.id,
       routes: {
         LoginPage.id: (context) => LoginPage(),
-        // ignore: missing_required_param
-        home.id: (context) => home(),
+        home.id: (context) => home(user: currentUser,),
+        UserProfile.id: (context) => UserProfile(),
+        MyAccount.id: (context) => MyAccount(),
+        MyMedical.id: (context) => MyMedical(),
+        HelpCenter.id: (context) => HelpCenter(),
         PedometerPage.id: (context) => PedometerPage(),
         MedicalFeed.id: (context) => MedicalFeed(),
         EMedicalReport.id: (context) => EMedicalReport(),

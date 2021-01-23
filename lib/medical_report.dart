@@ -3,9 +3,9 @@ import 'package:HealthGuard/main.dart';
 import 'package:HealthGuard/validation_tool.dart';
 import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
-import 'home.dart';
-import 'user_medic_info.dart' as medic_info;
-import 'constants.dart' as Constants;
+import 'package:HealthGuard/home.dart';
+import 'package:HealthGuard/user_medic_info.dart' as medic_info;
+import 'package:HealthGuard/constants.dart' as Constants;
 import 'package:flutter/services.dart';
 
 /// Medical report screen page widget class

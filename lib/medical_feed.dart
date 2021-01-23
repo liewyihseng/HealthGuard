@@ -4,10 +4,10 @@ import 'package:HealthGuard/view/article_view.dart';
 import 'package:HealthGuard/view/category_view.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'helper/data.dart';
-import 'helper/news.dart';
-import 'model/article_model.dart';
-import 'model/category_model.dart';
+import 'package:HealthGuard/helper/data.dart';
+import 'package:HealthGuard/helper/news.dart';
+import 'package:HealthGuard/model/article_model.dart';
+import 'package:HealthGuard/model/category_model.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 /// Medical Feed screen page widget class

@@ -3,7 +3,7 @@ import 'package:HealthGuard/model/article_model.dart';
 import 'package:flutter/material.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-import 'article_view.dart';
+import 'package:HealthGuard/view/article_view.dart';
 
 class CategoryView extends StatefulWidget{
 
