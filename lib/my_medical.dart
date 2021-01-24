@@ -14,7 +14,8 @@ class MyMedical extends StatefulWidget{
 
 /// User's medical information screen page state class
 class _MyMedicalState extends State<MyMedical>{
-
+  final db = FirebaseFirestore.instance;
+  
   @override
   Widget build(BuildContext context){
     return Scaffold(
@@ -30,71 +31,98 @@ class _MyMedicalState extends State<MyMedical>{
         backgroundColor: Colors.blue,
         centerTitle: true,
       ),
-      body: Column(
-        children: <Widget>[
-          /// Birthday
-          Text("Dummy Birthday",
-            style: TextStyle(
-              color: Colors.black,
-              fontFamily: "Montserrat",
-              fontSize: 15,
-            ),
-          ),
+      body: StreamBuilder<QuerySnapshot>(
+        /// Creating a stream connecting to the database (collection is to access the collection, doc is to access the document within the collection)
+          stream: db.collection(Constants.USERS).doc(MyAppState.currentUser.userID).collection(Constants.MED_INFO).snapshots(),
+          builder: (context, snapshot) {
+            if(snapshot.hasData){
+              var doc = snapshot.data.documents;
+              return new ListView.builder(
+                itemCount: doc.length,
+                itemBuilder: (context, index){
+                  return Column(
+                    children: <Widget>[
+                      /// Birthday
+                      Text(doc[index].get("birthday"),
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: "Montserrat",
+                          fontSize: 15,
+                        ),
+                      ),
 
-          /// Sex
-          Text("Dummy Sex",
-            style: TextStyle(
-              color: Colors.black,
-              fontFamily: "Montserrat",
-              fontSize: 15,
-            ),
-          ),
+                      /// Sex
+                      Text(doc[index].get("sex"),
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: "Montserrat",
+                          fontSize: 15,
+                        ),
+                      ),
 
-          /// Height
-          Text("Dummy Height",
-            style: TextStyle(
-              color: Colors.black,
-              fontFamily: "Montserrat",
-              fontSize: 15,
-            ),
-          ),
+                      /// Height
+                      Text(doc[index].get("height"),
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: "Montserrat",
+                          fontSize: 15,
+                        ),
+                      ),
 
-          /// Weight
-          Text("Dummy Weight",
-            style: TextStyle(
-              color: Colors.black,
-              fontFamily: "Montserrat",
-              fontSize: 15,
-            ),
-          ),
+                      /// Weight
+                      Text(doc[index].get("weight"),
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: "Montserrat",
+                          fontSize: 15,
+                        ),
+                      ),
 
-          /// Current Medication
-          Text("Dummy Current Medication",
-            style: TextStyle(
-              color: Colors.black,
-              fontFamily: "Montserrat",
-              fontSize: 15,
-            ),
-          ),
+                      /// Current Medication
+                      Text(doc[index].get("currentMedication"),
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: "Montserrat",
+                          fontSize: 15,
+                        ),
+                      ),
 
-          /// Address
-          Text("Dummy Address",
-            style: TextStyle(
-              color: Colors.black,
-              fontFamily: "Montserrat",
-              fontSize: 15,
-            ),
-          ),
+                      /// Address
+                      Text(doc[index].get("address"),
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: "Montserrat",
+                          fontSize: 15,
+                        ),
+                      ),
 
-          /// Health Condition
-          Text("Dummy Health Condition",
-            style: TextStyle(
-              color: Colors.black,
-              fontFamily: "Montserrat",
-              fontSize: 15,
-            ),
-          ),
-        ],
+                      /// Health Condition
+                      Text(doc[index].get("healthCondition"),
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: "Montserrat",
+                          fontSize: 15,
+                        ),
+                      ),
+                    ],
+                  );}
+                );
+
+            }else{
+              return Column(
+                children: <Widget>[
+                  LinearProgressIndicator(),
+                  Text("Nothing To Show",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontFamily: "Montserrat",
+                      fontSize: 15,
+                    ),
+                  ),
+                ],
+              );
+            }
+        }
       ),
     );
   }
