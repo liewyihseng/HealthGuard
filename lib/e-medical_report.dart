@@ -243,7 +243,7 @@ class _medicalPageState extends State<EMedicalReport>{
           child: ConstrainedBox(
             constraints: const BoxConstraints(minWidth: double.infinity),
             child: RaisedButton(
-              color: Color(0xff01A0C7),
+              color: Constants.BUTTON_COLOUR,
               child: Text('Submit',
                 style: TextStyle(
                   fontSize: 20,

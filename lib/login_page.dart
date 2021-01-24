@@ -93,7 +93,7 @@ class _LoginPageState extends State<LoginPage> {
         child: ConstrainedBox(
           constraints: const BoxConstraints(minWidth: double.infinity),
           child: RaisedButton(
-            color: Color(0xff01A0C7),
+            color: Constants.BUTTON_COLOUR,
             child: Text('Login',
                 style: TextStyle(
                     fontSize: 20,

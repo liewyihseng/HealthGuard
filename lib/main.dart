@@ -13,7 +13,7 @@ import 'package:HealthGuard/user_medic_info.dart' as OurMedic;
 import 'package:HealthGuard/authentication.dart';
 import 'package:HealthGuard/home.dart';
 import 'package:HealthGuard/login_page.dart';
-import 'package:HealthGuard/medical_report.dart';
+import 'package:HealthGuard/e-medical_report.dart';
 import 'package:HealthGuard/pedometer_page.dart';
 
 void main() async {

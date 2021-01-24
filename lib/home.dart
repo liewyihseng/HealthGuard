@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:HealthGuard/pedometer_page.dart';
 import 'package:HealthGuard/medical_feed.dart';
 import 'package:HealthGuard/user_profile.dart';
+import 'package:HealthGuard/widgets/card_section.dart';
 import 'package:HealthGuard/widgets/custom_clipper.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -17,8 +18,9 @@ import 'package:HealthGuard/User.dart' as OurUser;
 import 'package:HealthGuard/authentication.dart';
 import 'package:HealthGuard/login_page.dart';
 import 'package:HealthGuard/main.dart';
-import 'package:HealthGuard/medical_report.dart';
+import 'package:HealthGuard/e-medical_report.dart';
 import 'package:HealthGuard/validation_tool.dart';
+import 'package:HealthGuard/constants.dart' as Constants;
 
 FireStoreUtils _fireStoreUtils = FireStoreUtils();
 
@@ -419,13 +421,13 @@ class _HomeOptionState extends State<HomeOption> {
         .top;
 
     return Scaffold(
-      backgroundColor: Color(0xFFF5F5F7),
+      backgroundColor: Constants.BACKGROUND_COLOUR,
       body: Stack(
           children: <Widget>[
       ClipPath(
       clipper: MyCustomClipper(clipType: ClipType.bottom),
       child: Container(
-        color: Color(0xFF3B72FF),
+        color: Colors.blue,
         height: 228.5 + statusBarHeight,
       ),
     ),
@@ -469,6 +471,7 @@ class _HomeOptionState extends State<HomeOption> {
             ),
 
             SizedBox(height: 25),
+
             /// Green Box containing the user's QR Code
             Container(
               margin: const EdgeInsets.only(top: 15.0, left: 25.0, right: 25.0, bottom: 15.0),
@@ -478,7 +481,7 @@ class _HomeOptionState extends State<HomeOption> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
                 shape: BoxShape.rectangle,
-                color: Color(0xFFA1ECBF),
+                color: Constants.LOGO_COLOUR_GREEN_DARK,
               ),
               child: Material(
                 child: InkWell(
@@ -514,55 +517,55 @@ class _HomeOptionState extends State<HomeOption> {
                           ],
                         ),
                       ),
+
                     ],
                   ),
                 ),
                 color: Colors.transparent,
               ),
             ),
+            SizedBox(height: 20),
+            Text("YOUR DAILY MEDICATION",
+              style: TextStyle(
+                color: Constants.TEXT_LIGHT,
+                fontSize: 13,
+                fontWeight: FontWeight.bold,
+                fontFamily: "Montserrat",
+              ),
+            ),
+            SizedBox(height: 20),
+            /// Dummy Data Change them when the medication reminder is working
+            Container(
+              height: 125,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: <Widget>[
+                  CardSection(
+                    title: "Metforminv",
+                    value: "2",
+                    unit: "pills",
+                    time: "6-7AM",
+                    image: AssetImage('assets/capsule.png'),
+                    isDone: false,
+                  ),
+                  CardSection(
+                    title: "Trulicity",
+                    value: "1",
+                    unit: "shot",
+                    time: "8-9AM",
+                    image: AssetImage('assets/syringe.png'),
+                    isDone: true,
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
+
+
     ],
       ),
     );
-
-
-    /*
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          
-          displayCircleImage(user.profilePictureURL, 125, false),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(user.firstName),
-          ),
-
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(user.email),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(user.phoneNumber),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(user.userID),
-          ),
-          /// Generation of user's QR Code
-          QrImage(
-            data: user.userID,
-            version: QrVersions.auto,
-            size: 200.0,
-          ),
-        ],
-      ),
-    );
-    */
   }
 }
