@@ -9,6 +9,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 import 'package:HealthGuard/Bloodpressure1.dart';
@@ -84,6 +85,23 @@ class _home extends State<home> {
                   color: Colors.blue,
                 ),
               ),
+            ),
+            ListTile(
+              title: Text(
+                'My Profile',
+                style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: "Montserrat",
+                    fontWeight: FontWeight.w900),
+              ),
+              leading: SvgPicture.asset(
+                "assets/icons/personal-information.svg",
+                width: 25,
+                color: Colors.black,
+              ),
+              onTap: () {
+                Navigator.pushNamed(context, UserProfile.id);
+              },
             ),
             ListTile(
               title: Text(

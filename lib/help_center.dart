@@ -27,7 +27,7 @@ class _HelpCenterState extends State<HelpCenter>{
       ),
       body: Column(
         children: <Widget>[
-
+          
         ],
       ),
     );
