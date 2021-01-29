@@ -1,6 +1,8 @@
 import 'package:HealthGuard/Bloodpressure1.dart';
+import 'package:HealthGuard/add_medication.dart';
 import 'package:HealthGuard/help_center.dart';
 import 'package:HealthGuard/medical_feed.dart';
+import 'package:HealthGuard/medication_reminder.dart';
 import 'package:HealthGuard/my_account.dart';
 import 'package:HealthGuard/my_medical.dart';
 import 'package:HealthGuard/user_profile.dart';
@@ -9,7 +11,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:HealthGuard/User.dart' as OurUser;
-import 'package:HealthGuard/user_medic_info.dart' as OurMedic;
 import 'package:HealthGuard/authentication.dart';
 import 'package:HealthGuard/home.dart';
 import 'package:HealthGuard/login_page.dart';
@@ -33,22 +34,25 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: LoginPage.id,
-      routes: {
-        LoginPage.id: (context) => LoginPage(),
-        home.id: (context) => home(user: currentUser,),
-        UserProfile.id: (context) => UserProfile(),
-        MyAccount.id: (context) => MyAccount(),
-        MyMedical.id: (context) => MyMedical(),
-        HelpCenter.id: (context) => HelpCenter(),
-        PedometerPage.id: (context) => PedometerPage(),
-        MedicalFeed.id: (context) => MedicalFeed(),
-        EMedicalReport.id: (context) => EMedicalReport(),
-        Bloodpressure1.id: (context) =>
-            Bloodpressure1(sys: 60, dia: 70, pul: 80),
-      },
-      theme: ThemeData(accentColor: Colors.white),
+          initialRoute: LoginPage.id,
+          routes: {
+            LoginPage.id: (context) => LoginPage(),
+            home.id: (context) => home(user: currentUser,),
+            UserProfile.id: (context) => UserProfile(),
+            MyAccount.id: (context) => MyAccount(),
+            MyMedical.id: (context) => MyMedical(),
+            HelpCenter.id: (context) => HelpCenter(),
+            PedometerPage.id: (context) => PedometerPage(),
+            MedicalFeed.id: (context) => MedicalFeed(),
+            EMedicalReport.id: (context) => EMedicalReport(),
+            MedicationReminder.id: (context) => MedicationReminder(),
+            AddMedicationReminder.id: (context) => AddMedicationReminder(),
+            Bloodpressure1.id: (context) =>
+                Bloodpressure1(sys: 60, dia: 70, pul: 80),
+          },
+          theme: ThemeData(accentColor: Colors.white),
     );
+
   }
 
   @override

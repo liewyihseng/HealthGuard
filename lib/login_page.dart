@@ -107,7 +107,8 @@ class _LoginPageState extends State<LoginPage> {
             padding: EdgeInsets.only(top: 12, bottom: 12),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(25.0),
-                side: BorderSide(color: Colors.blue)),
+                side: BorderSide(color: Colors.blue)
+            ),
           ),
         ),
       ),

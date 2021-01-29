@@ -21,6 +21,7 @@ import 'package:HealthGuard/main.dart';
 import 'package:HealthGuard/e-medical_report.dart';
 import 'package:HealthGuard/validation_tool.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
+import 'package:HealthGuard/medication_reminder.dart';
 
 FireStoreUtils _fireStoreUtils = FireStoreUtils();
 
@@ -40,7 +41,6 @@ class home extends StatefulWidget {
 // ignore: camel_case_types
 class _home extends State<home> {
   final OurUser.User user;
-
   // bottom nav bar selected index
   int _selectedIndex = 0;
 
@@ -187,9 +187,9 @@ class HealthOption extends StatelessWidget {
                             child: Text(
                               "E-Medical Report",
                               style: TextStyle(
-                                  fontSize: 20.0, color: Colors.black,
-                                  fontFamily: "Montserrat",
-                                  fontWeight: FontWeight.w600,
+                                fontSize: 20.0, color: Colors.black,
+                                fontFamily: "Montserrat",
+                                fontWeight: FontWeight.w600,
                               ),
                               textAlign: TextAlign.center,
                             ),
@@ -217,9 +217,9 @@ class HealthOption extends StatelessWidget {
                             child: Text(
                               "Pedometer",
                               style: TextStyle(
-                                  fontSize: 20.0, color: Colors.black,
-                                  fontFamily: "Montserrat",
-                                  fontWeight: FontWeight.w600,
+                                fontSize: 20.0, color: Colors.black,
+                                fontFamily: "Montserrat",
+                                fontWeight: FontWeight.w600,
                               ),
                               textAlign: TextAlign.center,
                             ),
@@ -247,9 +247,9 @@ class HealthOption extends StatelessWidget {
                             child: Text(
                               "Medical News Update",
                               style: TextStyle(
-                                  fontSize: 20.0, color: Colors.black,
-                                  fontFamily: "Montserrat",
-                                  fontWeight: FontWeight.w600,
+                                fontSize: 20.0, color: Colors.black,
+                                fontFamily: "Montserrat",
+                                fontWeight: FontWeight.w600,
                               ),
                               textAlign: TextAlign.center,
                             ),
@@ -277,9 +277,9 @@ class HealthOption extends StatelessWidget {
                             child: Text(
                               "Medication Reminder",
                               style: TextStyle(
-                                  fontSize: 20.0, color: Colors.black,
-                                  fontFamily: "Montserrat",
-                                  fontWeight: FontWeight.w600,
+                                fontSize: 20.0, color: Colors.black,
+                                fontFamily: "Montserrat",
+                                fontWeight: FontWeight.w600,
                               ),
                               textAlign: TextAlign.center,
                             ),
@@ -288,7 +288,7 @@ class HealthOption extends StatelessWidget {
                       ),
                     ),
                     onTap: () {
-                      //Navigator.pushNamed(context, PedometerPage.id);
+                      Navigator.pushNamed(context, MedicationReminder.id);
                     })),
             Card(
                 elevation: 3.0,
@@ -307,9 +307,9 @@ class HealthOption extends StatelessWidget {
                             child: Text(
                               "Blood Pressure Diary",
                               style: TextStyle(
-                                  fontSize: 20.0, color: Colors.black,
-                                  fontFamily: "Montserrat",
-                                  fontWeight: FontWeight.w600,
+                                fontSize: 20.0, color: Colors.black,
+                                fontFamily: "Montserrat",
+                                fontWeight: FontWeight.w600,
                               ),
                               textAlign: TextAlign.center,
                             ),
@@ -337,9 +337,9 @@ class HealthOption extends StatelessWidget {
                             child: Text(
                               "Chat with Doctor",
                               style: TextStyle(
-                                  fontSize: 20.0, color: Colors.black,
-                                  fontFamily: "Montserrat",
-                                  fontWeight: FontWeight.w600,
+                                fontSize: 20.0, color: Colors.black,
+                                fontFamily: "Montserrat",
+                                fontWeight: FontWeight.w600,
                               ),
                               textAlign: TextAlign.center,
                             ),
@@ -367,9 +367,9 @@ class HealthOption extends StatelessWidget {
                             child: Text(
                               "Hospital Suggestions",
                               style: TextStyle(
-                                  fontSize: 20.0, color: Colors.black,
-                                  fontFamily: "Montserrat",
-                                  fontWeight: FontWeight.w600,
+                                fontSize: 20.0, color: Colors.black,
+                                fontFamily: "Montserrat",
+                                fontWeight: FontWeight.w600,
                               ),
                               textAlign: TextAlign.center,
                             ),
@@ -410,7 +410,6 @@ class HomeOption extends StatefulWidget {
 
 class _HomeOptionState extends State<HomeOption> {
   final OurUser.User user;
-
   _HomeOptionState(this.user);
 
   @override
@@ -423,148 +422,146 @@ class _HomeOptionState extends State<HomeOption> {
     return Scaffold(
       backgroundColor: Constants.BACKGROUND_COLOUR,
       body: Stack(
-          children: <Widget>[
-      ClipPath(
-      clipper: MyCustomClipper(clipType: ClipType.bottom),
-      child: Container(
-        color: Colors.blue,
-        height: 228.5 + statusBarHeight,
-      ),
-    ),
-      Positioned(
-        right: -45,
-        top: -30,
-        child: ClipOval(
-          child: Container(
-            color: Colors.black.withOpacity(0.05),
-            height: 220,
-            width: 220,
-          ),
-        ),
-      ),
-
-      Padding(
-        padding: EdgeInsets.all(35),
-        child: ListView(
-          children: <Widget>[
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: Text("Good " + displayGreetings() + ",\n"+ user.fullName() +".",
-                    style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.w900,
-                      color: Colors.white,
-                      fontFamily: "Montserrat",
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  child: Container(
-                    child: displayCircleImage(user.profilePictureURL, 55, false)
-                  ),
-                  onTap: () {
-                    Navigator.pushNamed(context, UserProfile.id);
-                  }
-                ),
-              ],
+        children: <Widget>[
+          ClipPath(
+            clipper: MyCustomClipper(clipType: ClipType.bottom),
+            child: Container(
+              color: Colors.blue,
+              height: 228.5 + statusBarHeight,
             ),
-
-            SizedBox(height: 25),
-
-            /// Green Box containing the user's QR Code
-            Container(
-              margin: const EdgeInsets.only(top: 15.0, left: 25.0, right: 25.0, bottom: 15.0),
-              width: (
-                  (MediaQuery.of(context).size.width - (30.0 * 2 + 30.0 / 2)) /
-                      2),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                shape: BoxShape.rectangle,
-                color: Constants.LOGO_COLOUR_GREEN_DARK,
+          ),
+          Positioned(
+            right: -45,
+            top: -30,
+            child: ClipOval(
+              child: Container(
+                color: Colors.black.withOpacity(0.05),
+                height: 220,
+                width: 220,
               ),
-              child: Material(
-                child: InkWell(
-                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                  child: Stack(
-                    children: <Widget>[
-                      Positioned(
-                        child: ClipPath(
-                          clipper: MyCustomClipper(clipType: ClipType.semiCircle),
-                          child: Container(
-                            decoration: new BoxDecoration(
-                              borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                              color: Colors.black.withOpacity(0.03),
-                            ),
-                            height: 120,
-                            width: 120,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(20.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            QrImage(
-                              data: user.userID,
-                              version: QrVersions.auto,
-                              padding: EdgeInsets.all(15.0),
-                              size: 250.0,
-                              backgroundColor: Colors.white,
-                            ),
-                          ],
-                        ),
-                      ),
+            ),
+          ),
 
+          Padding(
+            padding: EdgeInsets.all(35),
+            child: ListView(
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Text("Good " + displayGreetings() + ",\n"+ user.fullName() +".",
+                        style: TextStyle(
+                          fontSize: 25,
+                          fontWeight: FontWeight.w900,
+                          color: Colors.white,
+                          fontFamily: "Montserrat",
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                        child: Container(
+                            child: displayCircleImage(user.profilePictureURL, 55, false)
+                        ),
+                        onTap: () {
+                          Navigator.pushNamed(context, UserProfile.id);
+                        }
+                    ),
+                  ],
+                ),
+
+                SizedBox(height: 25),
+
+                /// Green Box containing the user's QR Code
+                Container(
+                  margin: const EdgeInsets.only(top: 15.0, left: 25.0, right: 25.0, bottom: 15.0),
+                  width: (
+                      (MediaQuery.of(context).size.width - (30.0 * 2 + 30.0 / 2)) /
+                          2),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    shape: BoxShape.rectangle,
+                    color: Constants.LOGO_COLOUR_GREEN_DARK,
+                  ),
+                  child: Material(
+                    child: InkWell(
+                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                      child: Stack(
+                        children: <Widget>[
+                          Positioned(
+                            child: ClipPath(
+                              clipper: MyCustomClipper(clipType: ClipType.semiCircle),
+                              child: Container(
+                                decoration: new BoxDecoration(
+                                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                  color: Colors.black.withOpacity(0.03),
+                                ),
+                                height: 120,
+                                width: 120,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.all(20.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                QrImage(
+                                  data: user.userID,
+                                  version: QrVersions.auto,
+                                  padding: EdgeInsets.all(15.0),
+                                  size: 250.0,
+                                  backgroundColor: Colors.white,
+                                ),
+                              ],
+                            ),
+                          ),
+
+                        ],
+                      ),
+                    ),
+                    color: Colors.transparent,
+                  ),
+                ),
+                SizedBox(height: 20),
+                Text("YOUR DAILY MEDICATION",
+                  style: TextStyle(
+                    color: Constants.TEXT_LIGHT,
+                    fontSize: 13,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: "Montserrat",
+                  ),
+                ),
+                SizedBox(height: 20),
+                /// Dummy Data Change them when the medication reminder is working
+                Container(
+                  height: 125,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: <Widget>[
+                      CardSection(
+                        title: "Metforminv",
+                        value: "2",
+                        unit: "pills",
+                        time: "6-7AM",
+                        image: AssetImage('assets/capsule.png'),
+                        isDone: false,
+                      ),
+                      CardSection(
+                        title: "Trulicity",
+                        value: "1",
+                        unit: "shot",
+                        time: "8-9AM",
+                        image: AssetImage('assets/syringe.png'),
+                        isDone: true,
+                      ),
                     ],
                   ),
                 ),
-                color: Colors.transparent,
-              ),
+              ],
             ),
-            SizedBox(height: 20),
-            Text("YOUR DAILY MEDICATION",
-              style: TextStyle(
-                color: Constants.TEXT_LIGHT,
-                fontSize: 13,
-                fontWeight: FontWeight.bold,
-                fontFamily: "Montserrat",
-              ),
-            ),
-            SizedBox(height: 20),
-            /// Dummy Data Change them when the medication reminder is working
-            Container(
-              height: 125,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: <Widget>[
-                  CardSection(
-                    title: "Metforminv",
-                    value: "2",
-                    unit: "pills",
-                    time: "6-7AM",
-                    image: AssetImage('assets/capsule.png'),
-                    isDone: false,
-                  ),
-                  CardSection(
-                    title: "Trulicity",
-                    value: "1",
-                    unit: "shot",
-                    time: "8-9AM",
-                    image: AssetImage('assets/syringe.png'),
-                    isDone: true,
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-
-
-    ],
+          ),
+        ],
       ),
     );
   }

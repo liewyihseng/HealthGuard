@@ -11,7 +11,7 @@ class CardSection extends StatelessWidget {
   final String unit;
   final String time;
   final ImageProvider image;
-  final bool isDone;
+  bool isDone;
 
   CardSection(
   {Key key,
@@ -19,8 +19,10 @@ class CardSection extends StatelessWidget {
     @required this.value,
     @required this.unit,
     @required this.time,
-    @required this.image,
+    this.image,
     this.isDone}) : super(key: key);
+
+
 
   @override
   Widget build(BuildContext context){
@@ -43,10 +45,10 @@ class CardSection extends StatelessWidget {
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                    color: Constants.LOGO_COLOUR_PINK_LIGHT.withOpacity(0.1),
+                    color: Constants.BUTTON_COLOUR.withOpacity(0.06),
                   ),
-                  height: 120,
-                  width: 120,
+                  height: 110,
+                  width: 110,
                 ),
               ),
             ),
@@ -87,7 +89,7 @@ class CardSection extends StatelessWidget {
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
                                 color: Constants.TEXT_LIGHT,
-                                fontFamily: "Monserrat",
+                                fontFamily: "Montserrat",
                               ),
                             ),
                             SizedBox(height: 5),
@@ -95,7 +97,7 @@ class CardSection extends StatelessWidget {
                               style: TextStyle(
                                 fontSize: 15,
                                 color: Constants.TEXT_LIGHT,
-                                fontFamily: "Monserrat",
+                                fontFamily: "Montserrat",
                               ),
                             ),
                           ],
@@ -120,7 +122,11 @@ class CardSection extends StatelessWidget {
                           ),
                         ),
                         onTap: (){
-                          debugPrint("Button clicked. Handle button setState");
+                          if(!isDone) {
+                            this.isDone = true;
+                            debugPrint(
+                                "Button clicked. Handle button setState");
+                          }
                         }
                       ),
                     ],
