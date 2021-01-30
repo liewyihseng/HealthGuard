@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:pedometer/pedometer.dart';
+import 'package:HealthGuard/constants.dart' as Constants;
 
 // pedometer plugin doc https://pub.dev/packages/pedometer
 // shared preference doc https://pub.dev/packages/shared_preferences
@@ -108,7 +109,7 @@ class _PedometerPageState extends State<PedometerPage> {
               fontWeight: FontWeight.w900),
         ),
         iconTheme: IconThemeData(color: Colors.white),
-        backgroundColor: Colors.blue,
+        backgroundColor: Constants.APPBAR_COLOUR,
         centerTitle: true,
       ),
       body: Container(

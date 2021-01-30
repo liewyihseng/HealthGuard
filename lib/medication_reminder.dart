@@ -5,13 +5,12 @@ import 'dart:core';
 import 'package:HealthGuard/home.dart';
 import 'package:HealthGuard/main.dart';
 import 'package:HealthGuard/validation_tool.dart';
-import 'package:HealthGuard/widgets/card_section.dart';
+import 'package:HealthGuard/widgets/medication_reminder_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:smart_select/smart_select.dart';
 
-import 'package:HealthGuard/widgets/medicine_details.dart';
 import 'package:flutter/material.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
 
@@ -83,7 +82,7 @@ class _MedicationReminderState extends State<MedicationReminder>{
               fontWeight: FontWeight.w900),
         ),
         iconTheme: IconThemeData(color: Colors.white),
-        backgroundColor: Colors.blue,
+        backgroundColor: Constants.APPBAR_COLOUR,
         centerTitle: true,
       ),
       body: Container(
@@ -97,25 +96,25 @@ class _MedicationReminderState extends State<MedicationReminder>{
             SizedBox(
               height: 10,
             ),
-            RaisedButton(
-              color: Constants.BUTTON_COLOUR,
-              child: Icon(
-                Icons.add,
-              ),
-              splashColor: Colors.blue,
-              padding: EdgeInsets.only(top: 12, bottom: 12),
-              shape: CircleBorder(
-                side: BorderSide(color: Colors.blue),
-              ),
-              onPressed: (){
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) => _buildPopupDialog(context),
-                );
-              },
-            ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Constants.BUTTON_COLOUR,
+        child: Icon(
+          Icons.add,
+        ),
+        splashColor: Colors.blue,
+        //padding: EdgeInsets.only(top: 12, bottom: 12),
+        shape: CircleBorder(
+          side: BorderSide(color: Colors.blue),
+        ),
+        onPressed: (){
+          showDialog(
+            context: context,
+            builder: (BuildContext context) => _buildPopupDialog(context),
+          );
+        },
       ),
     );
   }
@@ -124,7 +123,7 @@ class _MedicationReminderState extends State<MedicationReminder>{
   Widget _buildPopupDialog(BuildContext context) {
     return new AlertDialog(
       backgroundColor: Constants.BACKGROUND_COLOUR,
-      title: Text(
+      title:  Text(
         'Add Medication',
         textAlign: TextAlign.center,
         style: TextStyle(
@@ -134,8 +133,8 @@ class _MedicationReminderState extends State<MedicationReminder>{
       ),
       content:
       Container(
-        height: 450,
-        width: 300,
+        height: 430,
+        width: 290,
         child: ListView(
           shrinkWrap: true,
           padding: EdgeInsets.symmetric(horizontal: 25),
@@ -267,7 +266,7 @@ class _MedicationReminderState extends State<MedicationReminder>{
               child: Padding(
                   padding: EdgeInsets.only(top: 10.0, bottom: 4.0),
                   child: RaisedButton(
-                    color: Constants.BUTTON_COLOUR,
+                    color: Constants.LOGO_COLOUR_PINK_LIGHT,
                     child: Text(_clicked == false ? "Pick Time": "${convertTime(_time.hour.toString())} : ${convertTime(_time.minute.toString())}",
                         style: TextStyle(
                             fontSize: 20,
@@ -275,7 +274,7 @@ class _MedicationReminderState extends State<MedicationReminder>{
                             fontFamily: "Montserrat")
                     ),
                     textColor: Colors.white,
-                    splashColor: Colors.blue,
+                    splashColor: Constants.LOGO_COLOUR_PINK_DARK,
                     onPressed: () async{
                       final TimeOfDay picked = await showTimePicker(
                         context: context,
@@ -293,13 +292,15 @@ class _MedicationReminderState extends State<MedicationReminder>{
                     padding: EdgeInsets.only(top: 12, bottom: 12),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25.0),
-                      side: BorderSide(color: Colors.blue),
+                      side: BorderSide(
+                        color: Constants.LOGO_COLOUR_PINK_LIGHT,
+                      ),
                     ),
                   )
               ),
             ),
 
-            SizedBox(height: 10),
+            SizedBox(height: 7),
 
             Padding(
               padding: const EdgeInsets.only(right: 40.0, left: 40.0, top: 40.0),
@@ -309,17 +310,18 @@ class _MedicationReminderState extends State<MedicationReminder>{
                   color: Constants.BUTTON_COLOUR,
                   child: Text('Submit',
                     style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w900,
-                        fontFamily: "Montserrat"),
+                      fontSize: 20,
+                      fontWeight: FontWeight.w900,
+                      fontFamily: "Montserrat",
+                    ),
                   ),
                   textColor: Colors.white,
                   splashColor: Colors.blue,
                   onPressed: _sendToServer,
                   padding: EdgeInsets.only(top: 12, bottom: 12),
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25.0),
-                      side: BorderSide(color: Colors.blue)
+                    borderRadius: BorderRadius.circular(25.0),
+                    side: BorderSide(color: Colors.blue),
                   ),
                 ),
               ),
@@ -424,65 +426,56 @@ class _MedicationReminderState extends State<MedicationReminder>{
 
 
 class TopContainer extends StatelessWidget{
-  List<Medicine> totalMedicine = [];
   final db = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context){
     return Scaffold(
-      body: Center(
+      body: Container(
+        alignment: Alignment.topCenter,
         child: StreamBuilder<QuerySnapshot>(
-          stream: db.collection(Constants.USERS).doc(MyAppState.currentUser.userID).collection(Constants.MEDICATION_INFO).snapshots(),
-          builder: (context, snapshot){
-            if(snapshot.hasData){
-              var doc = snapshot.data.documents;
-              return new ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: doc.length,
-                  itemBuilder: (context, index){
-                    return Container(
-                      height: 125,
-                      child: ListView(
-
-                        scrollDirection: Axis.horizontal,
-                        children: <Widget>[
-                          CardSection(
-                            title: doc[index].get("medicineName"),
-                            value: doc[index].get("dosage"),
-                            unit: "mg",
-                            time: doc[index].get("startTime"),
-                            image: AssetImage(imageLink(doc[index].get("medicineType"))),
-                            isDone: false,
-                          ),
-                        ],
-                      ),
-                    );
-                    // return SingleChildScrollView(
-                    //     scrollDirection: Axis.vertical,
-                    //     child:
-                    //         CardSection(
-                    //             title: doc[index].get("medicineName"),
-                    //             value: doc[index].get("dosage"),
-                    //             unit: "mg",
-                    //             time: doc[index].get("startTime"),
-                    //             image: AssetImage(imageLink(doc[index].get("medicineType"))),
-                    //             isDone: false,
-                    //         ),
-                    //
-                    // );
-                  }
-              );
+            stream: db.collection(Constants.USERS).doc(MyAppState.currentUser.userID).collection(Constants.MEDICATION_INFO).snapshots(),
+            builder: (context, snapshot){
+              if(!snapshot.hasData){
+                return Container();
+              }else if(snapshot.data.size == 0){
+                return Container( color: Color(0xFFF6F8FC),
+                  child: Center(
+                    child:  Text(
+                      'Nothing to be shown',
+                      style: TextStyle(
+                          fontSize: 24,
+                          color: Constants.TEXT_SUPER_LIGHT,
+                          fontFamily: "Montserrat",
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                );
+              }else{
+                var doc = snapshot.data.documents;
+                return new ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: doc.length,
+                    itemBuilder: (context, index){
+                      return Container(
+                        height: 135,
+                        child: ListView(
+                          scrollDirection: Axis.vertical,
+                          children: <Widget>[
+                            MedicationReminderCard(
+                              title: doc[index].get("medicineName"),
+                              value: doc[index].get("dosage"),
+                              unit: "mg",
+                              time: doc[index].get("startTime"),
+                              image: AssetImage(imageLink(doc[index].get("medicineType"))),
+                              isDone: false,
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+                );
+              }
             }
-            return Container(
-              child: Text("Nothing To Show",
-                style: TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.w900,
-                  color: Colors.white,
-                  fontFamily: "Montserrat",
-                ),
-              ),
-            );
-          },
         ),
       ),
     );

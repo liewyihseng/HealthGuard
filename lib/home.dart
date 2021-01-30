@@ -137,7 +137,7 @@ class _home extends State<home> {
               fontWeight: FontWeight.w900),
         ),
         iconTheme: IconThemeData(color: Colors.white),
-        backgroundColor: Colors.blue,
+        backgroundColor: Constants.APPBAR_COLOUR,
         centerTitle: true,
       ),
       body: _bottomNavBarOptions.elementAt(_selectedIndex),
@@ -410,6 +410,7 @@ class HomeOption extends StatefulWidget {
 
 class _HomeOptionState extends State<HomeOption> {
   final OurUser.User user;
+  final db = FirebaseFirestore.instance;
   _HomeOptionState(this.user);
 
   @override
@@ -533,29 +534,52 @@ class _HomeOptionState extends State<HomeOption> {
                   ),
                 ),
                 SizedBox(height: 20),
-                /// Dummy Data Change them when the medication reminder is working
+                /// Working Data Change with medication reminder
                 Container(
                   height: 125,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: <Widget>[
-                      CardSection(
-                        title: "Metforminv",
-                        value: "2",
-                        unit: "pills",
-                        time: "6-7AM",
-                        image: AssetImage('assets/capsule.png'),
-                        isDone: false,
-                      ),
-                      CardSection(
-                        title: "Trulicity",
-                        value: "1",
-                        unit: "shot",
-                        time: "8-9AM",
-                        image: AssetImage('assets/syringe.png'),
-                        isDone: true,
-                      ),
-                    ],
+                  child: StreamBuilder<QuerySnapshot>(
+                    stream: db.collection(Constants.USERS).doc(MyAppState.currentUser.userID).collection(Constants.MEDICATION_INFO).snapshots(),
+                    builder: (context, snapshot){
+                      if(!snapshot.hasData){
+                        return Container();
+                      }else if(snapshot.data.size == 0){
+                        return GestureDetector(
+                          child: Container(
+                            color: Color(0xFFF6F8FC),
+                            child: Center(
+                              child:  Text(
+                                'Tap to add medication',
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    color: Constants.TEXT_SUPER_LIGHT,
+                                    fontFamily: "Montserrat",
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            ),
+                          ),
+                          onTap: (){
+                            Navigator.pushNamed(context, MedicationReminder.id);
+                          }
+                        );
+                      }else{ var doc = snapshot.data.documents;
+                      return new ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: doc.length,
+                        itemBuilder: (context, index){
+                          return Container(
+                            child: CardSection(
+                              title: doc[index].get("medicineName"),
+                              value: doc[index].get("dosage"),
+                              unit: "mg",
+                              time: doc[index].get("startTime"),
+                              image: AssetImage(imageLink(doc[index].get("medicineType"))),
+                              isDone: false,
+                            ),
+                          );
+                        },
+                      );
+                      }
+                    },
                   ),
                 ),
               ],
@@ -566,3 +590,4 @@ class _HomeOptionState extends State<HomeOption> {
     );
   }
 }
+

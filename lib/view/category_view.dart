@@ -2,6 +2,7 @@ import 'package:HealthGuard/helper/news.dart';
 import 'package:HealthGuard/model/article_model.dart';
 import 'package:flutter/material.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import 'package:HealthGuard/constants.dart' as Constants;
 
 import 'package:HealthGuard/view/article_view.dart';
 
@@ -49,7 +50,7 @@ class _CategoryViewState extends State<CategoryView>{
               fontWeight: FontWeight.w900),
         ),
         iconTheme: IconThemeData(color: Colors.white),
-        backgroundColor: Colors.blue,
+        backgroundColor: Constants.APPBAR_COLOUR,
         centerTitle: true,
       ),
       body: _loading ? Center(

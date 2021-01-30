@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:HealthGuard/constants.dart' as Constants;
 
 ///Article view when being clicked
 
@@ -24,7 +25,15 @@ class _ArticleViewState extends State<ArticleView>{
     return Scaffold(
       ///Displaying appbar even in webView
       appBar: AppBar(
-        title: Text("HealthGuard"),
+        title: Text(
+          'HealthGuard',
+          style: TextStyle(
+              color: Colors.white,
+              fontFamily: "Montserrat",
+              fontWeight: FontWeight.w900),
+        ),
+        iconTheme: IconThemeData(color: Colors.white),
+        backgroundColor: Constants.APPBAR_COLOUR,
         centerTitle: true,
       ),
       body: Container(
