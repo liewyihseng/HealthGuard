@@ -25,16 +25,12 @@ class _PedometerPageState extends State<PedometerPage> {
 
   /// step count stream
   Stream<StepCount> _stepCountStream;
-
   /// steps
   int _steps = 0;
-
   /// calories (cal)
   double _calories = 0;
-
   /// water (ml)
   int _water = 0;
-
   /// goal (steps)
   int goal = 10000;
 
@@ -49,7 +45,6 @@ class _PedometerPageState extends State<PedometerPage> {
   void initPlatformState() {
     _stepCountStream = Pedometer.stepCountStream;
     _stepCountStream.listen(onStepCount).onError(onStepCountError);
-
     if (!mounted) return;
   }
 
@@ -100,7 +95,7 @@ class _PedometerPageState extends State<PedometerPage> {
     return ((value * pow(10, place)).round()) / pow(10, place);
   }
 
-  /// build
+  /// build user interface
   @override
   Widget build(BuildContext context) {
     return Scaffold(
