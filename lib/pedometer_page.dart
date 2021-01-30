@@ -22,6 +22,7 @@ class PedometerPage extends StatefulWidget {
 
 /// pedometer screen page state class
 class _PedometerPageState extends State<PedometerPage> {
+
   /// step count stream
   Stream<StepCount> _stepCountStream;
 
@@ -54,8 +55,8 @@ class _PedometerPageState extends State<PedometerPage> {
 
   /// step count event handler
   void onStepCount(StepCount event) async {
-    final String previousStepKey = "previousStep";
-    final String previousDayNoKey = "previousDayNo";
+    final String previousStepKey = "pedometerPreviousStep";
+    final String previousDayNoKey = "pedometerPreviousDayNo";
 
     int todayDayNo = Jiffy(event.timeStamp).dayOfYear;
     int preSteps = await SharedPrefService.read(previousStepKey) ?? 0;
@@ -94,6 +95,7 @@ class _PedometerPageState extends State<PedometerPage> {
     });
   }
 
+  /// helper function
   double toPrecision(double value, int place) {
     return ((value * pow(10, place)).round()) / pow(10, place);
   }
