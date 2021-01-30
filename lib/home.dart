@@ -137,7 +137,7 @@ class _home extends State<home> {
               fontWeight: FontWeight.w900),
         ),
         iconTheme: IconThemeData(color: Colors.white),
-        backgroundColor: Colors.blue,
+        backgroundColor: Constants.APPBAR_COLOUR,
         centerTitle: true,
       ),
       body: _bottomNavBarOptions.elementAt(_selectedIndex),

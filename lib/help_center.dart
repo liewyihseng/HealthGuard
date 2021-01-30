@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:HealthGuard/constants.dart' as Constants;
 
 /// Help center screen page widget class
 class HelpCenter extends StatefulWidget{
@@ -22,7 +23,7 @@ class _HelpCenterState extends State<HelpCenter>{
               fontWeight: FontWeight.w900),
         ),
         iconTheme: IconThemeData(color: Colors.white),
-        backgroundColor: Colors.blue,
+        backgroundColor: Constants.APPBAR_COLOUR,
         centerTitle: true,
       ),
       body: Column(

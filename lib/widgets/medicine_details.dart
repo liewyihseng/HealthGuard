@@ -2,7 +2,7 @@ import 'package:HealthGuard/model/medicine_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
-
+import 'package:HealthGuard/constants.dart' as Constants;
 import '../global_bloc.dart';
 
 
@@ -27,7 +27,7 @@ class MedicineDetails extends StatelessWidget {
               fontWeight: FontWeight.w900),
         ),
         iconTheme: IconThemeData(color: Colors.white),
-        backgroundColor: Colors.blue,
+        backgroundColor: Constants.APPBAR_COLOUR,
         centerTitle: true,
       ),
       body: Container(

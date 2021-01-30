@@ -27,7 +27,7 @@ class _MyAccountState extends State<MyAccount>{
               fontWeight: FontWeight.w900),
         ),
         iconTheme: IconThemeData(color: Colors.white),
-        backgroundColor: Colors.blue,
+        backgroundColor: Constants.APPBAR_COLOUR,
         centerTitle: true,
       ),
       body: StreamBuilder<QuerySnapshot>(

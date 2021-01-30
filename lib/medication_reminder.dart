@@ -5,14 +5,12 @@ import 'dart:core';
 import 'package:HealthGuard/home.dart';
 import 'package:HealthGuard/main.dart';
 import 'package:HealthGuard/validation_tool.dart';
-import 'package:HealthGuard/widgets/card_section.dart';
 import 'package:HealthGuard/widgets/medication_reminder_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:smart_select/smart_select.dart';
 
-import 'package:HealthGuard/widgets/medicine_details.dart';
 import 'package:flutter/material.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
 
@@ -84,7 +82,7 @@ class _MedicationReminderState extends State<MedicationReminder>{
               fontWeight: FontWeight.w900),
         ),
         iconTheme: IconThemeData(color: Colors.white),
-        backgroundColor: Colors.blue,
+        backgroundColor: Constants.APPBAR_COLOUR,
         centerTitle: true,
       ),
       body: Container(
@@ -125,7 +123,7 @@ class _MedicationReminderState extends State<MedicationReminder>{
   Widget _buildPopupDialog(BuildContext context) {
     return new AlertDialog(
       backgroundColor: Constants.BACKGROUND_COLOUR,
-      title: Text(
+      title:  Text(
         'Add Medication',
         textAlign: TextAlign.center,
         style: TextStyle(
@@ -135,8 +133,8 @@ class _MedicationReminderState extends State<MedicationReminder>{
       ),
       content:
       Container(
-        height: 450,
-        width: 300,
+        height: 430,
+        width: 290,
         child: ListView(
           shrinkWrap: true,
           padding: EdgeInsets.symmetric(horizontal: 25),
@@ -268,7 +266,7 @@ class _MedicationReminderState extends State<MedicationReminder>{
               child: Padding(
                   padding: EdgeInsets.only(top: 10.0, bottom: 4.0),
                   child: RaisedButton(
-                    color: Constants.BUTTON_COLOUR,
+                    color: Constants.LOGO_COLOUR_PINK_LIGHT,
                     child: Text(_clicked == false ? "Pick Time": "${convertTime(_time.hour.toString())} : ${convertTime(_time.minute.toString())}",
                         style: TextStyle(
                             fontSize: 20,
@@ -276,7 +274,7 @@ class _MedicationReminderState extends State<MedicationReminder>{
                             fontFamily: "Montserrat")
                     ),
                     textColor: Colors.white,
-                    splashColor: Colors.blue,
+                    splashColor: Constants.LOGO_COLOUR_PINK_DARK,
                     onPressed: () async{
                       final TimeOfDay picked = await showTimePicker(
                         context: context,
@@ -294,13 +292,15 @@ class _MedicationReminderState extends State<MedicationReminder>{
                     padding: EdgeInsets.only(top: 12, bottom: 12),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25.0),
-                      side: BorderSide(color: Colors.blue),
+                      side: BorderSide(
+                        color: Constants.LOGO_COLOUR_PINK_LIGHT,
+                      ),
                     ),
                   )
               ),
             ),
 
-            SizedBox(height: 10),
+            SizedBox(height: 7),
 
             Padding(
               padding: const EdgeInsets.only(right: 40.0, left: 40.0, top: 40.0),
@@ -310,17 +310,18 @@ class _MedicationReminderState extends State<MedicationReminder>{
                   color: Constants.BUTTON_COLOUR,
                   child: Text('Submit',
                     style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w900,
-                        fontFamily: "Montserrat"),
+                      fontSize: 20,
+                      fontWeight: FontWeight.w900,
+                      fontFamily: "Montserrat",
+                    ),
                   ),
                   textColor: Colors.white,
                   splashColor: Colors.blue,
                   onPressed: _sendToServer,
                   padding: EdgeInsets.only(top: 12, bottom: 12),
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25.0),
-                      side: BorderSide(color: Colors.blue)
+                    borderRadius: BorderRadius.circular(25.0),
+                    side: BorderSide(color: Colors.blue),
                   ),
                 ),
               ),
@@ -442,7 +443,7 @@ class TopContainer extends StatelessWidget{
                     child:  Text(
                       'Nothing to be shown',
                       style: TextStyle(
-                        fontSize: 24,
+                          fontSize: 24,
                           color: Constants.TEXT_SUPER_LIGHT,
                           fontFamily: "Montserrat",
                           fontWeight: FontWeight.bold),

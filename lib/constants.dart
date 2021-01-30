@@ -1,4 +1,5 @@
 library constants;
+import 'package:flutter/material.dart';
 
 import 'dart:ui';
 
@@ -25,3 +26,5 @@ const TEXT_LIGHT = Color(0xFF486581);
 const TEXT_DARK = Color(0xFF102A43);
 
 const BACKGROUND_COLOUR = Color(0xFFF5F5F7);
+
+const APPBAR_COLOUR = Colors.blue;
