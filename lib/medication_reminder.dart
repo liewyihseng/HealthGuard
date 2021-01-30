@@ -6,6 +6,7 @@ import 'package:HealthGuard/home.dart';
 import 'package:HealthGuard/main.dart';
 import 'package:HealthGuard/validation_tool.dart';
 import 'package:HealthGuard/widgets/card_section.dart';
+import 'package:HealthGuard/widgets/medication_reminder_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
@@ -97,25 +98,25 @@ class _MedicationReminderState extends State<MedicationReminder>{
             SizedBox(
               height: 10,
             ),
-            RaisedButton(
-              color: Constants.BUTTON_COLOUR,
-              child: Icon(
-                Icons.add,
-              ),
-              splashColor: Colors.blue,
-              padding: EdgeInsets.only(top: 12, bottom: 12),
-              shape: CircleBorder(
-                side: BorderSide(color: Colors.blue),
-              ),
-              onPressed: (){
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) => _buildPopupDialog(context),
-                );
-              },
-            ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Constants.BUTTON_COLOUR,
+        child: Icon(
+          Icons.add,
+        ),
+        splashColor: Colors.blue,
+        //padding: EdgeInsets.only(top: 12, bottom: 12),
+        shape: CircleBorder(
+          side: BorderSide(color: Colors.blue),
+        ),
+        onPressed: (){
+          showDialog(
+            context: context,
+            builder: (BuildContext context) => _buildPopupDialog(context),
+          );
+        },
       ),
     );
   }
@@ -424,65 +425,56 @@ class _MedicationReminderState extends State<MedicationReminder>{
 
 
 class TopContainer extends StatelessWidget{
-  List<Medicine> totalMedicine = [];
   final db = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context){
     return Scaffold(
-      body: Center(
+      body: Container(
+        alignment: Alignment.topCenter,
         child: StreamBuilder<QuerySnapshot>(
-          stream: db.collection(Constants.USERS).doc(MyAppState.currentUser.userID).collection(Constants.MEDICATION_INFO).snapshots(),
-          builder: (context, snapshot){
-            if(snapshot.hasData){
-              var doc = snapshot.data.documents;
-              return new ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: doc.length,
-                  itemBuilder: (context, index){
-                    return Container(
-                      height: 125,
-                      child: ListView(
-
-                        scrollDirection: Axis.horizontal,
-                        children: <Widget>[
-                          CardSection(
-                            title: doc[index].get("medicineName"),
-                            value: doc[index].get("dosage"),
-                            unit: "mg",
-                            time: doc[index].get("startTime"),
-                            image: AssetImage(imageLink(doc[index].get("medicineType"))),
-                            isDone: false,
-                          ),
-                        ],
-                      ),
-                    );
-                    // return SingleChildScrollView(
-                    //     scrollDirection: Axis.vertical,
-                    //     child:
-                    //         CardSection(
-                    //             title: doc[index].get("medicineName"),
-                    //             value: doc[index].get("dosage"),
-                    //             unit: "mg",
-                    //             time: doc[index].get("startTime"),
-                    //             image: AssetImage(imageLink(doc[index].get("medicineType"))),
-                    //             isDone: false,
-                    //         ),
-                    //
-                    // );
-                  }
-              );
+            stream: db.collection(Constants.USERS).doc(MyAppState.currentUser.userID).collection(Constants.MEDICATION_INFO).snapshots(),
+            builder: (context, snapshot){
+              if(!snapshot.hasData){
+                return Container();
+              }else if(snapshot.data.size == 0){
+                return Container( color: Color(0xFFF6F8FC),
+                  child: Center(
+                    child:  Text(
+                      'Nothing to be shown',
+                      style: TextStyle(
+                        fontSize: 24,
+                          color: Constants.TEXT_SUPER_LIGHT,
+                          fontFamily: "Montserrat",
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                );
+              }else{
+                var doc = snapshot.data.documents;
+                return new ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: doc.length,
+                    itemBuilder: (context, index){
+                      return Container(
+                        height: 135,
+                        child: ListView(
+                          scrollDirection: Axis.vertical,
+                          children: <Widget>[
+                            MedicationReminderCard(
+                              title: doc[index].get("medicineName"),
+                              value: doc[index].get("dosage"),
+                              unit: "mg",
+                              time: doc[index].get("startTime"),
+                              image: AssetImage(imageLink(doc[index].get("medicineType"))),
+                              isDone: false,
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+                );
+              }
             }
-            return Container(
-              child: Text("Nothing To Show",
-                style: TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.w900,
-                  color: Colors.white,
-                  fontFamily: "Montserrat",
-                ),
-              ),
-            );
-          },
         ),
       ),
     );

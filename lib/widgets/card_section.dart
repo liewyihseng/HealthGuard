@@ -140,3 +140,93 @@ class CardSection extends StatelessWidget {
     );
   }
 }
+
+
+class NoMedicationCardSection extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context){
+    return Align(
+      alignment: Alignment.topLeft,
+      child: Container(
+        margin: const EdgeInsets.only(right: 15.0),
+        width: 240,
+        decoration: new BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+          shape: BoxShape.rectangle,
+          color: Colors.white,
+        ),
+        child: Stack(
+          overflow: Overflow.clip,
+          children: <Widget>[
+            Positioned(
+              child: ClipPath(
+                clipper: MyCustomClipper(clipType: ClipType.semiCircle),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    color: Constants.BUTTON_COLOUR.withOpacity(0.06),
+                  ),
+                  height: 110,
+                  width: 110,
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        'Testing',
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Constants.TEXT_LIGHT,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget> [
+                            Text('Testing',
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Constants.TEXT_LIGHT,
+                                fontFamily: "Montserrat",
+                              ),
+                            ),
+                            SizedBox(height: 5),
+                            Text('Testing',
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Constants.TEXT_LIGHT,
+                                fontFamily: "Montserrat",
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(width: 10),
+
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
