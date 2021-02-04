@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
-void Map() => runApp(MyApp());
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
@@ -37,8 +37,8 @@ class _MyHomePageState extends State<MyHomePage> {
   GoogleMapController _controller;
 
   static final CameraPosition initialLocation = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14.4746,
+    target: LatLng(3.139003, 101.686852),
+    zoom: 10,
   );
 
   Future<Uint8List> getMarker() async {
@@ -50,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
     LatLng latlng = LatLng(newLocalData.latitude, newLocalData.longitude);
     this.setState(() {
       marker = Marker(
-          markerId: MarkerId("home"),
+          markerId: MarkerId("hospital"),
           position: latlng,
           rotation: newLocalData.heading,
           draggable: false,
@@ -87,7 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
               bearing: 192.8334901395799,
               target: LatLng(newLocalData.latitude, newLocalData.longitude),
               tilt: 0,
-              zoom: 18.00)));
+              zoom: 12.00)));
           updateMarkerAndCircle(newLocalData, imageData);
         }
       });
