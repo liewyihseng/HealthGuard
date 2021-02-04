@@ -7,6 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'User.dart' as OurUser;
 import 'auth.dart';
+import 'chat/chatroom.dart';
 import 'home.dart';
 import 'login_page.dart';
 import 'pedometer_page.dart';
@@ -38,6 +39,7 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
         EmedicReport.id: (context) => EmedicReport(),
         Bloodpressure1.id: (context) =>
             Bloodpressure1(sys: 60, dia: 70, pul: 80),
+        Chatroom.id: (context) => Chatroom(),
       },
       theme: ThemeData(accentColor: Colors.white),
     );

@@ -7,7 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:HealthGuard/chat/chatroom.dart';
 import 'Bloodpressure1.dart';
 import 'User.dart' as OurUser;
 import 'auth.dart';
@@ -35,6 +35,7 @@ class _home extends State<home> {
   final OurUser.User user;
   // bottom nav bar selected index
   int _selectedIndex = 0;
+
   /// list of widgets to switch between for bottom nav bar
   static List<Widget> _bottomNavBarOptions;
 
@@ -293,7 +294,7 @@ class HealthOption extends StatelessWidget {
                   ),
                 ),
                 onTap: () {
-                  //Navigator.pushNamed(context, PedometerPage.id);
+                  Navigator.pushNamed(context, Chatroom.id);
                 })),
         Card(
             elevation: 3.0,

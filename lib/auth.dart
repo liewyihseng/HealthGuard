@@ -9,7 +9,6 @@ import 'validation_tool.dart';
 import 'User.dart' as OurUser;
 import 'package:firebase_storage/firebase_storage.dart';
 
-
 class FireStoreUtils {
   static FirebaseFirestore firestore = FirebaseFirestore.instance;
   static DocumentReference currentUserDocRef =
