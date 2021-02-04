@@ -1,11 +1,9 @@
 import 'package:HealthGuard/model/medicine_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:provider/provider.dart';
+//import 'package:provider/provider.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
 import '../global_bloc.dart';
-
-
 
 class MedicineDetails extends StatelessWidget {
   final Medicine medicine;
@@ -14,7 +12,7 @@ class MedicineDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final GlobalBloc _globalBloc = Provider.of<GlobalBloc>(context);
+    //final GlobalBloc _globalBloc = Provider.of<GlobalBloc>(context);
     return Scaffold(
       //resizeToAvoidBottomPadding: false,
       backgroundColor: Colors.white,
@@ -54,7 +52,7 @@ class MedicineDetails extends StatelessWidget {
                     color: Color(0xFF3EB16F),
                     shape: StadiumBorder(),
                     onPressed: () {
-                      openAlertBox(context, _globalBloc);
+                      //openAlertBox(context, _globalBloc);
                     },
                     child: Center(
                       child: Text(

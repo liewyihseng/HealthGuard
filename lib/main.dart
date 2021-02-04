@@ -17,6 +17,7 @@ import 'package:HealthGuard/home.dart';
 import 'package:HealthGuard/login_page.dart';
 import 'package:HealthGuard/e-medical_report.dart';
 import 'package:HealthGuard/pedometer_page.dart';
+import 'package:HealthGuard/chat/chatroom.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,26 +36,28 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-          initialRoute: LoginPage.id,
-          routes: {
-            LoginPage.id: (context) => LoginPage(),
-            home.id: (context) => home(user: currentUser,),
-            UserProfile.id: (context) => UserProfile(),
-            MyAccount.id: (context) => MyAccount(),
-            MyMedical.id: (context) => MyMedical(),
-            HelpCenter.id: (context) => HelpCenter(),
-            PedometerPage.id: (context) => PedometerPage(),
-            MedicalFeed.id: (context) => MedicalFeed(),
-            EMedicalReport.id: (context) => EMedicalReport(),
-            MedicationReminder.id: (context) => MedicationReminder(),
-            MedicineDetail.id: (context) => MedicineDetail(),
-            AddMedicationReminder.id: (context) => AddMedicationReminder(),
-            Bloodpressure1.id: (context) =>
-                Bloodpressure1(sys: 60, dia: 70, pul: 80),
-          },
-          theme: ThemeData(accentColor: Colors.white),
-    );
 
+      initialRoute: LoginPage.id,
+      routes: {
+        LoginPage.id: (context) => LoginPage(),
+        home.id: (context) => home(
+              user: currentUser,
+            ),
+        UserProfile.id: (context) => UserProfile(),
+        MyAccount.id: (context) => MyAccount(),
+        MyMedical.id: (context) => MyMedical(),
+        HelpCenter.id: (context) => HelpCenter(),
+        PedometerPage.id: (context) => PedometerPage(),
+        MedicalFeed.id: (context) => MedicalFeed(),
+        EMedicalReport.id: (context) => EMedicalReport(),
+        MedicationReminder.id: (context) => MedicationReminder(),
+        AddMedicationReminder.id: (context) => AddMedicationReminder(),
+        Bloodpressure1.id: (context) =>
+            Bloodpressure1(sys: 60, dia: 70, pul: 80),
+        Chatroom.id: (context) => Chatroom(),
+      },
+      theme: ThemeData(accentColor: Colors.white),
+    );
   }
 
   @override
