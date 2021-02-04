@@ -1,29 +1,28 @@
-import 'dart:math';
-
+import 'dart:async';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+
 void Map() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter Maps',
       theme: ThemeData(
-
         primarySwatch: Colors.red,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Map'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
-
-
   final String title;
 
   @override
@@ -31,62 +30,104 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
+  StreamSubscription _locationSubscription;
+  Location _locationTracker = Location();
+  Marker marker;
+  Circle circle;
   GoogleMapController _controller;
-  Location location = new Location();
 
-  final CameraPosition _initialPosition = CameraPosition(target: LatLng(24.903623, 67.198367));
+  static final CameraPosition initialLocation = CameraPosition(
+    target: LatLng(37.42796133580664, -122.085749655962),
+    zoom: 14.4746,
+  );
 
-  final List<Marker> markers = [];
+  Future<Uint8List> getMarker() async {
+    ByteData byteData = await DefaultAssetBundle.of(context).load("assets/loc.png");
+    return byteData.buffer.asUint8List();
+  }
 
-  addMarker(cordinate){
+  void updateMarkerAndCircle(LocationData newLocalData, Uint8List imageData) {
+    LatLng latlng = LatLng(newLocalData.latitude, newLocalData.longitude);
+    this.setState(() {
+      marker = Marker(
+          markerId: MarkerId("home"),
+          position: latlng,
+          rotation: newLocalData.heading,
+          draggable: false,
+          zIndex: 2,
+          flat: true,
+          anchor: Offset(0.5, 0.5),
+          icon: BitmapDescriptor.fromBytes(imageData));
+      circle = Circle(
+          circleId: CircleId("loc"),
+          radius: newLocalData.accuracy,
+          zIndex: 1,
+          strokeColor: Colors.red,
+          center: latlng,
+          fillColor: Colors.red.withAlpha(70));
+    });
+  }
 
-    int id = Random().nextInt(100);
+  void getCurrentLocation() async {
+    try {
 
-    setState(() {
-      markers.add(Marker(position: cordinate, markerId: MarkerId(id.toString())));
-      //myLocation = true;
+      Uint8List imageData = await getMarker();
+      var location = await _locationTracker.getLocation();
+
+      updateMarkerAndCircle(location, imageData);
+
+      if (_locationSubscription != null) {
+        _locationSubscription.cancel();
+      }
 
 
+      _locationSubscription = _locationTracker.onLocationChanged().listen((newLocalData) {
+        if (_controller != null) {
+          _controller.animateCamera(CameraUpdate.newCameraPosition(new CameraPosition(
+              bearing: 192.8334901395799,
+              target: LatLng(newLocalData.latitude, newLocalData.longitude),
+              tilt: 0,
+              zoom: 18.00)));
+          updateMarkerAndCircle(newLocalData, imageData);
+        }
+      });
+
+    } on PlatformException catch (e) {
+      if (e.code == 'PERMISSION_DENIED') {
+        debugPrint("Permission Denied");
+      }
     }
-    );
+  }
+
+  @override
+  void dispose() {
+    if (_locationSubscription != null) {
+      _locationSubscription.cancel();
+    }
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
       body: GoogleMap(
-        initialCameraPosition: _initialPosition,
-        mapType: MapType.normal,
-        onMapCreated: (controller){
-          setState(() {
-            _controller = controller;
-          });
+        mapType: MapType.hybrid,
+        initialCameraPosition: initialLocation,
+        markers: Set.of((marker != null) ? [marker] : []),
+        circles: Set.of((circle != null) ? [circle] : []),
+        onMapCreated: (GoogleMapController controller) {
+          _controller = controller;
         },
-        markers: markers.toSet(),
-        onTap: (cordinate){
-          _controller.animateCamera(CameraUpdate.newLatLng(cordinate));
-          addMarker(cordinate);
-        },
+
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          _controller.animateCamera(CameraUpdate.zoomOut());
-        },
-        child: Icon(Icons.zoom_out),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
-  }
-  _animateToUser() async{
-    var pos = await location.getLocation();
-    _controller.animateCamera(CameraUpdate.newCameraPosition(
-        CameraPosition(
-
-      zoom: 17.0,
-    )
-
-    )
-
+          child: Icon(Icons.location_searching),
+          onPressed: () {
+            getCurrentLocation();
+          }),
     );
   }
 }
