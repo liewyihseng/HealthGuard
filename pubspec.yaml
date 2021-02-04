@@ -63,6 +63,8 @@ dependencies:
   # Simplifies the task of updating app's launcher icon
   flutter_launcher_icons: ^0.8.1
   smart_select: ^4.3.2
+  # Enable google sign in function in the app
+  google_sign_in: ^4.5.9
 
 # Run flutter pub run flutter_launcher_icons:main after flutter pub get
 flutter_icons:

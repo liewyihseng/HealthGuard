@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:HealthGuard/main.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
-import 'package:HealthGuard/authentication.dart';
 
 /// User's medical information screen page widget class
 class MyMedical extends StatefulWidget{

@@ -8,6 +8,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import 'package:HealthGuard/User.dart' as OurUser;
 import 'package:HealthGuard/authentication.dart';
@@ -24,6 +26,7 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
+
 /// Login screen page state class
 class _LoginPageState extends State<LoginPage> {
   TextEditingController _emailController = new TextEditingController();
@@ -33,6 +36,45 @@ class _LoginPageState extends State<LoginPage> {
   GlobalKey<FormState> _key = new GlobalKey();
 
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn googleSignIn = GoogleSignIn();
+
+  Future<String> signInWithGoogle() async {
+    await Firebase.initializeApp();
+
+    final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
+    final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
+
+    final AuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleSignInAuthentication.accessToken,
+      idToken: googleSignInAuthentication.idToken,
+    );
+
+    final UserCredential authResult = await _auth.signInWithCredential(credential);
+    final OurUser.User user = authResult.user as OurUser.User;
+
+    if(user != null){
+
+      final User currentUser = _auth.currentUser;
+      assert(user.userID == currentUser.uid);
+      Navigator.pushNamedAndRemoveUntil(context, home.id, (route) => false);
+      pushAndRemoveUntil(context, home(user: user), false);
+
+
+      print('signInWithGoogle succeeded: $user');
+
+      return '$user';
+    }
+
+    return null;
+  }
+
+  Future<void> signOutGoogle() async{
+    await googleSignIn.signOut();
+
+    print("User Signed Out");
+  }
+
 
   List<Widget> buildInputs() {
     return [
@@ -230,12 +272,15 @@ class _LoginPageState extends State<LoginPage> {
                   child: IconButton(
                     icon: FaIcon(FontAwesomeIcons.google),
                     color: Colors.white,
-                    onPressed: () {},
-                    ///
-                    /// Codes linking sign-in for Google
-                    /// Should be here within the onPressed()
-                    ///
-                    ///
+                    onPressed: () {
+                      ///
+                      /// Codes linking sign-in for Google
+                      /// Should be here within the onPressed()
+                      ///
+                      ///
+                      signInWithGoogle();
+                    },
+
                   ),
                 ),
               ),
@@ -365,3 +410,5 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
+
+

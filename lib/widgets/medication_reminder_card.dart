@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:HealthGuard/medicine_detail.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:HealthGuard/widgets/custom_clipper.dart';
@@ -120,6 +121,7 @@ class MedicationReminderCard extends StatelessWidget{
                               ),
                             ),
                             onTap: (){
+                              Navigator.pushNamed(context, MedicineDetail.id);
                               if(!isDone) {
                                 this.isDone = true;
                                 debugPrint(
