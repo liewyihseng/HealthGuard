@@ -1,15 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import 'home.dart';
-import 'main.dart';
-import 'validation_tool.dart';
+import 'package:HealthGuard/home.dart';
+import 'package:HealthGuard/main.dart';
+import 'package:HealthGuard/validation_tool.dart';
 import 'package:flutter/cupertino.dart';
-import 'auth.dart';
+import 'package:HealthGuard/authentication.dart';
 import 'package:flutter/material.dart';
-import 'User.dart';
-import 'constants.dart' as Constants;
-import 'User.dart' as OurUser;
+import 'package:HealthGuard/User.dart';
+import 'package:HealthGuard/constants.dart' as Constants;
+import 'package:HealthGuard/User.dart' as OurUser;
 import 'dart:io';
 
 File _image;
@@ -41,7 +41,7 @@ class _signupPageState extends State<signup_page> {
       ),
       body: SingleChildScrollView(
         child: new Container(
-          margin: new EdgeInsets.only(left: 16.0, right: 16, bottom: 16),
+          margin: new EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
           child: new Form(
             key: _key,
             autovalidate: _validate,
@@ -305,7 +305,7 @@ class _signupPageState extends State<signup_page> {
           child: ConstrainedBox(
             constraints: const BoxConstraints(minWidth: double.infinity),
             child: RaisedButton(
-              color: Color(0xff01A0C7),
+              color: Constants.BUTTON_COLOUR,
               child: Text(
                 'Sign Up',
                 style: TextStyle(
@@ -358,7 +358,8 @@ class _signupPageState extends State<signup_page> {
         await FireStoreUtils.firestore
             .collection(Constants.USERS)
             .doc(result.user.uid)
-            .set(user.toJson());
+            .collection(Constants.ACC_INFO)
+            .add(user.toJson());
         hideProgress();
         MyAppState.currentUser = user;
         pushAndRemoveUntil(context, home(user: user), false);

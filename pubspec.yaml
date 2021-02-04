@@ -47,10 +47,28 @@ dependencies:
   webview_flutter: ^1.0.7
   # creating fuzzy timestamps
   timeago: ^2.0.29
-
+  # Rendering QR code via a widget
+  qr_flutter: ^3.2.0
+  # Drawing SVG
+  flutter_svg: ^0.19.2+1
+  # Displaying local notifications
+  flutter_local_notifications: ^3.0.3
+  # Adding additional capabilities to Dart Streams and StreamControllers
+  rxdart: ^0.25.0
+  # Wrapper around Inherited Widget
+  provider: ^4.3.3
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
+  # Simplifies the task of updating app's launcher icon
+  flutter_launcher_icons: ^0.8.1
+  smart_select: ^4.3.2
+
+# Run flutter pub run flutter_launcher_icons:main after flutter pub get
+flutter_icons:
+  image_path: "assets/Logo.png"
+  android: true
+  ios: true
 
 dev_dependencies:
   flutter_test:
@@ -79,18 +97,24 @@ flutter:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
   assets:
-    - Logo.png
-    - placeholder.jpg
-    - postImage.jpg
-    - user.png
-    - Hospital Suggestions.png
-    - Pedometer.png
-    - Medication Reminder.png
-    - Medical News Update.png
-    - Blood Pressure Diary.png
-    - Chat with Doctor.png
-    - E-Medical Report.png
-    - assets/
+    - assets/Logo.png
+    - assets/placeholder.jpg
+    - assets/postImage.jpg
+    - assets/user.png
+    - assets/Hospital Suggestions.png
+    - assets/Pedometer.png
+    - assets/Medication Reminder.png
+    - assets/Medical News Update.png
+    - assets/Blood Pressure Diary.png
+    - assets/Chat with Doctor.png
+    - assets/E-Medical Report.png
+    - assets/icons/logout.svg
+    - assets/icons/medical-record.svg
+    - assets/icons/personal-information.svg
+    - assets/icons/help-center.svg
+    - assets/capsule.png
+    - assets/syringe.png
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 
@@ -117,6 +141,7 @@ flutter:
     - family: Montserrat
       fonts:
         - asset: fonts/Montserrat-Regular.ttf
+        - asset: fonts/ic_medicine.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

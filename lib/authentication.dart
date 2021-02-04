@@ -3,10 +3,10 @@ import 'dart:io';
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'constants.dart';
-import 'main.dart';
-import 'validation_tool.dart';
-import 'User.dart' as OurUser;
+import 'package:HealthGuard/constants.dart';
+import 'package:HealthGuard/main.dart';
+import 'package:HealthGuard/validation_tool.dart';
+import 'package:HealthGuard/User.dart' as OurUser;
 import 'package:firebase_storage/firebase_storage.dart';
 
 class FireStoreUtils {

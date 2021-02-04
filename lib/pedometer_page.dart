@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:pedometer/pedometer.dart';
+import 'package:HealthGuard/constants.dart' as Constants;
 
 // pedometer plugin doc https://pub.dev/packages/pedometer
 // shared preference doc https://pub.dev/packages/shared_preferences
@@ -22,18 +23,15 @@ class PedometerPage extends StatefulWidget {
 
 /// pedometer screen page state class
 class _PedometerPageState extends State<PedometerPage> {
+
   /// step count stream
   Stream<StepCount> _stepCountStream;
-
   /// steps
   int _steps = 0;
-
   /// calories (cal)
   double _calories = 0;
-
   /// water (ml)
   int _water = 0;
-
   /// goal (steps)
   int goal = 10000;
 
@@ -48,14 +46,13 @@ class _PedometerPageState extends State<PedometerPage> {
   void initPlatformState() {
     _stepCountStream = Pedometer.stepCountStream;
     _stepCountStream.listen(onStepCount).onError(onStepCountError);
-
     if (!mounted) return;
   }
 
   /// step count event handler
   void onStepCount(StepCount event) async {
-    final String previousStepKey = "previousStep";
-    final String previousDayNoKey = "previousDayNo";
+    final String previousStepKey = "pedometerPreviousStep";
+    final String previousDayNoKey = "pedometerPreviousDayNo";
 
     int todayDayNo = Jiffy(event.timeStamp).dayOfYear;
     int preSteps = await SharedPrefService.read(previousStepKey) ?? 0;
@@ -94,17 +91,26 @@ class _PedometerPageState extends State<PedometerPage> {
     });
   }
 
+  /// helper function
   double toPrecision(double value, int place) {
     return ((value * pow(10, place)).round()) / pow(10, place);
   }
 
-  /// build
+  /// build user interface
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Text(
+          'Pedometer',
+          style: TextStyle(
+              color: Colors.white,
+              fontFamily: "Montserrat",
+              fontWeight: FontWeight.w900),
+        ),
+        iconTheme: IconThemeData(color: Colors.white),
+        backgroundColor: Constants.APPBAR_COLOUR,
         centerTitle: true,
-        title: Text("Pedometer"),
       ),
       body: Container(
         child: Column(

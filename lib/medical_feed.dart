@@ -4,11 +4,12 @@ import 'package:HealthGuard/view/article_view.dart';
 import 'package:HealthGuard/view/category_view.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'helper/data.dart';
-import 'helper/news.dart';
-import 'model/article_model.dart';
-import 'model/category_model.dart';
+import 'package:HealthGuard/helper/data.dart';
+import 'package:HealthGuard/helper/news.dart';
+import 'package:HealthGuard/model/article_model.dart';
+import 'package:HealthGuard/model/category_model.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import 'package:HealthGuard/constants.dart' as Constants;
 
 /// Medical Feed screen page widget class
 class MedicalFeed extends StatefulWidget{
@@ -50,7 +51,15 @@ class _MedicalFeedState extends State<MedicalFeed>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Medical Article"),
+        title: Text(
+          'Medical Article',
+          style: TextStyle(
+              color: Colors.white,
+              fontFamily: "Montserrat",
+              fontWeight: FontWeight.w900),
+        ),
+        iconTheme: IconThemeData(color: Colors.white),
+        backgroundColor: Constants.APPBAR_COLOUR,
         centerTitle: true,
       ),
       body: _loading ? Center(
@@ -136,7 +145,7 @@ class CategoryTile extends StatelessWidget{
               borderRadius: BorderRadius.circular(6),
               color: Colors.black26,
             ),
-            child: Text(categoryName, style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w500),),
+            child: Text(categoryName, style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w900, fontFamily: "Montserrat",),),
           )
         ],
         ),
