@@ -1,7 +1,6 @@
 import 'package:HealthGuard/model/medicine_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-//import 'package:provider/provider.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
 import '../global_bloc.dart';
 

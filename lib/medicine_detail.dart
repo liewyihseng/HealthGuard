@@ -62,49 +62,51 @@ class _MedicineDetailState extends State<MedicineDetail> {
                   itemBuilder: (context, index) {
                     return Container(
                       height: 135,
-                      child: ListView(
-                        scrollDirection: Axis.vertical,
-                        children: <Widget>[
-                          Text(doc[index].get("medicineName"),
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontFamily: "Montserrat",
-                              fontSize: 15,
+                      child: Center(
+                        child: ListView(
+                          scrollDirection: Axis.vertical,
+                          children: <Widget>[
+                            Text(doc[index].get("medicineName"),
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: "Montserrat",
+                                fontSize: 15,
+                              ),
                             ),
-                          ),
 
-                          Text(doc[index].get("medicineType"),
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontFamily: "Montserrat",
-                              fontSize: 15,
+                            Text(doc[index].get("medicineType"),
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: "Montserrat",
+                                fontSize: 15,
+                              ),
                             ),
-                          ),
 
-                          Text(doc[index].get("startTime"),
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontFamily: "Montserrat",
-                              fontSize: 15,
+                            Text(doc[index].get("startTime"),
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: "Montserrat",
+                                fontSize: 15,
+                              ),
                             ),
-                          ),
 
-                          Text(doc[index].get("dosage"),
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontFamily: "Montserrat",
-                              fontSize: 15,
+                            Text(doc[index].get("dosage"),
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: "Montserrat",
+                                fontSize: 15,
+                              ),
                             ),
-                          ),
 
-                          Text(doc[index].get("interval").toString(),
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontFamily: "Montserrat",
-                              fontSize: 15,
+                            Text(doc[index].get("interval").toString(),
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: "Montserrat",
+                                fontSize: 15,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     );
                   }

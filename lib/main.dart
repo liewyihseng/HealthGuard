@@ -51,6 +51,7 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
         MedicalFeed.id: (context) => MedicalFeed(),
         EMedicalReport.id: (context) => EMedicalReport(),
         MedicationReminder.id: (context) => MedicationReminder(),
+        MedicineDetail.id: (context) => MedicineDetail(),
         AddMedicationReminder.id: (context) => AddMedicationReminder(),
         Bloodpressure1.id: (context) =>
             Bloodpressure1(sys: 60, dia: 70, pul: 80),

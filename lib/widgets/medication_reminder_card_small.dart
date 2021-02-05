@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:HealthGuard/widgets/custom_clipper.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
 
-class CardSection extends StatelessWidget {
+class MedicationReminderCardSmall extends StatelessWidget {
   final String title;
   final String value;
   final String unit;
@@ -13,7 +13,7 @@ class CardSection extends StatelessWidget {
   final ImageProvider image;
   bool isDone;
 
-  CardSection(
+  MedicationReminderCardSmall(
       {Key key,
         @required this.title,
         @required this.value,

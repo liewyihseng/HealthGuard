@@ -4,7 +4,7 @@ import 'dart:ui';
 import 'package:HealthGuard/pedometer_page.dart';
 import 'package:HealthGuard/medical_feed.dart';
 import 'package:HealthGuard/user_profile.dart';
-import 'package:HealthGuard/widgets/card_section.dart';
+import 'package:HealthGuard/widgets/medication_reminder_card_small.dart';
 import 'package:HealthGuard/widgets/custom_clipper.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -582,7 +582,7 @@ class _HomeOptionState extends State<HomeOption> {
                           itemCount: doc.length,
                           itemBuilder: (context, index) {
                             return Container(
-                              child: CardSection(
+                              child: MedicationReminderCardSmall(
                                 title: doc[index].get("medicineName"),
                                 value: doc[index].get("dosage"),
                                 unit: "mg",
