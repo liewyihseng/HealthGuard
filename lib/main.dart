@@ -2,7 +2,6 @@ import 'package:HealthGuard/Bloodpressure1.dart';
 import 'file:///C:/Users/user/AndroidStudioProjects/HealthGuard/lib/view/help_center_view.dart';
 import 'package:HealthGuard/medical_feed.dart';
 import 'package:HealthGuard/medication_reminder.dart';
-import 'package:HealthGuard/medicine_detail.dart';
 import 'package:HealthGuard/my_account.dart';
 import 'package:HealthGuard/my_medical.dart';
 import 'package:HealthGuard/user_profile.dart';
@@ -51,7 +50,6 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
         MedicalFeed.id: (context) => MedicalFeed(),
         EMedicalReport.id: (context) => EMedicalReport(),
         MedicationReminder.id: (context) => MedicationReminder(),
-        MedicineDetail.id: (context) => MedicineDetail(),
         ForgotPassword.id: (context) => ForgotPassword(),
         Bloodpressure1.id: (context) =>
             Bloodpressure1(sys: 60, dia: 70, pul: 80),

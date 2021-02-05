@@ -162,12 +162,11 @@ class MedicationReminderCardLarge extends StatelessWidget {
                             ),
                             onTap: () async {
                               FirebaseFirestore.instance.collection(Constants.USERS).doc(MyAppState.currentUser.userID).collection(Constants.MEDICATION_INFO).where("medicineName", isEqualTo: this.title).get().then((value){value.docs.forEach((element){
-                                FirebaseFirestore.instance.collection(Constants.USERS).doc(MyAppState.currentUser.userID).collection(Constants.MEDICATION_INFO).doc(element.id).delete().then((value){print("Success!!!");
-                                });
+                                FirebaseFirestore.instance.collection(Constants.USERS).doc(MyAppState.currentUser.userID).collection(Constants.MEDICATION_INFO).doc(element.id).delete();
                               });
                               });
-                            }
-                            ),
+                            },
+                        ),
                       ],
                     ),
                   ],
