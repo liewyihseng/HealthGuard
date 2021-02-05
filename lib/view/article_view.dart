@@ -29,8 +29,9 @@ class _ArticleViewState extends State<ArticleView>{
           'HealthGuard',
           style: TextStyle(
               color: Colors.white,
-              fontFamily: "Montserrat",
-              fontWeight: FontWeight.w900),
+              fontFamily: Constants.FONTSTYLE,
+            fontWeight: Constants.APPBAR_TEXT_WEIGHT,
+          ),
         ),
         iconTheme: IconThemeData(color: Colors.white),
         backgroundColor: Constants.APPBAR_COLOUR,

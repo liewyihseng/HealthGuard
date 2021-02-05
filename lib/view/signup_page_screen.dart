@@ -35,9 +35,18 @@ class _signupPageState extends State<signup_page> {
     }
     return Scaffold(
       appBar: AppBar(
+        title: Text(
+          'Create new account',
+          style: TextStyle(
+            color: Colors.blue,
+            fontWeight: Constants.APPBAR_TEXT_WEIGHT,
+            fontFamily: Constants.FONTSTYLE,
+          ),
+        ),
         elevation: 0.0,
         backgroundColor: Colors.transparent,
         iconTheme: IconThemeData(color: Colors.black),
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: new Container(
@@ -111,17 +120,6 @@ class _signupPageState extends State<signup_page> {
   Widget signupForm() {
     return new Column(
       children: <Widget>[
-        new Align(
-            alignment: Alignment.topLeft,
-            child: Text(
-              'Create new account',
-              style: TextStyle(
-                color: Colors.blue,
-                fontWeight: FontWeight.bold,
-                fontSize: 25.0,
-                fontFamily: "Montserrat",
-              ),
-            )),
         Padding(
           padding:
               const EdgeInsets.only(left: 8.0, top: 32, right: 8, bottom: 8),
@@ -343,6 +341,9 @@ class _signupPageState extends State<signup_page> {
           profilePicUrl = await FireStoreUtils()
               .uploadUserImageToFireStorage(_image, result.user.uid);
         }
+
+        await result.user.sendEmailVerification();
+
 
         /// Assigning all the user's input information to the user instance
         OurUser.User user = OurUser.User(

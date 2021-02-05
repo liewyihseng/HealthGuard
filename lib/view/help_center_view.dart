@@ -19,8 +19,9 @@ class _HelpCenterState extends State<HelpCenter>{
           'Help Center',
           style: TextStyle(
               color: Colors.white,
-              fontFamily: "Montserrat",
-              fontWeight: FontWeight.w900),
+              fontFamily: Constants.FONTSTYLE,
+            fontWeight: Constants.APPBAR_TEXT_WEIGHT,
+          ),
         ),
         iconTheme: IconThemeData(color: Colors.white),
         backgroundColor: Constants.APPBAR_COLOUR,

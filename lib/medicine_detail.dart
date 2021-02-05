@@ -23,8 +23,8 @@ class _MedicineDetailState extends State<MedicineDetail> {
           'Medicine Detail',
           style: TextStyle(
               color: Colors.white,
-              fontFamily: "Montserrat",
-              fontWeight: FontWeight.w900
+              fontFamily: Constants.FONTSTYLE,
+            fontWeight: Constants.APPBAR_TEXT_WEIGHT,
           ),
         ),
         iconTheme: IconThemeData(color: Colors.white),

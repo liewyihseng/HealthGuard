@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:HealthGuard/signup_page.dart';
+import 'file:///C:/Users/user/AndroidStudioProjects/HealthGuard/lib/view/signup_page_screen.dart';
 import 'file:///C:/Users/user/AndroidStudioProjects/HealthGuard/lib/helper/validation_tool.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -16,6 +16,8 @@ import 'package:HealthGuard/authentication.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
 import 'package:HealthGuard/home.dart';
 import 'package:HealthGuard/main.dart';
+
+import 'forgot_password_page_screen.dart';
 
 final _fireStoreUtils = FireStoreUtils();
 
@@ -100,6 +102,10 @@ class _LoginPageState extends State<LoginPage> {
         decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           hintText: "Email Address",
+          icon: Icon(
+              Icons.mail,
+              color:Constants.TEXT_LIGHT
+          ),
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
         ),
       ),
@@ -117,6 +123,10 @@ class _LoginPageState extends State<LoginPage> {
         decoration: InputDecoration(
             contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
             hintText: "Password",
+            icon: Icon(
+                Icons.vpn_key,
+                color:Constants.TEXT_LIGHT
+            ),
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
       ),
@@ -241,7 +251,7 @@ class _LoginPageState extends State<LoginPage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             Material(
-              color: Colors.white,
+              color: Colors.transparent,
               child: Center(
                 child: Ink(
                   decoration: new ShapeDecoration(
@@ -249,8 +259,8 @@ class _LoginPageState extends State<LoginPage> {
                     color: Colors.lightBlue,
                   ),
                   child: IconButton(
-                    icon: FaIcon(FontAwesomeIcons.facebookF),
                     color: Colors.white,
+                    icon: FaIcon(FontAwesomeIcons.facebookF),
                     onPressed: () {},
                     ///
                     /// Codes linking sign-in for Facebook
@@ -262,7 +272,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             Material(
-              color: Colors.white,
+              color: Colors.transparent,
               child: Center(
                 child: Ink(
                   decoration: const ShapeDecoration(
@@ -270,8 +280,8 @@ class _LoginPageState extends State<LoginPage> {
                     color: Colors.lightBlue,
                   ),
                   child: IconButton(
-                    icon: FaIcon(FontAwesomeIcons.google),
                     color: Colors.white,
+                    icon: FaIcon(FontAwesomeIcons.google),
                     onPressed: () {
                       ///
                       /// Codes linking sign-in for Google
@@ -302,7 +312,7 @@ class _LoginPageState extends State<LoginPage> {
           ),
           GestureDetector(
             onTap: () {
-              print("Routing to Forget Password page");
+              Navigator.pushNamed(context, ForgotPassword.id);
             },
             child: Text(
               "Forgot your password?",
@@ -328,7 +338,6 @@ class _LoginPageState extends State<LoginPage> {
           await loginWithUserNameAndPassword(email.trim(), password.trim());
 
       if (user != null) {
-        Navigator.pushNamedAndRemoveUntil(context, home.id, (route) => false);
         pushAndRemoveUntil(context, home(user: user), false);
       }
     } else {
@@ -395,6 +404,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Constants.BACKGROUND_COLOUR,
       body: Form(
         key: _key,
         autovalidate: _validate,

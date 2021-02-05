@@ -17,7 +17,7 @@ import 'package:HealthGuard/chat/chatroom.dart';
 import 'package:HealthGuard/Bloodpressure1.dart';
 import 'file:///C:/Users/user/AndroidStudioProjects/HealthGuard/lib/model/user_model.dart' as OurUser;
 import 'package:HealthGuard/authentication.dart';
-import 'package:HealthGuard/login_page.dart';
+import 'file:///C:/Users/user/AndroidStudioProjects/HealthGuard/lib/view/login_page_screen.dart';
 import 'package:HealthGuard/main.dart';
 import 'package:HealthGuard/e-medical_report.dart';
 import 'file:///C:/Users/user/AndroidStudioProjects/HealthGuard/lib/helper/validation_tool.dart';
@@ -135,8 +135,9 @@ class _home extends State<home> {
           'Home',
           style: TextStyle(
               color: Colors.white,
-              fontFamily: "Montserrat",
-              fontWeight: FontWeight.w900),
+              fontFamily: Constants.FONTSTYLE,
+            fontWeight: Constants.APPBAR_TEXT_WEIGHT,
+          ),
         ),
         iconTheme: IconThemeData(color: Colors.white),
         backgroundColor: Constants.APPBAR_COLOUR,

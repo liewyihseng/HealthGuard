@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:HealthGuard/authentication.dart';
-import 'package:HealthGuard/login_page.dart';
+import 'file:///C:/Users/user/AndroidStudioProjects/HealthGuard/lib/view/login_page_screen.dart';
 import 'package:HealthGuard/main.dart';
 import 'package:HealthGuard/my_account.dart';
 import 'package:HealthGuard/my_medical.dart';
@@ -36,8 +36,9 @@ class _UserProfileState extends State<UserProfile>{
           'Profile',
           style: TextStyle(
             color: Colors.white,
-            fontFamily: "Montserrat",
-            fontWeight: FontWeight.w900),
+            fontFamily: Constants.FONTSTYLE,
+            fontWeight: Constants.APPBAR_TEXT_WEIGHT,
+          ),
         ),
         iconTheme: IconThemeData(color: Colors.white),
         backgroundColor: Constants.APPBAR_COLOUR,

@@ -6,6 +6,7 @@ import 'package:HealthGuard/medicine_detail.dart';
 import 'package:HealthGuard/my_account.dart';
 import 'package:HealthGuard/my_medical.dart';
 import 'package:HealthGuard/user_profile.dart';
+import 'package:HealthGuard/view/forgot_password_page_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -13,7 +14,7 @@ import 'package:flutter/material.dart';
 import 'file:///C:/Users/user/AndroidStudioProjects/HealthGuard/lib/model/user_model.dart' as OurUser;
 import 'package:HealthGuard/authentication.dart';
 import 'package:HealthGuard/home.dart';
-import 'package:HealthGuard/login_page.dart';
+import 'file:///C:/Users/user/AndroidStudioProjects/HealthGuard/lib/view/login_page_screen.dart';
 import 'package:HealthGuard/e-medical_report.dart';
 import 'package:HealthGuard/view/pedometer_screen.dart';
 import 'package:HealthGuard/chat/chatroom.dart';
@@ -51,6 +52,7 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
         EMedicalReport.id: (context) => EMedicalReport(),
         MedicationReminder.id: (context) => MedicationReminder(),
         MedicineDetail.id: (context) => MedicineDetail(),
+        ForgotPassword.id: (context) => ForgotPassword(),
         Bloodpressure1.id: (context) =>
             Bloodpressure1(sys: 60, dia: 70, pul: 80),
         Chatroom.id: (context) => Chatroom(),

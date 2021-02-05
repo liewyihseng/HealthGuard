@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:HealthGuard/chat/databse.dart';
 import 'package:charts_flutter/flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:HealthGuard/constants.dart' as Constants;
 import 'package:firebase_auth/firebase_auth.dart';
 
 class Chatroom extends StatefulWidget {
@@ -27,8 +28,18 @@ class _ChatroomState extends State<Chatroom> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("chatroom"),
-        actions: [],
+        title: Text(
+          'Chatroom',
+          style: TextStyle(
+            color: Colors.blue,
+            fontWeight: Constants.APPBAR_TEXT_WEIGHT,
+            fontFamily: Constants.FONTSTYLE,
+          ),
+        ),
+        elevation: 0.0,
+        backgroundColor: Colors.transparent,
+        iconTheme: IconThemeData(color: Colors.black),
+        centerTitle: true,
       ),
       body: Container(
         margin: EdgeInsets.symmetric(horizontal: 20),
