@@ -10,7 +10,7 @@ const RECORDS = "health_records";
 const ACC_INFO = "acc_info";
 const MED_INFO = "medical_info";
 const MEDICATION_INFO = "medication_info";
-
+const PEDOMETER_INFO = "pedometer_info";
 
 /// Colours
 const BUTTON_COLOUR = Color(0xff01A0C7);
