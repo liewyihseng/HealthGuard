@@ -69,6 +69,7 @@ class _home extends State<home> {
     ];
 
     return Scaffold(
+      backgroundColor: Constants.BACKGROUND_COLOUR,
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,

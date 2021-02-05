@@ -27,6 +27,7 @@ class _ChatroomState extends State<Chatroom> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Constants.BACKGROUND_COLOUR,
       appBar: AppBar(
         title: Text(
           'Chatroom',

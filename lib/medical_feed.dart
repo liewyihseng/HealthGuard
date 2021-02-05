@@ -50,6 +50,7 @@ class _MedicalFeedState extends State<MedicalFeed>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Constants.BACKGROUND_COLOUR,
       appBar: AppBar(
         title: Text(
           'Medical Article',

@@ -23,6 +23,7 @@ class _medicalPageState extends State<EMedicalReport>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Constants.BACKGROUND_COLOUR,
       appBar: AppBar(
         title: Text(
           'E-Medical Report',

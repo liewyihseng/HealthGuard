@@ -34,6 +34,7 @@ class _signupPageState extends State<signup_page> {
       retrieveLostData();
     }
     return Scaffold(
+      backgroundColor: Constants.BACKGROUND_COLOUR,
       appBar: AppBar(
         title: Text(
           'Create new account',

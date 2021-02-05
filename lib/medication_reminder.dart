@@ -65,6 +65,7 @@ class _MedicationReminderState extends State<MedicationReminder>{
   @override
   Widget build(BuildContext context){
     return  Scaffold(
+      backgroundColor: Constants.BACKGROUND_COLOUR,
       appBar: AppBar(
         leading: Builder(
           builder: (BuildContext context){

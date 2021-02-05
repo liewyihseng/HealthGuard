@@ -23,6 +23,7 @@ class _ArticleViewState extends State<ArticleView>{
   @override
   Widget build(BuildContext context){
     return Scaffold(
+      backgroundColor: Constants.BACKGROUND_COLOUR,
       ///Displaying appbar even in webView
       appBar: AppBar(
         title: Text(

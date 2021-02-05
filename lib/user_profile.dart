@@ -31,6 +31,7 @@ class _UserProfileState extends State<UserProfile>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Constants.BACKGROUND_COLOUR,
       appBar: AppBar(
         title: Text(
           'Profile',
@@ -126,7 +127,7 @@ class ProfileMenu extends StatelessWidget {
       child: FlatButton(
         padding: EdgeInsets.all(20),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-        color: Color(0xFFF5F6F9),
+        color: Colors.white,
         onPressed: press,
         child: Row(
           children: [

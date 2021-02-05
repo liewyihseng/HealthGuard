@@ -122,6 +122,7 @@ class _PedometerScreenState extends State<PedometerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Constants.BACKGROUND_COLOUR,
       appBar: AppBar(
         title: Text(
           'Pedometer',

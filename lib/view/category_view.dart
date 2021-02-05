@@ -41,6 +41,7 @@ class _CategoryViewState extends State<CategoryView>{
   @override
   Widget build(BuildContext context){
     return Scaffold(
+      backgroundColor: Constants.BACKGROUND_COLOUR,
       appBar: AppBar(
         title: Text(
           " $_categoryName - Medical Article",

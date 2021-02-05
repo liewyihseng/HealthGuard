@@ -18,6 +18,7 @@ class _MyMedicalState extends State<MyMedical> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Constants.BACKGROUND_COLOUR,
       appBar: AppBar(
         title: Text(
           'Medical Information',
