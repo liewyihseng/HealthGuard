@@ -4,7 +4,7 @@ import 'dart:core';
 
 import 'package:HealthGuard/home.dart';
 import 'package:HealthGuard/main.dart';
-import 'package:HealthGuard/validation_tool.dart';
+import 'file:///C:/Users/user/AndroidStudioProjects/HealthGuard/lib/helper/validation_tool.dart';
 import 'package:HealthGuard/widgets/medication_reminder_card_large.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';

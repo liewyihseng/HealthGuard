@@ -5,8 +5,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:HealthGuard/constants.dart';
 import 'package:HealthGuard/main.dart';
-import 'package:HealthGuard/validation_tool.dart';
-import 'package:HealthGuard/User.dart' as OurUser;
+import 'file:///C:/Users/user/AndroidStudioProjects/HealthGuard/lib/helper/validation_tool.dart';
+import 'file:///C:/Users/user/AndroidStudioProjects/HealthGuard/lib/model/user_model.dart' as OurUser;
 import 'package:firebase_storage/firebase_storage.dart';
 
 class FireStoreUtils {

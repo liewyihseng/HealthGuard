@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:HealthGuard/signup_page.dart';
-import 'package:HealthGuard/validation_tool.dart';
+import 'file:///C:/Users/user/AndroidStudioProjects/HealthGuard/lib/helper/validation_tool.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,7 +11,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-import 'package:HealthGuard/User.dart' as OurUser;
+import 'file:///C:/Users/user/AndroidStudioProjects/HealthGuard/lib/model/user_model.dart' as OurUser;
 import 'package:HealthGuard/authentication.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
 import 'package:HealthGuard/home.dart';

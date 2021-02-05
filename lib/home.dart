@@ -15,12 +15,12 @@ import 'package:flutter_svg/svg.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:HealthGuard/chat/chatroom.dart';
 import 'package:HealthGuard/Bloodpressure1.dart';
-import 'package:HealthGuard/User.dart' as OurUser;
+import 'file:///C:/Users/user/AndroidStudioProjects/HealthGuard/lib/model/user_model.dart' as OurUser;
 import 'package:HealthGuard/authentication.dart';
 import 'package:HealthGuard/login_page.dart';
 import 'package:HealthGuard/main.dart';
 import 'package:HealthGuard/e-medical_report.dart';
-import 'package:HealthGuard/validation_tool.dart';
+import 'file:///C:/Users/user/AndroidStudioProjects/HealthGuard/lib/helper/validation_tool.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
 import 'package:HealthGuard/medication_reminder.dart';
 

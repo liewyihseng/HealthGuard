@@ -3,13 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:HealthGuard/home.dart';
 import 'package:HealthGuard/main.dart';
-import 'package:HealthGuard/validation_tool.dart';
+import 'file:///C:/Users/user/AndroidStudioProjects/HealthGuard/lib/helper/validation_tool.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:HealthGuard/authentication.dart';
 import 'package:flutter/material.dart';
-import 'package:HealthGuard/User.dart';
+import 'file:///C:/Users/user/AndroidStudioProjects/HealthGuard/lib/model/user_model.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
-import 'package:HealthGuard/User.dart' as OurUser;
+import 'file:///C:/Users/user/AndroidStudioProjects/HealthGuard/lib/model/user_model.dart' as OurUser;
 import 'dart:io';
 
 File _image;
