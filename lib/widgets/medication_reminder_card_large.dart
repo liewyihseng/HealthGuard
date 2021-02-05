@@ -1,5 +1,6 @@
 import 'dart:ui';
-import 'package:HealthGuard/medicine_detail.dart';
+import 'package:HealthGuard/main.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:HealthGuard/widgets/custom_clipper.dart';
@@ -15,12 +16,12 @@ class MedicationReminderCardLarge extends StatelessWidget {
 
   MedicationReminderCardLarge(
       {Key key,
-      @required this.title,
-      @required this.value,
-      @required this.unit,
-      @required this.time,
-      this.image,
-      this.isDone})
+        @required this.title,
+        @required this.value,
+        @required this.unit,
+        @required this.time,
+        this.image,
+        this.isDone,})
       : super(key: key);
 
   @override
@@ -112,7 +113,7 @@ class MedicationReminderCardLarge extends StatelessWidget {
                             child: Container(
                               decoration: new BoxDecoration(
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(10.0)),
+                                BorderRadius.all(Radius.circular(10.0)),
                                 shape: BoxShape.rectangle,
                                 color: isDone
                                     ? Color(0xFF3B72FF)
@@ -124,7 +125,7 @@ class MedicationReminderCardLarge extends StatelessWidget {
                                 child: Icon(
                                   Icons.check,
                                   color:
-                                      isDone ? Colors.white : Color(0xFF3B72FF),
+                                  isDone ? Colors.white : Color(0xFF3B72FF),
                                 ),
                               ),
                             ),
@@ -143,7 +144,7 @@ class MedicationReminderCardLarge extends StatelessWidget {
                             child: Container(
                               decoration: new BoxDecoration(
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(10.0)),
+                                BorderRadius.all(Radius.circular(10.0)),
                                 shape: BoxShape.rectangle,
                                 color: isDone
                                     ? Color(0xFF3B72FF)
@@ -155,17 +156,18 @@ class MedicationReminderCardLarge extends StatelessWidget {
                                 child: Icon(
                                   Icons.delete_outline_outlined,
                                   color:
-                                      isDone ? Colors.white : Color(0xFF3B72FF),
+                                  isDone ? Colors.white : Color(0xFF3B72FF),
                                 ),
                               ),
                             ),
-                            onTap: () {
-                              //Navigator.pushNamed(context, MedicineDetail.id);
-                              if (!isDone) {
-                                this.isDone = true;
-                                debugPrint("Cancel Button clicked.");
-                              }
-                            }),
+                            onTap: () async {
+                              FirebaseFirestore.instance.collection(Constants.USERS).doc(MyAppState.currentUser.userID).collection(Constants.MEDICATION_INFO).where("medicineName", isEqualTo: this.title).get().then((value){value.docs.forEach((element){
+                                FirebaseFirestore.instance.collection(Constants.USERS).doc(MyAppState.currentUser.userID).collection(Constants.MEDICATION_INFO).doc(element.id).delete().then((value){print("Success!!!");
+                                });
+                              });
+                              });
+                            }
+                            ),
                       ],
                     ),
                   ],
@@ -177,4 +179,5 @@ class MedicationReminderCardLarge extends StatelessWidget {
       ),
     );
   }
+
 }

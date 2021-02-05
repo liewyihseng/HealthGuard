@@ -344,7 +344,6 @@ class _signupPageState extends State<signup_page> {
 
         await result.user.sendEmailVerification();
 
-
         /// Assigning all the user's input information to the user instance
         OurUser.User user = OurUser.User(
             email: email,
