@@ -16,7 +16,7 @@ import 'package:HealthGuard/authentication.dart';
 import 'package:HealthGuard/home.dart';
 import 'package:HealthGuard/login_page.dart';
 import 'package:HealthGuard/e-medical_report.dart';
-import 'package:HealthGuard/pedometer_page.dart';
+import 'package:HealthGuard/view/pedometer_screen.dart';
 import 'package:HealthGuard/chat/chatroom.dart';
 
 void main() async {
@@ -47,7 +47,7 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
         MyAccount.id: (context) => MyAccount(),
         MyMedical.id: (context) => MyMedical(),
         HelpCenter.id: (context) => HelpCenter(),
-        PedometerPage.id: (context) => PedometerPage(),
+        PedometerScreen.id: (context) => PedometerScreen(),
         MedicalFeed.id: (context) => MedicalFeed(),
         EMedicalReport.id: (context) => EMedicalReport(),
         MedicationReminder.id: (context) => MedicationReminder(),

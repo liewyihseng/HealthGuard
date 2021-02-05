@@ -1,10 +1,10 @@
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:HealthGuard/pedometer_page.dart';
 import 'package:HealthGuard/medical_feed.dart';
 import 'package:HealthGuard/user_profile.dart';
 import 'package:HealthGuard/widgets/medication_reminder_card_small.dart';
+import 'package:HealthGuard/view/pedometer_screen.dart';
 import 'package:HealthGuard/widgets/custom_clipper.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -59,6 +59,7 @@ class _home extends State<home> {
 
   @override
   Widget build(BuildContext context) {
+
     /// initialize options with widgets
     _bottomNavBarOptions = <Widget>[
       HomeOption(
@@ -231,7 +232,7 @@ class HealthOption extends StatelessWidget {
                   ),
                 ),
                 onTap: () {
-                  Navigator.pushNamed(context, PedometerPage.id);
+                  Navigator.pushNamed(context, PedometerScreen.id);
                 })),
         Card(
             elevation: 3.0,

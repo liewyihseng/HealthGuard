@@ -1,11 +1,9 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:HealthGuard/utils/services/shared_pref_service.dart';
 import 'package:HealthGuard/widgets/round_progress_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:jiffy/jiffy.dart';
 import 'package:pedometer/pedometer.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
 
@@ -13,16 +11,16 @@ import 'package:HealthGuard/constants.dart' as Constants;
 // shared preference doc https://pub.dev/packages/shared_preferences
 
 /// pedometer screen page widget class
-class PedometerPage extends StatefulWidget {
+class PedometerScreen extends StatefulWidget {
   /// screen ID for navigator routing
-  static const String id = "PedometerPage";
+  static const String id = "PedometerScreen";
 
   @override
-  _PedometerPageState createState() => _PedometerPageState();
+  _PedometerScreenState createState() => _PedometerScreenState();
 }
 
 /// pedometer screen page state class
-class _PedometerPageState extends State<PedometerPage> {
+class _PedometerScreenState extends State<PedometerScreen> {
 
   /// step count stream
   Stream<StepCount> _stepCountStream;
@@ -51,29 +49,30 @@ class _PedometerPageState extends State<PedometerPage> {
 
   /// step count event handler
   void onStepCount(StepCount event) async {
-    final String previousStepKey = "pedometerPreviousStep";
-    final String previousDayNoKey = "pedometerPreviousDayNo";
-
-    int todayDayNo = Jiffy(event.timeStamp).dayOfYear;
-    int preSteps = await SharedPrefService.read(previousStepKey) ?? 0;
-    int previousDayNo =
-        await SharedPrefService.read(previousDayNoKey) ?? todayDayNo;
-
-    // if reboot then
-    if (event.steps < preSteps) {
-      preSteps = 0;
-      SharedPrefService.saveInt(previousStepKey, preSteps);
-    }
-
-    // if new day
-    if (previousDayNo < todayDayNo) {
-      preSteps = event.steps;
-      previousDayNo = todayDayNo;
-    }
-
-    // save all
-    SharedPrefService.saveInt(previousStepKey, preSteps);
-    SharedPrefService.saveInt(previousDayNoKey, previousDayNo);
+    //// all of this is fucking not working
+    // final String previousStepKey = "pedometerPreviousStep";
+    // final String previousDayNoKey = "pedometerPreviousDayNo";
+    //
+    // int todayDayNo = Jiffy(event.timeStamp).dayOfYear;
+    // int preSteps = await SharedPrefService.read(previousStepKey) ?? 0;
+    // int previousDayNo =
+    //     await SharedPrefService.read(previousDayNoKey) ?? todayDayNo;
+    //
+    // // if reboot then
+    // if (event.steps < preSteps) {
+    //   preSteps = 0;
+    //   SharedPrefService.saveInt(previousStepKey, preSteps);
+    // }
+    //
+    // // if new day
+    // if (previousDayNo < todayDayNo) {
+    //   preSteps = event.steps;
+    //   previousDayNo = todayDayNo;
+    // }
+    //
+    // // save all
+    // SharedPrefService.saveInt(previousStepKey, preSteps);
+    // SharedPrefService.saveInt(previousDayNoKey, previousDayNo);
 
     setState(() {
       // _steps = event.steps - preSteps;
@@ -96,7 +95,7 @@ class _PedometerPageState extends State<PedometerPage> {
     return ((value * pow(10, place)).round()) / pow(10, place);
   }
 
-  /// build user interface
+  /// GUI
   @override
   Widget build(BuildContext context) {
     return Scaffold(
