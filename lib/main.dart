@@ -1,8 +1,8 @@
 import 'package:HealthGuard/Bloodpressure1.dart';
-import 'package:HealthGuard/add_medication.dart';
-import 'package:HealthGuard/help_center.dart';
+import 'file:///C:/Users/user/AndroidStudioProjects/HealthGuard/lib/view/help_center_view.dart';
 import 'package:HealthGuard/medical_feed.dart';
 import 'package:HealthGuard/medication_reminder.dart';
+import 'package:HealthGuard/medicine_detail.dart';
 import 'package:HealthGuard/my_account.dart';
 import 'package:HealthGuard/my_medical.dart';
 import 'package:HealthGuard/user_profile.dart';
@@ -10,7 +10,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:HealthGuard/User.dart' as OurUser;
+import 'file:///C:/Users/user/AndroidStudioProjects/HealthGuard/lib/model/user_model.dart' as OurUser;
 import 'package:HealthGuard/authentication.dart';
 import 'package:HealthGuard/home.dart';
 import 'package:HealthGuard/login_page.dart';
@@ -35,6 +35,7 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+
       initialRoute: LoginPage.id,
       routes: {
         LoginPage.id: (context) => LoginPage(),
@@ -49,7 +50,7 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
         MedicalFeed.id: (context) => MedicalFeed(),
         EMedicalReport.id: (context) => EMedicalReport(),
         MedicationReminder.id: (context) => MedicationReminder(),
-        AddMedicationReminder.id: (context) => AddMedicationReminder(),
+        MedicineDetail.id: (context) => MedicineDetail(),
         Bloodpressure1.id: (context) =>
             Bloodpressure1(sys: 60, dia: 70, pul: 80),
         Chatroom.id: (context) => Chatroom(),

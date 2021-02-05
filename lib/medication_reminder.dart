@@ -4,8 +4,8 @@ import 'dart:core';
 
 import 'package:HealthGuard/home.dart';
 import 'package:HealthGuard/main.dart';
-import 'package:HealthGuard/validation_tool.dart';
-import 'package:HealthGuard/widgets/medication_reminder_card.dart';
+import 'file:///C:/Users/user/AndroidStudioProjects/HealthGuard/lib/helper/validation_tool.dart';
+import 'package:HealthGuard/widgets/medication_reminder_card_large.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
@@ -461,7 +461,7 @@ class TopContainer extends StatelessWidget{
                         child: ListView(
                           scrollDirection: Axis.vertical,
                           children: <Widget>[
-                            MedicationReminderCard(
+                            MedicationReminderCardLarge(
                               title: doc[index].get("medicineName"),
                               value: doc[index].get("dosage"),
                               unit: "mg",

@@ -1,10 +1,11 @@
 import 'dart:ui';
+import 'package:HealthGuard/medicine_detail.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:HealthGuard/widgets/custom_clipper.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
 
-class MedicationReminderCard extends StatelessWidget{
+class MedicationReminderCardLarge extends StatelessWidget {
   final String title;
   final String value;
   final String unit;
@@ -12,17 +13,18 @@ class MedicationReminderCard extends StatelessWidget{
   final ImageProvider image;
   bool isDone;
 
-  MedicationReminderCard(
+  MedicationReminderCardLarge(
       {Key key,
-        @required this.title,
-        @required this.value,
-        @required this.unit,
-        @required this.time,
-        this.image,
-        this.isDone}) : super(key: key);
+      @required this.title,
+      @required this.value,
+      @required this.unit,
+      @required this.time,
+      this.image,
+      this.isDone})
+      : super(key: key);
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Container(
       child: Align(
         alignment: Alignment.center,
@@ -80,8 +82,9 @@ class MedicationReminderCard extends StatelessWidget{
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget> [
-                              Text(title,
+                            children: <Widget>[
+                              Text(
+                                title,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                   fontSize: 20,
@@ -91,7 +94,8 @@ class MedicationReminderCard extends StatelessWidget{
                                 ),
                               ),
                               SizedBox(height: 5),
-                              Text('$value $unit',
+                              Text(
+                                '$value $unit',
                                 style: TextStyle(
                                   fontSize: 15,
                                   color: Constants.TEXT_LIGHT,
@@ -103,30 +107,65 @@ class MedicationReminderCard extends StatelessWidget{
                         ),
                         SizedBox(width: 10),
 
+                        /// Function to mark medicine has been taken should be added here
                         InkWell(
                             child: Container(
                               decoration: new BoxDecoration(
-                                borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10.0)),
                                 shape: BoxShape.rectangle,
-                                color: isDone ? Color(0xFF3B72FF) : Color(0xFFF0F4F8),
+                                color: isDone
+                                    ? Color(0xFF3B72FF)
+                                    : Color(0xFFF0F4F8),
                               ),
                               width: 44,
                               height: 44,
                               child: Center(
                                 child: Icon(
                                   Icons.check,
-                                  color: isDone ? Colors.white :  Color(0xFF3B72FF),
+                                  color:
+                                      isDone ? Colors.white : Color(0xFF3B72FF),
                                 ),
                               ),
                             ),
-                            onTap: (){
-                              if(!isDone) {
+                            onTap: () {
+                              //Navigator.pushNamed(context, MedicineDetail.id);
+                              if (!isDone) {
                                 this.isDone = true;
                                 debugPrint(
                                     "Button clicked. Handle button setState");
                               }
-                            }
-                        ),
+                            }),
+                        SizedBox(width: 10),
+
+                        /// Functions to delete the medicine to be added here
+                        InkWell(
+                            child: Container(
+                              decoration: new BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10.0)),
+                                shape: BoxShape.rectangle,
+                                color: isDone
+                                    ? Color(0xFF3B72FF)
+                                    : Color(0xFFF0F4F8),
+                              ),
+                              width: 44,
+                              height: 44,
+                              child: Center(
+                                child: Icon(
+                                  Icons.delete_outline_outlined,
+                                  color:
+                                      isDone ? Colors.white : Color(0xFF3B72FF),
+                                ),
+                              ),
+                            ),
+                            onTap: () {
+                              //Navigator.pushNamed(context, MedicineDetail.id);
+                              if (!isDone) {
+                                this.isDone = true;
+                                debugPrint("Cancel Button clicked.");
+                              }
+                            }),
                       ],
                     ),
                   ],
