@@ -4,6 +4,8 @@ import 'package:HealthGuard/doctor_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
 
+import 'chat/database.dart';
+
 
 /// Find doctor screen page widget class
 class FindDoctor extends StatefulWidget{
@@ -14,6 +16,15 @@ class FindDoctor extends StatefulWidget{
 
 /// Find doctor screen page state class
 class _findDoctorsPageState extends State<FindDoctor>{
+
+  bool isSearching = false;
+  Stream usersStream;
+  TextEditingController searchUsernameEditingController = TextEditingController();
+
+  onSearchBtnClick() async {
+    isSearching = true;
+    usersStream = await DatabaseMethods().getUserByName(searchUsernameEditingController.text);
+  }
 
   @override
   Widget build(BuildContext context){
@@ -45,20 +56,21 @@ class _findDoctorsPageState extends State<FindDoctor>{
                   centerTitle: true,
                 ),
                 Padding(
-                  padding: EdgeInsets.only(left: 14, right: 10,  top: 25),
+                  padding: EdgeInsets.only(left: 14, right: 14,  top: 25),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text("Select a Doctor or Category",
+                      Text("Category",
                         style: TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.w700,
+                          fontSize: 25,
+                          fontWeight: FontWeight.w800,
                           fontFamily: Constants.FONTSTYLE,
                         ),
                       ),
                       SizedBox(
-                        height: 20,
+                        height: 10,
                       ),
+
                       Container(
                         width: MediaQuery.of(context).size.width,
                         height: 120,
@@ -86,23 +98,74 @@ class _findDoctorsPageState extends State<FindDoctor>{
                         ),
                       ),
 
+                      /// Zi Jie Your code here
+                      ///
+                      ///
+                      ///
+                      ///
+                      ///
+                      ///
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 20),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                isSearching ? GestureDetector(
+                                  onTap: (){
+                                    isSearching = false;
+                                    searchUsernameEditingController.text ="";
+                                  },
+                                  child: Padding(
+                                    padding: EdgeInsets.only(right: 12),
+                                    child: Icon(Icons.arrow_back),
+                                  ),
+                                ) : Container(),
+                                Expanded(
+                                  child: Container(
+                                    margin: EdgeInsets.symmetric(vertical: 16),
+                                    padding: EdgeInsets.symmetric(horizontal: 16),
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color:Colors.grey,
+                                        width: 1,
+                                        style: BorderStyle.solid,
+                                      ),
+                                      borderRadius: BorderRadius.circular(24),
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: TextField(
+                                            controller: searchUsernameEditingController,
+                                            decoration: InputDecoration(
+                                              border: InputBorder.none,
+                                              hintText: "Doctor's name",
+                                            ),
+                                          ),
+                                        ),
+                                        GestureDetector(
+                                          onTap: (){
+                                            if(searchUsernameEditingController.text != ""){
+                                              onSearchBtnClick();
+                                            }
+                                          },
+                                          child: Icon(Icons.search)
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ]
+                            ),
+                          ],
+                        ),
+                      ),
 
-
-                      ///Search Doctor Bar add here
-                      ///
-                      ///
-                      ///
-                      ///
-                      ///
-                      ///
-                      ///
-                      ///
-                      ///
-
-                      SizedBox(height: 20,),
+                      SizedBox(height: 10),
 
                       Container(
-                        height: 400,
+                        height: 398,
                         child: SingleChildScrollView(
                           physics: BouncingScrollPhysics(),
                           child: Column(
@@ -214,6 +277,7 @@ class _findDoctorsPageState extends State<FindDoctor>{
     );
   }
 }
+
 
 class pathPainter extends CustomPainter
 {
