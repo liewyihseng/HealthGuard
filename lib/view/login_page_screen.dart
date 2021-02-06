@@ -1,7 +1,4 @@
 import 'dart:async';
-
-import 'file:///C:/Users/user/AndroidStudioProjects/HealthGuard/lib/view/signup_page_screen.dart';
-import 'file:///C:/Users/user/AndroidStudioProjects/HealthGuard/lib/helper/validation_tool.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,13 +7,13 @@ import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
-import 'file:///C:/Users/user/AndroidStudioProjects/HealthGuard/lib/model/user_model.dart' as OurUser;
+import 'package:HealthGuard/view/signup_page_screen.dart';
+import 'package:HealthGuard/model/user_model.dart' as OurUser;
+import 'package:HealthGuard/helper/validation_tool.dart';
 import 'package:HealthGuard/authentication.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
 import 'package:HealthGuard/home.dart';
 import 'package:HealthGuard/main.dart';
-
 import 'forgot_password_page_screen.dart';
 
 final _fireStoreUtils = FireStoreUtils();
@@ -27,7 +24,6 @@ class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
 }
-
 
 /// Login screen page state class
 class _LoginPageState extends State<LoginPage> {
@@ -45,23 +41,23 @@ class _LoginPageState extends State<LoginPage> {
     await Firebase.initializeApp();
 
     final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
-    final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
+    final GoogleSignInAuthentication googleSignInAuthentication =
+        await googleSignInAccount.authentication;
 
     final AuthCredential credential = GoogleAuthProvider.credential(
       accessToken: googleSignInAuthentication.accessToken,
       idToken: googleSignInAuthentication.idToken,
     );
 
-    final UserCredential authResult = await _auth.signInWithCredential(credential);
+    final UserCredential authResult =
+        await _auth.signInWithCredential(credential);
     final OurUser.User user = authResult.user as OurUser.User;
 
-    if(user != null){
-
+    if (user != null) {
       final User currentUser = _auth.currentUser;
       assert(user.userID == currentUser.uid);
       Navigator.pushNamedAndRemoveUntil(context, home.id, (route) => false);
       pushAndRemoveUntil(context, home(user: user), false);
-
 
       print('signInWithGoogle succeeded: $user');
 
@@ -71,12 +67,11 @@ class _LoginPageState extends State<LoginPage> {
     return null;
   }
 
-  Future<void> signOutGoogle() async{
+  Future<void> signOutGoogle() async {
     await googleSignIn.signOut();
 
     print("User Signed Out");
   }
-
 
   List<Widget> buildInputs() {
     return [
@@ -89,6 +84,7 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
       SizedBox(height: 40.0),
+
       /// Field for user's email input
       TextFormField(
         validator: validateEmail,
@@ -102,15 +98,13 @@ class _LoginPageState extends State<LoginPage> {
         decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           hintText: "Email Address",
-          icon: Icon(
-              Icons.mail,
-              color:Constants.TEXT_LIGHT
-          ),
+          icon: Icon(Icons.mail, color: Constants.TEXT_LIGHT),
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
         ),
       ),
 
       SizedBox(height: 20.0),
+
       /// Field for user's password input
       TextFormField(
         validator: validatePassword,
@@ -123,10 +117,7 @@ class _LoginPageState extends State<LoginPage> {
         decoration: InputDecoration(
             contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
             hintText: "Password",
-            icon: Icon(
-                Icons.vpn_key,
-                color:Constants.TEXT_LIGHT
-            ),
+            icon: Icon(Icons.vpn_key, color: Constants.TEXT_LIGHT),
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
       ),
@@ -159,11 +150,11 @@ class _LoginPageState extends State<LoginPage> {
             padding: EdgeInsets.only(top: 12, bottom: 12),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(25.0),
-                side: BorderSide(color: Colors.blue)
-            ),
+                side: BorderSide(color: Colors.blue)),
           ),
         ),
       ),
+
       /// Sign up here wording (User tap to redirect them to sign up page)
       Container(
         child: Row(
@@ -262,6 +253,7 @@ class _LoginPageState extends State<LoginPage> {
                     color: Colors.white,
                     icon: FaIcon(FontAwesomeIcons.facebookF),
                     onPressed: () {},
+
                     ///
                     /// Codes linking sign-in for Facebook
                     /// Should be here within the onPressed()
@@ -290,7 +282,6 @@ class _LoginPageState extends State<LoginPage> {
                       ///
                       signInWithGoogle();
                     },
-
                   ),
                 ),
               ),
@@ -420,5 +411,3 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
-
-

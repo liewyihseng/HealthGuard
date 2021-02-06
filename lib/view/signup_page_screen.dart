@@ -1,15 +1,15 @@
+import 'package:HealthGuard/model/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:HealthGuard/home.dart';
 import 'package:HealthGuard/main.dart';
-import 'file:///C:/Users/user/AndroidStudioProjects/HealthGuard/lib/helper/validation_tool.dart';
+import 'package:HealthGuard/helper/validation_tool.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:HealthGuard/authentication.dart';
 import 'package:flutter/material.dart';
-import 'file:///C:/Users/user/AndroidStudioProjects/HealthGuard/lib/model/user_model.dart';
+import 'package:HealthGuard/model/user_model.dart' as OurUser;
 import 'package:HealthGuard/constants.dart' as Constants;
-import 'file:///C:/Users/user/AndroidStudioProjects/HealthGuard/lib/model/user_model.dart' as OurUser;
 import 'dart:io';
 
 File _image;

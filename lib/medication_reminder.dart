@@ -4,23 +4,19 @@ import 'dart:core';
 
 import 'package:HealthGuard/home.dart';
 import 'package:HealthGuard/main.dart';
-import 'file:///C:/Users/user/AndroidStudioProjects/HealthGuard/lib/helper/validation_tool.dart';
+import 'package:HealthGuard/helper/validation_tool.dart';
 import 'package:HealthGuard/widgets/medication_reminder_card_large.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:smart_select/smart_select.dart';
-
 import 'package:flutter/material.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
-
 import 'package:HealthGuard/model/medicine_model.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-
 import 'package:HealthGuard/authentication.dart';
 import 'package:HealthGuard/helper/convert_time.dart';
 import 'package:HealthGuard/model/medication_type.dart';
-
 
 class MedicationReminder extends StatefulWidget{
   /// Screen ID for navigator routing
