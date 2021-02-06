@@ -1,10 +1,10 @@
 import 'dart:ui';
 
-import 'package:HealthGuard/doctor_detail.dart';
+import 'package:HealthGuard/view/doctor_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
 
-import 'chat/database.dart';
+import '../chat/database.dart';
 
 
 /// Find doctor screen page widget class
@@ -67,9 +67,8 @@ class _findDoctorsPageState extends State<FindDoctor>{
                           fontFamily: Constants.FONTSTYLE,
                         ),
                       ),
-                      SizedBox(
-                        height: 10,
-                      ),
+
+                      SizedBox(height: 10),
 
                       Container(
                         width: MediaQuery.of(context).size.width,
@@ -94,7 +93,7 @@ class _findDoctorsPageState extends State<FindDoctor>{
                         style: TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.w800,
-                          fontFamily: "Montserrat",
+                          fontFamily: Constants.FONTSTYLE,
                         ),
                       ),
 
@@ -110,53 +109,53 @@ class _findDoctorsPageState extends State<FindDoctor>{
                         child: Column(
                           children: [
                             Row(
-                              children: [
-                                isSearching ? GestureDetector(
-                                  onTap: (){
-                                    isSearching = false;
-                                    searchUsernameEditingController.text ="";
-                                  },
-                                  child: Padding(
-                                    padding: EdgeInsets.only(right: 12),
-                                    child: Icon(Icons.arrow_back),
-                                  ),
-                                ) : Container(),
-                                Expanded(
-                                  child: Container(
-                                    margin: EdgeInsets.symmetric(vertical: 16),
-                                    padding: EdgeInsets.symmetric(horizontal: 16),
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        color:Colors.grey,
-                                        width: 1,
-                                        style: BorderStyle.solid,
-                                      ),
-                                      borderRadius: BorderRadius.circular(24),
+                                children: [
+                                  isSearching ? GestureDetector(
+                                    onTap: (){
+                                      isSearching = false;
+                                      searchUsernameEditingController.text ="";
+                                    },
+                                    child: Padding(
+                                      padding: EdgeInsets.only(right: 12),
+                                      child: Icon(Icons.arrow_back),
                                     ),
-                                    child: Row(
-                                      children: [
-                                        Expanded(
-                                          child: TextField(
-                                            controller: searchUsernameEditingController,
-                                            decoration: InputDecoration(
-                                              border: InputBorder.none,
-                                              hintText: "Doctor's name",
+                                  ) : Container(),
+                                  Expanded(
+                                    child: Container(
+                                      margin: EdgeInsets.symmetric(vertical: 16),
+                                      padding: EdgeInsets.symmetric(horizontal: 16),
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color:Colors.grey,
+                                          width: 1,
+                                          style: BorderStyle.solid,
+                                        ),
+                                        borderRadius: BorderRadius.circular(24),
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                            child: TextField(
+                                              controller: searchUsernameEditingController,
+                                              decoration: InputDecoration(
+                                                border: InputBorder.none,
+                                                hintText: "Doctor's name",
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                        GestureDetector(
-                                          onTap: (){
-                                            if(searchUsernameEditingController.text != ""){
-                                              onSearchBtnClick();
-                                            }
-                                          },
-                                          child: Icon(Icons.search)
-                                        ),
-                                      ],
+                                          GestureDetector(
+                                              onTap: (){
+                                                if(searchUsernameEditingController.text != ""){
+                                                  onSearchBtnClick();
+                                                }
+                                              },
+                                              child: Icon(Icons.search)
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ]
+                                ]
                             ),
                           ],
                         ),
@@ -201,7 +200,7 @@ class _findDoctorsPageState extends State<FindDoctor>{
             style: TextStyle(
               fontWeight: FontWeight.w800,
               fontSize: 17,
-              fontFamily: "Montserrat",
+              fontFamily: Constants.FONTSTYLE,
             ),
           ),
         ],
@@ -242,11 +241,11 @@ class _findDoctorsPageState extends State<FindDoctor>{
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text("Dr. $docName",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                          fontFamily: "Montserrat",
-                        ),
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        fontFamily: Constants.FONTSTYLE,
+                      ),
                     ),
 
                     SizedBox(height: 5),
@@ -259,7 +258,7 @@ class _findDoctorsPageState extends State<FindDoctor>{
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
-                          fontFamily: "Montserrat",
+                          fontFamily: Constants.FONTSTYLE,
                         ),
                         overflow: TextOverflow.clip,
                       ),
@@ -270,9 +269,9 @@ class _findDoctorsPageState extends State<FindDoctor>{
             ),
           ),
         ),
-    onTap: () {
-      Navigator.pushNamed(context, DoctorDetail.id);
-    },
+        onTap: () {
+          Navigator.pushNamed(context, DoctorDetail.id);
+        },
       ),
     );
   }

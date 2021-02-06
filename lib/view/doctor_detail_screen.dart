@@ -21,7 +21,8 @@ class _doctorDetailPageState extends State<DoctorDetail>{
           style: TextStyle(
             color: Colors.white,
             fontFamily: Constants.FONTSTYLE,
-            fontWeight: Constants.APPBAR_TEXT_WEIGHT,),
+            fontWeight: Constants.APPBAR_TEXT_WEIGHT,
+          ),
         ),
         iconTheme: IconThemeData(color: Colors.white),
         backgroundColor: Constants.APPBAR_COLOUR,
@@ -78,15 +79,40 @@ class _doctorDetailPageState extends State<DoctorDetail>{
                               Text("Dr. Susan Thomas",
                                 style: TextStyle(
                                   fontSize: 20,
-                                  fontWeight: FontWeight.w400,
-                                  fontFamily: "Montserrat",
+                                  fontWeight: FontWeight.w600,
+                                  fontFamily: Constants.FONTSTYLE,
                                 ),
                               ),
                               Text("Heart Surgeon - CK Hospital",
                                 style: TextStyle(
                                   fontSize: 17,
                                   fontWeight: FontWeight.w400,
-                                  fontFamily: "Montserrat",
+                                  fontFamily: Constants.FONTSTYLE,
+                                ),
+                              ),
+
+                              ///
+                              /// Chat Now Button Here
+                              ///
+                              RaisedButton(
+                                color: Constants.BUTTON_COLOUR,
+                                child: Text('Chat Now',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w900,
+                                    fontFamily: Constants.FONTSTYLE,
+                                  ),
+                                ),
+                                textColor: Colors.white,
+                                splashColor: Colors.blue,
+                                onPressed: ()  {
+                                  /// Navigate to chat page
+                                  /// Navigator.pushNamed(context, Chatroom.id);
+                                },
+                                padding: EdgeInsets.all(10),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16.0),
+                                  side: BorderSide(color: Colors.blue),
                                 ),
                               ),
                             ],
@@ -94,7 +120,7 @@ class _doctorDetailPageState extends State<DoctorDetail>{
                         ],
                       ),
                       Padding(
-                        padding: EdgeInsets.only(left: 8, right: 8),
+                        padding: EdgeInsets.only(left: 13, right: 13),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
@@ -102,41 +128,37 @@ class _doctorDetailPageState extends State<DoctorDetail>{
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w800,
+                                fontFamily: Constants.FONTSTYLE,
                               ),
                             ),
-                            SizedBox(height: 10,),
+
+                            SizedBox(height: 10),
+
                             Text("Please write the description of the doctor here. This will be a detailed information about the doctor and the roles and achievements that the doctor has had over the past years", style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
+                              fontFamily: Constants.FONTSTYLE,
                             ),
                             ),
-                            SizedBox(height: 10,),
+
+                            SizedBox(height: 10),
+
                             Text("Available Time Slots",
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w800,
+                                fontFamily: Constants.FONTSTYLE,
                               ),
                             ),
-                            SizedBox(height: 5,),
+
+                            SizedBox(height: 10),
+
                             timeSlotWidget("13", "MAY", "Consultation", "Sunday 9 am to 11.30 am"),
                             timeSlotWidget("14", "MAY", "Consultation", "Monday 10 am to 12.30 am"),
                             timeSlotWidget("1", "JUN", "Consultation", "Wednesday 8 am to 12.30 pm"),
                             timeSlotWidget("3", "JUN", "Consultation", "Friday 8 am to 1 am"),
 
                             SizedBox(height: 10),
-
-                            ///Chat now button here
-                            ///
-                            ///
-                            ///
-                            ///
-                            ///
-                            ///
-                            ///
-                            ///
-                            ///
-                            ///
-
                           ],
                         ),
                       ),
@@ -150,6 +172,8 @@ class _doctorDetailPageState extends State<DoctorDetail>{
       ),
     );
   }
+
+  /// Change to some other things next time
   Container timeSlotWidget(String date, String month, String slotType, String time)
   {
     return Container(
@@ -174,35 +198,41 @@ class _doctorDetailPageState extends State<DoctorDetail>{
                 children: <Widget>[
                   Text("$date",
                     style: TextStyle(
-                        color: Color(0xff3479C0),
-                        fontSize: 30,
-                        fontWeight: FontWeight.w800
+                      color: Color(0xff3479C0),
+                      fontSize: 20,
+                      fontWeight: FontWeight.w800,
+                      fontFamily: Constants.FONTSTYLE,
                     ),
                   ),
                   Text("$month",
                     style: TextStyle(
-                        color: Color(0xff3479C0),
-                        fontSize: 20,
-                        fontWeight: FontWeight.w800
+                      color: Color(0xff3479C0),
+                      fontSize: 20,
+                      fontWeight: FontWeight.w800,
+                      fontFamily: Constants.FONTSTYLE,
                     ),
                   ),
                 ],
               ),
             ),
-            SizedBox(width: 10,),
+
+            SizedBox(width: 10),
+
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text("$slotType",
                   style: TextStyle(
                     fontSize: 20,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: FontWeight.w700,
+                    fontFamily: Constants.FONTSTYLE,
                   ),
                 ),
                 Text("$time",
                   style: TextStyle(
-                      fontSize: 17,
-                      fontWeight: FontWeight.w600
+                    fontSize: 17,
+                    fontWeight: FontWeight.w600,
+                    fontFamily: Constants.FONTSTYLE,
                   ),
                 ),
               ],

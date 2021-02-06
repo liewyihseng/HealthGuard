@@ -141,7 +141,7 @@ class _LoginPageState extends State<LoginPage> {
                 style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w900,
-                    fontFamily: "Montserrat")),
+                  fontFamily: Constants.FONTSTYLE,)),
             textColor: Colors.white,
             splashColor: Colors.blue,
             onPressed: () async {
@@ -212,7 +212,7 @@ class _LoginPageState extends State<LoginPage> {
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 16.0,
-                          fontFamily: "Montserrat"),
+                        fontFamily: Constants.FONTSTYLE,),
                     ),
                   ),
                   Container(

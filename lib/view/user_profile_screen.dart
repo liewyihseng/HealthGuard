@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
-import 'package:HealthGuard/view/help_center_view.dart';
+import 'package:HealthGuard/view/help_center_screen.dart';
 
 File _image;
 FireStoreUtils _fireStoreUtils = FireStoreUtils();
@@ -141,7 +141,7 @@ class ProfileMenu extends StatelessWidget {
                     text,
                 style: TextStyle(
                   color: Colors.black,
-                  fontFamily: "Montserrat",
+                    fontFamily: Constants.FONTSTYLE,
                   fontSize: 16,
                   fontWeight: FontWeight.w500),
                   ),

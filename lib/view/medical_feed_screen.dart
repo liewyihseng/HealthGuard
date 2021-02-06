@@ -1,7 +1,7 @@
 import 'dart:ui';
 
-import 'package:HealthGuard/view/article_view.dart';
-import 'package:HealthGuard/view/category_view.dart';
+import 'package:HealthGuard/view/article_webview_screen.dart';
+import 'package:HealthGuard/view/category_medical_feed_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:HealthGuard/helper/data.dart';
@@ -147,8 +147,16 @@ class CategoryTile extends StatelessWidget{
               borderRadius: BorderRadius.circular(6),
               color: Colors.black26,
             ),
-            child: Text(categoryName, style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w900, fontFamily: "Montserrat",),),
-          )
+            child: Text(
+              categoryName,
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w900,
+                fontFamily: Constants.FONTSTYLE,
+              ),
+            ),
+          ),
         ],
         ),
       ),

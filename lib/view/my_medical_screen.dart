@@ -53,7 +53,7 @@ class _MyMedicalState extends State<MyMedical> {
                           doc[index].get("birthday"),
                           style: TextStyle(
                             color: Colors.black,
-                            fontFamily: "Montserrat",
+                            fontFamily: Constants.FONTSTYLE,
                             fontSize: 15,
                           ),
                         ),
@@ -63,7 +63,7 @@ class _MyMedicalState extends State<MyMedical> {
                           doc[index].get("sex"),
                           style: TextStyle(
                             color: Colors.black,
-                            fontFamily: "Montserrat",
+                            fontFamily: Constants.FONTSTYLE,
                             fontSize: 15,
                           ),
                         ),
@@ -73,7 +73,7 @@ class _MyMedicalState extends State<MyMedical> {
                           doc[index].get("height"),
                           style: TextStyle(
                             color: Colors.black,
-                            fontFamily: "Montserrat",
+                            fontFamily: Constants.FONTSTYLE,
                             fontSize: 15,
                           ),
                         ),
@@ -83,7 +83,7 @@ class _MyMedicalState extends State<MyMedical> {
                           doc[index].get("weight"),
                           style: TextStyle(
                             color: Colors.black,
-                            fontFamily: "Montserrat",
+                            fontFamily: Constants.FONTSTYLE,
                             fontSize: 15,
                           ),
                         ),
@@ -93,7 +93,7 @@ class _MyMedicalState extends State<MyMedical> {
                           doc[index].get("currentMedication"),
                           style: TextStyle(
                             color: Colors.black,
-                            fontFamily: "Montserrat",
+                            fontFamily: Constants.FONTSTYLE,
                             fontSize: 15,
                           ),
                         ),
@@ -103,7 +103,7 @@ class _MyMedicalState extends State<MyMedical> {
                           doc[index].get("address"),
                           style: TextStyle(
                             color: Colors.black,
-                            fontFamily: "Montserrat",
+                            fontFamily: Constants.FONTSTYLE,
                             fontSize: 15,
                           ),
                         ),
@@ -113,7 +113,7 @@ class _MyMedicalState extends State<MyMedical> {
                           doc[index].get("healthCondition"),
                           style: TextStyle(
                             color: Colors.black,
-                            fontFamily: "Montserrat",
+                            fontFamily: Constants.FONTSTYLE,
                             fontSize: 15,
                           ),
                         ),
@@ -128,7 +128,7 @@ class _MyMedicalState extends State<MyMedical> {
                     "Nothing To Show",
                     style: TextStyle(
                       color: Colors.black,
-                      fontFamily: "Montserrat",
+                      fontFamily: Constants.FONTSTYLE,
                       fontSize: 15,
                     ),
                   ),

@@ -53,7 +53,7 @@ class _HelpCenterState extends State<HelpCenter>{
                   textAlign: TextAlign.justify,
                   style: TextStyle(
                       color: Constants.TEXT_LIGHT,
-                      fontFamily: "Montserrat",
+                      fontFamily: Constants.FONTSTYLE,
                       fontSize: 20,
                       fontWeight: FontWeight.w500),
                 ),
@@ -64,7 +64,7 @@ class _HelpCenterState extends State<HelpCenter>{
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: Constants.TEXT_LIGHT,
-                      fontFamily: "Montserrat",
+                      fontFamily: Constants.FONTSTYLE,
                       fontSize: 19),
                 ),
               ],
