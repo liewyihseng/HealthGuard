@@ -1,13 +1,14 @@
-import 'package:HealthGuard/Bloodpressure2.dart';
-import 'package:flutter/material.dart';
-import 'package:HealthGuard/Bloodpressurechart.dart';
 
-class Bloodpressure1 extends StatelessWidget {
-  static const String id = "Bloodpressure1";
+import 'package:flutter/material.dart';
+import 'package:HealthGuard/view/add_bloodpressure_screen.dart';
+import 'package:HealthGuard/widgets/bloodpressure_chart.dart';
+
+class BloodPressureScreen extends StatelessWidget {
+  static const String id = "Bloodpressure_screen";
   var sys;
   var dia;
   var pul;
-  Bloodpressure1({@required this.sys, @required this.dia, @required this.pul});
+  BloodPressureScreen({@required this.sys, @required this.dia, @required this.pul});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +19,7 @@ class Bloodpressure1 extends StatelessWidget {
         child: Icon(Icons.add),
         onPressed: () async {
           var navigationResult = await Navigator.push(context,
-              new MaterialPageRoute(builder: (context) => Bloodpressure2()));
+              new MaterialPageRoute(builder: (context) => AddBloodpressureScreen()));
         },
       ),
       body: Column(children: <Widget>[

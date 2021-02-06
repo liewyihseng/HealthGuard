@@ -1,8 +1,9 @@
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:HealthGuard/medical_feed.dart';
-import 'package:HealthGuard/user_profile.dart';
+import 'package:HealthGuard/view/medical_feed_screen.dart';
+import 'package:HealthGuard/view/user_profile_screen.dart';
+import 'package:HealthGuard/view/bloodpressure_screen.dart';
 import 'package:HealthGuard/widgets/medication_reminder_card_small.dart';
 import 'package:HealthGuard/view/pedometer_screen.dart';
 import 'package:HealthGuard/widgets/custom_clipper.dart';
@@ -14,15 +15,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:HealthGuard/chat/chatroom.dart';
-import 'package:HealthGuard/Bloodpressure1.dart';
+import 'package:HealthGuard/view/bloodpressure_screen.dart';
 import 'package:HealthGuard/model/user_model.dart' as OurUser;
-import 'package:HealthGuard/authentication.dart';
-import 'package:HealthGuard/view/login_page_screen.dart';
+import 'package:HealthGuard/net/authentication.dart';
+import 'package:HealthGuard/view/login_screen.dart';
 import 'package:HealthGuard/main.dart';
-import 'package:HealthGuard/e-medical_report.dart';
+import 'package:HealthGuard/view/e-medical_report_screen.dart';
 import 'package:HealthGuard/helper/validation_tool.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
-import 'package:HealthGuard/medication_reminder.dart';
+import 'package:HealthGuard/view/medication_reminder_screen.dart';
 
 FireStoreUtils _fireStoreUtils = FireStoreUtils();
 
@@ -327,7 +328,7 @@ class HealthOption extends StatelessWidget {
                   ),
                 ),
                 onTap: () {
-                  Navigator.pushNamed(context, Bloodpressure1.id);
+                  Navigator.pushNamed(context, BloodPressureScreen.id);
                 })),
         Card(
             elevation: 3.0,

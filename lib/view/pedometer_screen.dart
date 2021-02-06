@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:HealthGuard/authentication.dart';
+import 'package:HealthGuard/net/authentication.dart';
 import 'package:HealthGuard/main.dart';
 import 'package:HealthGuard/model/pedometer_model.dart';
 import 'package:HealthGuard/widgets/round_progress_bar.dart';

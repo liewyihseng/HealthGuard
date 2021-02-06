@@ -14,7 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
 import 'package:HealthGuard/model/medicine_model.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:HealthGuard/authentication.dart';
+import 'package:HealthGuard/net/authentication.dart';
 import 'package:HealthGuard/helper/convert_time.dart';
 import 'package:HealthGuard/model/medication_type.dart';
 
