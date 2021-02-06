@@ -6,7 +6,7 @@ import 'package:HealthGuard/home.dart';
 import 'package:HealthGuard/main.dart';
 import 'package:HealthGuard/helper/validation_tool.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:HealthGuard/authentication.dart';
+import 'package:HealthGuard/net/authentication.dart';
 import 'package:flutter/material.dart';
 import 'package:HealthGuard/model/user_model.dart' as OurUser;
 import 'package:HealthGuard/constants.dart' as Constants;

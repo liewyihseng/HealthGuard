@@ -1,9 +1,8 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:HealthGuard/authentication.dart';
+import 'package:HealthGuard/helper/shared_preferences_services.dart';
 import 'package:HealthGuard/main.dart';
-import 'package:HealthGuard/model/pedometer_model.dart';
 import 'package:HealthGuard/widgets/round_progress_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,23 +15,24 @@ import 'package:HealthGuard/constants.dart' as Constants;
 
 /// pedometer screen page widget class
 class PedometerScreen extends StatefulWidget {
+
   /// screen ID for navigator routing
   static const String id = "PedometerScreen";
 
   @override
   _PedometerScreenState createState() => _PedometerScreenState();
+
 }
 
 /// pedometer screen page state class
 class _PedometerScreenState extends State<PedometerScreen> {
+
   /// variables
   Stream<StepCount> _stepCountStream;
   int _steps = 0;
   double _calories = 0; // cal
   int _water = 0; // ml
   int _goal = 10000;
-  int _previousDayNo = Jiffy(DateTime.now()).dayOfYear;
-  int _previousSteps = 0;
 
   final db = FirebaseFirestore.instance;
 
@@ -60,57 +60,40 @@ class _PedometerScreenState extends State<PedometerScreen> {
 
   /// step count event handler
   void onStepCount(StepCount event) async {
-    //// all of this is fucking not working
-    //
-    // final String previousStepKey = "pedometerPreviousStep";
-    // final String previousDayNoKey = "pedometerPreviousDayNo";
-    //
-    // int todayDayNo = Jiffy(event.timeStamp).dayOfYear;
-    // int preSteps = await SharedPrefService.read(previousStepKey) ?? 0;
-    // int previousDayNo =
-    //     await SharedPrefService.read(previousDayNoKey) ?? todayDayNo;
-    //
-    // // if reboot then
-    // if (event.steps < preSteps) {
-    //   preSteps = 0;
-    //   SharedPrefService.saveInt(previousStepKey, preSteps);
-    // }
-    //
-    // // if new day
-    // if (previousDayNo < todayDayNo) {
-    //   preSteps = event.steps;
-    //   previousDayNo = todayDayNo;
-    // }
-    //
-    // // save all
-    // SharedPrefService.saveInt(previousStepKey, preSteps);
-    // SharedPrefService.saveInt(previousDayNoKey, previousDayNo);
+
+    /// shared preferences keys
+    final String previousStepKey = "preStep";
+    final String previousDayNoKey = "preDayNo";
+
+    int todayDayNo = Jiffy(event.timeStamp).dayOfYear;
+
+    SharedPrefService sharedPrefService = SharedPrefService();
+
+    int preSteps = await sharedPrefService.read(previousStepKey) ?? 0;
+    int previousDayNo =
+        await sharedPrefService.read(previousDayNoKey) ?? todayDayNo;
+
+    // if reboot then
+    if (event.steps < preSteps) {
+      preSteps = 0;
+      sharedPrefService.saveInt(previousStepKey, preSteps);
+    }
+
+    // if new day
+    if (previousDayNo < todayDayNo) {
+      preSteps = event.steps;
+      previousDayNo = todayDayNo;
+    }
+
+    // save all
+    sharedPrefService.saveInt(previousStepKey, preSteps);
+    sharedPrefService.saveInt(previousDayNoKey, previousDayNo);
 
     setState(() {
-      // _steps = event.steps - preSteps;
-      _steps = event.steps;
+      _steps = event.steps - preSteps;
       _calories = _steps.toDouble() * 0.04;
       _water = (_steps.toDouble() * 0.1282).toInt();
     });
-  }
-
-  /// send data to database
-  _sendToServer() async {
-    /// construct updated data
-    PedometerData pedometerData = PedometerData(
-      water: _water,
-      steps: _steps,
-      calories: _calories,
-      previousDayNo: _previousDayNo,
-      previousSteps: _previousSteps,
-    );
-
-    /// store it to fire store
-    await FireStoreUtils.firestore
-        .collection(Constants.USERS)
-        .doc(MyAppState.currentUser.userID)
-        .collection(Constants.PEDOMETER_INFO)
-        .add(pedometerData.toJson());
   }
 
   /// helper function
@@ -143,7 +126,9 @@ class _PedometerScreenState extends State<PedometerScreen> {
               .collection(Constants.PEDOMETER_INFO)
               .snapshots(),
           builder: (context, snapshot) {
+            var doc;
             if (snapshot.hasData) {
+              doc = snapshot.data.docs;
               // TODO - continue this part
               /// load data based on day number
               /// calculate new data
@@ -151,7 +136,6 @@ class _PedometerScreenState extends State<PedometerScreen> {
               /// else the next day store updated data as a new document to fire store
               /// (additional : replace previous year record based on 365 days)
             }
-            var doc = snapshot.data.docs;
             return Container(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,

@@ -7,14 +7,14 @@ import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:HealthGuard/view/signup_page_screen.dart';
+import 'package:HealthGuard/view/signup_screen.dart';
 import 'package:HealthGuard/model/user_model.dart' as OurUser;
 import 'package:HealthGuard/helper/validation_tool.dart';
-import 'package:HealthGuard/authentication.dart';
+import 'package:HealthGuard/net/authentication.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
 import 'package:HealthGuard/home.dart';
 import 'package:HealthGuard/main.dart';
-import 'forgot_password_page_screen.dart';
+import 'forgot_password_screen.dart';
 
 final _fireStoreUtils = FireStoreUtils();
 

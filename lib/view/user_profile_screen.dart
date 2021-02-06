@@ -1,10 +1,10 @@
 import 'dart:io';
 
-import 'package:HealthGuard/authentication.dart';
-import 'package:HealthGuard/view/login_page_screen.dart';
+import 'package:HealthGuard/net/authentication.dart';
+import 'package:HealthGuard/view/login_screen.dart';
 import 'package:HealthGuard/main.dart';
-import 'package:HealthGuard/my_account.dart';
-import 'package:HealthGuard/my_medical.dart';
+import 'package:HealthGuard/view/my_account_screen.dart';
+import 'package:HealthGuard/view/my_medical_screen.dart';
 import 'package:HealthGuard/helper/validation_tool.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
