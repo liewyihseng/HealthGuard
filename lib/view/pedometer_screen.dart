@@ -94,25 +94,6 @@ class _PedometerScreenState extends State<PedometerScreen> {
     });
   }
 
-  /// send data to database
-  _sendToServer() async {
-    /// construct updated data
-    PedometerData pedometerData = PedometerData(
-      water: _water,
-      steps: _steps,
-      calories: _calories,
-      previousDayNo: _previousDayNo,
-      previousSteps: _previousSteps,
-    );
-
-    /// store it to fire store
-    await FireStoreUtils.firestore
-        .collection(Constants.USERS)
-        .doc(MyAppState.currentUser.userID)
-        .collection(Constants.PEDOMETER_INFO)
-        .add(pedometerData.toJson());
-  }
-
   /// helper function
   double toPrecision(double value, int place) {
     return ((value * pow(10, place)).round()) / pow(10, place);
