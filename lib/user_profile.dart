@@ -1,19 +1,18 @@
 import 'dart:io';
 
 import 'package:HealthGuard/authentication.dart';
-import 'file:///C:/Users/user/AndroidStudioProjects/HealthGuard/lib/view/login_page_screen.dart';
+import 'package:HealthGuard/view/login_page_screen.dart';
 import 'package:HealthGuard/main.dart';
 import 'package:HealthGuard/my_account.dart';
 import 'package:HealthGuard/my_medical.dart';
-import 'file:///C:/Users/user/AndroidStudioProjects/HealthGuard/lib/helper/validation_tool.dart';
+import 'package:HealthGuard/helper/validation_tool.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
-
-import 'file:///C:/Users/user/AndroidStudioProjects/HealthGuard/lib/view/help_center_view.dart';
+import 'package:HealthGuard/view/help_center_view.dart';
 
 File _image;
 FireStoreUtils _fireStoreUtils = FireStoreUtils();
