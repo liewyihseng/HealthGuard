@@ -389,7 +389,7 @@ class HealthOption extends StatelessWidget {
                   ),
                 ),
                 onTap: () {
-                  //Navigator.pushNamed(context, PedometerPage.id);
+                  Navigator.pushNamed(context, HospitalSuggestion.id);
                 })),
       ],
     ));

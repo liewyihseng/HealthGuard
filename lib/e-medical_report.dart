@@ -1,10 +1,10 @@
 import 'package:HealthGuard/authentication.dart';
 import 'package:HealthGuard/main.dart';
-import 'file:///C:/Users/user/AndroidStudioProjects/HealthGuard/lib/helper/validation_tool.dart';
+import 'package:HealthGuard/helper/validation_tool.dart';
 import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:HealthGuard/home.dart';
-import 'file:///C:/Users/user/AndroidStudioProjects/HealthGuard/lib/model/user_medic_info_model.dart' as medic_info;
+import 'package:HealthGuard/model/user_medic_info_model.dart' as medic_info;
 import 'package:HealthGuard/constants.dart' as Constants;
 import 'package:flutter/services.dart';
 
