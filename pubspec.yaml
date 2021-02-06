@@ -27,7 +27,7 @@ dependencies:
   firebase_core: 0.5.0+1
   firebase_auth: 0.18.1+2
   # show images from internet
-  cached_network_image: ^2.1.0+1
+  cached_network_image: ^2.5.0
   image_picker: ^0.6.5
   progress_dialog: ^1.2.2
   cloud_firestore: 0.14.1+3
@@ -116,6 +116,18 @@ flutter:
     - assets/icons/help-center.svg
     - assets/capsule.png
     - assets/syringe.png
+    - assets/medicalCategory/category1.png
+    - assets/medicalCategory/category2.png
+    - assets/medicalCategory/category3.png
+    - assets/medicalCategory/category4.png
+    - assets/medicalCategory/category5.png
+    - assets/medicalCategory/category6.png
+    - assets/medicalCategory/category7.png
+    - assets/medicalCategory/category8.png
+    - assets/docprofile/doc1.png
+    - assets/docprofile/doc2.png
+    - assets/docprofile/doc3.png
+    - assets/docinfo/bg1.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -143,7 +155,6 @@ flutter:
     - family: Montserrat
       fonts:
         - asset: fonts/Montserrat-Regular.ttf
-        - asset: fonts/ic_medicine.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

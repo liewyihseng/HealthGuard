@@ -1,6 +1,8 @@
 
+import 'file:///C:/Users/user/AndroidStudioProjects/HealthGuard/lib/view/doctor_detail_screen.dart';
+import 'file:///C:/Users/user/AndroidStudioProjects/HealthGuard/lib/view/find_doctor_screen.dart';
 import 'package:HealthGuard/view/bloodpressure_screen.dart';
-import 'package:HealthGuard/view/help_center_view.dart';
+import 'package:HealthGuard/view/help_center_screen.dart';
 import 'package:HealthGuard/view/medical_feed_screen.dart';
 import 'package:HealthGuard/view/medication_reminder_screen.dart';
 import 'package:HealthGuard/view/my_account_screen.dart';
@@ -52,6 +54,8 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
         EMedicalReport.id: (context) => EMedicalReport(),
         MedicationReminder.id: (context) => MedicationReminder(),
         ForgotPassword.id: (context) => ForgotPassword(),
+        FindDoctor.id: (context) => FindDoctor(),
+        DoctorDetail.id: (context) => DoctorDetail(),
         BloodPressureScreen.id: (context) =>
             BloodPressureScreen(sys: 60, dia: 70, pul: 80),
         Chatroom.id: (context) => Chatroom(),

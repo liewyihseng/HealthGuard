@@ -74,8 +74,8 @@ class _MedicationReminderState extends State<MedicationReminder>{
         title: Text(
           'Medication Reminder',
           style: TextStyle(
-              color: Colors.white,
-              fontFamily: Constants.FONTSTYLE,
+            color: Colors.white,
+            fontFamily: Constants.FONTSTYLE,
             fontWeight: Constants.APPBAR_TEXT_WEIGHT,
           ),
         ),
@@ -126,7 +126,7 @@ class _MedicationReminderState extends State<MedicationReminder>{
         textAlign: TextAlign.center,
         style: TextStyle(
             color: Constants.TEXT_DARK,
-            fontFamily: "Montserrat",
+            fontFamily: Constants.FONTSTYLE,
             fontWeight: FontWeight.w900),
       ),
       content:
@@ -267,9 +267,9 @@ class _MedicationReminderState extends State<MedicationReminder>{
                     color: Constants.LOGO_COLOUR_PINK_LIGHT,
                     child: Text(_clicked == false ? "Pick Time": "${convertTime(_time.hour.toString())} : ${convertTime(_time.minute.toString())}",
                         style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w900,
-                            fontFamily: "Montserrat")
+                          fontSize: 20,
+                          fontWeight: FontWeight.w900,
+                          fontFamily: Constants.FONTSTYLE,)
                     ),
                     textColor: Colors.white,
                     splashColor: Constants.LOGO_COLOUR_PINK_DARK,
@@ -310,7 +310,7 @@ class _MedicationReminderState extends State<MedicationReminder>{
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w900,
-                      fontFamily: "Montserrat",
+                      fontFamily: Constants.FONTSTYLE,
                     ),
                   ),
                   textColor: Colors.white,
@@ -443,7 +443,7 @@ class TopContainer extends StatelessWidget{
                       style: TextStyle(
                           fontSize: 24,
                           color: Constants.TEXT_SUPER_LIGHT,
-                          fontFamily: "Montserrat",
+                          fontFamily: Constants.FONTSTYLE,
                           fontWeight: FontWeight.bold),
                     ),
                   ),

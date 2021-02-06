@@ -52,7 +52,7 @@ class _ForgotPasswordPageState extends State<ForgotPassword>{
                     child: Text('Please enter your email, a verification email will be sent to update your password.',
                       style: TextStyle(
                         color: Constants.TEXT_LIGHT,
-                        fontFamily: "Montserrat",
+                        fontFamily: Constants.FONTSTYLE,
                         fontWeight: FontWeight.w900,
                         fontSize: 15,
                       ),
@@ -105,7 +105,7 @@ class _ForgotPasswordPageState extends State<ForgotPassword>{
                             style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w900,
-                                fontFamily: "Montserrat")),
+                              fontFamily: Constants.FONTSTYLE,)),
                         textColor: Colors.white,
                         splashColor: Colors.blue,
                         onPressed: () async {

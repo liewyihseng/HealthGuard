@@ -25,6 +25,8 @@ import 'package:HealthGuard/helper/validation_tool.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
 import 'package:HealthGuard/view/medication_reminder_screen.dart';
 
+import 'package:HealthGuard/view/find_doctor_screen.dart';
+
 FireStoreUtils _fireStoreUtils = FireStoreUtils();
 
 class home extends StatefulWidget {
@@ -84,7 +86,7 @@ class _home extends State<home> {
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 20,
-                      fontFamily: "Montserrat",
+                      fontFamily: Constants.FONTSTYLE,
                       fontWeight: FontWeight.w900),
                 ),
                 decoration: BoxDecoration(
@@ -97,7 +99,7 @@ class _home extends State<home> {
                 'My Profile',
                 style: TextStyle(
                     color: Colors.black,
-                    fontFamily: "Montserrat",
+                    fontFamily: Constants.FONTSTYLE,
                     fontWeight: FontWeight.w900),
               ),
               leading: SvgPicture.asset(
@@ -114,7 +116,7 @@ class _home extends State<home> {
                 'Log Out',
                 style: TextStyle(
                     color: Colors.black,
-                    fontFamily: "Montserrat",
+                    fontFamily: Constants.FONTSTYLE,
                     fontWeight: FontWeight.w900),
               ),
               leading: Transform.rotate(
@@ -194,7 +196,7 @@ class HealthOption extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 20.0,
                             color: Colors.black,
-                            fontFamily: "Montserrat",
+                            fontFamily: Constants.FONTSTYLE,
                             fontWeight: FontWeight.w600,
                           ),
                           textAlign: TextAlign.center,
@@ -225,7 +227,7 @@ class HealthOption extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 20.0,
                             color: Colors.black,
-                            fontFamily: "Montserrat",
+                            fontFamily: Constants.FONTSTYLE,
                             fontWeight: FontWeight.w600,
                           ),
                           textAlign: TextAlign.center,
@@ -256,7 +258,7 @@ class HealthOption extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 20.0,
                             color: Colors.black,
-                            fontFamily: "Montserrat",
+                            fontFamily: Constants.FONTSTYLE,
                             fontWeight: FontWeight.w600,
                           ),
                           textAlign: TextAlign.center,
@@ -287,7 +289,7 @@ class HealthOption extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 20.0,
                             color: Colors.black,
-                            fontFamily: "Montserrat",
+                            fontFamily: Constants.FONTSTYLE,
                             fontWeight: FontWeight.w600,
                           ),
                           textAlign: TextAlign.center,
@@ -318,7 +320,7 @@ class HealthOption extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 20.0,
                             color: Colors.black,
-                            fontFamily: "Montserrat",
+                            fontFamily: Constants.FONTSTYLE,
                             fontWeight: FontWeight.w600,
                           ),
                           textAlign: TextAlign.center,
@@ -349,7 +351,7 @@ class HealthOption extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 20.0,
                             color: Colors.black,
-                            fontFamily: "Montserrat",
+                            fontFamily: Constants.FONTSTYLE,
                             fontWeight: FontWeight.w600,
                           ),
                           textAlign: TextAlign.center,
@@ -359,7 +361,7 @@ class HealthOption extends StatelessWidget {
                   ),
                 ),
                 onTap: () {
-                  Navigator.pushNamed(context, Chatroom.id);
+                  Navigator.pushNamed(context, FindDoctor.id);
                 })),
         Card(
             elevation: 3.0,
@@ -380,7 +382,7 @@ class HealthOption extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 20.0,
                             color: Colors.black,
-                            fontFamily: "Montserrat",
+                            fontFamily: Constants.FONTSTYLE,
                             fontWeight: FontWeight.w600,
                           ),
                           textAlign: TextAlign.center,
@@ -390,7 +392,7 @@ class HealthOption extends StatelessWidget {
                   ),
                 ),
                 onTap: () {
-                  //Navigator.pushNamed(context, PedometerPage.id);
+                  //Navigator.pushNamed(context, HospitalSuggestion.id);
                 })),
       ],
     ));
@@ -466,7 +468,7 @@ class _HomeOptionState extends State<HomeOption> {
                           fontSize: 25,
                           fontWeight: FontWeight.w900,
                           color: Colors.white,
-                          fontFamily: "Montserrat",
+                            fontFamily: Constants.FONTSTYLE,
                         ),
                       ),
                     ),
@@ -543,7 +545,7 @@ class _HomeOptionState extends State<HomeOption> {
                     color: Constants.TEXT_LIGHT,
                     fontSize: 13,
                     fontWeight: FontWeight.bold,
-                    fontFamily: "Montserrat",
+                      fontFamily: Constants.FONTSTYLE,
                   ),
                 ),
                 SizedBox(height: 20),
@@ -570,7 +572,7 @@ class _HomeOptionState extends State<HomeOption> {
                                   style: TextStyle(
                                       fontSize: 20,
                                       color: Constants.TEXT_SUPER_LIGHT,
-                                      fontFamily: "Montserrat",
+                                      fontFamily: Constants.FONTSTYLE,
                                       fontWeight: FontWeight.w600),
                                 ),
                               ),

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:HealthGuard/constants.dart' as Constants;
 
-import 'package:HealthGuard/view/article_view.dart';
+import 'package:HealthGuard/view/article_webview_screen.dart';
 
 class CategoryView extends StatefulWidget{
 

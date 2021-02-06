@@ -250,7 +250,7 @@ class _medicalPageState extends State<EMedicalReport>{
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w900,
-                  fontFamily: "Montserrat"),
+                  fontFamily: Constants.FONTSTYLE,),
                 ),
               textColor: Colors.white,
               splashColor: Colors.blue,

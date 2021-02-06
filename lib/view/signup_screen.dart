@@ -89,7 +89,7 @@ class _signupPageState extends State<signup_page> {
           onPressed: () async {
             Navigator.pop(context);
             var image =
-                await ImagePicker.pickImage(source: ImageSource.gallery);
+            await ImagePicker.pickImage(source: ImageSource.gallery);
             setState(() {
               _image = image;
             });
@@ -123,7 +123,7 @@ class _signupPageState extends State<signup_page> {
       children: <Widget>[
         Padding(
           padding:
-              const EdgeInsets.only(left: 8.0, top: 32, right: 8, bottom: 8),
+          const EdgeInsets.only(left: 8.0, top: 32, right: 8, bottom: 8),
           child: Stack(
             alignment: Alignment.bottomCenter,
             children: <Widget>[
@@ -137,13 +137,13 @@ class _signupPageState extends State<signup_page> {
                     height: 170,
                     child: _image == null
                         ? Image.asset(
-                            'assets/placeholder.jpg',
-                            fit: BoxFit.cover,
-                          )
+                      'assets/placeholder.jpg',
+                      fit: BoxFit.cover,
+                    )
                         : Image.file(
-                            _image,
-                            fit: BoxFit.cover,
-                          ),
+                      _image,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               ),
@@ -164,7 +164,7 @@ class _signupPageState extends State<signup_page> {
             constraints: BoxConstraints(minWidth: double.infinity),
             child: Padding(
                 padding:
-                    const EdgeInsets.only(top: 16.0, right: 8.0, left: 8.0),
+                const EdgeInsets.only(top: 16.0, right: 8.0, left: 8.0),
                 child: TextFormField(
                     validator: validateName,
                     onSaved: (String val) {
@@ -174,7 +174,7 @@ class _signupPageState extends State<signup_page> {
                     onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
                     decoration: InputDecoration(
                         contentPadding:
-                            new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                        new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                         fillColor: Colors.white,
                         hintText: 'First Name',
                         border: OutlineInputBorder(
@@ -185,7 +185,7 @@ class _signupPageState extends State<signup_page> {
             constraints: BoxConstraints(minWidth: double.infinity),
             child: Padding(
                 padding:
-                    const EdgeInsets.only(top: 16.0, right: 8.0, left: 8.0),
+                const EdgeInsets.only(top: 16.0, right: 8.0, left: 8.0),
                 child: TextFormField(
                     validator: validateName,
                     onSaved: (String val) {
@@ -195,7 +195,7 @@ class _signupPageState extends State<signup_page> {
                     onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
                     decoration: InputDecoration(
                         contentPadding:
-                            new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                        new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                         fillColor: Colors.white,
                         hintText: 'Last Name',
                         border: OutlineInputBorder(
@@ -206,7 +206,7 @@ class _signupPageState extends State<signup_page> {
             constraints: BoxConstraints(minWidth: double.infinity),
             child: Padding(
                 padding:
-                    const EdgeInsets.only(top: 16.0, right: 8.0, left: 8.0),
+                const EdgeInsets.only(top: 16.0, right: 8.0, left: 8.0),
                 child: TextFormField(
                     keyboardType: TextInputType.phone,
                     textInputAction: TextInputAction.next,
@@ -217,7 +217,7 @@ class _signupPageState extends State<signup_page> {
                     },
                     decoration: InputDecoration(
                         contentPadding:
-                            new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                        new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                         fillColor: Colors.white,
                         hintText: 'Mobile Number',
                         border: OutlineInputBorder(
@@ -228,7 +228,7 @@ class _signupPageState extends State<signup_page> {
             constraints: BoxConstraints(minWidth: double.infinity),
             child: Padding(
                 padding:
-                    const EdgeInsets.only(top: 16.0, right: 8.0, left: 8.0),
+                const EdgeInsets.only(top: 16.0, right: 8.0, left: 8.0),
                 child: TextFormField(
                     keyboardType: TextInputType.emailAddress,
                     textInputAction: TextInputAction.next,
@@ -239,7 +239,7 @@ class _signupPageState extends State<signup_page> {
                     },
                     decoration: InputDecoration(
                         contentPadding:
-                            new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                        new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                         fillColor: Colors.white,
                         hintText: 'Email Address',
                         border: OutlineInputBorder(
@@ -263,7 +263,7 @@ class _signupPageState extends State<signup_page> {
                   cursorColor: Colors.black,
                   decoration: InputDecoration(
                       contentPadding:
-                          new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                      new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                       fillColor: Colors.white,
                       hintText: 'Password',
                       border: OutlineInputBorder(
@@ -290,7 +290,7 @@ class _signupPageState extends State<signup_page> {
                 cursorColor: Colors.black,
                 decoration: InputDecoration(
                     contentPadding:
-                        new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                    new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                     fillColor: Colors.white,
                     hintText: 'Confirm Password',
                     border: OutlineInputBorder(
@@ -308,9 +308,10 @@ class _signupPageState extends State<signup_page> {
               child: Text(
                 'Sign Up',
                 style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w900,
-                    fontFamily: "Montserrat"),
+                  fontSize: 20,
+                  fontWeight: FontWeight.w900,
+                  fontFamily: Constants.FONTSTYLE,
+                ),
               ),
               textColor: Colors.white,
               splashColor: Colors.blue,
@@ -369,7 +370,7 @@ class _signupPageState extends State<signup_page> {
         (error as FirebaseException).code != 'ERROR_EMAIL_ALREADY_IN_USE'
             ? showAlertDialog(context, 'Failed', 'Couldn\'t sign up')
             : showAlertDialog(context, 'Failed',
-                'Email already in use. Please pick another email address');
+            'Email already in use. Please pick another email address');
         print(error.toString());
       }
     } else {

@@ -87,7 +87,7 @@ class MedicationReminderCardSmall extends StatelessWidget {
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
                                 color: Constants.TEXT_LIGHT,
-                                fontFamily: "Montserrat",
+                                fontFamily: Constants.FONTSTYLE,
                               ),
                             ),
                             SizedBox(height: 5),
@@ -95,7 +95,7 @@ class MedicationReminderCardSmall extends StatelessWidget {
                               style: TextStyle(
                                 fontSize: 15,
                                 color: Constants.TEXT_LIGHT,
-                                fontFamily: "Montserrat",
+                                fontFamily: Constants.FONTSTYLE,
                               ),
                             ),
                           ],
