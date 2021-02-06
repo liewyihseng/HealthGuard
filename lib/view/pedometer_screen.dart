@@ -1,8 +1,9 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:HealthGuard/helper/shared_preferences_services.dart';
 import 'package:HealthGuard/main.dart';
+import 'package:HealthGuard/model/pedometer_model.dart';
+import 'package:HealthGuard/net/authentication.dart';
 import 'package:HealthGuard/widgets/round_progress_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:pedometer/pedometer.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
+import 'package:HealthGuard/helper/math_helper.dart';
 
 // pedometer plugin doc https://pub.dev/packages/pedometer
 
@@ -73,19 +75,20 @@ class _PedometerScreenState extends State<PedometerScreen> {
     int previousDayNo =
         await sharedPrefService.read(previousDayNoKey) ?? todayDayNo;
 
-    // if reboot then
+    /// if reboot then
     if (event.steps < preSteps) {
       preSteps = 0;
       sharedPrefService.saveInt(previousStepKey, preSteps);
     }
 
-    // if new day
-    if (previousDayNo < todayDayNo) {
+    /// if new day
+    if (previousDayNo != todayDayNo) {
+      _sendToServer(event.steps - preSteps, _goal, _calories, _water);
       preSteps = event.steps;
       previousDayNo = todayDayNo;
     }
 
-    // save all
+    /// save all
     sharedPrefService.saveInt(previousStepKey, preSteps);
     sharedPrefService.saveInt(previousDayNoKey, previousDayNo);
 
@@ -94,11 +97,27 @@ class _PedometerScreenState extends State<PedometerScreen> {
       _calories = _steps.toDouble() * 0.04;
       _water = (_steps.toDouble() * 0.1282).toInt();
     });
+
   }
 
-  /// helper function
-  double toPrecision(double value, int place) {
-    return ((value * pow(10, place)).round()) / pow(10, place);
+  /// send data to database
+  _sendToServer(int steps, int goal, double calories, int water) async {
+
+    /// construct updated data
+    PedometerData pedometerData = PedometerData(
+        goal: _goal,
+        steps: _steps,
+        water: _water,
+        calories: _calories,
+        lastUpdate: Timestamp.now()
+    );
+
+    /// store it to fire store
+    await FireStoreUtils.firestore
+        .collection(Constants.USERS)
+        .doc(MyAppState.currentUser.userID)
+        .collection(Constants.PEDOMETER_INFO)
+        .add(pedometerData.toJson());
   }
 
   /// GUI
@@ -158,7 +177,7 @@ class _PedometerScreenState extends State<PedometerScreen> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Icon(Icons.local_fire_department),
-                                  Text("${toPrecision(_calories, 2)} cal"),
+                                  Text("${MathHelper.toPrecision(_calories, 2)} cal"),
                                 ],
                               );
                             }),
@@ -199,7 +218,7 @@ class _PedometerScreenState extends State<PedometerScreen> {
                             ),
                             Text("$_steps / $_goal steps"),
                             Text(
-                                "${toPrecision(value / _goal.toDouble() * 100, 2)} %"),
+                                "${MathHelper.toPrecision(value / _goal.toDouble() * 100, 2)} %"),
                           ],
                         );
                       }),
