@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:HealthGuard/helper/shared_preferences_services.dart';
 import 'package:HealthGuard/main.dart';
 import 'package:HealthGuard/model/pedometer_model.dart';
-import 'package:HealthGuard/net/authentication.dart';
 import 'package:HealthGuard/widgets/round_progress_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
@@ -58,6 +57,7 @@ class _PedometerScreenState extends State<PedometerScreen> {
   void initState() {
     super.initState();
     initPlatformState();
+    // _sendToServer(_steps, _goal, _calories, _water);
   }
 
   /// step count event handler
@@ -83,7 +83,7 @@ class _PedometerScreenState extends State<PedometerScreen> {
 
     /// if new day
     if (previousDayNo != todayDayNo) {
-      _sendToServer(event.steps - preSteps, _goal, _calories, _water);
+      // _sendToServer(event.steps - preSteps, _goal, _calories, _water); // to lower database traffic
       preSteps = event.steps;
       previousDayNo = todayDayNo;
     }
@@ -97,6 +97,7 @@ class _PedometerScreenState extends State<PedometerScreen> {
       _calories = _steps.toDouble() * 0.04;
       _water = (_steps.toDouble() * 0.1282).toInt();
     });
+    _sendToServer(_steps, _goal, _calories, _water);
 
   }
 
@@ -112,12 +113,40 @@ class _PedometerScreenState extends State<PedometerScreen> {
         lastUpdate: Timestamp.now()
     );
 
-    /// store it to fire store
-    await FireStoreUtils.firestore
+    var pedometerRef = db
         .collection(Constants.USERS)
         .doc(MyAppState.currentUser.userID)
-        .collection(Constants.PEDOMETER_INFO)
-        .add(pedometerData.toJson());
+        .collection(Constants.PEDOMETER_INFO);
+
+    /// previous data
+    // PedometerData oldPedometerData; // not used
+    String oldDataId;
+
+    var now = DateTime.now();
+    var lastMidnight = DateTime(now.year, now.month, now.day);
+    var followingMidNight = DateTime(now.year, now.month, now.day);
+
+    await pedometerRef
+        .orderBy("lastUpdate",descending: true)
+        .where("lastUpdate", isGreaterThanOrEqualTo: Timestamp.fromDate(lastMidnight))
+        .where("lastUpdate", isLessThan: Timestamp.fromDate(followingMidNight))
+        .get()
+        .then((value){
+          if(value.docs.isNotEmpty){
+            oldDataId = value.docs.first.id;
+            print("$oldDataId this is my text");
+            // oldPedometerData = PedometerData.fromJson(value.docs.single.data()); // not used
+          } else {
+            print("no document found");
+          }
+    }).catchError((e)=> print("error fetching old pedometer data : $e"));
+
+    if (oldDataId != null){
+      await pedometerRef.doc(oldDataId).update(pedometerData.toJson());
+    } else {
+      await pedometerRef.add(pedometerData.toJson());
+    }
+
   }
 
   /// GUI
@@ -138,24 +167,7 @@ class _PedometerScreenState extends State<PedometerScreen> {
         backgroundColor: Constants.APPBAR_COLOUR,
         centerTitle: true,
       ),
-      body: StreamBuilder<QuerySnapshot>(
-          stream: db
-              .collection(Constants.USERS)
-              .doc(MyAppState.currentUser.userID)
-              .collection(Constants.PEDOMETER_INFO)
-              .snapshots(),
-          builder: (context, snapshot) {
-            var doc;
-            if (snapshot.hasData) {
-              doc = snapshot.data.docs;
-              // TODO - continue this part
-              /// load data based on day number
-              /// calculate new data
-              /// store updated data during the same day to the same document in fire store
-              /// else the next day store updated data as a new document to fire store
-              /// (additional : replace previous year record based on 365 days)
-            }
-            return Container(
+      body: Container(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -224,8 +236,7 @@ class _PedometerScreenState extends State<PedometerScreen> {
                       }),
                 ],
               ),
-            );
-          }),
+            ),
     );
   }
 }
