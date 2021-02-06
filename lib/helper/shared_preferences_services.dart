@@ -5,14 +5,14 @@ class SharedPrefService {
   static String firstname = "FIRSTNAME";
 
   /// read any value
-  static dynamic read(String key) async {
+  Future<dynamic> read(String key) async {
     final prefs = await SharedPreferences.getInstance();
     final value = prefs.get(key);
     return value;
   }
 
   /// write int
-  static void saveInt(String key, int value) async {
+  void saveInt(String key, int value) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setInt(key, value);
   }
