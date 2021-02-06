@@ -1,4 +1,6 @@
 import 'package:HealthGuard/Bloodpressure1.dart';
+import 'package:HealthGuard/doctor_detail.dart';
+import 'package:HealthGuard/find_doctor.dart';
 import 'package:HealthGuard/view/help_center_view.dart';
 import 'package:HealthGuard/medical_feed.dart';
 import 'package:HealthGuard/medication_reminder.dart';
@@ -51,6 +53,8 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
         EMedicalReport.id: (context) => EMedicalReport(),
         MedicationReminder.id: (context) => MedicationReminder(),
         ForgotPassword.id: (context) => ForgotPassword(),
+        FindDoctor.id: (context) => FindDoctor(),
+        DoctorDetail.id: (context) => DoctorDetail(),
         Bloodpressure1.id: (context) =>
             Bloodpressure1(sys: 60, dia: 70, pul: 80),
         Chatroom.id: (context) => Chatroom(),

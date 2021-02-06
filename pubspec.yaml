@@ -116,6 +116,18 @@ flutter:
     - assets/icons/help-center.svg
     - assets/capsule.png
     - assets/syringe.png
+    - assets/medicalCategory/category1.png
+    - assets/medicalCategory/category2.png
+    - assets/medicalCategory/category3.png
+    - assets/medicalCategory/category4.png
+    - assets/medicalCategory/category5.png
+    - assets/medicalCategory/category6.png
+    - assets/medicalCategory/category7.png
+    - assets/medicalCategory/category8.png
+    - assets/docprofile/doc1.png
+    - assets/docprofile/doc2.png
+    - assets/docprofile/doc3.png
+    - assets/docinfo/bg1.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

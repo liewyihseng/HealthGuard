@@ -24,6 +24,8 @@ import 'package:HealthGuard/helper/validation_tool.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
 import 'package:HealthGuard/medication_reminder.dart';
 
+import 'package:HealthGuard/find_doctor.dart';
+
 FireStoreUtils _fireStoreUtils = FireStoreUtils();
 
 class home extends StatefulWidget {
@@ -358,7 +360,7 @@ class HealthOption extends StatelessWidget {
                   ),
                 ),
                 onTap: () {
-                  Navigator.pushNamed(context, Chatroom.id);
+                  Navigator.pushNamed(context, FindDoctor.id);
                 })),
         Card(
             elevation: 3.0,
@@ -389,7 +391,7 @@ class HealthOption extends StatelessWidget {
                   ),
                 ),
                 onTap: () {
-                  Navigator.pushNamed(context, HospitalSuggestion.id);
+                  //Navigator.pushNamed(context, HospitalSuggestion.id);
                 })),
       ],
     ));
