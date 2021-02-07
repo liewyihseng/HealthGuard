@@ -1,6 +1,6 @@
 
-import 'file:///C:/Users/user/AndroidStudioProjects/HealthGuard/lib/view/doctor_detail_screen.dart';
-import 'file:///C:/Users/user/AndroidStudioProjects/HealthGuard/lib/view/find_doctor_screen.dart';
+import 'package:HealthGuard/view/doctor_detail_screen.dart';
+import 'package:HealthGuard/view/find_doctor_screen.dart';
 import 'package:HealthGuard/view/bloodpressure_screen.dart';
 import 'package:HealthGuard/view/help_center_screen.dart';
 import 'package:HealthGuard/view/medical_feed_screen.dart';
