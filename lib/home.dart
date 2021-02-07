@@ -217,6 +217,9 @@ class HealthOption extends StatelessWidget {
                 text: "Hospital Suggestions",
                 screenID: EMedicalReport.id, // dummy input
               ),
+              SizedBox(
+                height: 5,
+              ),
             ],
           ),
         ),

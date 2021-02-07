@@ -1,11 +1,11 @@
 import 'dart:async';
-import 'dart:html';
 
 import 'package:HealthGuard/helper/shared_preferences_services.dart';
 import 'package:HealthGuard/helper/time_helper.dart';
 import 'package:HealthGuard/main.dart';
 import 'package:HealthGuard/model/pedometer_model.dart';
 import 'package:HealthGuard/view/pedometer_history_screen.dart';
+import 'package:HealthGuard/widgets/health_option_card.dart';
 import 'package:HealthGuard/widgets/round_progress_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
@@ -272,15 +272,23 @@ class _PedometerScreenState extends State<PedometerScreen> {
                           ],
                         );
                       }),
-                  GestureDetector(
-                    child: Card(
-                      child: Text(
-                        "History"
+                  Row(
+                    children: [
+                      Expanded(
+                        child: HealthOptionCard(
+                          imageName: "assets/Pedometer.png",
+                          text: "Goal",
+                          screenID: PedometerHistoryScreen.id,
+                        ),
                       ),
-                    ),
-                    onTap: (){
-                      Navigator.pushNamed(context, PedometerHistoryScreen.id);
-                    },
+                      Expanded(
+                        child: HealthOptionCard(
+                          imageName: "assets/Pedometer.png",
+                          text: "History",
+                          screenID: PedometerHistoryScreen.id,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
