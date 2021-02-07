@@ -10,7 +10,7 @@ const RECORDS = "health_records";
 const ACC_INFO = "acc_info";
 const MED_INFO = "medical_info";
 const MEDICATION_INFO = "medication_info";
-const PEDOMETER_INFO = "pedometer_info";
+
 
 /// Colours
 const BUTTON_COLOUR = Color(0xff01A0C7);
@@ -27,12 +27,4 @@ const TEXT_DARK = Color(0xFF102A43);
 
 const BACKGROUND_COLOUR = Color(0xFFF5F5F7);
 
-/// Font
-const FONTSTYLE = "Montserrat";
-
-/// Appbar
-const APPBAR_TEXT_WEIGHT = FontWeight.w900;
-
 const APPBAR_COLOUR = Colors.blue;
-
-
