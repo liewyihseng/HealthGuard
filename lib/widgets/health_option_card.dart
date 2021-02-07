@@ -23,7 +23,7 @@ class HealthOptionCard extends StatelessWidget {
                   height: 30.0,
                 ),
                 Padding(
-                  padding: EdgeInsets.all(15.0),
+                  padding: EdgeInsets.all(13.0),
                   child: Text(
                     text,
                     style: TextStyle(
