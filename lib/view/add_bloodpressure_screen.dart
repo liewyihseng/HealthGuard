@@ -1,7 +1,6 @@
 
-import 'package:flutter/material.dart';
 import 'package:HealthGuard/view/bloodpressure_screen.dart';
-import 'package:HealthGuard/widgets/bloodpressure_chart.dart';
+import 'package:flutter/material.dart';
 
 class AddBloodpressureScreen extends StatelessWidget {
   var _sys;

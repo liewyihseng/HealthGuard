@@ -1,12 +1,13 @@
 
-import 'file:///C:/Users/user/AndroidStudioProjects/HealthGuard/lib/view/doctor_detail_screen.dart';
-import 'file:///C:/Users/user/AndroidStudioProjects/HealthGuard/lib/view/find_doctor_screen.dart';
+import 'package:HealthGuard/view/doctor_detail_screen.dart';
+import 'package:HealthGuard/view/find_doctor_screen.dart';
 import 'package:HealthGuard/view/bloodpressure_screen.dart';
 import 'package:HealthGuard/view/help_center_screen.dart';
 import 'package:HealthGuard/view/medical_feed_screen.dart';
 import 'package:HealthGuard/view/medication_reminder_screen.dart';
 import 'package:HealthGuard/view/my_account_screen.dart';
 import 'package:HealthGuard/view/my_medical_screen.dart';
+import 'package:HealthGuard/view/pedometer_history_screen.dart';
 import 'package:HealthGuard/view/user_profile_screen.dart';
 import 'package:HealthGuard/view/forgot_password_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -50,6 +51,7 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
         MyMedical.id: (context) => MyMedical(),
         HelpCenter.id: (context) => HelpCenter(),
         PedometerScreen.id: (context) => PedometerScreen(),
+        PedometerHistoryScreen.id: (context) => PedometerHistoryScreen(),
         MedicalFeed.id: (context) => MedicalFeed(),
         EMedicalReport.id: (context) => EMedicalReport(),
         MedicationReminder.id: (context) => MedicationReminder(),

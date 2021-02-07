@@ -1,23 +1,23 @@
+import 'package:HealthGuard/helper/time_helper.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 ///store pedometer result data and calculation data
 class PedometerData {
 
   /// variables
-  int goal = 10000;
-  int steps = 0;
-  int water = 0;
-  double calories = 0.0;
-  Timestamp lastUpdate = Timestamp.now();
+  int goal;
+  int steps;
+  int water;
+  double calories;
+  Timestamp date;
 
-  /// constructor
-  PedometerData({
-    this.goal,
-    this.steps,
-    this.water,
-    this.calories,
-    this.lastUpdate
-  });
+  PedometerData({int goal, int steps, int water, double calories, Timestamp date}){
+    this.goal = goal;
+    this.steps = steps;
+    this.water = water;
+    this.calories = calories;
+    this.date = Timestamp.fromDate(TimeHelper.getYesterdayDate());
+  }
 
   ///convert from json
   factory PedometerData.fromJson(Map<dynamic, dynamic> parsedJson){
@@ -26,7 +26,7 @@ class PedometerData {
         steps: parsedJson['steps'] ?? 0,
         water: parsedJson['water'] ?? 0.0,
         calories: parsedJson['calories'] ?? 0,
-        lastUpdate: parsedJson['lastUpdate'] ?? Timestamp.now()
+        date: parsedJson['date'] ?? Timestamp.fromDate(TimeHelper.getYesterdayDate())
     );
   }
 
@@ -37,7 +37,7 @@ class PedometerData {
       "steps" : this.steps,
       "water" : this.water,
       "calories" : this.calories,
-      "lastUpdate" : this.lastUpdate
+      "date" : this.date
     };
   }
 }

@@ -34,5 +34,3 @@ const FONTSTYLE = "Montserrat";
 const APPBAR_TEXT_WEIGHT = FontWeight.w900;
 
 const APPBAR_COLOUR = Colors.blue;
-
-
