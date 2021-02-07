@@ -1,27 +1,32 @@
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:HealthGuard/pedometer_page.dart';
-import 'package:HealthGuard/medical_feed.dart';
-import 'package:HealthGuard/user_profile.dart';
-import 'package:HealthGuard/widgets/card_section.dart';
+import 'package:HealthGuard/view/medical_feed_screen.dart';
+import 'package:HealthGuard/view/user_profile_screen.dart';
+import 'package:HealthGuard/view/bloodpressure_screen.dart';
+import 'package:HealthGuard/widgets/health_option_card.dart';
+import 'package:HealthGuard/widgets/medication_reminder_card_small.dart';
+import 'package:HealthGuard/view/pedometer_screen.dart';
 import 'package:HealthGuard/widgets/custom_clipper.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import 'package:flutter_svg/svg.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-
-import 'package:HealthGuard/Bloodpressure1.dart';
-import 'package:HealthGuard/User.dart' as OurUser;
-import 'package:HealthGuard/authentication.dart';
-import 'package:HealthGuard/login_page.dart';
+import 'package:HealthGuard/chat/chatroom.dart';
+import 'package:HealthGuard/view/bloodpressure_screen.dart';
+import 'package:HealthGuard/model/user_model.dart' as OurUser;
+import 'package:HealthGuard/net/authentication.dart';
+import 'package:HealthGuard/view/login_screen.dart';
 import 'package:HealthGuard/main.dart';
-import 'package:HealthGuard/e-medical_report.dart';
-import 'package:HealthGuard/validation_tool.dart';
+import 'package:HealthGuard/view/e-medical_report_screen.dart';
+import 'package:HealthGuard/helper/validation_tool.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
-import 'package:HealthGuard/medication_reminder.dart';
+import 'package:HealthGuard/view/medication_reminder_screen.dart';
+
+import 'package:HealthGuard/view/find_doctor_screen.dart';
 
 FireStoreUtils _fireStoreUtils = FireStoreUtils();
 
@@ -67,6 +72,7 @@ class _home extends State<home> {
     ];
 
     return Scaffold(
+      backgroundColor: Constants.BACKGROUND_COLOUR,
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
@@ -80,7 +86,7 @@ class _home extends State<home> {
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 20,
-                      fontFamily: "Montserrat",
+                      fontFamily: Constants.FONTSTYLE,
                       fontWeight: FontWeight.w900),
                 ),
                 decoration: BoxDecoration(
@@ -93,7 +99,7 @@ class _home extends State<home> {
                 'My Profile',
                 style: TextStyle(
                     color: Colors.black,
-                    fontFamily: "Montserrat",
+                    fontFamily: Constants.FONTSTYLE,
                     fontWeight: FontWeight.w900),
               ),
               leading: SvgPicture.asset(
@@ -110,7 +116,7 @@ class _home extends State<home> {
                 'Log Out',
                 style: TextStyle(
                     color: Colors.black,
-                    fontFamily: "Montserrat",
+                    fontFamily: Constants.FONTSTYLE,
                     fontWeight: FontWeight.w900),
               ),
               leading: Transform.rotate(
@@ -132,9 +138,10 @@ class _home extends State<home> {
         title: Text(
           'Home',
           style: TextStyle(
-              color: Colors.white,
-              fontFamily: "Montserrat",
-              fontWeight: FontWeight.w900),
+            color: Colors.white,
+            fontFamily: Constants.FONTSTYLE,
+            fontWeight: Constants.APPBAR_TEXT_WEIGHT,
+          ),
         ),
         iconTheme: IconThemeData(color: Colors.white),
         backgroundColor: Constants.APPBAR_COLOUR,
@@ -169,226 +176,57 @@ class HealthOption extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
         child: Column(
-          children: [
-            Card(
-                elevation: 3.0,
-                child: GestureDetector(
-                    child: Container(
-                      child: Column(
-                        children: <Widget>[
-                          Image.asset(
-                            "assets/E-Medical Report.png",
-                            alignment: Alignment.center,
-                            width: 100.0,
-                            height: 27.0,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(15.0),
-                            child: Text(
-                              "E-Medical Report",
-                              style: TextStyle(
-                                fontSize: 20.0, color: Colors.black,
-                                fontFamily: "Montserrat",
-                                fontWeight: FontWeight.w600,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    onTap: () {
-                      Navigator.pushNamed(context, EMedicalReport.id);
-                    })),
-            Card(
-                elevation: 3.0,
-                child: GestureDetector(
-                    child: Container(
-                      child: Column(
-                        children: <Widget>[
-                          Image.asset(
-                            "assets/Pedometer.png",
-                            alignment: Alignment.center,
-                            width: 40.0,
-                            height: 27.0,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(15.0),
-                            child: Text(
-                              "Pedometer",
-                              style: TextStyle(
-                                fontSize: 20.0, color: Colors.black,
-                                fontFamily: "Montserrat",
-                                fontWeight: FontWeight.w600,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    onTap: () {
-                      Navigator.pushNamed(context, PedometerPage.id);
-                    })),
-            Card(
-                elevation: 3.0,
-                child: GestureDetector(
-                    child: Container(
-                      child: Column(
-                        children: <Widget>[
-                          Image.asset(
-                            "assets/Medical News Update.png",
-                            alignment: Alignment.center,
-                            width: 40.0,
-                            height: 27.0,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(15.0),
-                            child: Text(
-                              "Medical News Update",
-                              style: TextStyle(
-                                fontSize: 20.0, color: Colors.black,
-                                fontFamily: "Montserrat",
-                                fontWeight: FontWeight.w600,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    onTap: () {
-                      Navigator.pushNamed(context, MedicalFeed.id);
-                    })),
-            Card(
-                elevation: 3.0,
-                child: GestureDetector(
-                    child: Container(
-                      child: Column(
-                        children: <Widget>[
-                          Image.asset(
-                            "assets/Medication Reminder.png",
-                            alignment: Alignment.center,
-                            width: 40.0,
-                            height: 27.0,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(15.0),
-                            child: Text(
-                              "Medication Reminder",
-                              style: TextStyle(
-                                fontSize: 20.0, color: Colors.black,
-                                fontFamily: "Montserrat",
-                                fontWeight: FontWeight.w600,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    onTap: () {
-                      Navigator.pushNamed(context, MedicationReminder.id);
-                    })),
-            Card(
-                elevation: 3.0,
-                child: GestureDetector(
-                    child: Container(
-                      child: Column(
-                        children: <Widget>[
-                          Image.asset(
-                            "assets/Blood Pressure Diary.png",
-                            alignment: Alignment.center,
-                            width: 40.0,
-                            height: 27.0,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(15.0),
-                            child: Text(
-                              "Blood Pressure Diary",
-                              style: TextStyle(
-                                fontSize: 20.0, color: Colors.black,
-                                fontFamily: "Montserrat",
-                                fontWeight: FontWeight.w600,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    onTap: () {
-                      Navigator.pushNamed(context, Bloodpressure1.id);
-                    })),
-            Card(
-                elevation: 3.0,
-                child: GestureDetector(
-                    child: Container(
-                      child: Column(
-                        children: <Widget>[
-                          Image.asset(
-                            "assets/Chat with Doctor.png",
-                            alignment: Alignment.center,
-                            width: 40.0,
-                            height: 27.0,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(15.0),
-                            child: Text(
-                              "Chat with Doctor",
-                              style: TextStyle(
-                                fontSize: 20.0, color: Colors.black,
-                                fontFamily: "Montserrat",
-                                fontWeight: FontWeight.w600,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    onTap: () {
-                      //Navigator.pushNamed(context, PedometerPage.id);
-                    })),
-            Card(
-                elevation: 3.0,
-                child: GestureDetector(
-                    child: Container(
-                      child: Column(
-                        children: <Widget>[
-                          Image.asset(
-                            "assets/Hospital Suggestions.png",
-                            alignment: Alignment.center,
-                            width: 40.0,
-                            height: 27.0,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(15.0),
-                            child: Text(
-                              "Hospital Suggestions",
-                              style: TextStyle(
-                                fontSize: 20.0, color: Colors.black,
-                                fontFamily: "Montserrat",
-                                fontWeight: FontWeight.w600,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    onTap: () {
-                      //Navigator.pushNamed(context, PedometerPage.id);
-                    })),
-          ],
-        ));
+          mainAxisSize: MainAxisSize.min,
+      children: [
+        Expanded(
+          child: ListView(
+            scrollDirection: Axis.vertical,
+            children: [
+              HealthOptionCard(
+                imageName: "assets/E-Medical Report.png",
+                text: "E-Medical Report",
+                screenID: EMedicalReport.id,
+              ),
+              HealthOptionCard(
+                imageName: "assets/Pedometer.png",
+                text: "Pedometer",
+                screenID: PedometerScreen.id,
+              ),
+              HealthOptionCard(
+                imageName: "assets/Medical News Update.png",
+                text: "Medical News Update",
+                screenID: MedicalFeed.id,
+              ),
+              HealthOptionCard(
+                imageName: "assets/Medication Reminder.png",
+                text: "Medication Reminder",
+                screenID: MedicationReminder.id,
+              ),
+              HealthOptionCard(
+                imageName: "assets/Blood Pressure Diary.png",
+                text: "Blood Pressure Diary",
+                screenID: BloodPressureScreen.id,
+              ),
+              HealthOptionCard(
+                imageName: "assets/Chat with Doctor.png",
+                text: "Chat with Doctor",
+                screenID: FindDoctor.id,
+              ),
+              HealthOptionCard(
+                imageName: "assets/Hospital Suggestions.png",
+                text: "Hospital Suggestions",
+                screenID: EMedicalReport.id, // dummy input
+              ),
+            ],
+          ),
+        ),
+      ],
+    ));
   }
 }
 
 String displayGreetings() {
-  var hourNow = DateTime
-      .now()
-      .hour;
+  var hourNow = DateTime.now().hour;
   if (hourNow < 12) {
     return 'Morning';
   }
@@ -415,10 +253,7 @@ class _HomeOptionState extends State<HomeOption> {
 
   @override
   Widget build(BuildContext context) {
-    double statusBarHeight = MediaQuery
-        .of(context)
-        .padding
-        .top;
+    double statusBarHeight = MediaQuery.of(context).padding.top;
 
     return Scaffold(
       backgroundColor: Constants.BACKGROUND_COLOUR,
@@ -442,7 +277,6 @@ class _HomeOptionState extends State<HomeOption> {
               ),
             ),
           ),
-
           Padding(
             padding: EdgeInsets.all(35),
             child: ListView(
@@ -450,23 +284,27 @@ class _HomeOptionState extends State<HomeOption> {
                 Row(
                   children: <Widget>[
                     Expanded(
-                      child: Text("Good " + displayGreetings() + ",\n"+ user.fullName() +".",
+                      child: Text(
+                        "Good " +
+                            displayGreetings() +
+                            ",\n" +
+                            user.fullName() +
+                            ".",
                         style: TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.w900,
                           color: Colors.white,
-                          fontFamily: "Montserrat",
+                          fontFamily: Constants.FONTSTYLE,
                         ),
                       ),
                     ),
                     GestureDetector(
                         child: Container(
-                            child: displayCircleImage(user.profilePictureURL, 55, false)
-                        ),
+                            child: displayCircleImage(
+                                user.profilePictureURL, 55, false)),
                         onTap: () {
                           Navigator.pushNamed(context, UserProfile.id);
-                        }
-                    ),
+                        }),
                   ],
                 ),
 
@@ -474,10 +312,11 @@ class _HomeOptionState extends State<HomeOption> {
 
                 /// Green Box containing the user's QR Code
                 Container(
-                  margin: const EdgeInsets.only(top: 15.0, left: 25.0, right: 25.0, bottom: 15.0),
-                  width: (
-                      (MediaQuery.of(context).size.width - (30.0 * 2 + 30.0 / 2)) /
-                          2),
+                  margin: const EdgeInsets.only(
+                      top: 15.0, left: 25.0, right: 25.0, bottom: 15.0),
+                  width: ((MediaQuery.of(context).size.width -
+                          (30.0 * 2 + 30.0 / 2)) /
+                      2),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(10.0)),
                     shape: BoxShape.rectangle,
@@ -490,10 +329,12 @@ class _HomeOptionState extends State<HomeOption> {
                         children: <Widget>[
                           Positioned(
                             child: ClipPath(
-                              clipper: MyCustomClipper(clipType: ClipType.semiCircle),
+                              clipper: MyCustomClipper(
+                                  clipType: ClipType.semiCircle),
                               child: Container(
                                 decoration: new BoxDecoration(
-                                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10.0)),
                                   color: Colors.black.withOpacity(0.03),
                                 ),
                                 height: 120,
@@ -517,7 +358,6 @@ class _HomeOptionState extends State<HomeOption> {
                               ],
                             ),
                           ),
-
                         ],
                       ),
                     ),
@@ -525,59 +365,67 @@ class _HomeOptionState extends State<HomeOption> {
                   ),
                 ),
                 SizedBox(height: 20),
-                Text("YOUR DAILY MEDICATION",
+                Text(
+                  "YOUR DAILY MEDICATION",
                   style: TextStyle(
                     color: Constants.TEXT_LIGHT,
                     fontSize: 13,
                     fontWeight: FontWeight.bold,
-                    fontFamily: "Montserrat",
+                    fontFamily: Constants.FONTSTYLE,
                   ),
                 ),
                 SizedBox(height: 20),
+
                 /// Working Data Change with medication reminder
                 Container(
                   height: 125,
                   child: StreamBuilder<QuerySnapshot>(
-                    stream: db.collection(Constants.USERS).doc(MyAppState.currentUser.userID).collection(Constants.MEDICATION_INFO).snapshots(),
-                    builder: (context, snapshot){
-                      if(!snapshot.hasData){
+                    stream: db
+                        .collection(Constants.USERS)
+                        .doc(MyAppState.currentUser.userID)
+                        .collection(Constants.MEDICATION_INFO)
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData) {
                         return Container();
-                      }else if(snapshot.data.size == 0){
+                      } else if (snapshot.data.size == 0) {
                         return GestureDetector(
-                          child: Container(
-                            color: Color(0xFFF6F8FC),
-                            child: Center(
-                              child:  Text(
-                                'Tap to add medication',
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    color: Constants.TEXT_SUPER_LIGHT,
-                                    fontFamily: "Montserrat",
-                                    fontWeight: FontWeight.w600),
+                            child: Container(
+                              color: Color(0xFFF6F8FC),
+                              child: Center(
+                                child: Text(
+                                  'Tap to add medication',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      color: Constants.TEXT_SUPER_LIGHT,
+                                      fontFamily: Constants.FONTSTYLE,
+                                      fontWeight: FontWeight.w600),
+                                ),
                               ),
                             ),
-                          ),
-                          onTap: (){
-                            Navigator.pushNamed(context, MedicationReminder.id);
-                          }
+                            onTap: () {
+                              Navigator.pushNamed(
+                                  context, MedicationReminder.id);
+                            });
+                      } else {
+                        var doc = snapshot.data.documents;
+                        return new ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: doc.length,
+                          itemBuilder: (context, index) {
+                            return Container(
+                              child: MedicationReminderCardSmall(
+                                title: doc[index].get("medicineName"),
+                                value: doc[index].get("dosage"),
+                                unit: "mg",
+                                time: doc[index].get("startTime"),
+                                image: AssetImage(
+                                    imageLink(doc[index].get("medicineType"))),
+                                isDone: false,
+                              ),
+                            );
+                          },
                         );
-                      }else{ var doc = snapshot.data.documents;
-                      return new ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: doc.length,
-                        itemBuilder: (context, index){
-                          return Container(
-                            child: CardSection(
-                              title: doc[index].get("medicineName"),
-                              value: doc[index].get("dosage"),
-                              unit: "mg",
-                              time: doc[index].get("startTime"),
-                              image: AssetImage(imageLink(doc[index].get("medicineType"))),
-                              isDone: false,
-                            ),
-                          );
-                        },
-                      );
                       }
                     },
                   ),
@@ -590,4 +438,3 @@ class _HomeOptionState extends State<HomeOption> {
     );
   }
 }
-

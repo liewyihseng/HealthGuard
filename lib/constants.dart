@@ -1,8 +1,8 @@
 library constants;
-
 import 'package:flutter/material.dart';
 
 import 'dart:ui';
+
 
 /// Database
 const USERS = 'users';
@@ -10,7 +10,7 @@ const RECORDS = "health_records";
 const ACC_INFO = "acc_info";
 const MED_INFO = "medical_info";
 const MEDICATION_INFO = "medication_info";
-const BP_INFO = "bloodPressure_info";
+
 
 /// Colours
 const BUTTON_COLOUR = Color(0xff01A0C7);

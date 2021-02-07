@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "860372481278-plkdi3559qhvs9og6jmiapgs69nvviio.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.HealthGuard",
+            "certificate_hash": "c2f73c963fa6e5b26fa0883f2908d33941f24a30"
+          }
+        },
+        {
           "client_id": "860372481278-eria9ov1574lahhgupbm3vb7i9d3umtb.apps.googleusercontent.com",
           "client_type": 3
         }
