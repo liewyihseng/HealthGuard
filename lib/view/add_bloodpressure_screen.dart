@@ -1,8 +1,8 @@
-import 'package:HealthGuard/Bloodpressure1.dart';
-import 'package:flutter/material.dart';
-import 'package:HealthGuard/Bloodpressurechart.dart';
 
-class Bloodpressure2 extends StatelessWidget {
+import 'package:HealthGuard/view/bloodpressure_screen.dart';
+import 'package:flutter/material.dart';
+
+class AddBloodpressureScreen extends StatelessWidget {
   var _sys;
   var _dia;
   var _pul;
@@ -61,7 +61,7 @@ class Bloodpressure2 extends StatelessWidget {
                       Navigator.push(
                           context,
                           new MaterialPageRoute(
-                              builder: (context) => Bloodpressure1(
+                              builder: (context) => BloodPressureScreen(
                                   sys: _sys, dia: _dia, pul: _pul)));
                     },
                     child: Text('Submit'),
