@@ -128,6 +128,7 @@ flutter:
     - assets/docprofile/doc2.png
     - assets/docprofile/doc3.png
     - assets/docinfo/bg1.png
+    - assets/icons/Walking.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

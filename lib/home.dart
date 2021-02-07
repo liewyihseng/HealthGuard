@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:HealthGuard/view/medical_feed_screen.dart';
 import 'package:HealthGuard/view/user_profile_screen.dart';
 import 'package:HealthGuard/view/bloodpressure_screen.dart';
+import 'package:HealthGuard/widgets/card_items.dart';
 import 'package:HealthGuard/widgets/medication_reminder_card_small.dart';
 import 'package:HealthGuard/view/pedometer_screen.dart';
 import 'package:HealthGuard/widgets/custom_clipper.dart';
@@ -73,6 +74,19 @@ class _home extends State<home> {
 
     return Scaffold(
       backgroundColor: Constants.BACKGROUND_COLOUR,
+      appBar: AppBar(
+        title: Text(
+          'Home',
+          style: TextStyle(
+            color: Colors.white,
+            fontFamily: Constants.FONTSTYLE,
+            fontWeight: Constants.APPBAR_TEXT_WEIGHT,
+          ),
+        ),
+        iconTheme: IconThemeData(color: Colors.white),
+        backgroundColor: Constants.APPBAR_COLOUR,
+        centerTitle: true,
+      ),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
@@ -133,19 +147,6 @@ class _home extends State<home> {
             ),
           ],
         ),
-      ),
-      appBar: AppBar(
-        title: Text(
-          'Home',
-          style: TextStyle(
-              color: Colors.white,
-              fontFamily: Constants.FONTSTYLE,
-            fontWeight: Constants.APPBAR_TEXT_WEIGHT,
-          ),
-        ),
-        iconTheme: IconThemeData(color: Colors.white),
-        backgroundColor: Constants.APPBAR_COLOUR,
-        centerTitle: true,
       ),
       body: _bottomNavBarOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
@@ -347,7 +348,7 @@ class HealthOption extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.all(15.0),
                         child: Text(
-                          "Chat with Doctor",
+                          "Find a Doctor",
                           style: TextStyle(
                             fontSize: 20.0,
                             color: Colors.black,
@@ -420,6 +421,9 @@ class HomeOption extends StatefulWidget {
   _HomeOptionState createState() => _HomeOptionState(user);
 }
 
+
+
+
 class _HomeOptionState extends State<HomeOption> {
   final OurUser.User user;
   final db = FirebaseFirestore.instance;
@@ -452,7 +456,7 @@ class _HomeOptionState extends State<HomeOption> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.all(35),
+            padding: EdgeInsets.only(bottom: 35, left: 35, right: 35, top: 35),
             child: ListView(
               children: <Widget>[
                 Row(
@@ -482,7 +486,7 @@ class _HomeOptionState extends State<HomeOption> {
                   ],
                 ),
 
-                SizedBox(height: 25),
+                SizedBox(height: 15),
 
                 /// Green Box containing the user's QR Code
                 Container(
@@ -538,7 +542,9 @@ class _HomeOptionState extends State<HomeOption> {
                     color: Colors.transparent,
                   ),
                 ),
+
                 SizedBox(height: 20),
+
                 Text(
                   "YOUR DAILY MEDICATION",
                   style: TextStyle(
@@ -548,7 +554,8 @@ class _HomeOptionState extends State<HomeOption> {
                       fontFamily: Constants.FONTSTYLE,
                   ),
                 ),
-                SizedBox(height: 20),
+
+                SizedBox(height: 15),
 
                 /// Working Data Change with medication reminder
                 Container(
@@ -602,6 +609,39 @@ class _HomeOptionState extends State<HomeOption> {
                         );
                       }
                     },
+                  ),
+                ),
+
+                SizedBox(height: 20),
+
+                Text(
+                  "YOUR ACTIVITY",
+                  style: TextStyle(
+                    color: Constants.TEXT_LIGHT,
+                    fontSize: 13,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: Constants.FONTSTYLE,
+                  ),
+                ),
+
+                SizedBox(height: 15),
+
+                Container(
+                  child: ListView(
+                    scrollDirection: Axis.vertical,
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    children: <Widget>[
+                      /// Shi bin change the values of this widget
+                      CardItems(
+                        image: Image.asset('assets/icons/Walking.png'),
+                        title: "Walking",
+                        value: "750",
+                        unit: "steps",
+                        color: Constants.LOGO_COLOUR_PINK_LIGHT,
+                        progress: 30,
+                      ),
+                    ],
                   ),
                 ),
               ],
