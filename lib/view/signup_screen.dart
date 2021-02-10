@@ -355,7 +355,10 @@ class _signupPageState extends State<signup_page> {
             active: true,
             lastName: lastName,
             settings: Settings(allowPushNotifications: true),
-            profilePictureURL: profilePicUrl);
+            profilePictureURL: profilePicUrl,
+            userType: "Patient"
+            ///This page by default will allow users to create only patient account
+            );
 
         await FireStoreUtils.firestore
             .collection(Constants.USERS)
