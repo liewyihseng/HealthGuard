@@ -30,7 +30,6 @@ user_medic_info(
       height: parsedJson['height'] ?? "",
       weight: parsedJson['weight'] ?? "",
       birthday: parsedJson['birthday'] ?? "",
-      sex: parsedJson['sex'] ?? "",
       healthCondition: parsedJson['healthCondition'] ?? "",
       currentMedication: parsedJson['currentMedication'] ?? "",
       address: parsedJson['address'] ?? "",

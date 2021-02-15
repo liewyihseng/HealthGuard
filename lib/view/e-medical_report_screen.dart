@@ -3,6 +3,7 @@ import 'package:HealthGuard/net/authentication.dart';
 import 'package:HealthGuard/main.dart';
 import 'package:HealthGuard/helper/validation_tool.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:HealthGuard/home.dart';
 import 'package:HealthGuard/model/user_medic_info_model.dart' as medic_info;
@@ -111,7 +112,7 @@ class _medicalPageState extends State<EMedicalReport>{
                 context: context,
                 initialDate: DateTime.now(),
                 firstDate: DateTime(1900),
-                lastDate: DateTime(2100))
+                lastDate: DateTime(2050))
                 .then((date) {
               setState(() {
                 _dateTime = date;
@@ -270,6 +271,14 @@ class _medicalPageState extends State<EMedicalReport>{
     );
   }
 
+   String convertDateTimeDisplay(String date) {
+     final DateFormat displayFormater = DateFormat('yyyy-MM-dd HH:mm:ss.SSS');
+     final DateFormat serverFormater = DateFormat('dd-MM-yyyy');
+     final DateTime displayDate = displayFormater.parse(date);
+     final String formatted = serverFormater.format(displayDate);
+     return formatted;
+   }
+
   /// Sending user's medical information to server (firebase)
   _sendToServer() async{
     showProgress(context, "Processing Submission", false);
@@ -277,7 +286,7 @@ class _medicalPageState extends State<EMedicalReport>{
     medic_info.user_medic_info user_medic_info = medic_info.user_medic_info(
       height: height,
       weight: weight,
-      birthday: _dateTime.toString(),
+      birthday: convertDateTimeDisplay(_dateTime.toString()),
       sex: sex,
       healthCondition: healthCondition,
       currentMedication: currentMedication,
