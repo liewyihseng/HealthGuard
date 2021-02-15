@@ -78,6 +78,16 @@ class _MyAccountState extends State<MyAccount>{
                             fontSize: 15,
                           ),
                         ),
+
+                        /// Sex
+                        Text(MyAppState.currentUser.sex,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontFamily: Constants.FONTSTYLE,
+                            fontSize: 15,
+                          ),
+                        ),
+
                       ],
                     );
                   }

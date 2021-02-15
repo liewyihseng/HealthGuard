@@ -19,6 +19,7 @@ class User {
   bool selected = false;
   String appIdentifier = 'HealthGuard ${Platform.operatingSystem}';
   String userType = '';
+  String sex = '';
 
   /// User class Constructor
   User(
@@ -31,7 +32,8 @@ class User {
         this.settings,
         this.userID,
         this.profilePictureURL,
-      this.userType,}
+      this.userType,
+      this.sex,}
         );
 
   /// helper function combining user's first name and last name to form full name
@@ -52,7 +54,8 @@ class User {
         phoneNumber: parsedJson['phoneNumber'] ?? "",
         userID: parsedJson['id'] ?? parsedJson['userID'] ?? '',
         profilePictureURL: parsedJson['profilePictureURL'] ?? "",
-    userType: parsedJson['userType'] ?? "");
+    userType: parsedJson['userType'] ?? "",
+    sex: parsedJson['sex'] ?? "",);
   }
 
   Map<String, dynamic> toJson() {
@@ -68,6 +71,7 @@ class User {
       "profilePictureURL": this.profilePictureURL,
       'appIdentifier': this.appIdentifier,
       'userType': this.userType,
+      'sex': this.sex,
     };
   }
 }

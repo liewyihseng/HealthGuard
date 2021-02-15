@@ -58,16 +58,6 @@ class _MyMedicalState extends State<MyMedical> {
                           ),
                         ),
 
-                        /// Sex
-                        Text(
-                          doc[index].get("sex"),
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontFamily: Constants.FONTSTYLE,
-                            fontSize: 15,
-                          ),
-                        ),
-
                         /// Height
                         Text(
                           doc[index].get("height"),
@@ -101,6 +91,26 @@ class _MyMedicalState extends State<MyMedical> {
                         /// Address
                         Text(
                           doc[index].get("address"),
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontFamily: Constants.FONTSTYLE,
+                            fontSize: 15,
+                          ),
+                        ),
+
+                        /// Health Condition
+                        Text(
+                          doc[index].get("healthCondition"),
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontFamily: Constants.FONTSTYLE,
+                            fontSize: 15,
+                          ),
+                        ),
+
+                        /// Insurance ID
+                        Text(
+                          doc[index].get("insuranceID"),
                           style: TextStyle(
                             color: Colors.black,
                             fontFamily: Constants.FONTSTYLE,

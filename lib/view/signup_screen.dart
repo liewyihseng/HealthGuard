@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:HealthGuard/model/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
@@ -14,18 +16,24 @@ import 'dart:io';
 
 File _image;
 
+
+
 /// Sign up screen page widget class
 class signup_page extends StatefulWidget {
   @override
   State createState() => _signupPageState();
 }
 
+
+
 /// Sign up screen page state class
 class _signupPageState extends State<signup_page> {
   TextEditingController _passwordController = new TextEditingController();
   GlobalKey<FormState> _key = new GlobalKey();
   bool _validate = false;
-  String firstName, lastName, email, mobile, password, confirmPassword;
+  String firstName, lastName, email, mobile, password, confirmPassword, sex;
+  List gender=["Male","Female","Other"];
+
 
   /// build
   @override
@@ -60,6 +68,26 @@ class _signupPageState extends State<signup_page> {
           ),
         ),
       ),
+    );
+  }
+
+  Row addRadioButton(int btnValue, String title) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: <Widget>[
+        Radio(
+          activeColor: Theme.of(context).primaryColor,
+          value: gender[btnValue],
+          groupValue: sex,
+          onChanged: (value){
+            setState(() {
+              print(value);
+              sex = value;
+            });
+          },
+        ),
+        Text(title, style: TextStyle(fontFamily: Constants.FONTSTYLE, fontSize: 13.0),)
+      ],
     );
   }
 
@@ -180,6 +208,7 @@ class _signupPageState extends State<signup_page> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(32.0),
                         ))))),
+
         /// Field for user's last name input
         ConstrainedBox(
             constraints: BoxConstraints(minWidth: double.infinity),
@@ -201,6 +230,21 @@ class _signupPageState extends State<signup_page> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(32.0),
                         ))))),
+        ConstrainedBox(
+          constraints: BoxConstraints(minWidth: double.infinity),
+          child: Container(
+            padding: EdgeInsets.only(top: 15.0, left: 8.0, right: 8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text('Gender* :', style: TextStyle(fontFamily: Constants.FONTSTYLE, fontSize: 15.0, fontWeight: FontWeight.w500)),
+                addRadioButton(0, 'Male'),
+                addRadioButton(1, 'Female'),
+                addRadioButton(2, 'Others'),
+              ],
+            ),
+          ),
+        ),
         /// Field for user's mobile number input
         ConstrainedBox(
             constraints: BoxConstraints(minWidth: double.infinity),
@@ -348,17 +392,18 @@ class _signupPageState extends State<signup_page> {
 
         /// Assigning all the user's input information to the user instance
         OurUser.User user = OurUser.User(
-            email: email,
-            firstName: firstName,
-            phoneNumber: mobile,
-            userID: result.user.uid,
-            active: true,
-            lastName: lastName,
-            settings: Settings(allowPushNotifications: true),
-            profilePictureURL: profilePicUrl,
-            userType: "Patient"
-            ///This page by default will allow users to create only patient account
-            );
+          email: email,
+          firstName: firstName,
+          phoneNumber: mobile,
+          userID: result.user.uid,
+          active: true,
+          lastName: lastName,
+          settings: Settings(allowPushNotifications: true),
+          profilePictureURL: profilePicUrl,
+          userType: "Patient",
+          sex: sex,
+          ///This page by default will allow users to create only patient account
+        );
 
         await FireStoreUtils.firestore
             .collection(Constants.USERS)

@@ -18,7 +18,7 @@ class EMedicalReport extends StatefulWidget{
 
 /// Medical Report screen page state class
 class _medicalPageState extends State<EMedicalReport>{
-   String height, weight, birthday, sex, healthCondition, currentMedication, address, emergencyContact;
+   String height, weight, birthday, sex, healthCondition, currentMedication, address, emergencyContact, insuranceID;
    DateTime _dateTime;
 
   @override
@@ -119,29 +119,7 @@ class _medicalPageState extends State<EMedicalReport>{
             });
           },
         ),
-        /// Dropdown for user's sex input
-        DropdownButton<String>(
-          value: sex,
-          hint: Text("Gender"),
-          elevation: 16,
-          style: TextStyle(color: Colors.blue),
-          underline: Container(
-            height: 2,
-            color: Colors.blue,
-          ),
-          onChanged: (String newValue) {
-            setState(() {
-              sex = newValue;
-            });
-          },
-          items: <String>['Male', 'Female']
-              .map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            );
-          }).toList(),
-        ),
+
         /// Field for user's health condition input
         ConstrainedBox(
           constraints: BoxConstraints(minWidth: double.infinity),
@@ -239,6 +217,31 @@ class _medicalPageState extends State<EMedicalReport>{
               )
           ),
         ),
+
+        /// Field for user's Insurance Id input
+        ConstrainedBox(
+          constraints: BoxConstraints(minWidth: double.infinity),
+          child: Padding(
+              padding: const EdgeInsets.only(top: 16.0, right: 8.0, left: 8.0),
+              child: TextFormField(
+                  onChanged: (String val){
+                    setState((){
+                      insuranceID = val;
+                    });
+                  },
+                  textInputAction: TextInputAction.next,
+                  onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
+                  decoration: InputDecoration(
+                      contentPadding: new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                      fillColor: Colors.white,
+                      hintText: 'Insurance ID',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(32.0),
+                      )
+                  )
+              )
+          ),
+        ),
         /// Button to press after user has finished filling in their medical information
         Padding(
           padding: const EdgeInsets.only(right: 40.0, left: 40.0, top: 40.0),
@@ -280,6 +283,7 @@ class _medicalPageState extends State<EMedicalReport>{
       currentMedication: currentMedication,
       address: address,
       emergencyContact: emergencyContact,
+      insuranceID: insuranceID,
     );
 
     await FireStoreUtils.firestore
