@@ -2,6 +2,7 @@
 import 'package:HealthGuard/net/authentication.dart';
 import 'package:HealthGuard/main.dart';
 import 'package:HealthGuard/helper/validation_tool.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:jiffy/jiffy.dart';
@@ -293,6 +294,7 @@ class _medicalPageState extends State<EMedicalReport>{
       address: address,
       emergencyContact: emergencyContact,
       insuranceID: insuranceID,
+      uploadedDate: convertDateTimeDisplay(DateTime.now().toString()),
     );
 
     await FireStoreUtils.firestore

@@ -9,6 +9,7 @@ class user_medic_info{
   String address = '';
   String emergencyContact = '';
   String insuranceID = '';
+  String uploadedDate = '';
 
 
 
@@ -23,6 +24,7 @@ user_medic_info(
       this.address,
       this.emergencyContact,
       this.insuranceID,
+      this.uploadedDate,
     });
 
   factory user_medic_info.fromJson(Map<String, dynamic> parsedJson){
@@ -35,6 +37,7 @@ user_medic_info(
       address: parsedJson['address'] ?? "",
       emergencyContact: parsedJson['emergencyContact'] ?? "",
       insuranceID: parsedJson['insuranceID'] ?? "",
+      uploadedDate: parsedJson['uploadedDate'] ?? "",
     );
   }
 
@@ -49,6 +52,7 @@ user_medic_info(
       "address": this.address,
       "emergencyContact": this.emergencyContact,
       "insuranceID": this.insuranceID,
+      "uploadedDate": this.uploadedDate,
     };
   }
 }

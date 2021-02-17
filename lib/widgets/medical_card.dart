@@ -11,6 +11,7 @@ class MedicalCard extends StatelessWidget{
   final String address;
   final String emergencyContact;
   final String insuranceID;
+  final String uploadedDate;
 
   MedicalCard(
       {Key key,
@@ -22,7 +23,8 @@ class MedicalCard extends StatelessWidget{
         @required this.currentMedication,
         @required this.address,
         @required this.emergencyContact,
-        @required this.insuranceID,})
+        @required this.insuranceID,
+        @required this.uploadedDate})
       : super(key: key);
 
   @override
@@ -95,6 +97,13 @@ class MedicalCard extends StatelessWidget{
                             color: Constants.TEXT_LIGHT,
                           ),
                         ),
+                    Text(
+                      "Uploaded On "+ uploadedDate,
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: Constants.TEXT_LIGHT,
+                      ),
+                    )
                   ],
                 ),
               ),
