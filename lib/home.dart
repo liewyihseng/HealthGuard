@@ -461,14 +461,18 @@ class _HomeOptionState extends State<HomeOption> {
                     physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     children: <Widget>[
-                      /// Shi bin change the values of this widget
-                      CardItems(
-                        image: Image.asset('assets/icons/Walking.png'),
-                        title: "Walking",
-                        value: "750",
-                        unit: "steps",
-                        color: Constants.LOGO_COLOUR_PINK_LIGHT,
-                        progress: 30,
+                      GestureDetector(
+                        onTap: (){
+                          Navigator.pushNamed(context, PedometerScreen.id);
+                        },
+                        child: CardItems(
+                          image: Image.asset('assets/icons/Walking.png'),
+                          title: "Walking",
+                          value: PedometerScreen.steps.toString(),
+                          unit: "steps",
+                          color: Constants.LOGO_COLOUR_PINK_LIGHT,
+                          progress: PedometerScreen.getStepPercent().round(),
+                        ),
                       ),
                     ],
                   ),
