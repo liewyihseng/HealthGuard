@@ -1,22 +1,12 @@
-import 'dart:html';
-
-import 'package:HealthGuard/chat/databse.dart';
+import 'package:HealthGuard/chat/database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:HealthGuard/view/find_doctor_screen.dart';
 
 class Chatroom extends StatefulWidget {
   @override
   _ChatroomState createState() => _ChatroomState();
   static const String id = "Chatroom";
-}
-
-class DatabaseMethods {
-  Future<Stream<QuerySnapshot>> getUserByFirstName(String firstName) async {
-    return FirebaseFirestore.instance
-        .collection("users")
-        .where("firstName", isEqualTo: firstName)
-        .snapshots();
-  }
 }
 
 class _ChatroomState extends State<Chatroom> {
@@ -38,29 +28,10 @@ class _ChatroomState extends State<Chatroom> {
     isSearching = false;
     searchUsernameEditingController.text = "";
     setState(() {});
+    Navigator.pushNamed(context, FindDoctor.id);
   }
 
-  Widget searchListUserTile(String profilePictureURL, firstName, lastName) {
-    return Row(
-      children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(30),
-          child: Image.network(
-            profilePictureURL,
-            height: 70,
-            width: 70,
-          ),
-        ),
-        SizedBox(width: 12),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [Text(firstName)],
-        )
-      ],
-    );
-  }
-
-  Widget searchuserlist(String profilePictureURL, firstName, lastName) {
+  Widget searchUsersList() {
     return StreamBuilder(
       stream: usersStream,
       builder: (context, snapshot) {
@@ -71,13 +42,52 @@ class _ChatroomState extends State<Chatroom> {
                 itemBuilder: (context, index) {
                   DocumentSnapshot ds = snapshot.data.docs[index];
                   return searchListUserTile(
-                      ds["profilePictureURL"], ds["firstName"], ds["lastName"]);
+                      profilePictureURL: ds["profilePictureURL"],
+                      firstName: ds["firstName"],
+                      email: ds["email"],
+                      userstate: ds["active"]);
                 },
               )
             : Center(
                 child: CircularProgressIndicator(),
               );
       },
+    );
+  }
+
+  Widget searchListUserTile(
+      {String profilePictureURL, firstName, userstate, email}) {
+    return GestureDetector(
+      onTap: () {
+        // var chatRoomId = getChatRoomIdByUsernames(myUserName, username);
+        // Map<String, dynamic> chatRoomInfoMap = {
+        //   "users": [myUserName, username]
+        // };
+        // DatabaseMethods().createChatRoom(chatRoomId, chatRoomInfoMap);
+        // Navigator.push(
+        //     context,
+        //     MaterialPageRoute(
+        //         builder: (context) => ChatScreen(username, name)));
+      },
+      child: Container(
+        margin: EdgeInsets.symmetric(vertical: 8),
+        child: Row(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(40),
+              child: Image.network(
+                profilePictureURL,
+                height: 40,
+                width: 40,
+              ),
+            ),
+            SizedBox(width: 12),
+            Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [Text(firstName), Text(email)])
+          ],
+        ),
+      ),
     );
   }
 
@@ -89,8 +99,16 @@ class _ChatroomState extends State<Chatroom> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("chatroom"),
-        actions: [],
+        title: Text(
+          'Chatroom',
+          style: TextStyle(
+            color: Colors.blue,
+          ),
+        ),
+        elevation: 0.0,
+        backgroundColor: Colors.transparent,
+        iconTheme: IconThemeData(color: Colors.black),
+        centerTitle: true,
       ),
       body: Container(
         margin: EdgeInsets.symmetric(horizontal: 20),
@@ -139,7 +157,7 @@ class _ChatroomState extends State<Chatroom> {
                 ),
               ],
             ),
-            chatroomlist()
+            searchUsersList()
           ],
         ),
       ),

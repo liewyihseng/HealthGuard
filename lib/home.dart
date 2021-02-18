@@ -1,10 +1,13 @@
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:HealthGuard/pedometer_page.dart';
-import 'package:HealthGuard/medical_feed.dart';
-import 'package:HealthGuard/user_profile.dart';
-import 'package:HealthGuard/widgets/card_section.dart';
+import 'package:HealthGuard/view/medical_feed_screen.dart';
+import 'package:HealthGuard/view/user_profile_screen.dart';
+import 'package:HealthGuard/view/bloodpressure_screen.dart';
+import 'package:HealthGuard/widgets/card_items.dart';
+import 'package:HealthGuard/widgets/health_option_card.dart';
+import 'package:HealthGuard/widgets/medication_reminder_card_small.dart';
+import 'package:HealthGuard/view/pedometer_screen.dart';
 import 'package:HealthGuard/widgets/custom_clipper.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,15 +17,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:HealthGuard/chat/chatroom.dart';
-import 'package:HealthGuard/Bloodpressure1.dart';
-import 'package:HealthGuard/User.dart' as OurUser;
-import 'package:HealthGuard/authentication.dart';
-import 'package:HealthGuard/login_page.dart';
+import 'package:HealthGuard/view/bloodpressure_screen.dart';
+import 'package:HealthGuard/model/user_model.dart' as OurUser;
+import 'package:HealthGuard/net/authentication.dart';
+import 'package:HealthGuard/view/login_screen.dart';
 import 'package:HealthGuard/main.dart';
-import 'package:HealthGuard/e-medical_report.dart';
-import 'package:HealthGuard/validation_tool.dart';
+import 'package:HealthGuard/view/e-medical_report_screen.dart';
+import 'package:HealthGuard/helper/validation_tool.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
-import 'package:HealthGuard/medication_reminder.dart';
+import 'package:HealthGuard/view/medication_reminder_screen.dart';
+
+import 'package:HealthGuard/view/find_doctor_screen.dart';
 
 FireStoreUtils _fireStoreUtils = FireStoreUtils();
 
@@ -68,6 +73,20 @@ class _home extends State<home> {
     ];
 
     return Scaffold(
+      backgroundColor: Constants.BACKGROUND_COLOUR,
+      appBar: AppBar(
+        title: Text(
+          'Home',
+          style: TextStyle(
+            color: Colors.white,
+            fontFamily: Constants.FONTSTYLE,
+            fontWeight: Constants.APPBAR_TEXT_WEIGHT,
+          ),
+        ),
+        iconTheme: IconThemeData(color: Colors.white),
+        backgroundColor: Constants.APPBAR_COLOUR,
+        centerTitle: true,
+      ),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
@@ -81,7 +100,7 @@ class _home extends State<home> {
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 20,
-                      fontFamily: "Montserrat",
+                      fontFamily: Constants.FONTSTYLE,
                       fontWeight: FontWeight.w900),
                 ),
                 decoration: BoxDecoration(
@@ -94,7 +113,7 @@ class _home extends State<home> {
                 'My Profile',
                 style: TextStyle(
                     color: Colors.black,
-                    fontFamily: "Montserrat",
+                    fontFamily: Constants.FONTSTYLE,
                     fontWeight: FontWeight.w900),
               ),
               leading: SvgPicture.asset(
@@ -111,7 +130,7 @@ class _home extends State<home> {
                 'Log Out',
                 style: TextStyle(
                     color: Colors.black,
-                    fontFamily: "Montserrat",
+                    fontFamily: Constants.FONTSTYLE,
                     fontWeight: FontWeight.w900),
               ),
               leading: Transform.rotate(
@@ -128,18 +147,6 @@ class _home extends State<home> {
             ),
           ],
         ),
-      ),
-      appBar: AppBar(
-        title: Text(
-          'Home',
-          style: TextStyle(
-              color: Colors.white,
-              fontFamily: "Montserrat",
-              fontWeight: FontWeight.w900),
-        ),
-        iconTheme: IconThemeData(color: Colors.white),
-        backgroundColor: Constants.APPBAR_COLOUR,
-        centerTitle: true,
       ),
       body: _bottomNavBarOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
@@ -170,224 +177,53 @@ class HealthOption extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
         child: Column(
+          mainAxisSize: MainAxisSize.min,
       children: [
-        Card(
-            elevation: 3.0,
-            child: GestureDetector(
-                child: Container(
-                  child: Column(
-                    children: <Widget>[
-                      Image.asset(
-                        "assets/E-Medical Report.png",
-                        alignment: Alignment.center,
-                        width: 100.0,
-                        height: 27.0,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(15.0),
-                        child: Text(
-                          "E-Medical Report",
-                          style: TextStyle(
-                            fontSize: 20.0,
-                            color: Colors.black,
-                            fontFamily: "Montserrat",
-                            fontWeight: FontWeight.w600,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                onTap: () {
-                  Navigator.pushNamed(context, EMedicalReport.id);
-                })),
-        Card(
-            elevation: 3.0,
-            child: GestureDetector(
-                child: Container(
-                  child: Column(
-                    children: <Widget>[
-                      Image.asset(
-                        "assets/Pedometer.png",
-                        alignment: Alignment.center,
-                        width: 40.0,
-                        height: 27.0,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(15.0),
-                        child: Text(
-                          "Pedometer",
-                          style: TextStyle(
-                            fontSize: 20.0,
-                            color: Colors.black,
-                            fontFamily: "Montserrat",
-                            fontWeight: FontWeight.w600,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                onTap: () {
-                  Navigator.pushNamed(context, PedometerPage.id);
-                })),
-        Card(
-            elevation: 3.0,
-            child: GestureDetector(
-                child: Container(
-                  child: Column(
-                    children: <Widget>[
-                      Image.asset(
-                        "assets/Medical News Update.png",
-                        alignment: Alignment.center,
-                        width: 40.0,
-                        height: 27.0,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(15.0),
-                        child: Text(
-                          "Medical News Update",
-                          style: TextStyle(
-                            fontSize: 20.0,
-                            color: Colors.black,
-                            fontFamily: "Montserrat",
-                            fontWeight: FontWeight.w600,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                onTap: () {
-                  Navigator.pushNamed(context, MedicalFeed.id);
-                })),
-        Card(
-            elevation: 3.0,
-            child: GestureDetector(
-                child: Container(
-                  child: Column(
-                    children: <Widget>[
-                      Image.asset(
-                        "assets/Medication Reminder.png",
-                        alignment: Alignment.center,
-                        width: 40.0,
-                        height: 27.0,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(15.0),
-                        child: Text(
-                          "Medication Reminder",
-                          style: TextStyle(
-                            fontSize: 20.0,
-                            color: Colors.black,
-                            fontFamily: "Montserrat",
-                            fontWeight: FontWeight.w600,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                onTap: () {
-                  Navigator.pushNamed(context, MedicationReminder.id);
-                })),
-        Card(
-            elevation: 3.0,
-            child: GestureDetector(
-                child: Container(
-                  child: Column(
-                    children: <Widget>[
-                      Image.asset(
-                        "assets/Blood Pressure Diary.png",
-                        alignment: Alignment.center,
-                        width: 40.0,
-                        height: 27.0,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(15.0),
-                        child: Text(
-                          "Blood Pressure Diary",
-                          style: TextStyle(
-                            fontSize: 20.0,
-                            color: Colors.black,
-                            fontFamily: "Montserrat",
-                            fontWeight: FontWeight.w600,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                onTap: () {
-                  Navigator.pushNamed(context, Bloodpressure1.id);
-                })),
-        Card(
-            elevation: 3.0,
-            child: GestureDetector(
-                child: Container(
-                  child: Column(
-                    children: <Widget>[
-                      Image.asset(
-                        "assets/Chat with Doctor.png",
-                        alignment: Alignment.center,
-                        width: 40.0,
-                        height: 27.0,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(15.0),
-                        child: Text(
-                          "Chat with Doctor",
-                          style: TextStyle(
-                            fontSize: 20.0,
-                            color: Colors.black,
-                            fontFamily: "Montserrat",
-                            fontWeight: FontWeight.w600,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                onTap: () {
-                  Navigator.pushNamed(context, Chatroom.id);
-                })),
-        Card(
-            elevation: 3.0,
-            child: GestureDetector(
-                child: Container(
-                  child: Column(
-                    children: <Widget>[
-                      Image.asset(
-                        "assets/Hospital Suggestions.png",
-                        alignment: Alignment.center,
-                        width: 40.0,
-                        height: 27.0,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(15.0),
-                        child: Text(
-                          "Hospital Suggestions",
-                          style: TextStyle(
-                            fontSize: 20.0,
-                            color: Colors.black,
-                            fontFamily: "Montserrat",
-                            fontWeight: FontWeight.w600,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                onTap: () {
-                  //Navigator.pushNamed(context, PedometerPage.id);
-                })),
+        Expanded(
+          child: ListView(
+            scrollDirection: Axis.vertical,
+            children: [
+              HealthOptionCard(
+                imageName: "assets/E-Medical Report.png",
+                text: "E-Medical Report",
+                screenID: EMedicalReport.id,
+              ),
+              HealthOptionCard(
+                imageName: "assets/Pedometer.png",
+                text: "Pedometer",
+                screenID: PedometerScreen.id,
+              ),
+              HealthOptionCard(
+                imageName: "assets/Medical News Update.png",
+                text: "Medical News Update",
+                screenID: MedicalFeed.id,
+              ),
+              HealthOptionCard(
+                imageName: "assets/Medication Reminder.png",
+                text: "Medication Reminder",
+                screenID: MedicationReminder.id,
+              ),
+              HealthOptionCard(
+                imageName: "assets/Blood Pressure Diary.png",
+                text: "Blood Pressure Diary",
+                screenID: BloodPressureScreen.id,
+              ),
+              HealthOptionCard(
+                imageName: "assets/Chat with Doctor.png",
+                text: "Chat with Doctor",
+                screenID: FindDoctor.id,
+              ),
+              HealthOptionCard(
+                imageName: "assets/Hospital Suggestions.png",
+                text: "Hospital Suggestions",
+                screenID: EMedicalReport.id, // dummy input
+              ),
+              SizedBox(
+                height: 5,
+              ),
+            ],
+          ),
+        ),
       ],
     ));
   }
@@ -413,6 +249,9 @@ class HomeOption extends StatefulWidget {
   @override
   _HomeOptionState createState() => _HomeOptionState(user);
 }
+
+
+
 
 class _HomeOptionState extends State<HomeOption> {
   final OurUser.User user;
@@ -446,7 +285,7 @@ class _HomeOptionState extends State<HomeOption> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.all(35),
+            padding: EdgeInsets.only(bottom: 35, left: 35, right: 35, top: 35),
             child: ListView(
               children: <Widget>[
                 Row(
@@ -462,7 +301,7 @@ class _HomeOptionState extends State<HomeOption> {
                           fontSize: 25,
                           fontWeight: FontWeight.w900,
                           color: Colors.white,
-                          fontFamily: "Montserrat",
+                          fontFamily: Constants.FONTSTYLE,
                         ),
                       ),
                     ),
@@ -476,7 +315,7 @@ class _HomeOptionState extends State<HomeOption> {
                   ],
                 ),
 
-                SizedBox(height: 25),
+                SizedBox(height: 15),
 
                 /// Green Box containing the user's QR Code
                 Container(
@@ -532,17 +371,20 @@ class _HomeOptionState extends State<HomeOption> {
                     color: Colors.transparent,
                   ),
                 ),
+
                 SizedBox(height: 20),
+
                 Text(
                   "YOUR DAILY MEDICATION",
                   style: TextStyle(
                     color: Constants.TEXT_LIGHT,
                     fontSize: 13,
                     fontWeight: FontWeight.bold,
-                    fontFamily: "Montserrat",
+                    fontFamily: Constants.FONTSTYLE,
                   ),
                 ),
-                SizedBox(height: 20),
+
+                SizedBox(height: 15),
 
                 /// Working Data Change with medication reminder
                 Container(
@@ -566,7 +408,7 @@ class _HomeOptionState extends State<HomeOption> {
                                   style: TextStyle(
                                       fontSize: 20,
                                       color: Constants.TEXT_SUPER_LIGHT,
-                                      fontFamily: "Montserrat",
+                                      fontFamily: Constants.FONTSTYLE,
                                       fontWeight: FontWeight.w600),
                                 ),
                               ),
@@ -582,7 +424,7 @@ class _HomeOptionState extends State<HomeOption> {
                           itemCount: doc.length,
                           itemBuilder: (context, index) {
                             return Container(
-                              child: CardSection(
+                              child: MedicationReminderCardSmall(
                                 title: doc[index].get("medicineName"),
                                 value: doc[index].get("dosage"),
                                 unit: "mg",
@@ -596,6 +438,39 @@ class _HomeOptionState extends State<HomeOption> {
                         );
                       }
                     },
+                  ),
+                ),
+
+                SizedBox(height: 20),
+
+                Text(
+                  "YOUR ACTIVITY",
+                  style: TextStyle(
+                    color: Constants.TEXT_LIGHT,
+                    fontSize: 13,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: Constants.FONTSTYLE,
+                  ),
+                ),
+
+                SizedBox(height: 15),
+
+                Container(
+                  child: ListView(
+                    scrollDirection: Axis.vertical,
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    children: <Widget>[
+                      /// Shi bin change the values of this widget
+                      CardItems(
+                        image: Image.asset('assets/icons/Walking.png'),
+                        title: "Walking",
+                        value: "750",
+                        unit: "steps",
+                        color: Constants.LOGO_COLOUR_PINK_LIGHT,
+                        progress: 30,
+                      ),
+                    ],
                   ),
                 ),
               ],
