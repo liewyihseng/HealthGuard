@@ -58,7 +58,7 @@ class _signupPageState extends State<signup_page> {
         ),
         elevation: 0.0,
         backgroundColor: Colors.transparent,
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: IconThemeData(color: Colors.blue),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -155,13 +155,13 @@ class _signupPageState extends State<signup_page> {
       children: <Widget>[
         Padding(
           padding:
-          const EdgeInsets.only(left: 8.0, top: 32, right: 8, bottom: 8),
+          const EdgeInsets.only(left: 8.0, top: 20, right: 8.0, bottom: 8.0),
           child: Stack(
             alignment: Alignment.bottomCenter,
             children: <Widget>[
               /// Circle to hold user profile picture
               CircleAvatar(
-                radius: 65,
+                radius: 60,
                 backgroundColor: Colors.grey.shade400,
                 child: ClipOval(
                   child: SizedBox(
@@ -183,9 +183,13 @@ class _signupPageState extends State<signup_page> {
                 left: 80,
                 right: 0,
                 child: FloatingActionButton(
-                    backgroundColor: Colors.green,
-                    child: Icon(Icons.camera_alt),
+                    backgroundColor: Constants.BUTTON_COLOUR,
+                    child: Icon(
+                      Icons.camera_alt,
+                      color: Colors.white,
+                    ),
                     mini: true,
+                    splashColor: Colors.blue,
                     onPressed: _onCameraClick),
               )
             ],
@@ -241,9 +245,16 @@ class _signupPageState extends State<signup_page> {
           child: Padding(
             padding: const EdgeInsets.only(top: 8.0, bottom: 8.0, right: 8.0, left: 8.0),
             child: RaisedButton(
-              child: Text(_dateTime == null? 'Select Birthday': Jiffy(_dateTime).yMMMMd),
-              color: Colors.blue,
+              child: Text(_dateTime == null? 'Select Birthday': Jiffy(_dateTime).yMMMMd,
+                  style: TextStyle(
+                    fontFamily: Constants.FONTSTYLE,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                  ),
+              ),
+              color: Constants.BUTTON_COLOUR,
               textColor: Colors.white,
+              splashColor: Colors.blue,
               padding: EdgeInsets.all(10),
               onPressed: (){
                 showDatePicker(
@@ -264,7 +275,7 @@ class _signupPageState extends State<signup_page> {
         ConstrainedBox(
           constraints: BoxConstraints(minWidth: double.infinity),
           child: Container(
-            padding: EdgeInsets.only(top: 8.0, bottom: 8.0, left: 8.0, right: 8.0),
+            padding: EdgeInsets.only(bottom: 1.0, left: 8.0, right: 8.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -334,7 +345,6 @@ class _signupPageState extends State<signup_page> {
                   onSaved: (String val) {
                     password = val;
                   },
-                  style: TextStyle(height: 0.8, fontSize: 18.0),
                   cursorColor: Colors.black,
                   decoration: InputDecoration(
                       contentPadding:
@@ -361,7 +371,6 @@ class _signupPageState extends State<signup_page> {
                 onSaved: (String val) {
                   confirmPassword = val;
                 },
-                style: TextStyle(height: 0.8, fontSize: 18.0),
                 cursorColor: Colors.black,
                 decoration: InputDecoration(
                     contentPadding:

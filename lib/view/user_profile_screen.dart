@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:HealthGuard/net/authentication.dart';
-import 'package:HealthGuard/view/login_screen.dart';
+import 'package:HealthGuard/view/patient_sign_in_screen.dart';
 import 'package:HealthGuard/main.dart';
 import 'package:HealthGuard/view/my_account_screen.dart';
 import 'package:HealthGuard/view/my_medical_screen.dart';

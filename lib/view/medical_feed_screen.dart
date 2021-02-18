@@ -27,7 +27,7 @@ class _MedicalFeedState extends State<MedicalFeed>{
   List<ArticleModel> articles = new List<ArticleModel>();
   bool _loading = true;
 
-  /// Overide init
+  /// Override init
   @override
   void initState(){
     super.initState();

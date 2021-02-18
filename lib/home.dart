@@ -20,7 +20,7 @@ import 'package:HealthGuard/chat/chatroom.dart';
 import 'package:HealthGuard/view/bloodpressure_screen.dart';
 import 'package:HealthGuard/model/user_model.dart' as OurUser;
 import 'package:HealthGuard/net/authentication.dart';
-import 'package:HealthGuard/view/login_screen.dart';
+import 'package:HealthGuard/view/patient_sign_in_screen.dart';
 import 'package:HealthGuard/main.dart';
 import 'package:HealthGuard/view/e-medical_report_screen.dart';
 import 'package:HealthGuard/helper/validation_tool.dart';

@@ -1,4 +1,6 @@
 import 'package:HealthGuard/view/doctor_detail_screen.dart';
+import 'package:HealthGuard/view/doctor_sign_in_screen.dart';
+import 'package:HealthGuard/view/doctor_sign_up_screen.dart';
 import 'package:HealthGuard/view/find_doctor_screen.dart';
 import 'package:HealthGuard/view/bloodpressure_screen.dart';
 import 'package:HealthGuard/view/help_center_screen.dart';
@@ -16,7 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:HealthGuard/model/user_model.dart' as OurUser;
 import 'package:HealthGuard/net/authentication.dart';
 import 'package:HealthGuard/home.dart';
-import 'package:HealthGuard/view/login_screen.dart';
+import 'package:HealthGuard/view/patient_sign_in_screen.dart';
 import 'package:HealthGuard/view/e-medical_report_screen.dart';
 import 'package:HealthGuard/view/pedometer_screen.dart';
 import 'package:HealthGuard/chat/chatroom.dart';
@@ -59,6 +61,8 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
         BloodPressureScreen.id: (context) =>
             BloodPressureScreen(sys: 60, dia: 70, pul: 80),
         Chatroom.id: (context) => Chatroom(),
+        DoctorSignIn.id: (context) => DoctorSignIn(),
+        DoctorSignUp.id: (context) => DoctorSignUp(),
       },
       theme: ThemeData(accentColor: Colors.white),
     );
