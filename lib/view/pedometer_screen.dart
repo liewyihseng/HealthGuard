@@ -24,6 +24,21 @@ class PedometerScreen extends StatefulWidget {
   static double calories = 0; // cal
   static int water = 0; // ml
   static int goal = 10000;
+  // Stream<StepCount> _stepCountStream;
+
+  /// mainly to avoid value overflow of the progress bar
+  static double getProgressBarFriendlySteps(){
+      if ((steps ?? 0) < goal){
+        return steps?.toDouble();
+      } else {
+        return goal.toDouble();
+      }
+  }
+
+  static double getStepPercent(){
+    print("result : " + (getProgressBarFriendlySteps()/goal*100).toString());
+    return (getProgressBarFriendlySteps()/goal*100);
+  }
 
   @override
   _PedometerScreenState createState() => _PedometerScreenState();

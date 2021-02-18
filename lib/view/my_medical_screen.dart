@@ -66,7 +66,7 @@ class _MyMedicalState extends State<MyMedical> {
                   scrollDirection: Axis.vertical,
                   itemBuilder: (context, index){
                     return Container(
-                      height: 180,
+                      height: 200,
                       child: ListView(
                         scrollDirection: Axis.vertical,
                         children: <Widget>[
@@ -79,6 +79,7 @@ class _MyMedicalState extends State<MyMedical> {
                               address: doc[index].get("address"),
                               emergencyContact: doc[index].get("emergencyContact"),
                               insuranceID: doc[index].get("insuranceID"),
+                            uploadedDate: doc[index].get("uploadedDate"),
                           ),
                         ],
                       ),
