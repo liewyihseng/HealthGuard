@@ -44,7 +44,7 @@ class _MyAccountState extends State<MyAccount>{
                     return Column(
                       children: <Widget>[
                         /// Full Name
-                        Text(MyAppState.currentUser.fullName(),
+                        Text("Name: " + MyAppState.currentUser.fullName(),
                           style: TextStyle(
                             color: Colors.black,
                             fontFamily: Constants.FONTSTYLE,
@@ -53,7 +53,7 @@ class _MyAccountState extends State<MyAccount>{
                         ),
 
                         /// User id
-                        Text(MyAppState.currentUser.userID,
+                        Text("User ID: " + MyAppState.currentUser.userID,
                           style: TextStyle(
                             color: Colors.black,
                             fontFamily: Constants.FONTSTYLE,
@@ -62,7 +62,7 @@ class _MyAccountState extends State<MyAccount>{
                         ),
 
                         /// Email Address
-                        Text(MyAppState.currentUser.email,
+                        Text("Email Address: " + MyAppState.currentUser.email,
                           style: TextStyle(
                             color: Colors.black,
                             fontFamily: Constants.FONTSTYLE,
@@ -71,7 +71,7 @@ class _MyAccountState extends State<MyAccount>{
                         ),
 
                         /// Phone Number
-                        Text(MyAppState.currentUser.phoneNumber,
+                        Text("Phone Number: " + MyAppState.currentUser.phoneNumber,
                           style: TextStyle(
                             color: Colors.black,
                             fontFamily: Constants.FONTSTYLE,
@@ -80,7 +80,16 @@ class _MyAccountState extends State<MyAccount>{
                         ),
 
                         /// Sex
-                        Text(MyAppState.currentUser.sex,
+                        Text("Gender: " + MyAppState.currentUser.sex,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontFamily: Constants.FONTSTYLE,
+                            fontSize: 15,
+                          ),
+                        ),
+
+                        /// Birthday
+                        Text("Birthday: " + MyAppState.currentUser.birthday,
                           style: TextStyle(
                             color: Colors.black,
                             fontFamily: Constants.FONTSTYLE,

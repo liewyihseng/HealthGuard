@@ -2,14 +2,12 @@
 import 'package:HealthGuard/net/authentication.dart';
 import 'package:HealthGuard/main.dart';
 import 'package:HealthGuard/helper/validation_tool.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:jiffy/jiffy.dart';
 import 'package:HealthGuard/home.dart';
 import 'package:HealthGuard/model/user_medic_info_model.dart' as medic_info;
 import 'package:HealthGuard/constants.dart' as Constants;
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 
 /// Medical report screen page widget class
 class EMedicalReport extends StatefulWidget{
@@ -102,24 +100,6 @@ class _medicalPageState extends State<EMedicalReport>{
                   )
               )
           ),
-        ),
-        /// Calendar for user's birthday input
-        RaisedButton(
-          child: Text(_dateTime == null
-              ? 'Select Birthday'
-              : Jiffy(_dateTime).yMMMMd),
-          onPressed: () {
-            showDatePicker(
-                context: context,
-                initialDate: DateTime.now(),
-                firstDate: DateTime(1900),
-                lastDate: DateTime(2050))
-                .then((date) {
-              setState(() {
-                _dateTime = date;
-              });
-            });
-          },
         ),
 
         /// Field for user's health condition input
@@ -272,14 +252,6 @@ class _medicalPageState extends State<EMedicalReport>{
     );
   }
 
-   String convertDateTimeDisplay(String date) {
-     final DateFormat displayFormater = DateFormat('yyyy-MM-dd HH:mm:ss.SSS');
-     final DateFormat serverFormater = DateFormat('dd-MM-yyyy');
-     final DateTime displayDate = displayFormater.parse(date);
-     final String formatted = serverFormater.format(displayDate);
-     return formatted;
-   }
-
   /// Sending user's medical information to server (firebase)
   _sendToServer() async{
     showProgress(context, "Processing Submission", false);
@@ -287,7 +259,6 @@ class _medicalPageState extends State<EMedicalReport>{
     medic_info.user_medic_info user_medic_info = medic_info.user_medic_info(
       height: height,
       weight: weight,
-      birthday: convertDateTimeDisplay(_dateTime.toString()),
       sex: sex,
       healthCondition: healthCondition,
       currentMedication: currentMedication,
@@ -305,5 +276,15 @@ class _medicalPageState extends State<EMedicalReport>{
     hideProgress();
     pushAndRemoveUntil(context, home(user: MyAppState.currentUser), false);
   }
+
+
+   /// Converting dateTime that shows hours: minutes: seconds to date only
+   String convertDateTimeDisplay(String date) {
+     final DateFormat displayFormatter = DateFormat('yyyy-MM-dd HH:mm:ss.SSS');
+     final DateFormat serverFormatter = DateFormat('dd-MM-yyyy');
+     final DateTime displayDate = displayFormatter.parse(date);
+     final String formatted = serverFormatter.format(displayDate);
+     return formatted;
+   }
 }
 

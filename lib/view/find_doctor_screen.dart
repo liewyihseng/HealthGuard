@@ -7,7 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
 
-import '../chat/database.dart';
+import 'package:HealthGuard/chat/database.dart';
 
 /// Find doctor screen page widget class
 class FindDoctor extends StatefulWidget {
@@ -115,7 +115,8 @@ class _findDoctorsPageState extends State<FindDoctor> {
                           children: <Widget>[
                             medicalCategoryContainer(
                                 "category7.png", "CT-Scan"),
-                            medicalCategoryContainer("category1.png", "Ortho"),
+                            medicalCategoryContainer(
+                                "category1.png", "Ortho"),
                             medicalCategoryContainer(
                                 "category2.png", "Dietician"),
                             medicalCategoryContainer(

@@ -17,7 +17,6 @@ class user_medic_info{
 user_medic_info(
     {this.height,
       this.weight,
-      this.birthday,
       this.sex,
       this.healthCondition,
       this.currentMedication,
@@ -31,7 +30,6 @@ user_medic_info(
     return new user_medic_info(
       height: parsedJson['height'] ?? "",
       weight: parsedJson['weight'] ?? "",
-      birthday: parsedJson['birthday'] ?? "",
       healthCondition: parsedJson['healthCondition'] ?? "",
       currentMedication: parsedJson['currentMedication'] ?? "",
       address: parsedJson['address'] ?? "",
@@ -45,7 +43,6 @@ user_medic_info(
     return{
       "height": this.height,
       "weight": this.weight,
-      "birthday": this.birthday,
       "sex": this.sex,
       "healthCondition": this.healthCondition,
       "currentMedication": this.currentMedication,

@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'dart:io';
 
 import 'package:HealthGuard/model/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -12,7 +13,9 @@ import 'package:HealthGuard/net/authentication.dart';
 import 'package:flutter/material.dart';
 import 'package:HealthGuard/model/user_model.dart' as OurUser;
 import 'package:HealthGuard/constants.dart' as Constants;
-import 'dart:io';
+import 'package:intl/intl.dart';
+
+import 'package:jiffy/jiffy.dart';
 
 File _image;
 
@@ -32,6 +35,7 @@ class _signupPageState extends State<signup_page> {
   GlobalKey<FormState> _key = new GlobalKey();
   bool _validate = false;
   String firstName, lastName, email, mobile, password, confirmPassword, sex;
+  DateTime _dateTime;
   List gender=["Male","Female","Other"];
 
 
@@ -192,7 +196,7 @@ class _signupPageState extends State<signup_page> {
             constraints: BoxConstraints(minWidth: double.infinity),
             child: Padding(
                 padding:
-                const EdgeInsets.only(top: 16.0, right: 8.0, left: 8.0),
+                const EdgeInsets.only(top: 8.0, bottom: 8.0, right: 8.0, left: 8.0),
                 child: TextFormField(
                     validator: validateName,
                     onSaved: (String val) {
@@ -214,7 +218,7 @@ class _signupPageState extends State<signup_page> {
             constraints: BoxConstraints(minWidth: double.infinity),
             child: Padding(
                 padding:
-                const EdgeInsets.only(top: 16.0, right: 8.0, left: 8.0),
+                const EdgeInsets.only(top: 8.0, bottom: 8.0, right: 8.0, left: 8.0),
                 child: TextFormField(
                     validator: validateName,
                     onSaved: (String val) {
@@ -230,10 +234,37 @@ class _signupPageState extends State<signup_page> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(32.0),
                         ))))),
+
+        /// Calendar for user's birthday input
+        ConstrainedBox(
+          constraints: BoxConstraints(minWidth: double.infinity),
+          child: Padding(
+            padding: const EdgeInsets.only(top: 8.0, bottom: 8.0, right: 8.0, left: 8.0),
+            child: RaisedButton(
+              child: Text(_dateTime == null? 'Select Birthday': Jiffy(_dateTime).yMMMMd),
+              color: Colors.blue,
+              textColor: Colors.white,
+              padding: EdgeInsets.all(10),
+              onPressed: (){
+                showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(1900),
+                  lastDate: DateTime(2050)
+                ).then((date){
+                  setState((){
+                    _dateTime = date;
+                  });
+                });
+              },
+            ),
+          ),
+        ),
+
         ConstrainedBox(
           constraints: BoxConstraints(minWidth: double.infinity),
           child: Container(
-            padding: EdgeInsets.only(top: 15.0, left: 8.0, right: 8.0),
+            padding: EdgeInsets.only(top: 8.0, bottom: 8.0, left: 8.0, right: 8.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -250,7 +281,7 @@ class _signupPageState extends State<signup_page> {
             constraints: BoxConstraints(minWidth: double.infinity),
             child: Padding(
                 padding:
-                const EdgeInsets.only(top: 16.0, right: 8.0, left: 8.0),
+                const EdgeInsets.only(top: 8.0, bottom: 8.0, right: 8.0, left: 8.0),
                 child: TextFormField(
                     keyboardType: TextInputType.phone,
                     textInputAction: TextInputAction.next,
@@ -272,7 +303,7 @@ class _signupPageState extends State<signup_page> {
             constraints: BoxConstraints(minWidth: double.infinity),
             child: Padding(
                 padding:
-                const EdgeInsets.only(top: 16.0, right: 8.0, left: 8.0),
+                const EdgeInsets.only(top: 8.0, bottom: 8.0, right: 8.0, left: 8.0),
                 child: TextFormField(
                     keyboardType: TextInputType.emailAddress,
                     textInputAction: TextInputAction.next,
@@ -293,7 +324,7 @@ class _signupPageState extends State<signup_page> {
         ConstrainedBox(
             constraints: BoxConstraints(minWidth: double.infinity),
             child: Padding(
-              padding: const EdgeInsets.only(top: 16.0, right: 8.0, left: 8.0),
+              padding: const EdgeInsets.only(top: 8.0, bottom: 8.0, right: 8.0, left: 8.0),
               child: TextFormField(
                   obscureText: true,
                   textInputAction: TextInputAction.next,
@@ -318,7 +349,7 @@ class _signupPageState extends State<signup_page> {
         ConstrainedBox(
           constraints: BoxConstraints(minWidth: double.infinity),
           child: Padding(
-            padding: const EdgeInsets.only(top: 16.0, right: 8.0, left: 8.0),
+            padding: const EdgeInsets.only(top: 8.0, bottom: 8.0, right: 8.0, left: 8.0),
             child: TextFormField(
                 textInputAction: TextInputAction.done,
                 onFieldSubmitted: (_) {
@@ -402,6 +433,7 @@ class _signupPageState extends State<signup_page> {
           profilePictureURL: profilePicUrl,
           userType: "Patient",
           sex: sex,
+          birthday: convertDateTimeDisplay(_dateTime.toString()),
           ///This page by default will allow users to create only patient account
         );
 
@@ -428,4 +460,15 @@ class _signupPageState extends State<signup_page> {
       });
     }
   }
+
+
+  /// Converting dateTime that shows hours: minutes: seconds to date only
+  String convertDateTimeDisplay(String date) {
+    final DateFormat displayFormatter = DateFormat('yyyy-MM-dd HH:mm:ss.SSS');
+    final DateFormat serverFormatter = DateFormat('dd-MM-yyyy');
+    final DateTime displayDate = displayFormatter.parse(date);
+    final String formatted = serverFormatter.format(displayDate);
+    return formatted;
+  }
+
 }
