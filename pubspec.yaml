@@ -50,7 +50,7 @@ dependencies:
   # Rendering QR code via a widget
   qr_flutter: ^3.2.0
   # Drawing SVG
-  flutter_svg: ^0.19.2+1
+  flutter_svg: ^0.19.2
   # Displaying local notifications
   flutter_local_notifications: ^3.0.3
   # Adding additional capabilities to Dart Streams and StreamControllers

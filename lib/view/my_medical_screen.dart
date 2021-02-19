@@ -73,7 +73,6 @@ class _MyMedicalState extends State<MyMedical> {
                           MedicalCard(
                               height: doc[index].get("height"),
                               weight: doc[index].get("weight"),
-                              birthday: doc[index].get("birthday"),
                               healthCondition: doc[index].get("healthCondition"),
                               currentMedication: doc[index].get("currentMedication"),
                               address: doc[index].get("address"),

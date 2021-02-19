@@ -63,13 +63,6 @@ class MedicalCard extends StatelessWidget{
                           ),
                         ),
                         Text(
-                          "Date Of Birth : " + birthday,
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Constants.TEXT_LIGHT,
-                          ),
-                        ),
-                        Text(
                           "Health Condition : " + healthCondition,
                           style: TextStyle(
                             fontSize: 15,

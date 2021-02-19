@@ -259,7 +259,6 @@ class _medicalPageState extends State<EMedicalReport>{
     medic_info.user_medic_info user_medic_info = medic_info.user_medic_info(
       height: height,
       weight: weight,
-      sex: sex,
       healthCondition: healthCondition,
       currentMedication: currentMedication,
       address: address,
