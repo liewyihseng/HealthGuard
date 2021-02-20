@@ -36,7 +36,7 @@ class _signupPageState extends State<signup_page> {
   bool _validate = false;
   String firstName, lastName, email, mobile, password, confirmPassword, sex;
   DateTime _dateTime;
-  List gender=["Male","Female","Other"];
+  List gender = ["Male", "Female", "Other"];
 
 
   /// build
@@ -85,7 +85,6 @@ class _signupPageState extends State<signup_page> {
           groupValue: sex,
           onChanged: (value){
             setState(() {
-              print(value);
               sex = value;
             });
           },
@@ -195,49 +194,58 @@ class _signupPageState extends State<signup_page> {
             ],
           ),
         ),
+
         /// Field for user's first name input
         ConstrainedBox(
-            constraints: BoxConstraints(minWidth: double.infinity),
-            child: Padding(
-                padding:
-                const EdgeInsets.only(top: 8.0, bottom: 8.0, right: 8.0, left: 8.0),
-                child: TextFormField(
-                    validator: validateName,
-                    onSaved: (String val) {
-                      firstName = val;
-                    },
-                    textInputAction: TextInputAction.next,
-                    onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
-                    decoration: InputDecoration(
-                        contentPadding:
-                        new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                        fillColor: Colors.white,
-                        hintText: 'First Name',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(32.0),
-                        ))))),
+          constraints: BoxConstraints(minWidth: double.infinity),
+          child: Padding(
+            padding:
+            const EdgeInsets.only(top: 8.0, bottom: 8.0, right: 8.0, left: 8.0),
+            child: TextFormField(
+              validator: validateName,
+              onSaved: (String val) {
+                firstName = val;
+              },
+              textInputAction: TextInputAction.next,
+              onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
+              decoration: InputDecoration(
+                contentPadding:
+                new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                fillColor: Colors.white,
+                hintText: 'First Name',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(32.0),
+                ),
+              ),
+            ),
+          ),
+        ),
 
         /// Field for user's last name input
         ConstrainedBox(
-            constraints: BoxConstraints(minWidth: double.infinity),
-            child: Padding(
-                padding:
-                const EdgeInsets.only(top: 8.0, bottom: 8.0, right: 8.0, left: 8.0),
-                child: TextFormField(
-                    validator: validateName,
-                    onSaved: (String val) {
-                      lastName = val;
-                    },
-                    textInputAction: TextInputAction.next,
-                    onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
-                    decoration: InputDecoration(
-                        contentPadding:
-                        new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                        fillColor: Colors.white,
-                        hintText: 'Last Name',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(32.0),
-                        ))))),
+          constraints: BoxConstraints(minWidth: double.infinity),
+          child: Padding(
+            padding:
+            const EdgeInsets.only(top: 8.0, bottom: 8.0, right: 8.0, left: 8.0),
+            child: TextFormField(
+              validator: validateName,
+              onSaved: (String val) {
+                lastName = val;
+              },
+              textInputAction: TextInputAction.next,
+              onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
+              decoration: InputDecoration(
+                contentPadding:
+                new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                fillColor: Colors.white,
+                hintText: 'Last Name',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(32.0),
+                ),
+              ),
+            ),
+          ),
+        ),
 
         /// Calendar for user's birthday input
         ConstrainedBox(
@@ -246,11 +254,11 @@ class _signupPageState extends State<signup_page> {
             padding: const EdgeInsets.only(top: 8.0, bottom: 8.0, right: 8.0, left: 8.0),
             child: RaisedButton(
               child: Text(_dateTime == null? 'Select Birthday': Jiffy(_dateTime).yMMMMd,
-                  style: TextStyle(
-                    fontFamily: Constants.FONTSTYLE,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15,
-                  ),
+                style: TextStyle(
+                  fontFamily: Constants.FONTSTYLE,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                ),
               ),
               color: Constants.BUTTON_COLOUR,
               textColor: Colors.white,
@@ -258,10 +266,10 @@ class _signupPageState extends State<signup_page> {
               padding: EdgeInsets.all(10),
               onPressed: (){
                 showDatePicker(
-                  context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime(1900),
-                  lastDate: DateTime(2050)
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(1900),
+                    lastDate: DateTime(2050)
                 ).then((date){
                   setState((){
                     _dateTime = date;
@@ -272,6 +280,7 @@ class _signupPageState extends State<signup_page> {
           ),
         ),
 
+        /// Radio button for user's gender input
         ConstrainedBox(
           constraints: BoxConstraints(minWidth: double.infinity),
           child: Container(
@@ -287,99 +296,116 @@ class _signupPageState extends State<signup_page> {
             ),
           ),
         ),
+
         /// Field for user's mobile number input
         ConstrainedBox(
-            constraints: BoxConstraints(minWidth: double.infinity),
-            child: Padding(
-                padding:
-                const EdgeInsets.only(top: 8.0, bottom: 8.0, right: 8.0, left: 8.0),
-                child: TextFormField(
-                    keyboardType: TextInputType.phone,
-                    textInputAction: TextInputAction.next,
-                    onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
-                    validator: validateMobile,
-                    onSaved: (String val) {
-                      mobile = val;
-                    },
-                    decoration: InputDecoration(
-                        contentPadding:
-                        new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                        fillColor: Colors.white,
-                        hintText: 'Mobile Number',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(32.0),
-                        ))))),
+          constraints: BoxConstraints(minWidth: double.infinity),
+          child: Padding(
+            padding:
+            const EdgeInsets.only(top: 8.0, bottom: 8.0, right: 8.0, left: 8.0),
+            child: TextFormField(
+              keyboardType: TextInputType.phone,
+              textInputAction: TextInputAction.next,
+              onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
+              validator: validateMobile,
+              onSaved: (String val) {
+                mobile = val;
+              },
+              decoration: InputDecoration(
+                contentPadding:
+                new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                fillColor: Colors.white,
+                hintText: 'Mobile Number',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(32.0),
+                ),
+              ),
+            ),
+          ),
+        ),
+
         /// Field for user's email address input
         ConstrainedBox(
-            constraints: BoxConstraints(minWidth: double.infinity),
-            child: Padding(
-                padding:
-                const EdgeInsets.only(top: 8.0, bottom: 8.0, right: 8.0, left: 8.0),
-                child: TextFormField(
-                    keyboardType: TextInputType.emailAddress,
-                    textInputAction: TextInputAction.next,
-                    onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
-                    validator: validateEmail,
-                    onSaved: (String val) {
-                      email = val;
-                    },
-                    decoration: InputDecoration(
-                        contentPadding:
-                        new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                        fillColor: Colors.white,
-                        hintText: 'Email Address',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(32.0),
-                        ))))),
+          constraints: BoxConstraints(minWidth: double.infinity),
+          child: Padding(
+            padding:
+            const EdgeInsets.only(top: 8.0, bottom: 8.0, right: 8.0, left: 8.0),
+            child: TextFormField(
+              keyboardType: TextInputType.emailAddress,
+              textInputAction: TextInputAction.next,
+              onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
+              validator: validateEmail,
+              onSaved: (String val) {
+                email = val;
+              },
+              decoration: InputDecoration(
+                contentPadding:
+                new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                fillColor: Colors.white,
+                hintText: 'Email Address',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(32.0),
+                ),
+              ),
+            ),
+          ),
+        ),
+
         /// Field for user's password input
         ConstrainedBox(
-            constraints: BoxConstraints(minWidth: double.infinity),
-            child: Padding(
-              padding: const EdgeInsets.only(top: 8.0, bottom: 8.0, right: 8.0, left: 8.0),
-              child: TextFormField(
-                  obscureText: true,
-                  textInputAction: TextInputAction.next,
-                  onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
-                  controller: _passwordController,
-                  validator: validatePassword,
-                  onSaved: (String val) {
-                    password = val;
-                  },
-                  cursorColor: Colors.black,
-                  decoration: InputDecoration(
-                      contentPadding:
-                      new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                      fillColor: Colors.white,
-                      hintText: 'Password',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(32.0),
-                      ))),
-            )),
+          constraints: BoxConstraints(minWidth: double.infinity),
+          child: Padding(
+            padding: const EdgeInsets.only(top: 8.0, bottom: 8.0, right: 8.0, left: 8.0),
+            child: TextFormField(
+              obscureText: true,
+              textInputAction: TextInputAction.next,
+              onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
+              controller: _passwordController,
+              validator: validatePassword,
+              onSaved: (String val) {
+                password = val;
+              },
+              cursorColor: Colors.black,
+              decoration: InputDecoration(
+                contentPadding:
+                new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                fillColor: Colors.white,
+                hintText: 'Password',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(32.0),
+                ),
+              ),
+            ),
+          ),
+        ),
+
         /// Field for user's confirm password input
         ConstrainedBox(
           constraints: BoxConstraints(minWidth: double.infinity),
           child: Padding(
             padding: const EdgeInsets.only(top: 8.0, bottom: 8.0, right: 8.0, left: 8.0),
             child: TextFormField(
-                textInputAction: TextInputAction.done,
-                onFieldSubmitted: (_) {
-                  _sendToServer();
-                },
-                obscureText: true,
-                validator: (val) =>
-                    validateConfirmPassword(_passwordController.text, val),
-                onSaved: (String val) {
-                  confirmPassword = val;
-                },
-                cursorColor: Colors.black,
-                decoration: InputDecoration(
-                    contentPadding:
-                    new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                    fillColor: Colors.white,
-                    hintText: 'Confirm Password',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(32.0),
-                    ))),
+              textInputAction: TextInputAction.done,
+              onFieldSubmitted: (_) {
+                _sendToServer();
+              },
+              obscureText: true,
+              validator: (val) =>
+                  validateConfirmPassword(_passwordController.text, val),
+              onSaved: (String val) {
+                confirmPassword = val;
+              },
+              cursorColor: Colors.black,
+              decoration: InputDecoration(
+                contentPadding:
+                new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                fillColor: Colors.white,
+                hintText: 'Confirm Password',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(32.0),
+                ),
+              ),
+            ),
           ),
         ),
         /// Button to press after user has finished filling in their account information

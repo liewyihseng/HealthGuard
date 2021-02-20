@@ -9,9 +9,9 @@ class Doctor extends User{
   String aboutYourself = "";
   String doctorID = "";
 
-  Doctor({String email, String firstName, String lastName, OurUser.Settings settings, String phoneNumber, bool active, Timestamp lastOnlineTimestamp, String userID, String profilePictureURL, String userType, this.workPlace, this.speciality, this.aboutYourself, this.doctorID}) :
+  Doctor({String email, String firstName, String lastName, OurUser.Settings settings, String phoneNumber, bool active, Timestamp lastOnlineTimestamp, String userID, String profilePictureURL, String userType, String birthday, String sex, this.workPlace, this.speciality, this.aboutYourself, this.doctorID,}) :
         super(email: email, firstName: firstName, lastName: lastName, settings: settings, phoneNumber: phoneNumber,
-          active: active, lastOnlineTimestamp: lastOnlineTimestamp, userID: userType, profilePictureURL: profilePictureURL, userType: "Doctor");
+          active: active, lastOnlineTimestamp: lastOnlineTimestamp, userID: userType, profilePictureURL: profilePictureURL, userType: "Doctor", sex: sex, birthday: birthday);
 
   factory Doctor.fromJson(Map<String, dynamic> parsedJson){
     return new Doctor(
@@ -26,6 +26,8 @@ class Doctor extends User{
       userID: parsedJson['id'] ?? parsedJson['userID'] ?? '',
       profilePictureURL: parsedJson['profilePictureURL'] ?? "",
       userType: parsedJson['userType'] ?? "",
+      sex: parsedJson['sex'] ?? "",
+      birthday: parsedJson['birthday'] ?? "",
       workPlace: parsedJson['workPlace'] ?? "",
       speciality: parsedJson['speciality'] ?? "",
       aboutYourself: parsedJson['aboutYourself'] ?? "",
@@ -45,6 +47,8 @@ class Doctor extends User{
       'lastOnlineTimestamp': this.lastOnlineTimestamp,
       "profilePictureURL": this.profilePictureURL,
       'appIdentifier': this.appIdentifier,
+      "birthday": this.birthday,
+      "sex": this.sex,
       "userType": this.userType,
       "workPlace": this.workPlace,
       "speciality": this.speciality,

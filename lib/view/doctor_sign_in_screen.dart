@@ -8,11 +8,13 @@ import 'package:flutter/rendering.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:HealthGuard/model/user_model.dart' as OurUser;
+import 'package:HealthGuard/model/doctor_model.dart' as OurDoctor;
 import 'package:HealthGuard/helper/validation_tool.dart';
 import 'package:HealthGuard/net/authentication.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
 import 'package:HealthGuard/home.dart';
 import 'package:HealthGuard/main.dart';
+import 'doctor_home_screen.dart';
 import 'doctor_sign_up_screen.dart';
 import 'forgot_password_screen.dart';
 
@@ -266,7 +268,7 @@ class _doctorSignInPageState extends State<DoctorSignIn> {
       await loginWithUserNameAndPassword(email.trim(), password.trim());
 
       if (user != null) {
-        pushAndRemoveUntil(context, home(user: user), false);
+        pushAndRemoveUntil(context, DoctorHome(doctor: user), false);
       }
     } else {
       setState(() {
@@ -278,7 +280,7 @@ class _doctorSignInPageState extends State<DoctorSignIn> {
   /// Checking if Doctor's input credential's validity
   /// If valid, allow access to account
   /// Else display error
-  Future<OurUser.User> loginWithUserNameAndPassword(
+  Future<OurDoctor.Doctor> loginWithUserNameAndPassword(
       String email, String password) async {
     try {
       UserCredential result = await FirebaseAuth.instance
@@ -290,7 +292,7 @@ class _doctorSignInPageState extends State<DoctorSignIn> {
           .get();
       OurUser.User user;
       if (documentSnapshot != null && documentSnapshot.exists) {
-        user = OurUser.User.fromJson(documentSnapshot.data());
+        user = OurDoctor.Doctor.fromJson(documentSnapshot.data());
         user.active = true;
         await _fireStoreUtils.updateCurrentUser(user, context);
         hideProgress();

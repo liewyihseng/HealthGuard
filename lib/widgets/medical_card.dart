@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 class MedicalCard extends StatelessWidget{
   final String height;
   final String weight;
-  final String birthday;
-  final String sex;
   final String healthCondition;
   final String currentMedication;
   final String address;
@@ -17,8 +15,6 @@ class MedicalCard extends StatelessWidget{
       {Key key,
         @required this.height,
         @required this.weight,
-        @required this.birthday,
-        @required this.sex,
         @required this.healthCondition,
         @required this.currentMedication,
         @required this.address,

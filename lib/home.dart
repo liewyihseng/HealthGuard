@@ -16,8 +16,6 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/svg.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:HealthGuard/chat/chatroom.dart';
-import 'package:HealthGuard/view/bloodpressure_screen.dart';
 import 'package:HealthGuard/model/user_model.dart' as OurUser;
 import 'package:HealthGuard/net/authentication.dart';
 import 'package:HealthGuard/view/patient_sign_in_screen.dart';
