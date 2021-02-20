@@ -326,6 +326,7 @@ class _doctorSignInPageState extends State<DoctorSignIn> {
               context, 'Error', 'Email and Password are not enabled');
           break;
       }
+
       print(exception.toString());
       return null;
     }

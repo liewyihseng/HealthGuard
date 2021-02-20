@@ -50,6 +50,81 @@ class _doctorHome extends State<DoctorHome>{
         backgroundColor: Constants.APPBAR_COLOUR,
         centerTitle: true,
       ),
+
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            displayCircleImage(doctor.profilePictureURL, 125, false),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text("First Name: " + doctor.firstName, style: TextStyle(fontFamily: Constants.FONTSTYLE),),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text("Last Name: " + doctor.lastName, style: TextStyle(fontFamily: Constants.FONTSTYLE),),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text("Email: " + doctor.email, style: TextStyle(fontFamily: Constants.FONTSTYLE),),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text("Phone Number: " + doctor.phoneNumber, style: TextStyle(fontFamily: Constants.FONTSTYLE),),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text("User ID: " + doctor.userID, style: TextStyle(fontFamily: Constants.FONTSTYLE),),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text("User Type: " + doctor.userType, style: TextStyle(fontFamily: Constants.FONTSTYLE),),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text("Gender: " + doctor.sex, style: TextStyle(fontFamily: Constants.FONTSTYLE),),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text("Birthday: " + doctor.birthday, style: TextStyle(fontFamily: Constants.FONTSTYLE),),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text("Workplace: " + doctor.workPlace, style: TextStyle(fontFamily: Constants.FONTSTYLE),),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text("Speciality: " + doctor.speciality, style: TextStyle(fontFamily: Constants.FONTSTYLE),),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text("About Yourself: " + doctor.aboutYourself, style: TextStyle(fontFamily: Constants.FONTSTYLE),),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text("Doctor ID: " + doctor.doctorID, style: TextStyle(fontFamily: Constants.FONTSTYLE),),
+            )
+
+
+
+
+          ],
+        ),
+      ),
+
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
