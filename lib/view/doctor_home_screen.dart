@@ -5,13 +5,17 @@ import 'package:HealthGuard/helper/validation_tool.dart';
 import 'package:HealthGuard/main.dart';
 import 'package:HealthGuard/net/authentication.dart';
 import 'package:HealthGuard/model/doctor_model.dart' as OurDoctor;
-import 'package:HealthGuard/view/patient_sign_in_screen.dart';
+import 'package:HealthGuard/view/doctor_qr_scanner.dart';
+import 'package:HealthGuard/view/doctor_sign_in_screen.dart';
 import 'package:HealthGuard/view/user_profile_screen.dart';
+import 'package:HealthGuard/widgets/navigating_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
 import 'package:flutter_svg/svg.dart';
+
+import 'package:HealthGuard/view/chat_with_patient.dart';
 
 FireStoreUtils _fireStoreUtils = FireStoreUtils();
 
@@ -49,6 +53,31 @@ class _doctorHome extends State<DoctorHome>{
         iconTheme: IconThemeData(color: Colors.white),
         backgroundColor: Constants.APPBAR_COLOUR,
         centerTitle: true,
+      ),
+      body: Scaffold(
+        backgroundColor: Constants.BACKGROUND_COLOUR,
+        body: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Expanded(
+              child: ListView(
+                scrollDirection: Axis.vertical,
+                children: [
+                  NavigatingCard(
+                    imageName: "assets/Patient QR Scanner.png",
+                    text: "Patient QR Scanner",
+                    screenID: DoctorQrScanner.id,
+                  ),
+                  NavigatingCard(
+                    imageName: "assets/Chat with Doctor.png",
+                    text: "Chat with Patient",
+                    screenID: ChatWithPatient.id,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
       drawer: Drawer(
         child: ListView(
@@ -109,7 +138,7 @@ class _doctorHome extends State<DoctorHome>{
                 _fireStoreUtils.updateCurrentUser(doctor, context);
                 await FirebaseAuth.instance.signOut();
                 MyAppState.currentUser = null;
-                pushAndRemoveUntil(context, LoginPage(), false);
+                pushAndRemoveUntil(context, DoctorSignIn(), false);
               },
             )
           ],
