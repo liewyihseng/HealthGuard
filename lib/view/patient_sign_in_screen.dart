@@ -357,8 +357,15 @@ class _LoginPageState extends State<LoginPage> {
       OurUser.User user =
           await loginWithUserNameAndPassword(email.trim(), password.trim());
 
-      if (user != null) {
+      /// Checking if the user is a patient or a doctor
+      if (user != null && user.userType == 'Patient' && user.userID != 'Doctor') {
         pushAndRemoveUntil(context, home(user: user), false);
+      }else{
+        user.active = false;
+        _fireStoreUtils.updateCurrentUser(user, context);
+        await FirebaseAuth.instance.signOut();
+        MyAppState.currentUser = null;
+        pushAndRemoveUntil(context, LoginPage(), false);
       }
     } else {
       setState(() {

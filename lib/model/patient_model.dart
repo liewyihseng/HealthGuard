@@ -7,9 +7,9 @@ class Patient extends User{
 
   String insuranceID = '';
 
-  Patient({String email, String firstName, String lastName, OurUser.Settings settings, String phoneNumber, bool active, Timestamp lastOnlineTimestamp, String userID, String profilePictureURL, String userType, this.insuranceID}) :
+  Patient({String email, String firstName, String lastName, OurUser.Settings settings, String phoneNumber, bool active, Timestamp lastOnlineTimestamp, String userID, String profilePictureURL, String userType, String sex, String birthday, this.insuranceID}) :
         super(email: email, firstName: firstName, lastName: lastName, settings: settings, phoneNumber: phoneNumber,
-          active: active, lastOnlineTimestamp: lastOnlineTimestamp, userID: userType, profilePictureURL: profilePictureURL, userType: "Patient");
+          active: active, lastOnlineTimestamp: lastOnlineTimestamp, userID: userType, profilePictureURL: profilePictureURL, userType: "Patient", sex: sex, birthday: birthday);
 
   factory Patient.fromJson(Map<String, dynamic> parsedJson){
     return new Patient(
@@ -24,6 +24,8 @@ class Patient extends User{
       userID: parsedJson['id'] ?? parsedJson['userID'] ?? '',
       profilePictureURL: parsedJson['profilePictureURL'] ?? "",
       userType: parsedJson['userType'] ?? "",
+      sex: parsedJson['sex'] ?? "",
+      birthday: parsedJson['birthday'] ?? "",
       insuranceID: parsedJson['insuranceID'] ?? "",
     );
   }
@@ -41,6 +43,8 @@ class Patient extends User{
       "profilePictureURL": this.profilePictureURL,
       'appIdentifier': this.appIdentifier,
       "userType": this.userType,
+      "sex": this.sex,
+      "birthday": this.birthday,
       "insuranceID": this.insuranceID,
     };
   }
