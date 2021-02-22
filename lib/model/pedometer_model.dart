@@ -12,11 +12,11 @@ class PedometerData {
   Timestamp date;
 
   PedometerData({int goal, int steps, int water, double calories, Timestamp date}){
-    this.goal = goal;
-    this.steps = steps;
-    this.water = water;
-    this.calories = calories;
-    this.date = Timestamp.fromDate(TimeHelper.getYesterdayDate());
+    this.goal = goal ?? 10000;
+    this.steps = steps ?? 0;
+    this.water = water ?? 0;
+    this.calories = calories ?? 0;
+    this.date = date ?? Timestamp.fromDate(TimeHelper.getYesterdayDate());
   }
 
   ///convert from json
@@ -24,7 +24,7 @@ class PedometerData {
     return new PedometerData(
         goal: parsedJson['goal'] ?? 10000,
         steps: parsedJson['steps'] ?? 0,
-        water: parsedJson['water'] ?? 0.0,
+        water: parsedJson['water'] ?? 0,
         calories: parsedJson['calories'] ?? 0,
         date: parsedJson['date'] ?? Timestamp.fromDate(TimeHelper.getYesterdayDate())
     );

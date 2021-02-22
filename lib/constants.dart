@@ -34,3 +34,12 @@ const FONTSTYLE = "Montserrat";
 const APPBAR_TEXT_WEIGHT = FontWeight.w900;
 
 const APPBAR_COLOUR = Colors.blue;
+
+/// TextStyle
+const TextStyle ALERT_DIALOG_TITLE_STYLE = TextStyle(
+  fontFamily: FONTSTYLE,
+  fontWeight: APPBAR_TEXT_WEIGHT,
+  color: TEXT_DARK,
+);
+
+

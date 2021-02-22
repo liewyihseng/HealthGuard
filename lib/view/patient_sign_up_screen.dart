@@ -1,7 +1,9 @@
 import 'dart:ui';
 import 'dart:io';
 
+import 'package:HealthGuard/model/pedometer_model.dart';
 import 'package:HealthGuard/model/user_model.dart';
+import 'package:HealthGuard/view/pedometer_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -477,6 +479,16 @@ class _signupPageState extends State<signup_page> {
             .doc(result.user.uid)
             .collection(Constants.ACC_INFO)
             .add(user.toJson());
+
+        // init pedometer essential skeleton
+        PedometerData pedometerSkeleton = PedometerData();
+        await FireStoreUtils.firestore
+            .collection(Constants.USERS)
+            .doc(result.user.uid)
+            .collection(Constants.PEDOMETER_INFO)
+            .doc(PedometerScreen.documentID)
+            .set(pedometerSkeleton.toJson());
+
         hideProgress();
         MyAppState.currentUser = user;
         pushAndRemoveUntil(context, home(user: user), false);
