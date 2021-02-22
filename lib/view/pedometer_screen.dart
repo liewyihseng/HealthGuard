@@ -4,6 +4,7 @@ import 'package:HealthGuard/helper/shared_preferences_services.dart';
 import 'package:HealthGuard/helper/time_helper.dart';
 import 'package:HealthGuard/main.dart';
 import 'package:HealthGuard/model/pedometer_model.dart';
+import 'package:HealthGuard/net/PedometerService.dart';
 import 'package:HealthGuard/view/pedometer_history_screen.dart';
 import 'package:HealthGuard/widgets/health_option_card.dart';
 import 'package:HealthGuard/widgets/round_progress_bar.dart';
@@ -20,25 +21,27 @@ class PedometerScreen extends StatefulWidget {
 
   /// screen ID for navigator routing
   static const String id = "PedometerScreen";
-  static int steps = 0;
-  static double calories = 0; // cal
-  static int water = 0; // ml
-  static int goal = 10000;
+  static const String documentID = "staticData";
+  // static PedometerData currentData = PedometerData();
+  // static int steps = 0;
+  // static double calories = 0; // cal
+  // static int water = 0; // ml
+  // static int goal = 10000;
   // Stream<StepCount> _stepCountStream;
 
-  /// mainly to avoid value overflow of the progress bar
-  static double getProgressBarFriendlySteps(){
-      if ((steps ?? 0) < goal){
-        return steps?.toDouble();
-      } else {
-        return goal.toDouble();
-      }
-  }
-
-  static double getStepPercent(){
-    print("result : " + (getProgressBarFriendlySteps()/goal*100).toString());
-    return (getProgressBarFriendlySteps()/goal*100);
-  }
+  // /// mainly to avoid value overflow of the progress bar
+  // static double getProgressBarFriendlySteps(){
+  //     if ((currentData.steps ?? 0) < currentData.goal){
+  //       return currentData.steps?.toDouble();
+  //     } else {
+  //       return currentData.goal.toDouble();
+  //     }
+  // }
+  //
+  // static double getStepPercent(){
+  //   print("result : " + (getProgressBarFriendlySteps()/currentData.goal*100).toString());
+  //   return (getProgressBarFriendlySteps()/currentData.goal*100);
+  // }
 
   @override
   _PedometerScreenState createState() => _PedometerScreenState();
@@ -49,23 +52,20 @@ class PedometerScreen extends StatefulWidget {
 class _PedometerScreenState extends State<PedometerScreen> {
 
   /// variables
+  int _steps = 0;
+  double _calories = 0; // cal
+  int _water = 0; // ml
+  int _goal = 10000;
   Stream<StepCount> _stepCountStream;
-  // int steps = 0;
-  // double calories = 0; // cal
-  // int water = 0; // ml
-  // int goal = 10000;
-
   var db = FirebaseFirestore.instance;
-
-  /// shared preferences keys
-  final String previousStepKey = "preStep";
+  final String previousStepKey = "preStep"; // shared preferences keys
   final String previousDayNoKey = "preDayNo";
 
   /// step count stream error
   void onStepCountError(error) {
     print('onStepCountError: $error');
     setState(() {
-      PedometerScreen.steps = 0;
+      _steps = 0;
     });
   }
 
@@ -86,10 +86,10 @@ class _PedometerScreenState extends State<PedometerScreen> {
   /// step count event handler
   void onStepCount(StepCount event) async {
 
+    /// variable
     int todayDayNo = Jiffy(event.timeStamp).dayOfYear;
-
     SharedPrefService sharedPrefService = SharedPrefService();
-
+    PedometerService pedometerService = PedometerService();
     int preSteps = await sharedPrefService.read(previousStepKey) ?? 0;
     int previousDayNo = await sharedPrefService.read(previousDayNoKey) ?? todayDayNo;
 
@@ -101,7 +101,14 @@ class _PedometerScreenState extends State<PedometerScreen> {
 
     /// if new day
     if (previousDayNo != todayDayNo) {
-      _sendToServer(event.steps - preSteps, PedometerScreen.goal, PedometerScreen.calories, PedometerScreen.water); // to lower database traffic (downside : not real time)
+      PedometerData sentData = PedometerData(
+          goal: _goal,
+          water: _water,
+          calories: _calories,
+          steps: event.steps - preSteps,
+          date: Timestamp.fromDate(TimeHelper.getYesterdayDate())
+      );
+      await pedometerService.sendToServer(sentData);
       preSteps = event.steps;
       previousDayNo = todayDayNo;
     }
@@ -110,97 +117,114 @@ class _PedometerScreenState extends State<PedometerScreen> {
     sharedPrefService.saveInt(previousStepKey, preSteps);
     sharedPrefService.saveInt(previousDayNoKey, previousDayNo);
 
-    setState(() {
-      PedometerScreen.steps = event.steps - preSteps;
-      PedometerScreen.calories = PedometerScreen.steps.toDouble() * 0.04;
-      PedometerScreen.water = (PedometerScreen.steps.toDouble() * 0.1282).toInt();
-    });
-    // _sendToServer(_steps, _goal, _calories, _water); // high traffic
+    if(mounted){
+      setState(() {
+        _steps = event.steps - preSteps;
+        _calories = _steps.toDouble() * 0.04;
+        _water = (_steps.toDouble() * 0.1282).toInt();
+      });
+    } else {
+      _steps = event.steps - preSteps;
+      _calories = _steps.toDouble() * 0.04;
+      _water = (_steps.toDouble() * 0.1282).toInt();
+    }
 
-  }
-
-  /// send data to database
-  _sendToServer(int steps, int goal, double calories, int water) async {
-
-    /// variable
-    // PedometerData oldPedometerData;
-    // String oldDataId;
-
-    /// database reference
-    var pedometerRef = db
-        .collection(Constants.USERS)
-        .doc(MyAppState.currentUser.userID)
-        .collection(Constants.PEDOMETER_INFO);
-
-    /// construct updated data
-    PedometerData pedometerData = PedometerData(
-        goal: goal,
-        steps: steps,
-        water: water,
-        calories: calories,
-        date: Timestamp.fromDate(TimeHelper.getYesterdayDate())
+    PedometerData currentData = PedometerData(
+      goal: _goal,
+      steps: _steps,
+      water: _water,
+      calories: _calories,
+      date: Timestamp.now()
     );
-
-    await pedometerRef.add(pedometerData.toJson());
-
-    // await pedometerRef
-    //     .orderBy("date",descending: true)
-    //     .limit(1)
-        // timestamp query not working
-        // .where("lastUpdate", isGreaterThanOrEqualTo: Timestamp.fromDate(TimeHelper.getLastMidnightDate()))
-        // .where("lastUpdate", isLessThan: Timestamp.fromDate(TimeHelper.getNextMidnightDate()))
-    //     .get()
-    //     .then((value){
-    //       if(value.docs.isNotEmpty){
-    //
-    //         /// get data
-    //         oldDataId = value.docs.single.id;
-    //         oldPedometerData = PedometerData.fromJson(value.docs.single.data());
-    //
-    //         /// display incoming data
-    //         print("Existing pedometer document found, id : $oldDataId");
-    //         print(oldPedometerData.toJson());
-    //
-    //         DateTime oldDate = oldPedometerData.date.toDate();
-    //         Duration dateDiff = newTimestamp.toDate().difference(oldDate);
-    //
-    //         print("old date");
-    //         print(oldDate);
-    //         print("new date");
-    //         print(newTimestamp.toDate());
-    //         print("diff date");
-    //         print(dateDiff);
-    //
-    //         if(dateDiff.inDays >= 1){
-    //           oldDataId = null;
-    //           print("old data id set to null : $oldDataId");
-    //         }
-    //
-    //       } else {
-    //         print("No existing pedometer document found");
-    //       }
-    //       print("new data : ${pedometerData.toJson()}");
-    // }).catchError((e)=> print("error fetching old pedometer data : $e"));
-
-    // await pedometerRef
-    //     .orderBy("lastUpdate", descending: true)
-    //     .get()
-    //     .then((value){
-    //       if(value.docs.isNotEmpty){
-    //         oldDataId = value.docs.first.id;
-    //         print("${oldDataId} is the id of documents");
-    //         oldPedometerData = PedometerData.fromJson(value.docs.first.data());
-    //         print(oldPedometerData.toJson());
-    //       }
-    // });
-    
-    // if (oldDataId != null){
-    //   await pedometerRef.doc(oldDataId).update(pedometerData.toJson());
-    // } else {
-    //   await pedometerRef.add(pedometerData.toJson());
-    // }
-
+    await pedometerService.sendToServer(currentData, PedometerScreen.documentID);
   }
+
+  // /// send data to database
+  // _sendToServer(PedometerData data, [String docID]) async {
+  //
+  //   /// variable
+  //   // PedometerData oldPedometerData;
+  //   // String oldDataId;
+  //
+  //   /// database reference
+  //   var pedometerRef = db
+  //       .collection(Constants.USERS)
+  //       .doc(MyAppState.currentUser.userID)
+  //       .collection(Constants.PEDOMETER_INFO);
+  //
+  //   // /// construct updated data
+  //   // PedometerData pedometerData = PedometerData(
+  //   //     goal: goal,
+  //   //     steps: steps,
+  //   //     water: water,
+  //   //     calories: calories,
+  //   //     date: Timestamp.fromDate(TimeHelper.getYesterdayDate())
+  //   // );
+  //
+  //   if (docID == null){
+  //     await pedometerRef.add(data.toJson());
+  //   } else {
+  //     await pedometerRef.doc(docID).set(data.toJson());
+  //   }
+  //
+  //   // await pedometerRef
+  //   //     .orderBy("date",descending: true)
+  //   //     .limit(1)
+  //       // timestamp query not working
+  //       // .where("lastUpdate", isGreaterThanOrEqualTo: Timestamp.fromDate(TimeHelper.getLastMidnightDate()))
+  //       // .where("lastUpdate", isLessThan: Timestamp.fromDate(TimeHelper.getNextMidnightDate()))
+  //   //     .get()
+  //   //     .then((value){
+  //   //       if(value.docs.isNotEmpty){
+  //   //
+  //   //         /// get data
+  //   //         oldDataId = value.docs.single.id;
+  //   //         oldPedometerData = PedometerData.fromJson(value.docs.single.data());
+  //   //
+  //   //         /// display incoming data
+  //   //         print("Existing pedometer document found, id : $oldDataId");
+  //   //         print(oldPedometerData.toJson());
+  //   //
+  //   //         DateTime oldDate = oldPedometerData.date.toDate();
+  //   //         Duration dateDiff = newTimestamp.toDate().difference(oldDate);
+  //   //
+  //   //         print("old date");
+  //   //         print(oldDate);
+  //   //         print("new date");
+  //   //         print(newTimestamp.toDate());
+  //   //         print("diff date");
+  //   //         print(dateDiff);
+  //   //
+  //   //         if(dateDiff.inDays >= 1){
+  //   //           oldDataId = null;
+  //   //           print("old data id set to null : $oldDataId");
+  //   //         }
+  //   //
+  //   //       } else {
+  //   //         print("No existing pedometer document found");
+  //   //       }
+  //   //       print("new data : ${pedometerData.toJson()}");
+  //   // }).catchError((e)=> print("error fetching old pedometer data : $e"));
+  //
+  //   // await pedometerRef
+  //   //     .orderBy("lastUpdate", descending: true)
+  //   //     .get()
+  //   //     .then((value){
+  //   //       if(value.docs.isNotEmpty){
+  //   //         oldDataId = value.docs.first.id;
+  //   //         print("${oldDataId} is the id of documents");
+  //   //         oldPedometerData = PedometerData.fromJson(value.docs.first.data());
+  //   //         print(oldPedometerData.toJson());
+  //   //       }
+  //   // });
+  //
+  //   // if (oldDataId != null){
+  //   //   await pedometerRef.doc(oldDataId).update(pedometerData.toJson());
+  //   // } else {
+  //   //   await pedometerRef.add(pedometerData.toJson());
+  //   // }
+  //
+  // }
 
   /// GUI
   @override
@@ -233,7 +257,7 @@ class _PedometerScreenState extends State<PedometerScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         RoundProgressBar(
-                            value: (PedometerScreen.calories < 2000) ? PedometerScreen.calories : 2000,
+                            value: (_calories < 2000) ? _calories : 2000,
                             max: 2000,
                             size: 100,
                             color: Colors.orangeAccent,
@@ -242,12 +266,12 @@ class _PedometerScreenState extends State<PedometerScreen> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Icon(Icons.local_fire_department),
-                                  Text("${MathHelper.toPrecision(PedometerScreen.calories, 2)} cal"),
+                                  Text("${MathHelper.toPrecision(_calories, 2)} cal"),
                                 ],
                               );
                             }),
                         RoundProgressBar(
-                            value: (PedometerScreen.water < 3000) ? PedometerScreen.water.toDouble() : 3000,
+                            value: (_water < 3000) ? _water.toDouble() : 3000,
                             max: 3000,
                             size: 100,
                             color: Colors.blue[300],
@@ -256,7 +280,7 @@ class _PedometerScreenState extends State<PedometerScreen> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Icon(Icons.opacity),
-                                  Text(PedometerScreen.water.toString() + " ml"),
+                                  Text(_water.toString() + " ml"),
                                 ],
                               );
                             }),
@@ -264,10 +288,10 @@ class _PedometerScreenState extends State<PedometerScreen> {
                     ),
                   ),
                   RoundProgressBar(
-                      value: ((PedometerScreen.steps ?? 0) < PedometerScreen.goal)
-                          ? PedometerScreen.steps?.toDouble()
-                          : PedometerScreen.goal.toDouble(),
-                      max: PedometerScreen.goal.toDouble(),
+                      value: ((_steps ?? 0) < _goal)
+                          ? _steps?.toDouble()
+                          : _goal.toDouble(),
+                      max: _goal.toDouble(),
                       size: 300,
                       color: Colors.lightGreenAccent,
                       innerWidget: (double value) {
@@ -281,9 +305,9 @@ class _PedometerScreenState extends State<PedometerScreen> {
                             SizedBox(
                               height: 10,
                             ),
-                            Text("${PedometerScreen.steps} / ${PedometerScreen.goal} steps"),
+                            Text("$_steps / $_goal steps"),
                             Text(
-                                "${MathHelper.toPrecision(value / PedometerScreen.goal.toDouble() * 100, 2)} %"),
+                                "${MathHelper.toPrecision(value / _goal.toDouble() * 100, 2)} %"),
                           ],
                         );
                       }),

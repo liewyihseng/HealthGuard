@@ -1,6 +1,8 @@
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:HealthGuard/helper/math_helper.dart';
+import 'package:HealthGuard/model/pedometer_model.dart';
 import 'package:HealthGuard/view/medical_feed_screen.dart';
 import 'package:HealthGuard/view/user_profile_screen.dart';
 import 'package:HealthGuard/view/bloodpressure_screen.dart';
@@ -177,7 +179,7 @@ class HealthOption extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
         child: Column(
-          mainAxisSize: MainAxisSize.min,
+      mainAxisSize: MainAxisSize.min,
       children: [
         Expanded(
           child: ListView(
@@ -249,9 +251,6 @@ class HomeOption extends StatefulWidget {
   @override
   _HomeOptionState createState() => _HomeOptionState(user);
 }
-
-
-
 
 class _HomeOptionState extends State<HomeOption> {
   final OurUser.User user;
@@ -461,18 +460,46 @@ class _HomeOptionState extends State<HomeOption> {
                     physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     children: <Widget>[
-                      GestureDetector(
-                        onTap: (){
-                          Navigator.pushNamed(context, PedometerScreen.id);
+                      StreamBuilder<DocumentSnapshot>(
+                        stream: db
+                            .collection(Constants.USERS)
+                            .doc(MyAppState.currentUser.userID)
+                            .collection(Constants.PEDOMETER_INFO)
+                            .doc(PedometerScreen.documentID)
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          if(snapshot.data.data() == null){
+                            return GestureDetector(
+                              onTap: (){
+                                Navigator.pushNamed(context, PedometerScreen.id);
+                              },
+                              child: CardItems(
+                                image: Image.asset('assets/icons/Walking.png'),
+                                title: "Unknown",
+                                value: "Null",
+                                unit: "",
+                                color: Constants.LOGO_COLOUR_PINK_LIGHT,
+                                progress: 0,
+                              ),
+                            );
+                          }
+                          PedometerData pedometerData = PedometerData.fromJson(snapshot.data.data());
+                          int pedometerProgress = MathHelper.intPercentage(pedometerData.steps, pedometerData.goal);
+                          print(pedometerProgress);
+                          return GestureDetector(
+                            onTap: (){
+                              Navigator.pushNamed(context, PedometerScreen.id);
+                            },
+                            child: CardItems(
+                              image: Image.asset('assets/icons/Walking.png'),
+                              title: "Walking",
+                              value: pedometerData.steps.toString(),
+                              unit: "steps",
+                              color: Constants.LOGO_COLOUR_PINK_LIGHT,
+                              progress: pedometerProgress,
+                            ),
+                          );
                         },
-                        child: CardItems(
-                          image: Image.asset('assets/icons/Walking.png'),
-                          title: "Walking",
-                          value: PedometerScreen.steps.toString(),
-                          unit: "steps",
-                          color: Constants.LOGO_COLOUR_PINK_LIGHT,
-                          progress: PedometerScreen.getStepPercent().round(),
-                        ),
                       ),
                     ],
                   ),
