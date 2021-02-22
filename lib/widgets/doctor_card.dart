@@ -16,7 +16,7 @@ class DoctorCard extends StatelessWidget{
     return Container(
       child: InkWell(
         child: Container(
-          margin: EdgeInsets.only(bottom: 10),
+          margin: EdgeInsets.only(bottom: 10, top: 10),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(
               Radius.circular(12),
@@ -24,14 +24,14 @@ class DoctorCard extends StatelessWidget{
             color: Color(0xffECF0F5),
           ),
           child: Container(
-            padding: EdgeInsets.all(7),
+            padding: EdgeInsets.all(8),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
 
-                displayCircleImage(doctor.profilePictureURL, 30, true),
+                displayCircleImage(doctor.profilePictureURL, 70, true),
 
-                SizedBox(width: 10),
+                SizedBox(width: 20),
 
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
