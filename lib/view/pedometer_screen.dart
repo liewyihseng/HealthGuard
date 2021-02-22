@@ -2,11 +2,10 @@ import 'dart:async';
 
 import 'package:HealthGuard/helper/shared_preferences_services.dart';
 import 'package:HealthGuard/helper/time_helper.dart';
-import 'package:HealthGuard/main.dart';
 import 'package:HealthGuard/model/pedometer_model.dart';
 import 'package:HealthGuard/net/PedometerService.dart';
 import 'package:HealthGuard/view/pedometer_history_screen.dart';
-import 'package:HealthGuard/widgets/health_option_card.dart';
+import 'package:HealthGuard/widgets/navigating_card.dart';
 import 'package:HealthGuard/widgets/round_progress_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
@@ -18,48 +17,25 @@ import 'package:HealthGuard/helper/math_helper.dart';
 
 /// pedometer screen page widget class
 class PedometerScreen extends StatefulWidget {
-
   /// screen ID for navigator routing
   static const String id = "PedometerScreen";
   static const String documentID = "staticData";
-  // static PedometerData currentData = PedometerData();
-  // static int steps = 0;
-  // static double calories = 0; // cal
-  // static int water = 0; // ml
-  // static int goal = 10000;
-  // Stream<StepCount> _stepCountStream;
-
-  // /// mainly to avoid value overflow of the progress bar
-  // static double getProgressBarFriendlySteps(){
-  //     if ((currentData.steps ?? 0) < currentData.goal){
-  //       return currentData.steps?.toDouble();
-  //     } else {
-  //       return currentData.goal.toDouble();
-  //     }
-  // }
-  //
-  // static double getStepPercent(){
-  //   print("result : " + (getProgressBarFriendlySteps()/currentData.goal*100).toString());
-  //   return (getProgressBarFriendlySteps()/currentData.goal*100);
-  // }
 
   @override
   _PedometerScreenState createState() => _PedometerScreenState();
-
 }
 
 /// pedometer screen page state class
 class _PedometerScreenState extends State<PedometerScreen> {
-
   /// variables
   int _steps = 0;
   double _calories = 0; // cal
   int _water = 0; // ml
   int _goal = 10000;
   Stream<StepCount> _stepCountStream;
-  var db = FirebaseFirestore.instance;
   final String previousStepKey = "preStep"; // shared preferences keys
   final String previousDayNoKey = "preDayNo";
+  PedometerService pedometerService = PedometerService();
 
   /// step count stream error
   void onStepCountError(error) {
@@ -70,7 +46,15 @@ class _PedometerScreenState extends State<PedometerScreen> {
   }
 
   /// additional init for pedometer
-  void initPlatformState() {
+  Future<void> initPlatformState() async {
+    /// check previous goal settings
+    PedometerData initialData = await pedometerService.receiveFromServer(PedometerScreen.documentID);
+    print(initialData.toJson());
+    if(initialData.steps != -1){
+      setState(() {
+        _goal = initialData.goal;
+      });
+    }
     _stepCountStream = Pedometer.stepCountStream;
     _stepCountStream.listen(onStepCount).onError(onStepCountError);
     if (!mounted) return;
@@ -78,20 +62,19 @@ class _PedometerScreenState extends State<PedometerScreen> {
 
   /// override init
   @override
-  void initState() {
+  initState(){
     super.initState();
     initPlatformState();
   }
 
   /// step count event handler
   void onStepCount(StepCount event) async {
-
     /// variable
     int todayDayNo = Jiffy(event.timeStamp).dayOfYear;
     SharedPrefService sharedPrefService = SharedPrefService();
-    PedometerService pedometerService = PedometerService();
     int preSteps = await sharedPrefService.read(previousStepKey) ?? 0;
-    int previousDayNo = await sharedPrefService.read(previousDayNoKey) ?? todayDayNo;
+    int previousDayNo =
+        await sharedPrefService.read(previousDayNoKey) ?? todayDayNo;
 
     /// if reboot then
     if (event.steps < preSteps) {
@@ -106,8 +89,7 @@ class _PedometerScreenState extends State<PedometerScreen> {
           water: _water,
           calories: _calories,
           steps: event.steps - preSteps,
-          date: Timestamp.fromDate(TimeHelper.getYesterdayDate())
-      );
+          date: Timestamp.fromDate(TimeHelper.getYesterdayDate()));
       await pedometerService.sendToServer(sentData);
       preSteps = event.steps;
       previousDayNo = todayDayNo;
@@ -117,7 +99,7 @@ class _PedometerScreenState extends State<PedometerScreen> {
     sharedPrefService.saveInt(previousStepKey, preSteps);
     sharedPrefService.saveInt(previousDayNoKey, previousDayNo);
 
-    if(mounted){
+    if (mounted) {
       setState(() {
         _steps = event.steps - preSteps;
         _calories = _steps.toDouble() * 0.04;
@@ -130,13 +112,13 @@ class _PedometerScreenState extends State<PedometerScreen> {
     }
 
     PedometerData currentData = PedometerData(
-      goal: _goal,
-      steps: _steps,
-      water: _water,
-      calories: _calories,
-      date: Timestamp.now()
-    );
-    await pedometerService.sendToServer(currentData, PedometerScreen.documentID);
+        goal: _goal,
+        steps: _steps,
+        water: _water,
+        calories: _calories,
+        date: Timestamp.now());
+    await pedometerService.sendToServer(
+        currentData, PedometerScreen.documentID);
   }
 
   // /// send data to database
@@ -226,6 +208,44 @@ class _PedometerScreenState extends State<PedometerScreen> {
   //
   // }
 
+  Widget _PopUpDialog(BuildContext context){
+    return AlertDialog(
+      backgroundColor: Constants.BACKGROUND_COLOUR,
+      title: Text(
+        'Set Goal',
+        textAlign: TextAlign.center,
+        style: TextStyle(
+            color: Constants.TEXT_DARK,
+            fontFamily: Constants.FONTSTYLE,
+            fontWeight: FontWeight.w900),
+      ),
+      content: Container(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(minWidth: double.infinity),
+          child: Padding(
+            padding: const EdgeInsets.only(top: 16.0, right: 8.0, left: 8.0),
+            child: TextFormField(
+              onChanged: (String val) {
+                setState(() {
+                  _goal = int.parse(val);
+                });
+              },
+              textCapitalization: TextCapitalization.words,
+              onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
+              obscureText: false,
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                hintText: "Steps Number",
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(32.0)),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   /// GUI
   @override
   Widget build(BuildContext context) {
@@ -235,8 +255,8 @@ class _PedometerScreenState extends State<PedometerScreen> {
         title: Text(
           'Pedometer',
           style: TextStyle(
-              color: Colors.white,
-              fontFamily: Constants.FONTSTYLE,
+            color: Colors.white,
+            fontFamily: Constants.FONTSTYLE,
             fontWeight: Constants.APPBAR_TEXT_WEIGHT,
           ),
         ),
@@ -245,93 +265,94 @@ class _PedometerScreenState extends State<PedometerScreen> {
         centerTitle: true,
       ),
       body: Container(
-              child: Column(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            // Text(_steps?.toString() ?? '0'),
+            Card(
+              elevation: 2,
+              margin: EdgeInsets.all(10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // Text(_steps?.toString() ?? '0'),
-                  Card(
-                    elevation: 2,
-                    margin: EdgeInsets.all(10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        RoundProgressBar(
-                            value: (_calories < 2000) ? _calories : 2000,
-                            max: 2000,
-                            size: 100,
-                            color: Colors.orangeAccent,
-                            innerWidget: (value) {
-                              return Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(Icons.local_fire_department),
-                                  Text("${MathHelper.toPrecision(_calories, 2)} cal"),
-                                ],
-                              );
-                            }),
-                        RoundProgressBar(
-                            value: (_water < 3000) ? _water.toDouble() : 3000,
-                            max: 3000,
-                            size: 100,
-                            color: Colors.blue[300],
-                            innerWidget: (value) {
-                              return Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(Icons.opacity),
-                                  Text(_water.toString() + " ml"),
-                                ],
-                              );
-                            }),
-                      ],
-                    ),
-                  ),
                   RoundProgressBar(
-                      value: ((_steps ?? 0) < _goal)
-                          ? _steps?.toDouble()
-                          : _goal.toDouble(),
-                      max: _goal.toDouble(),
-                      size: 300,
-                      color: Colors.lightGreenAccent,
-                      innerWidget: (double value) {
+                      value: (_calories < 2000) ? _calories : 2000,
+                      max: 2000,
+                      size: 100,
+                      color: Colors.orangeAccent,
+                      innerWidget: (value) {
                         return Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(
-                              Icons.directions_run,
-                              size: 80,
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text("$_steps / $_goal steps"),
-                            Text(
-                                "${MathHelper.toPrecision(value / _goal.toDouble() * 100, 2)} %"),
+                            Icon(Icons.local_fire_department),
+                            Text("${MathHelper.toPrecision(_calories, 2)} cal"),
                           ],
                         );
                       }),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: HealthOptionCard(
-                          imageName: "assets/Pedometer.png",
-                          text: "Goal",
-                          screenID: PedometerHistoryScreen.id,
-                        ),
-                      ),
-                      Expanded(
-                        child: HealthOptionCard(
-                          imageName: "assets/Pedometer.png",
-                          text: "History",
-                          screenID: PedometerHistoryScreen.id,
-                        ),
-                      ),
-                    ],
-                  ),
+                  RoundProgressBar(
+                      value: (_water < 3000) ? _water.toDouble() : 3000,
+                      max: 3000,
+                      size: 100,
+                      color: Colors.blue[300],
+                      innerWidget: (value) {
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.opacity),
+                            Text(_water.toString() + " ml"),
+                          ],
+                        );
+                      }),
                 ],
               ),
             ),
+            RoundProgressBar(
+                value: ((_steps ?? 0) < _goal)
+                    ? _steps?.toDouble()
+                    : _goal.toDouble(),
+                max: _goal.toDouble(),
+                size: 300,
+                color: Colors.lightGreenAccent,
+                innerWidget: (double value) {
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.directions_run,
+                        size: 80,
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text("$_steps / $_goal steps"),
+                      Text(
+                          "${MathHelper.toPrecision(value / _goal.toDouble() * 100, 2)} %"),
+                    ],
+                  );
+                }),
+            Row(
+              children: [
+                Expanded(
+                  child: NavigatingCard(
+                    imageName: "assets/Pedometer.png",
+                    text: "Goal",
+                    screenID: PedometerHistoryScreen.id,
+                  ),
+                  // child: ,
+                ),
+                Expanded(
+                  child: NavigatingCard(
+                    imageName: "assets/Pedometer.png",
+                    text: "History",
+                    screenID: PedometerHistoryScreen.id,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
