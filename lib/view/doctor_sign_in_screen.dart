@@ -6,13 +6,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:HealthGuard/model/user_model.dart' as OurUser;
 import 'package:HealthGuard/model/doctor_model.dart' as OurDoctor;
 import 'package:HealthGuard/helper/validation_tool.dart';
 import 'package:HealthGuard/net/authentication.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
-import 'package:HealthGuard/home.dart';
 import 'package:HealthGuard/main.dart';
 import 'doctor_home_screen.dart';
 import 'doctor_sign_up_screen.dart';
@@ -36,8 +34,6 @@ class _doctorSignInPageState extends State<DoctorSignIn> {
   GlobalKey<FormState> _key = new GlobalKey();
 
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final GoogleSignIn googleSignIn = GoogleSignIn();
 
 
   List<Widget> buildInputs() {
@@ -267,8 +263,15 @@ class _doctorSignInPageState extends State<DoctorSignIn> {
       OurUser.User user =
       await loginWithUserNameAndPassword(email.trim(), password.trim());
 
-      if (user != null) {
+      /// Checking if the user is a patient of a doctor
+      if (user != null && user.userType == 'Doctor' && user.userID != 'Patient') {
         pushAndRemoveUntil(context, DoctorHome(doctor: user), false);
+      }else{
+        user.active = false;
+        _fireStoreUtils.updateCurrentUser(user, context);
+        await FirebaseAuth.instance.signOut();
+        MyAppState.currentUser = null;
+        pushAndRemoveUntil(context, DoctorSignIn(), false);
       }
     } else {
       setState(() {
