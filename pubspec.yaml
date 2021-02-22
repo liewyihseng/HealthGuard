@@ -110,6 +110,7 @@ flutter:
     - assets/Blood Pressure Diary.png
     - assets/Chat with Doctor.png
     - assets/E-Medical Report.png
+    - assets/Patient Qr Scanner.png
     - assets/icons/logout.svg
     - assets/icons/medical-record.svg
     - assets/icons/personal-information.svg

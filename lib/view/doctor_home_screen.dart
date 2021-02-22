@@ -7,11 +7,15 @@ import 'package:HealthGuard/net/authentication.dart';
 import 'package:HealthGuard/model/doctor_model.dart' as OurDoctor;
 import 'package:HealthGuard/view/patient_sign_in_screen.dart';
 import 'package:HealthGuard/view/user_profile_screen.dart';
+import 'package:HealthGuard/widgets/health_option_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
 import 'package:flutter_svg/svg.dart';
+
+import 'package:HealthGuard/view/chat_with_patient.dart';
+import 'package:HealthGuard/view/doctor_qr_scanner.dart';
 
 FireStoreUtils _fireStoreUtils = FireStoreUtils();
 
@@ -59,67 +63,76 @@ class _doctorHome extends State<DoctorHome>{
           children: <Widget>[
             displayCircleImage(doctor.profilePictureURL, 125, false),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(5.0),
               child: Text("First Name: " + doctor.firstName, style: TextStyle(fontFamily: Constants.FONTSTYLE),),
             ),
 
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(5.0),
               child: Text("Last Name: " + doctor.lastName, style: TextStyle(fontFamily: Constants.FONTSTYLE),),
             ),
 
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(5.0),
               child: Text("Email: " + doctor.email, style: TextStyle(fontFamily: Constants.FONTSTYLE),),
             ),
 
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(5.0),
               child: Text("Phone Number: " + doctor.phoneNumber, style: TextStyle(fontFamily: Constants.FONTSTYLE),),
             ),
 
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(5.0),
               child: Text("User ID: " + doctor.userID, style: TextStyle(fontFamily: Constants.FONTSTYLE),),
             ),
 
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(5.0),
               child: Text("User Type: " + doctor.userType, style: TextStyle(fontFamily: Constants.FONTSTYLE),),
             ),
 
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(5.0),
               child: Text("Gender: " + doctor.sex, style: TextStyle(fontFamily: Constants.FONTSTYLE),),
             ),
 
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(5.0),
               child: Text("Birthday: " + doctor.birthday, style: TextStyle(fontFamily: Constants.FONTSTYLE),),
             ),
 
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(5.0),
               child: Text("Workplace: " + doctor.workPlace, style: TextStyle(fontFamily: Constants.FONTSTYLE),),
             ),
 
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(5.0),
               child: Text("Speciality: " + doctor.speciality, style: TextStyle(fontFamily: Constants.FONTSTYLE),),
             ),
 
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(5.0),
               child: Text("About Yourself: " + doctor.aboutYourself, style: TextStyle(fontFamily: Constants.FONTSTYLE),),
             ),
 
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(5.0),
               child: Text("Doctor ID: " + doctor.doctorID, style: TextStyle(fontFamily: Constants.FONTSTYLE),),
-            )
+            ),
 
+            HealthOptionCard(
+              imageName: "assets/Patient QR Scanner.png",
+              text: "Patient Qr Scanner",
+              screenID: DoctorQrScanner.id,
+            ),
 
-
+            HealthOptionCard(
+              imageName: "assets/Chat with Doctor.png",
+              text: "Chat with Patient",
+              screenID: ChatWithPatient.id,
+            ),
 
           ],
         ),
