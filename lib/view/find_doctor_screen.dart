@@ -26,7 +26,7 @@ class _findDoctorsPageState extends State<FindDoctor> {
   TextEditingController searchUsernameEditingController =
       TextEditingController();
 
-  Doctor docTest = new Doctor(email: "nancydoc@nancydoc.com", firstName: "Nancy", lastName: "Tan", phoneNumber: "0123456789", profilePictureURL:  'https://firebasestorage.googleapis.com/v0/b/healthguard-2c4ac.appspot.com/o/images%2Fplaceholder.jpg?alt=media&token=158e23bd-54ed-425e-bac5-c4694214bb3c', userType: "Doctor", sex: "Female", birthday: "20-2-2001", workPlace: "Hospital KL", speciality: "Cardiologist", aboutYourself: "This is a brief thing about myselfmkuy,liluyklt7uk7tk765.", doctorID: "210i239tu43fni",);
+  Doctor docTest = new Doctor(email: "nancydoc@nancydoc.com", firstName: "Nancy", lastName: "Tan", phoneNumber: "0123456789", profilePictureURL:  'https://firebasestorage.googleapis.com/v0/b/healthguard-2c4ac.appspot.com/o/images%2Fplaceholder.jpg?alt=media&token=158e23bd-54ed-425e-bac5-c4694214bb3c', userType: "Doctor", sex: "Female", birthday: "20-2-2001", workPlace: "Hospital KL", speciality: "Cardiologist", aboutYourself: "This is a brief thing about myself. TestingTestingTestingTestingTestingTestingTestingTestingTestingTestingTestingTesting", doctorID: "210i239tu43fni",);
 
   onSearchBtnClick() async {
     isSearching = true;

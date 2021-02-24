@@ -5,13 +5,13 @@ List<CategoryModel> getCategories(){
   List<CategoryModel> category = new List<CategoryModel>();
   CategoryModel categoryModel;
 
-  ///1
-  ///Currently API not working. Try again next time
-  /// categoryModel = new CategoryModel();
-  /// categoryModel.categoryCode = "CN";
-  /// categoryModel.categoryName = "China";
-  /// categoryModel.imageUrl = "https://images.unsplash.com/photo-1473938718606-f15cdc613d96?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1117&q=80";
-  /// category.add(categoryModel);
+  // ///1
+  // ///Currently API not working. Try again next time
+  // categoryModel = new CategoryModel();
+  // categoryModel.categoryCode = "CN";
+  // categoryModel.categoryName = "China";
+  // categoryModel.imageUrl = "https://images.unsplash.com/photo-1473938718606-f15cdc613d96?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1117&q=80";
+  // category.add(categoryModel);
 
   ///2
   categoryModel = new CategoryModel();

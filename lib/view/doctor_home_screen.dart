@@ -122,7 +122,7 @@ class _doctorHome extends State<DoctorHome>{
             ),
 
             NavigatingCard(
-              imageName: "assets/Patient QR Scanner.png",
+              imageName: "assets/Patient Qr Scanner.png",
               text: "Patient Qr Scanner",
               screenID: DoctorQrScanner.id,
             ),
