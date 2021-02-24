@@ -1,4 +1,5 @@
 import 'package:HealthGuard/chat/database.dart';
+import 'package:HealthGuard/view/doctor_detail_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:HealthGuard/view/find_doctor_screen.dart';
@@ -28,7 +29,6 @@ class _ChatroomState extends State<Chatroom> {
     isSearching = false;
     searchUsernameEditingController.text = "";
     setState(() {});
-    Navigator.pushNamed(context, FindDoctor.id);
   }
 
   Widget searchUsersList() {
@@ -59,15 +59,7 @@ class _ChatroomState extends State<Chatroom> {
       {String profilePictureURL, firstName, userstate, email}) {
     return GestureDetector(
       onTap: () {
-        // var chatRoomId = getChatRoomIdByUsernames(myUserName, username);
-        // Map<String, dynamic> chatRoomInfoMap = {
-        //   "users": [myUserName, username]
-        // };
-        // DatabaseMethods().createChatRoom(chatRoomId, chatRoomInfoMap);
-        // Navigator.push(
-        //     context,
-        //     MaterialPageRoute(
-        //         builder: (context) => ChatScreen(username, name)));
+        Navigator.pushNamed(context, DoctorDetail.id);
       },
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 8),
