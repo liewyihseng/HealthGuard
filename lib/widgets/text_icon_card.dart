@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
 
-class HealthOptionCard extends StatelessWidget {
-  String imageName, text, screenID;
+class TextIconCard extends StatelessWidget {
 
-  HealthOptionCard({this.imageName, this.text, this.screenID});
+  final String imageName, text;
+  final Function onTap;
+
+  TextIconCard({this.imageName, this.text, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +41,7 @@ class HealthOptionCard extends StatelessWidget {
             ),
           ),
         ),
-        onTap: () {
-          Navigator.pushNamed(context, screenID);
-        });
+        onTap: onTap,
+    );
   }
 }

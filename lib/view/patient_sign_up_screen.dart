@@ -1,6 +1,9 @@
 import 'dart:ui';
+import 'dart:io';
 
+import 'package:HealthGuard/model/pedometer_model.dart';
 import 'package:HealthGuard/model/user_model.dart';
+import 'package:HealthGuard/view/pedometer_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -12,7 +15,9 @@ import 'package:HealthGuard/net/authentication.dart';
 import 'package:flutter/material.dart';
 import 'package:HealthGuard/model/user_model.dart' as OurUser;
 import 'package:HealthGuard/constants.dart' as Constants;
-import 'dart:io';
+import 'package:intl/intl.dart';
+
+import 'package:jiffy/jiffy.dart';
 
 File _image;
 
@@ -32,7 +37,8 @@ class _signupPageState extends State<signup_page> {
   GlobalKey<FormState> _key = new GlobalKey();
   bool _validate = false;
   String firstName, lastName, email, mobile, password, confirmPassword, sex;
-  List gender=["Male","Female","Other"];
+  DateTime _dateTime;
+  List gender = ["Male", "Female", "Other"];
 
 
   /// build
@@ -54,7 +60,7 @@ class _signupPageState extends State<signup_page> {
         ),
         elevation: 0.0,
         backgroundColor: Colors.transparent,
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: IconThemeData(color: Colors.blue),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -81,7 +87,6 @@ class _signupPageState extends State<signup_page> {
           groupValue: sex,
           onChanged: (value){
             setState(() {
-              print(value);
               sex = value;
             });
           },
@@ -151,13 +156,13 @@ class _signupPageState extends State<signup_page> {
       children: <Widget>[
         Padding(
           padding:
-          const EdgeInsets.only(left: 8.0, top: 32, right: 8, bottom: 8),
+          const EdgeInsets.only(left: 8.0, top: 20, right: 8.0, bottom: 8.0),
           child: Stack(
             alignment: Alignment.bottomCenter,
             children: <Widget>[
               /// Circle to hold user profile picture
               CircleAvatar(
-                radius: 65,
+                radius: 60,
                 backgroundColor: Colors.grey.shade400,
                 child: ClipOval(
                   child: SizedBox(
@@ -179,61 +184,109 @@ class _signupPageState extends State<signup_page> {
                 left: 80,
                 right: 0,
                 child: FloatingActionButton(
-                    backgroundColor: Colors.green,
-                    child: Icon(Icons.camera_alt),
+                    backgroundColor: Constants.BUTTON_COLOUR,
+                    child: Icon(
+                      Icons.camera_alt,
+                      color: Colors.white,
+                    ),
                     mini: true,
+                    splashColor: Colors.blue,
                     onPressed: _onCameraClick),
               )
             ],
           ),
         ),
+
         /// Field for user's first name input
         ConstrainedBox(
-            constraints: BoxConstraints(minWidth: double.infinity),
-            child: Padding(
-                padding:
-                const EdgeInsets.only(top: 16.0, right: 8.0, left: 8.0),
-                child: TextFormField(
-                    validator: validateName,
-                    onSaved: (String val) {
-                      firstName = val;
-                    },
-                    textInputAction: TextInputAction.next,
-                    onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
-                    decoration: InputDecoration(
-                        contentPadding:
-                        new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                        fillColor: Colors.white,
-                        hintText: 'First Name',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(32.0),
-                        ))))),
+          constraints: BoxConstraints(minWidth: double.infinity),
+          child: Padding(
+            padding:
+            const EdgeInsets.only(top: 8.0, bottom: 8.0, right: 8.0, left: 8.0),
+            child: TextFormField(
+              validator: validateName,
+              onSaved: (String val) {
+                firstName = val;
+              },
+              textInputAction: TextInputAction.next,
+              onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
+              decoration: InputDecoration(
+                contentPadding:
+                new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                fillColor: Colors.white,
+                hintText: 'First Name',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(32.0),
+                ),
+              ),
+            ),
+          ),
+        ),
 
         /// Field for user's last name input
         ConstrainedBox(
-            constraints: BoxConstraints(minWidth: double.infinity),
-            child: Padding(
-                padding:
-                const EdgeInsets.only(top: 16.0, right: 8.0, left: 8.0),
-                child: TextFormField(
-                    validator: validateName,
-                    onSaved: (String val) {
-                      lastName = val;
-                    },
-                    textInputAction: TextInputAction.next,
-                    onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
-                    decoration: InputDecoration(
-                        contentPadding:
-                        new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                        fillColor: Colors.white,
-                        hintText: 'Last Name',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(32.0),
-                        ))))),
+          constraints: BoxConstraints(minWidth: double.infinity),
+          child: Padding(
+            padding:
+            const EdgeInsets.only(top: 8.0, bottom: 8.0, right: 8.0, left: 8.0),
+            child: TextFormField(
+              validator: validateName,
+              onSaved: (String val) {
+                lastName = val;
+              },
+              textInputAction: TextInputAction.next,
+              onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
+              decoration: InputDecoration(
+                contentPadding:
+                new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                fillColor: Colors.white,
+                hintText: 'Last Name',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(32.0),
+                ),
+              ),
+            ),
+          ),
+        ),
+
+        /// Calendar for user's birthday input
+        ConstrainedBox(
+          constraints: BoxConstraints(minWidth: double.infinity),
+          child: Padding(
+            padding: const EdgeInsets.only(top: 8.0, bottom: 8.0, right: 8.0, left: 8.0),
+            child: RaisedButton(
+              child: Text(_dateTime == null? 'Select Birthday': Jiffy(_dateTime).yMMMMd,
+                style: TextStyle(
+                  fontFamily: Constants.FONTSTYLE,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                ),
+              ),
+              color: Constants.BUTTON_COLOUR,
+              textColor: Colors.white,
+              splashColor: Colors.blue,
+              padding: EdgeInsets.all(10),
+              onPressed: (){
+                showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(1900),
+                    lastDate: DateTime(2050)
+                ).then((date){
+                  setState((){
+                    _dateTime = date;
+                  });
+                });
+              },
+            ),
+          ),
+        ),
+
+        /// Radio button for user's gender input
         ConstrainedBox(
           constraints: BoxConstraints(minWidth: double.infinity),
           child: Container(
-            padding: EdgeInsets.only(top: 15.0, left: 8.0, right: 8.0),
+            padding: EdgeInsets.only(bottom: 1.0, left: 8.0, right: 8.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -245,101 +298,116 @@ class _signupPageState extends State<signup_page> {
             ),
           ),
         ),
+
         /// Field for user's mobile number input
         ConstrainedBox(
-            constraints: BoxConstraints(minWidth: double.infinity),
-            child: Padding(
-                padding:
-                const EdgeInsets.only(top: 16.0, right: 8.0, left: 8.0),
-                child: TextFormField(
-                    keyboardType: TextInputType.phone,
-                    textInputAction: TextInputAction.next,
-                    onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
-                    validator: validateMobile,
-                    onSaved: (String val) {
-                      mobile = val;
-                    },
-                    decoration: InputDecoration(
-                        contentPadding:
-                        new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                        fillColor: Colors.white,
-                        hintText: 'Mobile Number',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(32.0),
-                        ))))),
+          constraints: BoxConstraints(minWidth: double.infinity),
+          child: Padding(
+            padding:
+            const EdgeInsets.only(top: 8.0, bottom: 8.0, right: 8.0, left: 8.0),
+            child: TextFormField(
+              keyboardType: TextInputType.phone,
+              textInputAction: TextInputAction.next,
+              onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
+              validator: validateMobile,
+              onSaved: (String val) {
+                mobile = val;
+              },
+              decoration: InputDecoration(
+                contentPadding:
+                new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                fillColor: Colors.white,
+                hintText: 'Mobile Number',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(32.0),
+                ),
+              ),
+            ),
+          ),
+        ),
+
         /// Field for user's email address input
         ConstrainedBox(
-            constraints: BoxConstraints(minWidth: double.infinity),
-            child: Padding(
-                padding:
-                const EdgeInsets.only(top: 16.0, right: 8.0, left: 8.0),
-                child: TextFormField(
-                    keyboardType: TextInputType.emailAddress,
-                    textInputAction: TextInputAction.next,
-                    onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
-                    validator: validateEmail,
-                    onSaved: (String val) {
-                      email = val;
-                    },
-                    decoration: InputDecoration(
-                        contentPadding:
-                        new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                        fillColor: Colors.white,
-                        hintText: 'Email Address',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(32.0),
-                        ))))),
+          constraints: BoxConstraints(minWidth: double.infinity),
+          child: Padding(
+            padding:
+            const EdgeInsets.only(top: 8.0, bottom: 8.0, right: 8.0, left: 8.0),
+            child: TextFormField(
+              keyboardType: TextInputType.emailAddress,
+              textInputAction: TextInputAction.next,
+              onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
+              validator: validateEmail,
+              onSaved: (String val) {
+                email = val;
+              },
+              decoration: InputDecoration(
+                contentPadding:
+                new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                fillColor: Colors.white,
+                hintText: 'Email Address',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(32.0),
+                ),
+              ),
+            ),
+          ),
+        ),
+
         /// Field for user's password input
         ConstrainedBox(
-            constraints: BoxConstraints(minWidth: double.infinity),
-            child: Padding(
-              padding: const EdgeInsets.only(top: 16.0, right: 8.0, left: 8.0),
-              child: TextFormField(
-                  obscureText: true,
-                  textInputAction: TextInputAction.next,
-                  onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
-                  controller: _passwordController,
-                  validator: validatePassword,
-                  onSaved: (String val) {
-                    password = val;
-                  },
-                  style: TextStyle(height: 0.8, fontSize: 18.0),
-                  cursorColor: Colors.black,
-                  decoration: InputDecoration(
-                      contentPadding:
-                      new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                      fillColor: Colors.white,
-                      hintText: 'Password',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(32.0),
-                      ))),
-            )),
+          constraints: BoxConstraints(minWidth: double.infinity),
+          child: Padding(
+            padding: const EdgeInsets.only(top: 8.0, bottom: 8.0, right: 8.0, left: 8.0),
+            child: TextFormField(
+              obscureText: true,
+              textInputAction: TextInputAction.next,
+              onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
+              controller: _passwordController,
+              validator: validatePassword,
+              onSaved: (String val) {
+                password = val;
+              },
+              cursorColor: Colors.black,
+              decoration: InputDecoration(
+                contentPadding:
+                new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                fillColor: Colors.white,
+                hintText: 'Password',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(32.0),
+                ),
+              ),
+            ),
+          ),
+        ),
+
         /// Field for user's confirm password input
         ConstrainedBox(
           constraints: BoxConstraints(minWidth: double.infinity),
           child: Padding(
-            padding: const EdgeInsets.only(top: 16.0, right: 8.0, left: 8.0),
+            padding: const EdgeInsets.only(top: 8.0, bottom: 8.0, right: 8.0, left: 8.0),
             child: TextFormField(
-                textInputAction: TextInputAction.done,
-                onFieldSubmitted: (_) {
-                  _sendToServer();
-                },
-                obscureText: true,
-                validator: (val) =>
-                    validateConfirmPassword(_passwordController.text, val),
-                onSaved: (String val) {
-                  confirmPassword = val;
-                },
-                style: TextStyle(height: 0.8, fontSize: 18.0),
-                cursorColor: Colors.black,
-                decoration: InputDecoration(
-                    contentPadding:
-                    new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                    fillColor: Colors.white,
-                    hintText: 'Confirm Password',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(32.0),
-                    ))),
+              textInputAction: TextInputAction.done,
+              onFieldSubmitted: (_) {
+                _sendToServer();
+              },
+              obscureText: true,
+              validator: (val) =>
+                  validateConfirmPassword(_passwordController.text, val),
+              onSaved: (String val) {
+                confirmPassword = val;
+              },
+              cursorColor: Colors.black,
+              decoration: InputDecoration(
+                contentPadding:
+                new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                fillColor: Colors.white,
+                hintText: 'Confirm Password',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(32.0),
+                ),
+              ),
+            ),
           ),
         ),
         /// Button to press after user has finished filling in their account information
@@ -402,6 +470,7 @@ class _signupPageState extends State<signup_page> {
           profilePictureURL: profilePicUrl,
           userType: "Patient",
           sex: sex,
+          birthday: convertDateTimeDisplay(_dateTime.toString()),
           ///This page by default will allow users to create only patient account
         );
 
@@ -410,6 +479,16 @@ class _signupPageState extends State<signup_page> {
             .doc(result.user.uid)
             .collection(Constants.ACC_INFO)
             .add(user.toJson());
+
+        // init pedometer essential skeleton
+        PedometerData pedometerSkeleton = PedometerData();
+        await FireStoreUtils.firestore
+            .collection(Constants.USERS)
+            .doc(result.user.uid)
+            .collection(Constants.PEDOMETER_INFO)
+            .doc(PedometerScreen.documentID)
+            .set(pedometerSkeleton.toJson());
+
         hideProgress();
         MyAppState.currentUser = user;
         pushAndRemoveUntil(context, home(user: user), false);
@@ -428,4 +507,15 @@ class _signupPageState extends State<signup_page> {
       });
     }
   }
+
+
+  /// Converting dateTime that shows hours: minutes: seconds to date only
+  String convertDateTimeDisplay(String date) {
+    final DateFormat displayFormatter = DateFormat('yyyy-MM-dd HH:mm:ss.SSS');
+    final DateFormat serverFormatter = DateFormat('dd-MM-yyyy');
+    final DateTime displayDate = displayFormatter.parse(date);
+    final String formatted = serverFormatter.format(displayDate);
+    return formatted;
+  }
+
 }

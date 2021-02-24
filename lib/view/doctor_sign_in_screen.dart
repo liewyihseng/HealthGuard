@@ -1,32 +1,32 @@
 import 'dart:async';
+import 'package:HealthGuard/view/patient_sign_in_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:HealthGuard/view/signup_screen.dart';
 import 'package:HealthGuard/model/user_model.dart' as OurUser;
+import 'package:HealthGuard/model/doctor_model.dart' as OurDoctor;
 import 'package:HealthGuard/helper/validation_tool.dart';
 import 'package:HealthGuard/net/authentication.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
-import 'package:HealthGuard/home.dart';
 import 'package:HealthGuard/main.dart';
+import 'doctor_home_screen.dart';
+import 'doctor_sign_up_screen.dart';
 import 'forgot_password_screen.dart';
 
 final _fireStoreUtils = FireStoreUtils();
 
-/// Login screen page widget class
-class LoginPage extends StatefulWidget {
-  static const String id = 'LoginPage';
+/// Doctor Login screen page widget class
+class DoctorSignIn extends StatefulWidget {
+  static const String id = 'DoctorSignIn';
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _doctorSignInPageState createState() => _doctorSignInPageState();
 }
 
-/// Login screen page state class
-class _LoginPageState extends State<LoginPage> {
+/// Doctor Login screen page state class
+class _doctorSignInPageState extends State<DoctorSignIn> {
   TextEditingController _emailController = new TextEditingController();
   TextEditingController _passwordController = new TextEditingController();
   String email, password;
@@ -34,44 +34,7 @@ class _LoginPageState extends State<LoginPage> {
   GlobalKey<FormState> _key = new GlobalKey();
 
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final GoogleSignIn googleSignIn = GoogleSignIn();
 
-  Future<String> signInWithGoogle() async {
-    await Firebase.initializeApp();
-
-    final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
-    final GoogleSignInAuthentication googleSignInAuthentication =
-        await googleSignInAccount.authentication;
-
-    final AuthCredential credential = GoogleAuthProvider.credential(
-      accessToken: googleSignInAuthentication.accessToken,
-      idToken: googleSignInAuthentication.idToken,
-    );
-
-    final UserCredential authResult =
-        await _auth.signInWithCredential(credential);
-    final OurUser.User user = authResult.user as OurUser.User;
-
-    if (user != null) {
-      final User currentUser = _auth.currentUser;
-      assert(user.userID == currentUser.uid);
-      Navigator.pushNamedAndRemoveUntil(context, home.id, (route) => false);
-      pushAndRemoveUntil(context, home(user: user), false);
-
-      print('signInWithGoogle succeeded: $user');
-
-      return '$user';
-    }
-
-    return null;
-  }
-
-  Future<void> signOutGoogle() async {
-    await googleSignIn.signOut();
-
-    print("User Signed Out");
-  }
 
   List<Widget> buildInputs() {
     return [
@@ -97,7 +60,7 @@ class _LoginPageState extends State<LoginPage> {
         style: style,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: "Email Address",
+          hintText: "Doctor's Email Address",
           icon: Icon(Icons.mail, color: Constants.TEXT_LIGHT),
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
         ),
@@ -105,7 +68,7 @@ class _LoginPageState extends State<LoginPage> {
 
       SizedBox(height: 20.0),
 
-      /// Field for user's password input
+      /// Field for Doctor's password input
       TextFormField(
         validator: validatePassword,
         onSaved: (String val) {
@@ -119,7 +82,7 @@ class _LoginPageState extends State<LoginPage> {
             hintText: "Password",
             icon: Icon(Icons.vpn_key, color: Constants.TEXT_LIGHT),
             border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
+            OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
       ),
       SizedBox(
         height: 10.0,
@@ -128,7 +91,7 @@ class _LoginPageState extends State<LoginPage> {
     ];
   }
 
-  /// Button for user to submit their login credentials
+  /// Button for Doctor to submit their login credentials
   List<Widget> buildSubmitButtons() {
     return [
       Padding(
@@ -139,8 +102,8 @@ class _LoginPageState extends State<LoginPage> {
             color: Constants.BUTTON_COLOUR,
             child: Text('Login',
                 style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w900,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w900,
                   fontFamily: Constants.FONTSTYLE,)),
             textColor: Colors.white,
             splashColor: Colors.blue,
@@ -155,13 +118,13 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
 
-      /// Sign up here wording (User tap to redirect them to sign up page)
+      /// Sign up here wording (Doctor tap to redirect them to sign up page)
       Container(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              "Don't have an account?",
+              "Not a panel doctor?",
               style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14),
             ),
             SizedBox(
@@ -169,13 +132,12 @@ class _LoginPageState extends State<LoginPage> {
             ),
             GestureDetector(
               onTap: () {
-                push(context, new signup_page());
-                print("Routing to Sign Up screen");
+                Navigator.pushNamed(context, DoctorSignUp.id);
               },
               child: Text(
-                "Sign up",
+                "Register Now",
                 style:
-                    TextStyle(fontWeight: FontWeight.w800, color: Colors.blue),
+                TextStyle(fontWeight: FontWeight.w800, color: Colors.blue),
               ),
             )
           ],
@@ -210,8 +172,8 @@ class _LoginPageState extends State<LoginPage> {
                     child: Text(
                       "Or",
                       style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16.0,
+                        color: Colors.black,
+                        fontSize: 16.0,
                         fontFamily: Constants.FONTSTYLE,),
                     ),
                   ),
@@ -236,58 +198,31 @@ class _LoginPageState extends State<LoginPage> {
           ],
         ),
       ),
-      Container(
-        margin: EdgeInsets.all(15.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Material(
-              color: Colors.transparent,
-              child: Center(
-                child: Ink(
-                  decoration: new ShapeDecoration(
-                    shape: CircleBorder(),
-                    color: Colors.lightBlue,
-                  ),
-                  child: IconButton(
-                    color: Colors.white,
-                    icon: FaIcon(FontAwesomeIcons.facebookF),
-                    onPressed: () {},
 
-                    ///
-                    /// Codes linking sign-in for Facebook
-                    /// Should be here within the onPressed()
-                    ///
-                    ///
-                  ),
-                ),
-              ),
+      Container(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              "Are you a Patient?",
+              style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14),
             ),
-            Material(
-              color: Colors.transparent,
-              child: Center(
-                child: Ink(
-                  decoration: const ShapeDecoration(
-                    shape: CircleBorder(),
-                    color: Colors.lightBlue,
-                  ),
-                  child: IconButton(
-                    color: Colors.white,
-                    icon: FaIcon(FontAwesomeIcons.google),
-                    onPressed: () {
-                      ///
-                      /// Codes linking sign-in for Google
-                      /// Should be here within the onPressed()
-                      ///
-                      ///
-                      signInWithGoogle();
-                    },
-                  ),
-                ),
-              ),
+            SizedBox(
+              width: 5,
             ),
+            GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, LoginPage.id);
+              },
+              child: Text(
+                "Yes!",
+                style:
+                TextStyle(fontWeight: FontWeight.w800, color: Colors.blue),
+              ),
+            )
           ],
         ),
+        padding: const EdgeInsets.only(top: 30.0, bottom: 10.0),
       ),
     ];
   }
@@ -320,16 +255,23 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  /// Directing user to their account
+  /// Directing Doctor to their account
   onClick(String email, String password) async {
     if (_key.currentState.validate()) {
       _key.currentState.save();
       showProgress(context, 'Logging in, please wait...', false);
       OurUser.User user =
-          await loginWithUserNameAndPassword(email.trim(), password.trim());
+      await loginWithUserNameAndPassword(email.trim(), password.trim());
 
-      if (user != null) {
-        pushAndRemoveUntil(context, home(user: user), false);
+      /// Checking if the user is a patient of a doctor
+      if (user != null && user.userType == 'Doctor' && user.userID != 'Patient') {
+        pushAndRemoveUntil(context, DoctorHome(doctor: user), false);
+      }else{
+        user.active = false;
+        _fireStoreUtils.updateCurrentUser(user, context);
+        await FirebaseAuth.instance.signOut();
+        MyAppState.currentUser = null;
+        pushAndRemoveUntil(context, DoctorSignIn(), false);
       }
     } else {
       setState(() {
@@ -338,10 +280,10 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  /// Checking if user's input credential's validity
+  /// Checking if Doctor's input credential's validity
   /// If valid, allow access to account
   /// Else display error
-  Future<OurUser.User> loginWithUserNameAndPassword(
+  Future<OurDoctor.Doctor> loginWithUserNameAndPassword(
       String email, String password) async {
     try {
       UserCredential result = await FirebaseAuth.instance
@@ -353,7 +295,7 @@ class _LoginPageState extends State<LoginPage> {
           .get();
       OurUser.User user;
       if (documentSnapshot != null && documentSnapshot.exists) {
-        user = OurUser.User.fromJson(documentSnapshot.data());
+        user = OurDoctor.Doctor.fromJson(documentSnapshot.data());
         user.active = true;
         await _fireStoreUtils.updateCurrentUser(user, context);
         hideProgress();
@@ -387,6 +329,7 @@ class _LoginPageState extends State<LoginPage> {
               context, 'Error', 'Email and Password are not enabled');
           break;
       }
+
       print(exception.toString());
       return null;
     }

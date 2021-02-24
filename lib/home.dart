@@ -1,11 +1,13 @@
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:HealthGuard/helper/math_helper.dart';
+import 'package:HealthGuard/model/pedometer_model.dart';
 import 'package:HealthGuard/view/medical_feed_screen.dart';
 import 'package:HealthGuard/view/user_profile_screen.dart';
 import 'package:HealthGuard/view/bloodpressure_screen.dart';
 import 'package:HealthGuard/widgets/card_items.dart';
-import 'package:HealthGuard/widgets/health_option_card.dart';
+import 'package:HealthGuard/widgets/navigating_card.dart';
 import 'package:HealthGuard/widgets/medication_reminder_card_small.dart';
 import 'package:HealthGuard/view/pedometer_screen.dart';
 import 'package:HealthGuard/widgets/custom_clipper.dart';
@@ -16,11 +18,9 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/svg.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:HealthGuard/chat/chatroom.dart';
-import 'package:HealthGuard/view/bloodpressure_screen.dart';
 import 'package:HealthGuard/model/user_model.dart' as OurUser;
 import 'package:HealthGuard/net/authentication.dart';
-import 'package:HealthGuard/view/login_screen.dart';
+import 'package:HealthGuard/view/patient_sign_in_screen.dart';
 import 'package:HealthGuard/main.dart';
 import 'package:HealthGuard/view/e-medical_report_screen.dart';
 import 'package:HealthGuard/helper/validation_tool.dart';
@@ -177,43 +177,43 @@ class HealthOption extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
         child: Column(
-          mainAxisSize: MainAxisSize.min,
+      mainAxisSize: MainAxisSize.min,
       children: [
         Expanded(
           child: ListView(
             scrollDirection: Axis.vertical,
             children: [
-              HealthOptionCard(
+              NavigatingCard(
                 imageName: "assets/E-Medical Report.png",
                 text: "E-Medical Report",
                 screenID: EMedicalReport.id,
               ),
-              HealthOptionCard(
+              NavigatingCard(
                 imageName: "assets/Pedometer.png",
                 text: "Pedometer",
                 screenID: PedometerScreen.id,
               ),
-              HealthOptionCard(
+              NavigatingCard(
                 imageName: "assets/Medical News Update.png",
                 text: "Medical News Update",
                 screenID: MedicalFeed.id,
               ),
-              HealthOptionCard(
+              NavigatingCard(
                 imageName: "assets/Medication Reminder.png",
                 text: "Medication Reminder",
                 screenID: MedicationReminder.id,
               ),
-              HealthOptionCard(
+              NavigatingCard(
                 imageName: "assets/Blood Pressure Diary.png",
                 text: "Blood Pressure Diary",
                 screenID: BloodPressureScreen.id,
               ),
-              HealthOptionCard(
+              NavigatingCard(
                 imageName: "assets/Chat with Doctor.png",
                 text: "Chat with Doctor",
                 screenID: FindDoctor.id,
               ),
-              HealthOptionCard(
+              NavigatingCard(
                 imageName: "assets/Hospital Suggestions.png",
                 text: "Hospital Suggestions",
                 screenID: EMedicalReport.id, // dummy input
@@ -249,9 +249,6 @@ class HomeOption extends StatefulWidget {
   @override
   _HomeOptionState createState() => _HomeOptionState(user);
 }
-
-
-
 
 class _HomeOptionState extends State<HomeOption> {
   final OurUser.User user;
@@ -461,18 +458,47 @@ class _HomeOptionState extends State<HomeOption> {
                     physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     children: <Widget>[
-                      GestureDetector(
-                        onTap: (){
-                          Navigator.pushNamed(context, PedometerScreen.id);
+                      StreamBuilder<DocumentSnapshot>(
+                        stream: db
+                            .collection(Constants.USERS)
+                            .doc(MyAppState.currentUser.userID)
+                            .collection(Constants.PEDOMETER_INFO)
+                            .doc(PedometerScreen.documentID)
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          if(!snapshot.hasData){
+                            return GestureDetector(
+                              onTap: (){
+                                Navigator.pushNamed(context, PedometerScreen.id);
+                              },
+                              child: CardItems(
+                                image: Image.asset('assets/icons/Walking.png'),
+                                title: "Unknown",
+                                value: "Null",
+                                unit: "",
+                                color: Constants.LOGO_COLOUR_PINK_LIGHT,
+                                progress: 0,
+                              ),
+                            );
+                          } else {
+                            PedometerData pedometerData = PedometerData.fromJson(snapshot.data.data());
+                            int pedometerProgress = MathHelper.intPercentage(pedometerData.steps, pedometerData.goal);
+                            print(pedometerProgress);
+                            return GestureDetector(
+                              onTap: (){
+                                Navigator.pushNamed(context, PedometerScreen.id);
+                              },
+                              child: CardItems(
+                                image: Image.asset('assets/icons/Walking.png'),
+                                title: "Walking",
+                                value: pedometerData.steps.toString(),
+                                unit: "steps",
+                                color: Constants.LOGO_COLOUR_PINK_LIGHT,
+                                progress: pedometerProgress,
+                              ),
+                            );
+                          }
                         },
-                        child: CardItems(
-                          image: Image.asset('assets/icons/Walking.png'),
-                          title: "Walking",
-                          value: PedometerScreen.steps.toString(),
-                          unit: "steps",
-                          color: Constants.LOGO_COLOUR_PINK_LIGHT,
-                          progress: PedometerScreen.getStepPercent().round(),
-                        ),
                       ),
                     ],
                   ),
