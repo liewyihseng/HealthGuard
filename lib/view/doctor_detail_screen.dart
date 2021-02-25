@@ -1,17 +1,25 @@
 
+import 'package:HealthGuard/helper/validation_tool.dart';
 import 'package:flutter/material.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
+import 'package:HealthGuard/model/doctor_model.dart' as OurDoctor;
 
 /// Doctor detail screen page widget class
 class DoctorDetail extends StatefulWidget{
   static const String id = "DoctorDetail";
+  final OurDoctor.Doctor doctor;
+
+  DoctorDetail({Key key, this.doctor}) : super(key: key);
+
   @override
-  State createState() => _doctorDetailPageState();
+  State createState() => _doctorDetailPageState(doctor);
 }
 
 /// Doctor detail screen page state class
 class _doctorDetailPageState extends State<DoctorDetail>{
+  final OurDoctor.Doctor doctor;
 
+  _doctorDetailPageState(this.doctor);
   @override
   Widget build(BuildContext context){
     return Scaffold(
@@ -68,22 +76,24 @@ class _doctorDetailPageState extends State<DoctorDetail>{
                     children: <Widget>[
                       Row(
                         children: <Widget>[
-                          Container(
-                            height: 100,
-                            width: 100,
-                            child: Image.asset('assets/docprofile/doc1.png'),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10.0, left: 8.0, right: 15.0, bottom: 10.0),
+                            child: Container(
+
+                              child: displayCircleImage(doctor.profilePictureURL, 100, false),
+                            ),
                           ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              Text("Dr. Susan Thomas",
+                              Text(doctor.fullNameDr(),
                                 style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w600,
                                   fontFamily: Constants.FONTSTYLE,
                                 ),
                               ),
-                              Text("Heart Surgeon - CK Hospital",
+                              Text(doctor.speciality + " - " + doctor.workPlace,
                                 style: TextStyle(
                                   fontSize: 17,
                                   fontWeight: FontWeight.w400,
@@ -132,16 +142,17 @@ class _doctorDetailPageState extends State<DoctorDetail>{
                               ),
                             ),
 
-                            SizedBox(height: 10),
+                            SizedBox(height: 8),
 
-                            Text("Please write the description of the doctor here. This will be a detailed information about the doctor and the roles and achievements that the doctor has had over the past years", style: TextStyle(
+                            Text(doctor.aboutYourself,
+                              style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
                               fontFamily: Constants.FONTSTYLE,
                             ),
                             ),
 
-                            SizedBox(height: 10),
+                            SizedBox(height: 20),
 
                             Text("Available Time Slots",
                               style: TextStyle(

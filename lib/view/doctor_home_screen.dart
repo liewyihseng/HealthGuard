@@ -130,28 +130,8 @@ class _doctorHome extends State<DoctorHome>{
             TextIconCard(
               text: "Patient Qr Scanner",
               imageName: "assets/Patient Qr Scanner.png",
-              onTap: _scan,
+              onTap: _scanQR,
             ),
-
-            // Container(
-            //   color: Colors.white,
-            //   child: Column(
-            //     children: <Widget>[
-            //       SizedBox(height: 10),
-            //       TextField(
-            //         controller: this._outputController,
-            //         maxLines: 2,
-            //         decoration: InputDecoration(
-            //           prefixIcon: Icon(Icons.wrap_text),
-            //           hintText: 'The qrcode you scan will be displayed in this area.',
-            //           hintStyle: TextStyle(fontSize: 15),
-            //           contentPadding: EdgeInsets.symmetric(horizontal: 7, vertical: 15),
-            //         ),
-            //       ),
-            //       SizedBox(height: 10),
-            //     ],
-            //   ),
-            // ),
 
             NavigatingCard(
               imageName: "assets/Chat with Doctor.png",
@@ -232,7 +212,7 @@ class _doctorHome extends State<DoctorHome>{
   }
 
 
-  Future _scan() async {
+  Future _scanQR() async {
     await Permission.camera.request();
     String barcode = await scanner.scan();
     if (barcode == null) {

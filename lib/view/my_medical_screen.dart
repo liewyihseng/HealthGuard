@@ -1,9 +1,8 @@
 import 'package:HealthGuard/widgets/medical_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:HealthGuard/main.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
-import 'package:HealthGuard/model/user_model.dart' as OurUser;
+
 
 /// User's medical information screen page widget class
 class MyMedical extends StatefulWidget {
@@ -93,7 +92,8 @@ class _MyMedicalState extends State<MyMedical> {
                   },
                 );
               }
-            }),
+            }
+            ),
       ),
     );
   }

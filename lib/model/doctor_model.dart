@@ -56,6 +56,11 @@ class Doctor extends User{
       "doctorID": this.doctorID,
     };
   }
+
+  /// helper function combining user's first name and last name to form full name
+  String fullNameDr() {
+    return 'Dr. $firstName $lastName';
+  }
 }
 
 

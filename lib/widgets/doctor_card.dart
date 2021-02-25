@@ -37,7 +37,7 @@ class DoctorCard extends StatelessWidget{
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      "Dr. " + doctor.fullName(),
+                      doctor.fullNameDr(),
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
@@ -65,7 +65,7 @@ class DoctorCard extends StatelessWidget{
           ),
         ),
         onTap: () {
-          Navigator.pushNamed(context, DoctorDetail.id);
+          Navigator.push(context, MaterialPageRoute(builder: (context) => DoctorDetail(doctor: doctor,)));
         },
       ),
     );
