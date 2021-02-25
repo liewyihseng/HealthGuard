@@ -33,6 +33,9 @@
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 
+	<key>NSCameraUsageDescription</key>
+	    <string>Need Camera Permission for Scanning QR</string>
+
 	<key>io.flutter.embedded_views_preview</key>
     <string>YES</string>
 

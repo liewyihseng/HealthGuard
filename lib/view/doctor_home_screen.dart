@@ -1,15 +1,13 @@
 import 'dart:async';
 import 'dart:math';
-import 'dart:typed_data';
 import 'dart:ui';
-import 'dart:io';
 
 import 'package:HealthGuard/helper/validation_tool.dart';
 import 'package:HealthGuard/main.dart';
 import 'package:HealthGuard/net/authentication.dart';
 import 'package:HealthGuard/model/doctor_model.dart' as OurDoctor;
-import 'package:HealthGuard/view/doctor_qr_scanner.dart';
 import 'package:HealthGuard/view/doctor_sign_in_screen.dart';
+import 'package:HealthGuard/view/my_medical_screen.dart';
 import 'package:HealthGuard/view/user_profile_screen.dart';
 import 'package:HealthGuard/widgets/navigating_card.dart';
 import 'package:HealthGuard/widgets/text_icon_card.dart';
@@ -21,7 +19,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:HealthGuard/view/chat_with_patient.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
-import 'package:image_picker/image_picker.dart';
 
 
 FireStoreUtils _fireStoreUtils = FireStoreUtils();
@@ -136,25 +133,25 @@ class _doctorHome extends State<DoctorHome>{
               onTap: _scan,
             ),
 
-            Container(
-              color: Colors.white,
-              child: Column(
-                children: <Widget>[
-                  SizedBox(height: 10),
-                  TextField(
-                    controller: this._outputController,
-                    maxLines: 2,
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.wrap_text),
-                      hintText: 'The qrcode you scan will be displayed in this area.',
-                      hintStyle: TextStyle(fontSize: 15),
-                      contentPadding: EdgeInsets.symmetric(horizontal: 7, vertical: 15),
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                ],
-              ),
-            ),
+            // Container(
+            //   color: Colors.white,
+            //   child: Column(
+            //     children: <Widget>[
+            //       SizedBox(height: 10),
+            //       TextField(
+            //         controller: this._outputController,
+            //         maxLines: 2,
+            //         decoration: InputDecoration(
+            //           prefixIcon: Icon(Icons.wrap_text),
+            //           hintText: 'The qrcode you scan will be displayed in this area.',
+            //           hintStyle: TextStyle(fontSize: 15),
+            //           contentPadding: EdgeInsets.symmetric(horizontal: 7, vertical: 15),
+            //         ),
+            //       ),
+            //       SizedBox(height: 10),
+            //     ],
+            //   ),
+            // ),
 
             NavigatingCard(
               imageName: "assets/Chat with Doctor.png",
@@ -239,9 +236,12 @@ class _doctorHome extends State<DoctorHome>{
     await Permission.camera.request();
     String barcode = await scanner.scan();
     if (barcode == null) {
-      print('nothing return.');
-    } else {
+      print('This is an invalid QR Code');
+
+    }  else{
       this._outputController.text = barcode;
+      print("The scanned patient is: "+ _outputController.text);
+      Navigator.push(context, MaterialPageRoute(builder: (context) => MyMedical(userID: _outputController.text,)));
     }
   }
 
