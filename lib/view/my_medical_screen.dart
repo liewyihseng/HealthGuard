@@ -3,21 +3,28 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:HealthGuard/main.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
+import 'package:HealthGuard/model/user_model.dart' as OurUser;
 
 /// User's medical information screen page widget class
 class MyMedical extends StatefulWidget {
   static const String id = "MyMedicalPage";
-  const MyMedical({Key key}) : super(key: key);
+  final String userID;
+
+  const MyMedical({Key key, @required this.userID}) : super(key: key);
   @override
-  _MyMedicalState createState() => _MyMedicalState();
+  _MyMedicalState createState() => _MyMedicalState(userID);
 }
 
 /// User's medical information screen page state class
 class _MyMedicalState extends State<MyMedical> {
+  final String userID;
   final db = FirebaseFirestore.instance;
+
+  _MyMedicalState(this.userID);
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: Constants.BACKGROUND_COLOUR,
       appBar: AppBar(
@@ -39,7 +46,7 @@ class _MyMedicalState extends State<MyMedical> {
           /// Creating a stream connecting to the database (collection is to access the collection, doc is to access the document within the collection)
             stream: db
                 .collection(Constants.USERS)
-                .doc(MyAppState.currentUser.userID)
+                .doc(userID)
                 .collection(Constants.MED_INFO)
                 .snapshots(),
             builder: (context, snapshot) {

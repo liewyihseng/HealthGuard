@@ -74,7 +74,7 @@ class _UserProfileState extends State<UserProfile>{
             icon: "assets/icons/medical-record.svg",
             text: "Medical Information",
             press: (){
-              Navigator.pushNamed(context, MyMedical.id);
+              Navigator.push(context, MaterialPageRoute(builder: (context) => MyMedical(userID: MyAppState.currentUser.userID,)));
             },
           ),
 
