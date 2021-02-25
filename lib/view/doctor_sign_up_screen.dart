@@ -17,10 +17,7 @@ import 'package:HealthGuard/model/doctor_model.dart' as OurDoctor;
 import '../main.dart';
 import 'doctor_home_screen.dart';
 
-
 File _image;
-
-
 
 /// Doctor Sign up screen page widget class
 class DoctorSignUp extends StatefulWidget {
@@ -29,14 +26,22 @@ class DoctorSignUp extends StatefulWidget {
   State createState() => _doctorSignUpPageState();
 }
 
-
-
 /// Doctor Sign up screen page state class
 class _doctorSignUpPageState extends State<DoctorSignUp> {
   TextEditingController _passwordController = new TextEditingController();
   GlobalKey<FormState> _key = new GlobalKey();
   bool _validate = false;
-  String firstName, lastName, email, mobile, password, confirmPassword, sex, workplace, doctorID, aboutYourself, speciality;
+  String firstName,
+      lastName,
+      email,
+      mobile,
+      password,
+      confirmPassword,
+      sex,
+      workplace,
+      doctorID,
+      aboutYourself,
+      speciality;
   DateTime _dateTime;
   List gender = ["Male", "Female", "Other"];
 
@@ -75,7 +80,7 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
     );
   }
 
-  Row addRadioButton(int btnValue, String title){
+  Row addRadioButton(int btnValue, String title) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
@@ -83,13 +88,16 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
           activeColor: Theme.of(context).primaryColor,
           value: gender[btnValue],
           groupValue: sex,
-          onChanged: (value){
-            setState((){
+          onChanged: (value) {
+            setState(() {
               sex = value;
             });
           },
         ),
-        Text(title, style: TextStyle(fontFamily: Constants.FONTSTYLE, fontSize: 13.0),)
+        Text(
+          title,
+          style: TextStyle(fontFamily: Constants.FONTSTYLE, fontSize: 13.0),
+        )
       ],
     );
   }
@@ -106,7 +114,7 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
     }
   }
 
-  _onCameraClick(){
+  _onCameraClick() {
     final action = CupertinoActionSheet(
       message: Text(
         "Add profile picture",
@@ -118,7 +126,8 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
           isDefaultAction: false,
           onPressed: () async {
             Navigator.pop(context);
-            var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+            var image =
+                await ImagePicker.pickImage(source: ImageSource.gallery);
             setState(() {
               _image = image;
             });
@@ -126,18 +135,19 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
         ),
         CupertinoActionSheetAction(
           isDestructiveAction: false,
-          onPressed: () async{
+          onPressed: () async {
             Navigator.pop(context);
             var image = await ImagePicker.pickImage(source: ImageSource.camera);
             setState(() {
               _image = image;
             });
           },
+          child: null,
         )
       ],
       cancelButton: CupertinoActionSheetAction(
         child: Text("Cancel"),
-        onPressed: (){
+        onPressed: () {
           Navigator.pop(context);
         },
       ),
@@ -145,11 +155,12 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
     showCupertinoModalPopup(context: context, builder: (context) => action);
   }
 
-  Widget signupForm(){
+  Widget signupForm() {
     return new Column(
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.only(left: 8.0, top: 20, right: 8.0, bottom: 8.0),
+          padding: const EdgeInsets.only(
+              left: 8.0, top: 20, right: 8.0, bottom: 8.0),
           child: Stack(
             alignment: Alignment.bottomCenter,
             children: <Widget>[
@@ -160,14 +171,15 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
                   child: SizedBox(
                     width: 170,
                     height: 170,
-                    child: _image == null ?
-                    Image.asset(
-                      'assets/placeholder.jpg',
-                      fit: BoxFit.cover,
-                    ) : Image.file(
-                      _image,
-                      fit: BoxFit.cover,
-                    ),
+                    child: _image == null
+                        ? Image.asset(
+                            'assets/placeholder.jpg',
+                            fit: BoxFit.cover,
+                          )
+                        : Image.file(
+                            _image,
+                            fit: BoxFit.cover,
+                          ),
                   ),
                 ),
               ),
@@ -193,8 +205,8 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
         ConstrainedBox(
           constraints: BoxConstraints(minWidth: double.infinity),
           child: Padding(
-            padding:
-            const EdgeInsets.only(top: 8.0, bottom: 8.0, right: 8.0, left: 8.0),
+            padding: const EdgeInsets.only(
+                top: 8.0, bottom: 8.0, right: 8.0, left: 8.0),
             child: TextFormField(
               validator: validateName,
               onSaved: (String val) {
@@ -203,8 +215,7 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
               textInputAction: TextInputAction.next,
               onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
               decoration: InputDecoration(
-                contentPadding:
-                new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                contentPadding: new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                 fillColor: Colors.white,
                 hintText: 'First Name',
                 border: OutlineInputBorder(
@@ -219,8 +230,8 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
         ConstrainedBox(
           constraints: BoxConstraints(minWidth: double.infinity),
           child: Padding(
-            padding:
-            const EdgeInsets.only(top: 8.0, bottom: 8.0, right: 8.0, left: 8.0),
+            padding: const EdgeInsets.only(
+                top: 8.0, bottom: 8.0, right: 8.0, left: 8.0),
             child: TextFormField(
               validator: validateName,
               onSaved: (String val) {
@@ -229,8 +240,7 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
               textInputAction: TextInputAction.next,
               onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
               decoration: InputDecoration(
-                contentPadding:
-                new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                contentPadding: new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                 fillColor: Colors.white,
                 hintText: 'Last Name',
                 border: OutlineInputBorder(
@@ -245,9 +255,11 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
         ConstrainedBox(
           constraints: BoxConstraints(minWidth: double.infinity),
           child: Padding(
-            padding: const EdgeInsets.only(top: 8.0, bottom: 8.0, right: 8.0, left: 8.0),
+            padding: const EdgeInsets.only(
+                top: 8.0, bottom: 8.0, right: 8.0, left: 8.0),
             child: RaisedButton(
-              child: Text(_dateTime == null? 'Select Birthday': Jiffy(_dateTime).yMMMMd,
+              child: Text(
+                _dateTime == null ? 'Select Birthday' : Jiffy(_dateTime).yMMMMd,
                 style: TextStyle(
                   fontFamily: Constants.FONTSTYLE,
                   fontWeight: FontWeight.bold,
@@ -258,14 +270,14 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
               textColor: Colors.white,
               splashColor: Colors.blue,
               padding: EdgeInsets.all(10),
-              onPressed: (){
+              onPressed: () {
                 showDatePicker(
-                    context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime(1900),
-                    lastDate: DateTime(2050)
-                ).then((date){
-                  setState((){
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(1900),
+                        lastDate: DateTime(2050))
+                    .then((date) {
+                  setState(() {
                     _dateTime = date;
                   });
                 });
@@ -282,7 +294,11 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text('Gender* :', style: TextStyle(fontFamily: Constants.FONTSTYLE, fontSize: 15.0, fontWeight: FontWeight.w500)),
+                Text('Gender* :',
+                    style: TextStyle(
+                        fontFamily: Constants.FONTSTYLE,
+                        fontSize: 15.0,
+                        fontWeight: FontWeight.w500)),
                 addRadioButton(0, 'Male'),
                 addRadioButton(1, 'Female'),
                 addRadioButton(2, 'Others'),
@@ -295,8 +311,8 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
         ConstrainedBox(
           constraints: BoxConstraints(minWidth: double.infinity),
           child: Padding(
-            padding:
-            const EdgeInsets.only(top: 8.0, bottom: 8.0, right: 8.0, left: 8.0),
+            padding: const EdgeInsets.only(
+                top: 8.0, bottom: 8.0, right: 8.0, left: 8.0),
             child: TextFormField(
               keyboardType: TextInputType.phone,
               textInputAction: TextInputAction.next,
@@ -306,8 +322,7 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
                 mobile = val;
               },
               decoration: InputDecoration(
-                contentPadding:
-                new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                contentPadding: new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                 fillColor: Colors.white,
                 hintText: 'Mobile Number',
                 border: OutlineInputBorder(
@@ -322,8 +337,8 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
         ConstrainedBox(
           constraints: BoxConstraints(minWidth: double.infinity),
           child: Padding(
-            padding:
-            const EdgeInsets.only(top: 8.0, bottom: 8.0, right: 8.0, left: 8.0),
+            padding: const EdgeInsets.only(
+                top: 8.0, bottom: 8.0, right: 8.0, left: 8.0),
             child: TextFormField(
               textInputAction: TextInputAction.next,
               onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
@@ -331,8 +346,7 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
                 workplace = val;
               },
               decoration: InputDecoration(
-                contentPadding:
-                new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                contentPadding: new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                 fillColor: Colors.white,
                 hintText: 'Workplace',
                 border: OutlineInputBorder(
@@ -347,8 +361,8 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
         ConstrainedBox(
           constraints: BoxConstraints(minWidth: double.infinity),
           child: Padding(
-            padding:
-            const EdgeInsets.only(top: 8.0, bottom: 8.0, right: 8.0, left: 8.0),
+            padding: const EdgeInsets.only(
+                top: 8.0, bottom: 8.0, right: 8.0, left: 8.0),
             child: TextFormField(
               textInputAction: TextInputAction.next,
               onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
@@ -356,8 +370,7 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
                 speciality = val;
               },
               decoration: InputDecoration(
-                contentPadding:
-                new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                contentPadding: new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                 fillColor: Colors.white,
                 hintText: 'Speciality e.g. Cardiologist',
                 border: OutlineInputBorder(
@@ -372,8 +385,8 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
         ConstrainedBox(
           constraints: BoxConstraints(minWidth: double.infinity),
           child: Padding(
-            padding:
-            const EdgeInsets.only(top: 8.0, bottom: 8.0, right: 8.0, left: 8.0),
+            padding: const EdgeInsets.only(
+                top: 8.0, bottom: 8.0, right: 8.0, left: 8.0),
             child: TextFormField(
               textInputAction: TextInputAction.next,
               onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
@@ -381,8 +394,7 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
                 aboutYourself = val;
               },
               decoration: InputDecoration(
-                contentPadding:
-                new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                contentPadding: new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                 fillColor: Colors.white,
                 hintText: 'About Yourself',
                 border: OutlineInputBorder(
@@ -397,8 +409,8 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
         ConstrainedBox(
           constraints: BoxConstraints(minWidth: double.infinity),
           child: Padding(
-            padding:
-            const EdgeInsets.only(top: 8.0, bottom: 8.0, right: 8.0, left: 8.0),
+            padding: const EdgeInsets.only(
+                top: 8.0, bottom: 8.0, right: 8.0, left: 8.0),
             child: TextFormField(
               textInputAction: TextInputAction.next,
               onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
@@ -406,8 +418,7 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
                 doctorID = val;
               },
               decoration: InputDecoration(
-                contentPadding:
-                new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                contentPadding: new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                 fillColor: Colors.white,
                 hintText: 'Doctor ID',
                 border: OutlineInputBorder(
@@ -422,8 +433,8 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
         ConstrainedBox(
           constraints: BoxConstraints(minWidth: double.infinity),
           child: Padding(
-            padding:
-            const EdgeInsets.only(top: 8.0, bottom: 8.0, right: 8.0, left: 8.0),
+            padding: const EdgeInsets.only(
+                top: 8.0, bottom: 8.0, right: 8.0, left: 8.0),
             child: TextFormField(
               keyboardType: TextInputType.emailAddress,
               textInputAction: TextInputAction.next,
@@ -433,8 +444,7 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
                 email = val;
               },
               decoration: InputDecoration(
-                contentPadding:
-                new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                contentPadding: new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                 fillColor: Colors.white,
                 hintText: 'Email Address',
                 border: OutlineInputBorder(
@@ -449,7 +459,8 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
         ConstrainedBox(
           constraints: BoxConstraints(minWidth: double.infinity),
           child: Padding(
-            padding: const EdgeInsets.only(top: 8.0, bottom: 8.0, right: 8.0, left: 8.0),
+            padding: const EdgeInsets.only(
+                top: 8.0, bottom: 8.0, right: 8.0, left: 8.0),
             child: TextFormField(
               obscureText: true,
               textInputAction: TextInputAction.next,
@@ -461,8 +472,7 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
               },
               cursorColor: Colors.black,
               decoration: InputDecoration(
-                contentPadding:
-                new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                contentPadding: new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                 fillColor: Colors.white,
                 hintText: 'Password',
                 border: OutlineInputBorder(
@@ -477,7 +487,8 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
         ConstrainedBox(
           constraints: BoxConstraints(minWidth: double.infinity),
           child: Padding(
-            padding: const EdgeInsets.only(top: 8.0, bottom: 8.0, right: 8.0, left: 8.0),
+            padding: const EdgeInsets.only(
+                top: 8.0, bottom: 8.0, right: 8.0, left: 8.0),
             child: TextFormField(
               textInputAction: TextInputAction.done,
               onFieldSubmitted: (_) {
@@ -491,8 +502,7 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
               },
               cursorColor: Colors.black,
               decoration: InputDecoration(
-                contentPadding:
-                new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                contentPadding: new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                 fillColor: Colors.white,
                 hintText: 'Confirm Password',
                 border: OutlineInputBorder(
@@ -532,17 +542,21 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
     );
   }
 
-  _sendToServer() async{
-    if(_key.currentState.validate()){
+  _sendToServer() async {
+    if (_key.currentState.validate()) {
       _key.currentState.save();
+
       /// Alert box to show the doctor's account creation is under progress
       showProgress(context, 'Creating new account...', false);
-      var profilePicUrl =  'https://firebasestorage.googleapis.com/v0/b/healthguard-2c4ac.appspot.com/o/images%2Fplaceholder.jpg?alt=media&token=158e23bd-54ed-425e-bac5-c4694214bb3c';
-      try{
-        UserCredential result = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
-        if(_image != null){
+      var profilePicUrl =
+          'https://firebasestorage.googleapis.com/v0/b/healthguard-2c4ac.appspot.com/o/images%2Fplaceholder.jpg?alt=media&token=158e23bd-54ed-425e-bac5-c4694214bb3c';
+      try {
+        UserCredential result = await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(email: email, password: password);
+        if (_image != null) {
           updateProgress('Uploading image...');
-          profilePicUrl = await FireStoreUtils().uploadUserImageToFireStorage(_image, result.user.uid);
+          profilePicUrl = await FireStoreUtils()
+              .uploadUserImageToFireStorage(_image, result.user.uid);
         }
 
         await result.user.sendEmailVerification();
@@ -567,23 +581,24 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
         );
 
         await FireStoreUtils.firestore
-          .collection(Constants.USERS)
-        .doc(result.user.uid)
-        .set(user.toJson());
+            .collection(Constants.USERS)
+            .doc(result.user.uid)
+            .set(user.toJson());
 
         hideProgress();
         MyAppState.currentUser = user;
         pushAndRemoveUntil(context, DoctorHome(doctor: user), false);
-      }catch (error){
+      } catch (error) {
         hideProgress();
         (error as FirebaseException).code != 'ERROR_EMAIL_ALREADY_IN_USE'
-        ? showAlertDialog(context, 'Failed', 'Couldn\'t sign up')
-            : showAlertDialog(context, 'Failed', 'Email already in user. Please pick another email address');
+            ? showAlertDialog(context, 'Failed', 'Couldn\'t sign up')
+            : showAlertDialog(context, 'Failed',
+                'Email already in user. Please pick another email address');
         print(error.toString());
       }
-    }else{
+    } else {
       print('false');
-      setState((){
+      setState(() {
         _validate = true;
       });
     }
@@ -597,5 +612,4 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
     final String formatted = serverFormatter.format(displayDate);
     return formatted;
   }
-
 }
