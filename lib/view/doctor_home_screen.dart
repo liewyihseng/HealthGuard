@@ -77,12 +77,7 @@ class _doctorHome extends State<DoctorHome>{
             displayCircleImage(doctor.profilePictureURL, 125, false),
             Padding(
               padding: const EdgeInsets.all(5.0),
-              child: Text("First Name: " + doctor.firstName, style: TextStyle(fontFamily: Constants.FONTSTYLE),),
-            ),
-
-            Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Text("Last Name: " + doctor.lastName, style: TextStyle(fontFamily: Constants.FONTSTYLE),),
+              child: Text("Full Name: " + doctor.fullName(), style: TextStyle(fontFamily: Constants.FONTSTYLE),),
             ),
 
             Padding(
@@ -145,7 +140,7 @@ class _doctorHome extends State<DoctorHome>{
               color: Colors.white,
               child: Column(
                 children: <Widget>[
-                  SizedBox(height: 20),
+                  SizedBox(height: 10),
                   TextField(
                     controller: this._outputController,
                     maxLines: 2,
@@ -156,7 +151,7 @@ class _doctorHome extends State<DoctorHome>{
                       contentPadding: EdgeInsets.symmetric(horizontal: 7, vertical: 15),
                     ),
                   ),
-                  SizedBox(height: 20),
+                  SizedBox(height: 10),
                 ],
               ),
             ),
