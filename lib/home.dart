@@ -210,7 +210,7 @@ class HealthOption extends StatelessWidget {
               ),
               NavigatingCard(
                 imageName: "assets/Chat with Doctor.png",
-                text: "Chat with Doctor",
+                text: "Find a Doctor",
                 screenID: FindDoctor.id,
               ),
               NavigatingCard(

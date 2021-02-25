@@ -4,6 +4,7 @@ import 'package:HealthGuard/chat/chatroom.dart';
 import 'package:HealthGuard/model/doctor_model.dart';
 import 'package:HealthGuard/view/doctor_detail_screen.dart';
 import 'package:HealthGuard/widgets/doctor_card.dart';
+import 'package:HealthGuard/widgets/medicalCategoryCard.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
@@ -92,23 +93,6 @@ class _findDoctorsPageState extends State<FindDoctor> {
     );
   }
 
-  Doctor docTest = new Doctor(
-    email: "nancydoc@nancydoc.com",
-    firstName: "Nancy",
-    lastName: "Tan",
-    phoneNumber: "0123456789",
-    profilePictureURL:
-        'https://firebasestorage.googleapis.com/v0/b/healthguard-2c4ac.appspot.com/o/images%2Fplaceholder.jpg?alt=media&token=158e23bd-54ed-425e-bac5-c4694214bb3c',
-    userType: "Doctor",
-    sex: "Female",
-    birthday: "20-2-2001",
-    workPlace: "Hospital KL",
-    speciality: "Cardiologist",
-    aboutYourself:
-        "This is a brief thing about myself. TestingTestingTestingTestingTestingTestingTestingTestingTestingTestingTestingTesting",
-    doctorID: "210i239tu43fni",
-  );
-
   Widget searchuserlist(String profilePictureURL, firstName, lastName) {
     return StreamBuilder(
       stream: usersStream,
@@ -189,26 +173,58 @@ class _findDoctorsPageState extends State<FindDoctor> {
                           physics: BouncingScrollPhysics(),
                           scrollDirection: Axis.horizontal,
                           children: <Widget>[
-                            medicalCategoryContainer(
-                                "category7.png", "CT-Scan"),
-                            medicalCategoryContainer("category1.png", "Ortho"),
-                            medicalCategoryContainer(
-                                "category2.png", "Dietician"),
-                            medicalCategoryContainer(
-                                "category3.png", "Physician"),
-                            medicalCategoryContainer(
-                                "category4.png", "Paralysis"),
-                            medicalCategoryContainer(
-                                "category5.png", "Cardiology"),
-                            medicalCategoryContainer(
-                                "category6.png", "MRI - Scan"),
-                            medicalCategoryContainer(
-                                "category8.png", "Gynaecology"),
+
+                            medicalCategoryCard(
+                                imageName:
+                                "category5.png",
+                                text: "Cardiologist"
+                            ),
+
+                            medicalCategoryCard(
+                              imageName: "category7.png",
+                              text: "CT-Scan",
+                            ),
+
+                            medicalCategoryCard(
+                                imageName: "category1.png",
+                                text: "Ortho"
+                            ),
+
+                            medicalCategoryCard(
+                                imageName:
+                                "category2.png",
+                                text: "Dietician"
+                            ),
+
+                            medicalCategoryCard(
+                                imageName:
+                                "category3.png",
+                                text: "Physician"
+                            ),
+
+                            medicalCategoryCard(
+                                imageName:
+                                "category4.png",
+                                text: "Paralysis"
+                            ),
+
+                            medicalCategoryCard(
+                                imageName:
+                                "category6.png",
+                                text: "MRI - Scan"
+                            ),
+
+                            medicalCategoryCard(
+                                imageName:
+                                "category8.png",
+                                text: "Gynaecology"
+                            ),
+
                           ],
                         ),
                       ),
                       Text(
-                        "Doctors",
+                        "All Doctors",
                         style: TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.w800,
@@ -285,25 +301,6 @@ class _findDoctorsPageState extends State<FindDoctor> {
     );
   }
 
-  Container medicalCategoryContainer(String imgName, String title) {
-    return Container(
-      width: 130,
-      child: Column(
-        children: <Widget>[
-          Image.asset('assets/medicalCategory/$imgName'),
-          Text(
-            "$title",
-            style: TextStyle(
-              fontWeight: FontWeight.w800,
-              fontSize: 17,
-              fontFamily: Constants.FONTSTYLE,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   Container recommendDoctors() {
     final db = FirebaseFirestore.instance;
     return Container(
@@ -359,7 +356,6 @@ class _findDoctorsPageState extends State<FindDoctor> {
             }
           },
         ),
-
     );
   }
 
