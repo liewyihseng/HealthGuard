@@ -166,7 +166,7 @@ class _findDoctorsPageState extends State<FindDoctor> {
                   centerTitle: true,
                 ),
                 Padding(
-                  padding: EdgeInsets.only(left: 14, right: 14, top: 25),
+                  padding: EdgeInsets.only(left: 20, right: 20, top: 25),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
@@ -216,13 +216,6 @@ class _findDoctorsPageState extends State<FindDoctor> {
                         ),
                       ),
 
-                      /// Zi Jie Your code here
-                      ///
-                      ///
-                      ///
-                      ///
-                      ///
-                      ///
                       Container(
                         margin: EdgeInsets.symmetric(horizontal: 20),
                         child: Column(
@@ -241,7 +234,7 @@ class _findDoctorsPageState extends State<FindDoctor> {
                                   : Container(),
                               Expanded(
                                 child: Container(
-                                  margin: EdgeInsets.symmetric(vertical: 16),
+                                  margin: EdgeInsets.only(top: 16.0),
                                   padding: EdgeInsets.symmetric(horizontal: 16),
                                   decoration: BoxDecoration(
                                     border: Border.all(
@@ -280,7 +273,7 @@ class _findDoctorsPageState extends State<FindDoctor> {
                           ],
                         ),
                       ),
-                      isSearching ? searchUsersList() : reconmanddoctor()
+                      isSearching ? searchUsersList() : recommendDoctors()
                     ],
                   ),
                 ),
@@ -311,92 +304,65 @@ class _findDoctorsPageState extends State<FindDoctor> {
     );
   }
 
-  Container reconmanddoctor() {
+  Container recommendDoctors() {
+    final db = FirebaseFirestore.instance;
     return Container(
       height: 398,
-      child: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            DoctorCard(doctor: docTest),
-            createDoctorWidget("doc1.png", "Susan Thomas"),
-            createDoctorWidget("doc2.png", "Paul Barbara"),
-            createDoctorWidget("doc3.png", "Nancy Williams"),
-            createDoctorWidget("doc1.png", "Susan Thomas"),
-            createDoctorWidget("doc2.png", "Paul Barbara"),
-            createDoctorWidget("doc3.png", "Nancy Williams"),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Container createDoctorWidget(String imgName, String docName) {
-    return Container(
-      child: InkWell(
-        child: Container(
-          margin: EdgeInsets.only(bottom: 10),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(
-              Radius.circular(12),
-            ),
-            color: Color(0xffECF0F5),
-          ),
-          child: Container(
-            padding: EdgeInsets.all(7),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: <Widget>[
-                Container(
-                  width: 70,
-                  height: 70,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/docprofile/$imgName'),
-                      fit: BoxFit.cover,
+        child: StreamBuilder<QuerySnapshot>(
+          stream: db.collection(Constants.USERS).where("userType", isEqualTo: "Doctor").where("id", isEqualTo: "Doctor").snapshots(),
+          builder: (context, snapshot){
+            if(!snapshot.hasData){
+              return Container();
+            }else if(snapshot.data.size == 0){
+              return Container(color: Color(0xFFF6F8FC),
+                child: Center(
+                  child: Text(
+                    'No Doctors available',
+                    style: TextStyle(
+                      fontSize: 24,
+                      color: Constants.TEXT_SUPER_LIGHT,
+                      fontFamily: Constants.FONTSTYLE,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
-                SizedBox(width: 10),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      "Dr. $docName",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                        fontFamily: Constants.FONTSTYLE,
-                      ),
-                    ),
-                    SizedBox(height: 5),
-                    Container(
-                      width: 250,
-                      height: 50,
-                      child: Text(
-                        "A brief about the doctor to be added here. This is more liek an introduction about the doctor.",
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
-                          fontFamily: Constants.FONTSTYLE,
-                        ),
-                        overflow: TextOverflow.clip,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
+              );
+            }else{
+              var doc = snapshot.data.documents;
+              return new ListView.builder(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemCount: doc.length,
+                itemBuilder: (context, index){
+                  return Container(
+                      child: DoctorCard(doctor: new Doctor(
+                        email: doc[index].get("email"),
+                        firstName: doc[index].get("firstName"),
+                        lastName: doc[index].get("lastName"),
+                        active: doc[index].get("active"),
+                        lastOnlineTimestamp: doc[index].get("lastOnlineTimestamp"),
+                        settings: null,
+                        phoneNumber: doc[index].get("phoneNumber"),
+                        userID: doc[index].get("id"),
+                        profilePictureURL: doc[index].get("profilePictureURL"),
+                        userType: doc[index].get("userType"),
+                        sex: doc[index].get("sex"),
+                        birthday: doc[index].get("birthday"),
+                        workPlace: doc[index].get("workPlace"),
+                        speciality: doc[index].get("speciality"),
+                        aboutYourself: doc[index].get("aboutYourself"),
+                        doctorID: doc[index].get("doctorID"),
+                      ),),
+                  );
+                },
+              );
+            }
+          },
         ),
-        onTap: () {
-          Navigator.pushNamed(context, DoctorDetail.id);
-        },
-      ),
+
     );
   }
+
 }
 
 class pathPainter extends CustomPainter {

@@ -16,7 +16,7 @@ class DoctorCard extends StatelessWidget{
     return Container(
       child: InkWell(
         child: Container(
-          margin: EdgeInsets.only(bottom: 10, top: 10),
+          margin: EdgeInsets.only(bottom: 15),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(
               Radius.circular(12),
@@ -36,6 +36,8 @@ class DoctorCard extends StatelessWidget{
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
+                    SizedBox(height: 5,),
+
                     Text(
                       doctor.fullNameDr(),
                       style: TextStyle(

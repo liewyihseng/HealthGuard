@@ -444,7 +444,8 @@ class TopContainer extends StatelessWidget{
                           fontSize: 24,
                           color: Constants.TEXT_SUPER_LIGHT,
                           fontFamily: Constants.FONTSTYLE,
-                          fontWeight: FontWeight.bold),
+                          fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 );
