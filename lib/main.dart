@@ -65,7 +65,7 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
         Chatroom.id: (context) => Chatroom(),
         DoctorSignIn.id: (context) => DoctorSignIn(),
         DoctorSignUp.id: (context) => DoctorSignUp(),
-        DoctorQrScanner.id: (context) => DoctorQrScanner(),
+        //DoctorQrScanner.id: (context) => DoctorQrScanner(),
         ChatWithPatient.id: (context) => ChatWithPatient(),
       },
       theme: ThemeData(accentColor: Colors.white),

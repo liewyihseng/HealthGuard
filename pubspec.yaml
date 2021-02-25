@@ -65,6 +65,11 @@ dependencies:
   smart_select: ^4.3.2
   # Enable google sign in function in the app
   google_sign_in: ^4.5.9
+  # Enabling the QR scanning Feature
+  qrscan: ^0.2.22
+  # request for permission to access a feature on the phone
+  permission_handler: ^5.1.0+2
+  image_gallery_saver: ^1.6.8
 
 # Run flutter pub run flutter_launcher_icons:main after flutter pub get
 flutter_icons:

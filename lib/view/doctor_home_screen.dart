@@ -1,5 +1,8 @@
+import 'dart:async';
 import 'dart:math';
+import 'dart:typed_data';
 import 'dart:ui';
+import 'dart:io';
 
 import 'package:HealthGuard/helper/validation_tool.dart';
 import 'package:HealthGuard/main.dart';
@@ -9,12 +12,16 @@ import 'package:HealthGuard/view/doctor_qr_scanner.dart';
 import 'package:HealthGuard/view/doctor_sign_in_screen.dart';
 import 'package:HealthGuard/view/user_profile_screen.dart';
 import 'package:HealthGuard/widgets/navigating_card.dart';
+import 'package:HealthGuard/widgets/text_icon_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
 import 'package:flutter_svg/svg.dart';
 import 'package:HealthGuard/view/chat_with_patient.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:qrscan/qrscan.dart' as scanner;
+import 'package:image_picker/image_picker.dart';
 
 
 FireStoreUtils _fireStoreUtils = FireStoreUtils();
@@ -36,6 +43,13 @@ class _doctorHome extends State<DoctorHome>{
   final OurDoctor.Doctor doctor;
 
   _doctorHome(this.doctor);
+  TextEditingController _outputController;
+
+  @override
+  initState(){
+    super.initState();
+    this._outputController = new TextEditingController();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -121,10 +135,30 @@ class _doctorHome extends State<DoctorHome>{
               child: Text("Doctor ID: " + doctor.doctorID, style: TextStyle(fontFamily: Constants.FONTSTYLE),),
             ),
 
-            NavigatingCard(
-              imageName: "assets/Patient Qr Scanner.png",
+            TextIconCard(
               text: "Patient Qr Scanner",
-              screenID: DoctorQrScanner.id,
+              imageName: "assets/Patient Qr Scanner.png",
+              onTap: _scan,
+            ),
+
+            Container(
+              color: Colors.white,
+              child: Column(
+                children: <Widget>[
+                  SizedBox(height: 20),
+                  TextField(
+                    controller: this._outputController,
+                    maxLines: 2,
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.wrap_text),
+                      hintText: 'The qrcode you scan will be displayed in this area.',
+                      hintStyle: TextStyle(fontSize: 15),
+                      contentPadding: EdgeInsets.symmetric(horizontal: 7, vertical: 15),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                ],
+              ),
             ),
 
             NavigatingCard(
@@ -168,14 +202,14 @@ class _doctorHome extends State<DoctorHome>{
                   fontWeight: FontWeight.w900,
                 ),
               ),
-                leading: SvgPicture.asset(
-                  "assets/icons/personal-information.svg",
-                  width: 25,
-                  color: Colors.black,
-                ),
-                onTap: (){
-                  Navigator.pushNamed(context, UserProfile.id);
-                },
+              leading: SvgPicture.asset(
+                "assets/icons/personal-information.svg",
+                width: 25,
+                color: Colors.black,
+              ),
+              onTap: (){
+                Navigator.pushNamed(context, UserProfile.id);
+              },
             ),
             ListTile(
               title: Text(
@@ -203,6 +237,17 @@ class _doctorHome extends State<DoctorHome>{
         ),
       ),
     );
+  }
+
+
+  Future _scan() async {
+    await Permission.camera.request();
+    String barcode = await scanner.scan();
+    if (barcode == null) {
+      print('nothing return.');
+    } else {
+      this._outputController.text = barcode;
+    }
   }
 
 
