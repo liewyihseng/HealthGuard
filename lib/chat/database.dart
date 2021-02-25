@@ -5,6 +5,7 @@ class DatabaseMethods {
     return FirebaseFirestore.instance
         .collection("users")
         .where("firstName", isEqualTo: firstName)
+        .where("userType", isEqualTo: "Doctor")
         .snapshots();
   }
 }

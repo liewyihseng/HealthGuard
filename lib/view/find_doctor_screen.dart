@@ -26,15 +26,88 @@ class _findDoctorsPageState extends State<FindDoctor> {
   TextEditingController searchUsernameEditingController =
       TextEditingController();
 
-  Doctor docTest = new Doctor(email: "nancydoc@nancydoc.com", firstName: "Nancy", lastName: "Tan", phoneNumber: "0123456789", profilePictureURL:  'https://firebasestorage.googleapis.com/v0/b/healthguard-2c4ac.appspot.com/o/images%2Fplaceholder.jpg?alt=media&token=158e23bd-54ed-425e-bac5-c4694214bb3c', userType: "Doctor", sex: "Female", birthday: "20-2-2001", workPlace: "Hospital KL", speciality: "Cardiologist", aboutYourself: "This is a brief thing about myself. TestingTestingTestingTestingTestingTestingTestingTestingTestingTestingTestingTesting", doctorID: "210i239tu43fni",);
-
   onSearchBtnClick() async {
     isSearching = true;
+    setState(() {});
     usersStream = await DatabaseMethods()
         .getUserByFirstName(searchUsernameEditingController.text);
     setState(() {});
-    Navigator.pushNamed(context, Chatroom.id);
   }
+
+  onBackArrowClick() async {
+    isSearching = false;
+    searchUsernameEditingController.text = "";
+    setState(() {});
+  }
+
+  Widget searchUsersList() {
+    return StreamBuilder(
+      stream: usersStream,
+      builder: (context, snapshot) {
+        return snapshot.hasData
+            ? ListView.builder(
+                itemCount: snapshot.data.docs.length,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  DocumentSnapshot ds = snapshot.data.docs[index];
+                  return searchListUserTile(
+                      profilePictureURL: ds["profilePictureURL"],
+                      firstName: ds["firstName"],
+                      email: ds["email"],
+                      userstate: ds["active"]);
+                },
+              )
+            : Center(
+                child: CircularProgressIndicator(),
+              );
+      },
+    );
+  }
+
+  Widget searchListUserTile(
+      {String profilePictureURL, firstName, userstate, email}) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, DoctorDetail.id);
+      },
+      child: Container(
+        margin: EdgeInsets.symmetric(vertical: 8),
+        child: Row(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(40),
+              child: Image.network(
+                profilePictureURL,
+                height: 40,
+                width: 40,
+              ),
+            ),
+            SizedBox(width: 12),
+            Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [Text(firstName), Text(email)])
+          ],
+        ),
+      ),
+    );
+  }
+
+  Doctor docTest = new Doctor(
+    email: "nancydoc@nancydoc.com",
+    firstName: "Nancy",
+    lastName: "Tan",
+    phoneNumber: "0123456789",
+    profilePictureURL:
+        'https://firebasestorage.googleapis.com/v0/b/healthguard-2c4ac.appspot.com/o/images%2Fplaceholder.jpg?alt=media&token=158e23bd-54ed-425e-bac5-c4694214bb3c',
+    userType: "Doctor",
+    sex: "Female",
+    birthday: "20-2-2001",
+    workPlace: "Hospital KL",
+    speciality: "Cardiologist",
+    aboutYourself:
+        "This is a brief thing about myself. TestingTestingTestingTestingTestingTestingTestingTestingTestingTestingTestingTesting",
+    doctorID: "210i239tu43fni",
+  );
 
   Widget searchuserlist(String profilePictureURL, firstName, lastName) {
     return StreamBuilder(
@@ -118,8 +191,7 @@ class _findDoctorsPageState extends State<FindDoctor> {
                           children: <Widget>[
                             medicalCategoryContainer(
                                 "category7.png", "CT-Scan"),
-                            medicalCategoryContainer(
-                                "category1.png", "Ortho"),
+                            medicalCategoryContainer("category1.png", "Ortho"),
                             medicalCategoryContainer(
                                 "category2.png", "Dietician"),
                             medicalCategoryContainer(
@@ -159,10 +231,7 @@ class _findDoctorsPageState extends State<FindDoctor> {
                               isSearching
                                   ? GestureDetector(
                                       onTap: () {
-                                        isSearching = false;
-                                        searchUsernameEditingController.text =
-                                            "";
-                                        setState(() {});
+                                        onBackArrowClick();
                                       },
                                       child: Padding(
                                         padding: EdgeInsets.only(right: 12),
@@ -211,26 +280,7 @@ class _findDoctorsPageState extends State<FindDoctor> {
                           ],
                         ),
                       ),
-
-                      Container(
-                        height: 398,
-                        child: SingleChildScrollView(
-                          physics: BouncingScrollPhysics(),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: <Widget>[
-                              DoctorCard(doctor: docTest),
-                              createDoctorWidget("doc1.png", "Susan Thomas"),
-                              createDoctorWidget("doc2.png", "Paul Barbara"),
-                              createDoctorWidget("doc3.png", "Nancy Williams"),
-                              createDoctorWidget("doc1.png", "Susan Thomas"),
-                              createDoctorWidget("doc2.png", "Paul Barbara"),
-                              createDoctorWidget("doc3.png", "Nancy Williams"),
-                            ],
-                          ),
-                        ),
-                      ),
+                      isSearching ? searchUsersList() : reconmanddoctor()
                     ],
                   ),
                 ),
@@ -257,6 +307,28 @@ class _findDoctorsPageState extends State<FindDoctor> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Container reconmanddoctor() {
+    return Container(
+      height: 398,
+      child: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            DoctorCard(doctor: docTest),
+            createDoctorWidget("doc1.png", "Susan Thomas"),
+            createDoctorWidget("doc2.png", "Paul Barbara"),
+            createDoctorWidget("doc3.png", "Nancy Williams"),
+            createDoctorWidget("doc1.png", "Susan Thomas"),
+            createDoctorWidget("doc2.png", "Paul Barbara"),
+            createDoctorWidget("doc3.png", "Nancy Williams"),
+          ],
+        ),
       ),
     );
   }
