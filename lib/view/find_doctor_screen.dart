@@ -181,6 +181,12 @@ class _findDoctorsPageState extends State<FindDoctor> {
                             ),
 
                             medicalCategoryCard(
+                                imageName:
+                                "category8.png",
+                                text: "Gynaecologist"
+                            ),
+
+                            medicalCategoryCard(
                               imageName: "category7.png",
                               text: "CT-Scan",
                             ),
@@ -214,11 +220,7 @@ class _findDoctorsPageState extends State<FindDoctor> {
                                 text: "MRI - Scan"
                             ),
 
-                            medicalCategoryCard(
-                                imageName:
-                                "category8.png",
-                                text: "Gynaecology"
-                            ),
+
 
                           ],
                         ),

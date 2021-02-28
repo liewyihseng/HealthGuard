@@ -59,7 +59,7 @@ class Doctor extends User{
 
   /// helper function combining user's first name and last name to form full name
   String fullNameDr() {
-    return 'Dr. $firstName $lastName';
+    return 'Dr. '+ fullName();
   }
 }
 
