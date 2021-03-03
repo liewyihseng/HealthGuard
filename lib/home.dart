@@ -84,7 +84,7 @@ class _home extends State<home> {
           ),
         ),
         iconTheme: IconThemeData(color: Colors.white),
-        backgroundColor: Constants.APPBAR_COLOUR,
+        backgroundColor: Constants.LOGO_COLOUR_PINK_LIGHT,
         centerTitle: true,
       ),
       drawer: Drawer(
@@ -104,7 +104,7 @@ class _home extends State<home> {
                       fontWeight: FontWeight.w900),
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.blue,
+                  color: Constants.LOGO_COLOUR_PINK_LIGHT,
                 ),
               ),
             ),
@@ -266,7 +266,7 @@ class _HomeOptionState extends State<HomeOption> {
           ClipPath(
             clipper: MyCustomClipper(clipType: ClipType.bottom),
             child: Container(
-              color: Colors.blue,
+              color: Constants.LOGO_COLOUR_PINK_LIGHT,
               height: 228.5 + statusBarHeight,
             ),
           ),
