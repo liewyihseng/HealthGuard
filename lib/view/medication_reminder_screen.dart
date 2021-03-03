@@ -58,6 +58,32 @@ class _MedicationReminderState extends State<MedicationReminder>{
     initializeNotifications();
   }
 
+  Row addRadioButton(int btnValue, String title){
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: <Widget>[
+        Radio(
+          activeColor: Theme.of(context).primaryColor,
+          value: medicineType[btnValue],
+          groupValue: medicineType,
+          onChanged: (value){
+            setState(() {
+              _medicineType = value;
+            });
+          },
+        ),
+        Text(
+          title,
+          style: TextStyle(
+              fontSize: 20,
+              color: Colors.black,
+              fontWeight: FontWeight.w400
+          ),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context){
     return  Scaffold(
@@ -188,6 +214,7 @@ class _MedicationReminderState extends State<MedicationReminder>{
 
             ConstrainedBox(
               constraints: BoxConstraints(minWidth: double.infinity),
+
               child:
               SmartSelect<String>.single(
                 title: 'Medicine Type',
@@ -441,10 +468,10 @@ class TopContainer extends StatelessWidget{
                     child:  Text(
                       'Nothing to be shown',
                       style: TextStyle(
-                          fontSize: 24,
-                          color: Constants.TEXT_SUPER_LIGHT,
-                          fontFamily: Constants.FONTSTYLE,
-                          fontWeight: FontWeight.bold,
+                        fontSize: 24,
+                        color: Constants.TEXT_SUPER_LIGHT,
+                        fontFamily: Constants.FONTSTYLE,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),

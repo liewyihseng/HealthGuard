@@ -1,4 +1,5 @@
 library constants;
+
 import 'package:flutter/material.dart';
 
 import 'dart:ui';
@@ -42,5 +43,8 @@ const TextStyle ALERT_DIALOG_TITLE_STYLE = TextStyle(
   color: TEXT_DARK,
 );
 
+
+/// API Key
+const GoogleApiKey = "AIzaSyCwIvvIxm9yn4JXoEHoaAx7wn2WySONi7M";
 
 

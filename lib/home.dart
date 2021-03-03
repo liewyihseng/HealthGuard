@@ -3,7 +3,6 @@ import 'dart:ui';
 
 import 'package:HealthGuard/helper/math_helper.dart';
 import 'package:HealthGuard/model/pedometer_model.dart';
-import 'package:HealthGuard/view/hospital_suggestion_screen.dart';
 import 'package:HealthGuard/view/hospital_suggestions_screen.dart';
 import 'package:HealthGuard/view/medical_feed_screen.dart';
 import 'package:HealthGuard/view/user_profile_screen.dart';

@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
 
-const GoogleApiKey = "AIzaSyCwIvvIxm9yn4JXoEHoaAx7wn2WySONi7M";
-GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: GoogleApiKey);
 
-class PlaceDetailWidget extends StatefulWidget{
+GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: Constants.GoogleApiKey);
+
+class PlaceDetailScreen extends StatefulWidget{
   String placeId;
 
-  PlaceDetailWidget(String placeId){
+  PlaceDetailScreen(String placeId){
     this.placeId = placeId;
   }
 
@@ -20,11 +20,12 @@ class PlaceDetailWidget extends StatefulWidget{
 
 }
 
-class PlaceDetailState extends State<PlaceDetailWidget>{
+class PlaceDetailState extends State<PlaceDetailScreen>{
   GoogleMapController mapController;
   PlacesDetailsResponse place;
   bool isLoading;
   String errorLoading;
+  Set<Marker> marker = {};
 
   @override
   void initState(){
@@ -65,6 +66,14 @@ class PlaceDetailState extends State<PlaceDetailWidget>{
               height: 200.0,
               child: GoogleMap(
                 onMapCreated: _onMapCreated,
+                markers: marker..add(
+                  Marker(
+                      markerId: MarkerId(placeDetail.placeId),
+                      position: center,
+                      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+                      infoWindow: InfoWindow(title: "${placeDetail.name}")
+                  ),
+                ),
                 initialCameraPosition: CameraPosition(target: center, zoom: 15.0),
               ),
             ),
@@ -78,7 +87,17 @@ class PlaceDetailState extends State<PlaceDetailWidget>{
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text(
+          title,
+          style: TextStyle(
+            color: Colors.white,
+            fontFamily: Constants.FONTSTYLE,
+            fontWeight: Constants.APPBAR_TEXT_WEIGHT,
+          ),
+        ),
+        iconTheme: IconThemeData(color: Colors.white),
+        backgroundColor: Constants.APPBAR_COLOUR,
+        centerTitle: true,
       ),
       body: bodyChild,
     );
@@ -106,23 +125,15 @@ class PlaceDetailState extends State<PlaceDetailWidget>{
 
   void _onMapCreated(GoogleMapController controller){
     mapController = controller;
-    final placeDetail = place.result;
     final location = place.result.geometry.location;
     final lat = location.lat;
     final lng = location.lng;
     final center = LatLng(lat, lng);
-
-    var markerOptions = Marker(
-      markerId: MarkerId(placeDetail.placeId),
-      position: center,
-      infoWindow: InfoWindow(title: "${placeDetail.name}", snippet: "${placeDetail.formattedAddress}")
-    );
-    //mapController.addAll(markerOptions);
     mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: center, zoom: 15.0)));
   }
 
   String buildPhotoURL(String photoReference){
-    return "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photoReference}&key=${GoogleApiKey}";
+    return "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photoReference}&key=${Constants.GoogleApiKey}";
   }
 
   ListView buildPlaceDetailList(PlaceDetails placeDetail){
@@ -131,21 +142,22 @@ class PlaceDetailState extends State<PlaceDetailWidget>{
       final photos = placeDetail.photos;
       list.add(SizedBox(
         height: 100.0,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: photos.length,
-            itemBuilder: (context, index){
-              return Padding(
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: photos.length,
+          itemBuilder: (context, index){
+            return Padding(
                 padding: EdgeInsets.only(right: 1.0),
                 child: SizedBox(
                   height: 100,
                   child: Image.network(buildPhotoURL(photos[index].photoReference)),
                 )
-              );
-            },
-          ),
+            );
+          },
+        ),
       ));
     }
+
 
     list.add(Padding(
       padding: EdgeInsets.only(top: 4.0, left: 8.0, right: 8.0, bottom: 4.0),
@@ -161,17 +173,17 @@ class PlaceDetailState extends State<PlaceDetailWidget>{
 
     if(placeDetail.formattedAddress != null){
       list.add(
-        Padding(
-          padding: EdgeInsets.only(top: 4.0, left: 8.0, right: 8.0, bottom: 4.0),
-          child: Text(
-            placeDetail.formattedAddress,
-            style: TextStyle(
-              color: Colors.black,
-              fontFamily: Constants.FONTSTYLE,
-              fontWeight: Constants.APPBAR_TEXT_WEIGHT,
+          Padding(
+            padding: EdgeInsets.only(top: 4.0, left: 8.0, right: 8.0, bottom: 4.0),
+            child: Text(
+              placeDetail.formattedAddress,
+              style: TextStyle(
+                color: Colors.black,
+                fontFamily: Constants.FONTSTYLE,
+                fontWeight: Constants.APPBAR_TEXT_WEIGHT,
+              ),
             ),
-          ),
-        )
+          )
       );
     }
 

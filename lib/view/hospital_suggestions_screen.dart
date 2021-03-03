@@ -1,6 +1,6 @@
 
 import 'dart:async';
-import 'package:HealthGuard/widgets/place_detail_widget.dart';
+import 'file:///C:/Users/liewy/StudioProjects/HealthGuard/lib/screen/place_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
@@ -11,8 +11,7 @@ import 'package:location/location.dart' as LocationManager;
 import 'package:location/location.dart';
 import 'package:geolocator/geolocator.dart';
 
-const GoogleApiKey = "AIzaSyCwIvvIxm9yn4JXoEHoaAx7wn2WySONi7M";
-GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: GoogleApiKey);
+GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: Constants.GoogleApiKey);
 
 
 class HospitalSuggestions extends StatefulWidget{
@@ -29,7 +28,24 @@ class _HospitalSuggestionsState extends State<HospitalSuggestions>{
   List<PlacesSearchResult> places = [];
   bool isLoading = false;
   String errorMessage;
-  List<Marker> markers = <Marker>[];
+  Set<Marker> markers = {};
+
+
+
+  Future<LatLng> getUserLocation() async {
+    LocationData currentLocation;
+    final location = LocationManager.Location();
+    try {
+      currentLocation = await location.getLocation();
+      final lat = currentLocation.latitude;
+      final lng = currentLocation.longitude;
+      final center = LatLng(lat, lng);
+      return center;
+    } on Exception {
+      currentLocation = null;
+      return null;
+    }
+  }
 
   @override
   void initState() {
@@ -73,55 +89,36 @@ class _HospitalSuggestionsState extends State<HospitalSuggestions>{
       ),
       body:Column(
         children: <Widget>[
-          // Container(
-          //   height: MediaQuery.of(context).size.height/3,
-          //   width: MediaQuery.of(context).size.width,
-          //   child: FutureBuilder(
-          //     future: _currentLocation,
-          //     builder: (context, snapshot){
-          //       if(snapshot.connectionState == ConnectionState.done){
-          //         if(snapshot.hasData) {
-          //           /// The user location returned from the snapshot
-          //           Position snapshotData = snapshot.data;
-          //           LatLng _userLocation = LatLng(
-          //               snapshotData.latitude, snapshotData.longitude);
-          //         }
-          //
-          //         return GoogleMap(
-          //           initialCameraPosition: CameraPosition(
-          //             target: _userLocation,
-          //             zoom: 16.0,
-          //           ),
-          //           zoomGesturesEnabled: true, ,
-          //         );
-          //       }else{
-          //         return Center(child: Text("Failed to get user location."),);
-          //       }
-          //       return
-          //     },
-          //   ),
-          // ),
           Container(
-            child: SizedBox(
-              height: 400.0,
-              child: GoogleMap(
-                onMapCreated: _onMapCreated,
-                markers: Set<Marker>.of(markers),
-                initialCameraPosition: CameraPosition(target: LatLng(0.0, 0.0)),
+
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Container(
+                child: SizedBox(
+                  height: 400.0,
+                  width: 400.0,
+                  child: Container(
+                    child: GoogleMap(
+                      onMapCreated: _onMapCreated,
+                      markers: Set<Marker>.of(markers),
+                      initialCameraPosition: CameraPosition(target: LatLng(0.0, 0.0)),
+                    ),
+                  ),
+                ),
               ),
             ),
           ),
           Expanded(child: expandedChild,)
         ],
       ),
+
     );
   }
 
   void refresh() async{
     final center = await getUserLocation();
-    print("CURRENT_LOCATION: "+ _currentLocation.toString());
     mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: center == null ? LatLng(0,0) : center, zoom: 15.0)));
-    getNearbyPlaces(center);
+    getNearbyHospital(center);
   }
 
   void _onMapCreated(GoogleMapController controller) async{
@@ -129,22 +126,8 @@ class _HospitalSuggestionsState extends State<HospitalSuggestions>{
     refresh();
   }
 
-  Future<LatLng> getUserLocation() async {
-    LocationData currentLocation;
-    final location = LocationManager.Location();
-    try {
-      currentLocation = await location.getLocation();
-      final lat = currentLocation.latitude;
-      final lng = currentLocation.longitude;
-      final center = LatLng(lat, lng);
-      return center;
-    } on Exception {
-      currentLocation = null;
-      return null;
-    }
-  }
 
-  void getNearbyPlaces(LatLng center) async{
+  void getNearbyHospital(LatLng center) async{
     setState(() {
       this.isLoading = true;
       this.errorMessage = null;
@@ -155,16 +138,23 @@ class _HospitalSuggestionsState extends State<HospitalSuggestions>{
     setState(() {
       this.isLoading = false;
       if(result.status == "OK"){
-        this.places = result.results;
-        result.results.forEach((f){
-          markers.add(
-              Marker(
-                  markerId: MarkerId(f.placeId),
-                  position: LatLng(f.geometry.location.lat, f.geometry.location.lng),
-                  infoWindow: InfoWindow(title: "${f.name}", snippet:  "${f.types?.first}")
-              ),
-          );
-        });
+         this.places = result.results;
+         Set<Marker> _hospitalMarkers = result.results
+             .map((r) => Marker(
+             markerId: MarkerId(r.name),
+             // Use an icon with different colors to differentiate between current location
+             // and the hospital
+             icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+             infoWindow: InfoWindow(
+                 title: r.name,
+                 snippet: "Ratings: " + (r.rating?.toString() ?? "Not Rated")),
+             position: LatLng(
+                 r.geometry.location.lat, r.geometry.location.lng)))
+             .toSet();
+
+         setState(() {
+           markers.addAll(_hospitalMarkers);
+         });
       }else{
         this.errorMessage = result.errorMessage;
       }
@@ -181,14 +171,14 @@ class _HospitalSuggestionsState extends State<HospitalSuggestions>{
     try{
       final center = await getUserLocation();
       Prediction p = await PlacesAutocomplete.show(
-        context: context,
-        strictbounds: center == null ? false: true,
-        apiKey: GoogleApiKey,
-        onError: onError,
-        mode: Mode.fullscreen,
-        language: "en",
-        location: center == null ? null : webGoogle.Location(center.latitude, center.longitude),
-        radius: center == null ? null : 10000
+          context: context,
+          strictbounds: center == null ? false: true,
+          apiKey: Constants.GoogleApiKey,
+          onError: onError,
+          mode: Mode.fullscreen,
+          language: "en",
+          location: center == null ? null : webGoogle.Location(center.latitude, center.longitude),
+          radius: center == null ? null : 10000
       );
       showDetailPlace(p.placeId);
     }catch(e){
@@ -199,7 +189,7 @@ class _HospitalSuggestionsState extends State<HospitalSuggestions>{
   Future<Null> showDetailPlace(String placeId) async{
     if(placeId != null){
       Navigator.push(
-        context, MaterialPageRoute(builder: (context) => PlaceDetailWidget(placeId)),
+        context, MaterialPageRoute(builder: (context) => PlaceDetailScreen(placeId)),
       );
     }
   }
