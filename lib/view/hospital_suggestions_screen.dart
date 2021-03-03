@@ -9,6 +9,7 @@ import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:google_maps_webservice/places.dart';
 import 'package:location/location.dart' as LocationManager;
 import 'package:location/location.dart';
+import 'package:geolocator/geolocator.dart';
 
 const GoogleApiKey = "AIzaSyCwIvvIxm9yn4JXoEHoaAx7wn2WySONi7M";
 GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: GoogleApiKey);
@@ -22,16 +23,21 @@ class HospitalSuggestions extends StatefulWidget{
 }
 
 class _HospitalSuggestionsState extends State<HospitalSuggestions>{
+  Future<Position> _currentLocation;
   final homeScaffoldKey = GlobalKey<ScaffoldState>();
   GoogleMapController mapController;
   List<PlacesSearchResult> places = [];
   bool isLoading = false;
   String errorMessage;
 
+  @override
+  void initState() {
+    super.initState();
+    _currentLocation = Geolocator.getCurrentPosition();
+  }
 
   @override
   Widget build(BuildContext context) {
-
     Widget expandedChild;
     if (isLoading) {
       expandedChild = Center(child: CircularProgressIndicator(value: null));
@@ -66,9 +72,37 @@ class _HospitalSuggestionsState extends State<HospitalSuggestions>{
       ),
       body:Column(
         children: <Widget>[
+          // Container(
+          //   height: MediaQuery.of(context).size.height/3,
+          //   width: MediaQuery.of(context).size.width,
+          //   child: FutureBuilder(
+          //     future: _currentLocation,
+          //     builder: (context, snapshot){
+          //       if(snapshot.connectionState == ConnectionState.done){
+          //         if(snapshot.hasData) {
+          //           /// The user location returned from the snapshot
+          //           Position snapshotData = snapshot.data;
+          //           LatLng _userLocation = LatLng(
+          //               snapshotData.latitude, snapshotData.longitude);
+          //         }
+          //
+          //         return GoogleMap(
+          //           initialCameraPosition: CameraPosition(
+          //             target: _userLocation,
+          //             zoom: 16.0,
+          //           ),
+          //           zoomGesturesEnabled: true, ,
+          //         );
+          //       }else{
+          //         return Center(child: Text("Failed to get user location."),);
+          //       }
+          //       return
+          //     },
+          //   ),
+          // ),
           Container(
             child: SizedBox(
-              height: 200.0,
+              height: 400.0,
               child: GoogleMap(
                 onMapCreated: _onMapCreated,
                 initialCameraPosition: CameraPosition(target: LatLng(0.0, 0.0)),
@@ -83,7 +117,7 @@ class _HospitalSuggestionsState extends State<HospitalSuggestions>{
 
   void refresh() async{
     final center = await getUserLocation();
-
+    print("CURRENT_LOCATION: "+ _currentLocation.toString());
     mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: center == null ? LatLng(0,0) : center, zoom: 15.0)));
     getNearbyPlaces(center);
   }
@@ -114,7 +148,7 @@ class _HospitalSuggestionsState extends State<HospitalSuggestions>{
       this.errorMessage = null;
     });
 
-    final result = await _places.searchNearbyWithRadius(new webGoogle.Location(center.latitude, center.longitude), 2500);
+    final result = await _places.searchNearbyWithRadius(new webGoogle.Location(center.latitude, center.longitude), 10000, type: "hospital");
     setState(() {
       this.isLoading = false;
       if(result.status == "OK"){
