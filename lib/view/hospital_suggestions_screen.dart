@@ -29,6 +29,7 @@ class _HospitalSuggestionsState extends State<HospitalSuggestions>{
   List<PlacesSearchResult> places = [];
   bool isLoading = false;
   String errorMessage;
+  List<Marker> markers = <Marker>[];
 
   @override
   void initState() {
@@ -105,6 +106,7 @@ class _HospitalSuggestionsState extends State<HospitalSuggestions>{
               height: 400.0,
               child: GoogleMap(
                 onMapCreated: _onMapCreated,
+                markers: Set<Marker>.of(markers),
                 initialCameraPosition: CameraPosition(target: LatLng(0.0, 0.0)),
               ),
             ),
@@ -146,6 +148,7 @@ class _HospitalSuggestionsState extends State<HospitalSuggestions>{
     setState(() {
       this.isLoading = true;
       this.errorMessage = null;
+      markers.clear();
     });
 
     final result = await _places.searchNearbyWithRadius(new webGoogle.Location(center.latitude, center.longitude), 10000, type: "hospital");
@@ -154,9 +157,13 @@ class _HospitalSuggestionsState extends State<HospitalSuggestions>{
       if(result.status == "OK"){
         this.places = result.results;
         result.results.forEach((f){
-          final markerOptions = Marker(
-            position: LatLng(f.geometry.location.lat, f.geometry.location.lng),
-            infoWindow: InfoWindow(title: "${f.name}", snippet:  "${f.types?.first}"));
+          markers.add(
+              Marker(
+                  markerId: MarkerId(f.placeId),
+                  position: LatLng(f.geometry.location.lat, f.geometry.location.lng),
+                  infoWindow: InfoWindow(title: "${f.name}", snippet:  "${f.types?.first}")
+              ),
+          );
         });
       }else{
         this.errorMessage = result.errorMessage;

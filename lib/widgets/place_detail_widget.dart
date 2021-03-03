@@ -113,6 +113,7 @@ class PlaceDetailState extends State<PlaceDetailWidget>{
     final center = LatLng(lat, lng);
 
     var markerOptions = Marker(
+      markerId: MarkerId(placeDetail.placeId),
       position: center,
       infoWindow: InfoWindow(title: "${placeDetail.name}", snippet: "${placeDetail.formattedAddress}")
     );
