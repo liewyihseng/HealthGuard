@@ -3,6 +3,8 @@ import 'dart:ui';
 
 import 'package:HealthGuard/helper/math_helper.dart';
 import 'package:HealthGuard/model/pedometer_model.dart';
+import 'package:HealthGuard/view/hospital_suggestion_screen.dart';
+import 'package:HealthGuard/view/hospital_suggestions_screen.dart';
 import 'package:HealthGuard/view/medical_feed_screen.dart';
 import 'package:HealthGuard/view/user_profile_screen.dart';
 import 'package:HealthGuard/view/bloodpressure_screen.dart';
@@ -11,12 +13,14 @@ import 'package:HealthGuard/widgets/navigating_card.dart';
 import 'package:HealthGuard/widgets/medication_reminder_card_small.dart';
 import 'package:HealthGuard/view/pedometer_screen.dart';
 import 'package:HealthGuard/widgets/custom_clipper.dart';
+import 'package:HealthGuard/widgets/text_icon_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/svg.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:HealthGuard/model/user_model.dart' as OurUser;
 import 'package:HealthGuard/net/authentication.dart';
@@ -213,10 +217,13 @@ class HealthOption extends StatelessWidget {
                 text: "Find a Doctor",
                 screenID: FindDoctor.id,
               ),
-              NavigatingCard(
+              TextIconCard(
                 imageName: "assets/Hospital Suggestions.png",
                 text: "Hospital Suggestions",
-                screenID: EMedicalReport.id, // dummy input
+                onTap: (){
+                  //_determinePosition();
+                  Navigator.pushNamed(context, HospitalSuggestions.id);
+                }, // dummy input
               ),
               SizedBox(
                 height: 5,
@@ -227,6 +234,33 @@ class HealthOption extends StatelessWidget {
       ],
     ));
   }
+}
+
+Future<Position> _determinePosition() async {
+  bool serviceEnabled;
+  LocationPermission permission;
+
+  serviceEnabled = await Geolocator.isLocationServiceEnabled();
+  if (!serviceEnabled) {
+    return Future.error('Location services are disabled.');
+  }
+
+  permission = await Geolocator.checkPermission();
+  if (permission == LocationPermission.deniedForever) {
+    return Future.error(
+        'Location permissions are permanently denied, we cannot request permissions.');
+  }
+
+  if (permission == LocationPermission.denied) {
+    permission = await Geolocator.requestPermission();
+    if (permission != LocationPermission.whileInUse &&
+        permission != LocationPermission.always) {
+      return Future.error(
+          'Location permissions are denied (actual value: $permission).');
+    }
+  }
+
+  return await Geolocator.getCurrentPosition();
 }
 
 String displayGreetings() {

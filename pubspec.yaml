@@ -54,11 +54,11 @@ dependencies:
   # Displaying local notifications
   flutter_local_notifications: ^3.0.3
   # Adding additional capabilities to Dart Streams and StreamControllers
-  rxdart: ^0.25.0
+  rxdart: ^0.24.0
   # Wrapper around Inherited Widget
   provider: ^4.3.3
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
+  # The following adds the Cupertino Icons font to your application
+  # Use with the CupertinoIcons class for iOS style icons
   cupertino_icons: ^1.0.0
   # Simplifies the task of updating app's launcher icon
   flutter_launcher_icons: ^0.8.1
@@ -69,7 +69,20 @@ dependencies:
   qrscan: ^0.2.22
   # request for permission to access a feature on the phone
   permission_handler: ^5.1.0+2
+  # Use to select images from the Android and iOS image library
   image_gallery_saver: ^1.6.8
+  # Provides a Google Maps widget
+  google_maps_flutter: ^1.2.0
+  # Dart Library for Google Maps Webservice
+  google_maps_webservice: ^0.0.19
+  # Provides easy access to platform specific location services
+  geolocator: ^6.2.1
+  # Launching URL in the mobile platform
+  url_launcher: ^5.7.10
+  # Customizable rating bar
+  flutter_rating_bar: ^3.2.0+1
+  location: ^3.2.4
+  flutter_google_places: ^0.2.5
 
 # Run flutter pub run flutter_launcher_icons:main after flutter pub get
 flutter_icons:

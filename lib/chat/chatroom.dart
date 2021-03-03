@@ -2,7 +2,6 @@ import 'package:HealthGuard/chat/database.dart';
 import 'package:HealthGuard/view/doctor_detail_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:HealthGuard/view/find_doctor_screen.dart';
 
 class Chatroom extends StatefulWidget {
   @override

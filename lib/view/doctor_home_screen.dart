@@ -11,8 +11,6 @@ import 'package:HealthGuard/view/my_medical_screen.dart';
 import 'package:HealthGuard/view/user_profile_screen.dart';
 import 'package:HealthGuard/widgets/custom_clipper.dart';
 import 'package:HealthGuard/widgets/doctor_feature_card.dart';
-import 'package:HealthGuard/widgets/navigating_card.dart';
-import 'package:HealthGuard/widgets/text_icon_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

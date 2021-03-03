@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:HealthGuard/chat/chatroom.dart';
 import 'package:HealthGuard/model/doctor_model.dart';
 import 'package:HealthGuard/view/doctor_detail_screen.dart';
 import 'package:HealthGuard/widgets/doctor_card.dart';

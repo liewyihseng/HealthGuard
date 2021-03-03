@@ -2,7 +2,7 @@ import 'package:HealthGuard/model/category_model.dart';
 
 /// Represents the list of countries available above the articles in medical_feed page
 List<CategoryModel> getCategories(){
-  List<CategoryModel> category = new List<CategoryModel>();
+  List<CategoryModel> category = <CategoryModel>[];
   CategoryModel categoryModel;
 
   // ///1

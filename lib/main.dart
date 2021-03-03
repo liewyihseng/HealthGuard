@@ -1,3 +1,4 @@
+
 import 'package:HealthGuard/view/chat_with_patient.dart';
 import 'package:HealthGuard/view/doctor_detail_screen.dart';
 import 'package:HealthGuard/view/doctor_sign_in_screen.dart';
@@ -5,10 +6,10 @@ import 'package:HealthGuard/view/doctor_sign_up_screen.dart';
 import 'package:HealthGuard/view/find_doctor_screen.dart';
 import 'package:HealthGuard/view/bloodpressure_screen.dart';
 import 'package:HealthGuard/view/help_center_screen.dart';
+import 'package:HealthGuard/view/hospital_suggestions_screen.dart';
 import 'package:HealthGuard/view/medical_feed_screen.dart';
 import 'package:HealthGuard/view/medication_reminder_screen.dart';
 import 'package:HealthGuard/view/my_account_screen.dart';
-import 'package:HealthGuard/view/my_medical_screen.dart';
 import 'package:HealthGuard/view/pedometer_history_screen.dart';
 import 'package:HealthGuard/view/user_profile_screen.dart';
 import 'package:HealthGuard/view/forgot_password_screen.dart';
@@ -25,6 +26,7 @@ import 'package:HealthGuard/view/pedometer_screen.dart';
 import 'package:HealthGuard/chat/chatroom.dart';
 
 void main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(new MyApp());
@@ -49,7 +51,6 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
             ),
         UserProfile.id: (context) => UserProfile(),
         MyAccount.id: (context) => MyAccount(),
-        MyMedical.id: (context) => MyMedical(),
         HelpCenter.id: (context) => HelpCenter(),
         PedometerScreen.id: (context) => PedometerScreen(),
         PedometerHistoryScreen.id: (context) => PedometerHistoryScreen(),
@@ -65,6 +66,7 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
         DoctorSignIn.id: (context) => DoctorSignIn(),
         DoctorSignUp.id: (context) => DoctorSignUp(),
         ChatWithPatient.id: (context) => ChatWithPatient(),
+        HospitalSuggestions.id: (context) => HospitalSuggestions(),
       },
       theme: ThemeData(accentColor: Colors.white),
     );

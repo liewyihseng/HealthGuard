@@ -19,7 +19,6 @@ class EMedicalReport extends StatefulWidget{
 /// Medical Report screen page state class
 class _medicalPageState extends State<EMedicalReport>{
    String height, weight, birthday, sex, healthCondition, currentMedication, address, emergencyContact, insuranceID;
-   DateTime _dateTime;
 
   @override
   Widget build(BuildContext context) {
