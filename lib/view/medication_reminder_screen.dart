@@ -411,7 +411,7 @@ class _MedicationReminderState extends State<MedicationReminder>{
   Future<void> scheduleNotification(Medicine medicine) async {
     var hour = int.parse(medicine.startTime[0] + medicine.startTime[1]);
     var ogValue = hour;
-    var minute = int.parse(medicine.startTime[2] + medicine.startTime[3]);
+    var minute = int.parse(medicine.startTime[3] + medicine.startTime[4]);
 
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
       'repeatDailyAtTime channel id',
