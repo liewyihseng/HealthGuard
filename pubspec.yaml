@@ -52,7 +52,7 @@ dependencies:
   # Drawing SVG
   flutter_svg: ^0.19.2
   # Displaying local notifications
-  flutter_local_notifications: ^3.0.3
+  flutter_local_notifications: ^4.0.1+1
   # Adding additional capabilities to Dart Streams and StreamControllers
   rxdart: ^0.24.0
   # Wrapper around Inherited Widget
