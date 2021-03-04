@@ -135,13 +135,15 @@ class _PedometerScreenState extends State<PedometerScreen> {
         .snapshots()
         .listen((snap) {
       allHistory.clear();
-      setState(() {
-        snap.docs.forEach((d) {
-          // if (d.id != PedometerScreen.documentID) {
-          allHistory.add(PedometerData.fromJson(d.data()));
-          // }
+      if (mounted){
+        setState(() {
+          snap.docs.forEach((d) {
+            // if (d.id != PedometerScreen.documentID) {
+            allHistory.add(PedometerData.fromJson(d.data()));
+            // }
+          });
         });
-      });
+      }
     });
   }
 
