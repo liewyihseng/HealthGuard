@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
 
-
+/// Passing the Google CLoud api key into google map function
 GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: Constants.GoogleApiKey);
 
 class PlaceDetailScreen extends StatefulWidget{
@@ -25,6 +25,7 @@ class PlaceDetailState extends State<PlaceDetailScreen>{
   PlacesDetailsResponse place;
   bool isLoading;
   String errorLoading;
+  /// Set of markers to mark the hospital's location nearby
   Set<Marker> marker = {};
 
   @override
@@ -71,9 +72,11 @@ class PlaceDetailState extends State<PlaceDetailScreen>{
                       markerId: MarkerId(placeDetail.placeId),
                       position: center,
                       icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+                      /// Decide what is to be shown when the location marker has been clicked
                       infoWindow: InfoWindow(title: "${placeDetail.name}")
                   ),
                 ),
+                /// The initial position of the google map has been set to the location of the hospital (center)
                 initialCameraPosition: CameraPosition(target: center, zoom: 15.0),
               ),
             ),
@@ -103,6 +106,7 @@ class PlaceDetailState extends State<PlaceDetailScreen>{
     );
   }
 
+  /// Retrieving the detail of the location from google map
   void fetchPlaceDetail() async{
     setState(() {
       this.isLoading = true;
@@ -132,10 +136,12 @@ class PlaceDetailState extends State<PlaceDetailScreen>{
     mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: center, zoom: 15.0)));
   }
 
+  /// Retrieve the images available for the hospital from google map
   String buildPhotoURL(String photoReference){
     return "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photoReference}&key=${Constants.GoogleApiKey}";
   }
 
+  /// Displays the detail of the hospital in this screen
   ListView buildPlaceDetailList(PlaceDetails placeDetail){
     List<Widget> list = [];
     if(placeDetail.photos != null){

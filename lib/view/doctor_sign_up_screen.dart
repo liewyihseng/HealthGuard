@@ -80,6 +80,7 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
     );
   }
 
+  /// Radio button to handle the input of gender of doctors
   Row addRadioButton(int btnValue, String title) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -114,6 +115,7 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
     }
   }
 
+  /// Allows doctors to take a picture or to import an image from the gallery
   _onCameraClick() {
     final action = CupertinoActionSheet(
       message: Text(
@@ -542,6 +544,7 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
     );
   }
 
+  /// Handles the submission of data into the database
   _sendToServer() async {
     if (_key.currentState.validate()) {
       _key.currentState.save();

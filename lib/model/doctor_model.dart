@@ -2,17 +2,21 @@ import 'package:HealthGuard/model/user_model.dart' as OurUser;
 import 'package:HealthGuard/model/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+/// Acting as a frame for the creation of doctor instances (Extends User class)
 class Doctor extends User{
 
+  /// variables
   String workPlace = '';
   String speciality = '';
   String aboutYourself = "";
   String doctorID = "";
 
+  /// Doctor class Constructor
   Doctor({String email, String firstName, String lastName, OurUser.Settings settings, String phoneNumber, bool active, Timestamp lastOnlineTimestamp, String userID, String profilePictureURL, String userType, String birthday, String sex, this.workPlace, this.speciality, this.aboutYourself, this.doctorID,}) :
         super(email: email, firstName: firstName, lastName: lastName, settings: settings, phoneNumber: phoneNumber,
           active: active, lastOnlineTimestamp: lastOnlineTimestamp, userID: userType, profilePictureURL: profilePictureURL, userType: "Doctor", sex: sex, birthday: birthday);
 
+  /// Passing doctor input data, then creating a new doctor containing these data
   factory Doctor.fromJson(Map<String, dynamic> parsedJson){
     return new Doctor(
       email: parsedJson['email'] ?? "",
@@ -34,7 +38,7 @@ class Doctor extends User{
       doctorID: parsedJson['doctorID'] ?? "",
     );
   }
-
+  /// Convert to json
   Map<String, dynamic> toJson(){
     return{
       "email": this.email,

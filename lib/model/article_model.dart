@@ -1,3 +1,4 @@
+/// Acting as a frame for the creation of article instances
 class ArticleModel{
   String author;
   String title;

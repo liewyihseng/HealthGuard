@@ -1,6 +1,6 @@
 
 import 'dart:async';
-import 'file:///C:/Users/liewy/StudioProjects/HealthGuard/lib/screen/place_detail_screen.dart';
+import 'package:HealthGuard/view/place_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
@@ -11,6 +11,7 @@ import 'package:location/location.dart' as LocationManager;
 import 'package:location/location.dart';
 import 'package:geolocator/geolocator.dart';
 
+/// Passing the Google CLoud api key into google map function
 GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: Constants.GoogleApiKey);
 
 
@@ -31,7 +32,7 @@ class _HospitalSuggestionsState extends State<HospitalSuggestions>{
   Set<Marker> markers = {};
 
 
-
+  /// Retrieving the user's current position in Latitude and Longitude
   Future<LatLng> getUserLocation() async {
     LocationData currentLocation;
     final location = LocationManager.Location();
@@ -50,6 +51,7 @@ class _HospitalSuggestionsState extends State<HospitalSuggestions>{
   @override
   void initState() {
     super.initState();
+    /// Retrieving the user's most current position
     _currentLocation = Geolocator.getCurrentPosition();
   }
 
@@ -98,9 +100,11 @@ class _HospitalSuggestionsState extends State<HospitalSuggestions>{
                   height: 400.0,
                   width: 400.0,
                   child: Container(
+                    /// Displays the google map widget
                     child: GoogleMap(
                       onMapCreated: _onMapCreated,
                       markers: Set<Marker>.of(markers),
+                      /// Sets the initial position of the user
                       initialCameraPosition: CameraPosition(target: LatLng(0.0, 0.0)),
                     ),
                   ),
@@ -115,6 +119,7 @@ class _HospitalSuggestionsState extends State<HospitalSuggestions>{
     );
   }
 
+  /// Button on the upper right to allow users to recenter themselves
   void refresh() async{
     final center = await getUserLocation();
     mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: center == null ? LatLng(0,0) : center, zoom: 15.0)));
@@ -126,7 +131,7 @@ class _HospitalSuggestionsState extends State<HospitalSuggestions>{
     refresh();
   }
 
-
+  /// To handle the search of nearby hospital
   void getNearbyHospital(LatLng center) async{
     setState(() {
       this.isLoading = true;
@@ -134,27 +139,27 @@ class _HospitalSuggestionsState extends State<HospitalSuggestions>{
       markers.clear();
     });
 
+    /// The keyword of the search is here, e.g. to search for pharmacy, change the word hospital to pharmacy
     final result = await _places.searchNearbyWithRadius(new webGoogle.Location(center.latitude, center.longitude), 10000, type: "hospital");
     setState(() {
       this.isLoading = false;
       if(result.status == "OK"){
-         this.places = result.results;
-         Set<Marker> _hospitalMarkers = result.results
-             .map((r) => Marker(
-             markerId: MarkerId(r.name),
-             // Use an icon with different colors to differentiate between current location
-             // and the hospital
-             icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
-             infoWindow: InfoWindow(
-                 title: r.name,
-                 snippet: "Ratings: " + (r.rating?.toString() ?? "Not Rated")),
-             position: LatLng(
-                 r.geometry.location.lat, r.geometry.location.lng)))
-             .toSet();
+        this.places = result.results;
+        Set<Marker> _hospitalMarkers = result.results
+            .map((r) => Marker(
+            markerId: MarkerId(r.name),
+            /// Use an icon with different colors to differentiate between current location and the hospital
+            icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+            infoWindow: InfoWindow(
+                title: r.name,
+                snippet: "Ratings: " + (r.rating?.toString() ?? "Not Rated")),
+            position: LatLng(
+                r.geometry.location.lat, r.geometry.location.lng)))
+            .toSet();
 
-         setState(() {
-           markers.addAll(_hospitalMarkers);
-         });
+        setState(() {
+          markers.addAll(_hospitalMarkers);
+        });
       }else{
         this.errorMessage = result.errorMessage;
       }
@@ -167,6 +172,7 @@ class _HospitalSuggestionsState extends State<HospitalSuggestions>{
     );
   }
 
+  /// Redirecting user to another page if they pressed onto the cards below the map
   Future<void> _handlePressButton() async{
     try{
       final center = await getUserLocation();
@@ -186,6 +192,7 @@ class _HospitalSuggestionsState extends State<HospitalSuggestions>{
     }
   }
 
+  /// Handles the redirecting of users to the PlaceDetailScreen
   Future<Null> showDetailPlace(String placeId) async{
     if(placeId != null){
       Navigator.push(
@@ -194,6 +201,7 @@ class _HospitalSuggestionsState extends State<HospitalSuggestions>{
     }
   }
 
+  /// Handles the output of the place detail in the card below the map
   ListView buildPlacesList(){
     final placesWidget = places.map((f){
       List<Widget> list = [

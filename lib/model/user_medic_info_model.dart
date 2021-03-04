@@ -26,6 +26,7 @@ user_medic_info(
       this.uploadedDate,
     });
 
+  /// Passing user input data, then creating a new user medic info object containing these data
   factory user_medic_info.fromJson(Map<String, dynamic> parsedJson){
     return new user_medic_info(
       height: parsedJson['height'] ?? "",
@@ -39,6 +40,7 @@ user_medic_info(
     );
   }
 
+  /// Convert to json
   Map<String, dynamic> toJson(){
     return{
       "height": this.height,

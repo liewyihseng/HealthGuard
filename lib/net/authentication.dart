@@ -26,6 +26,7 @@ class FireStoreUtils {
     }
   }
 
+  /// Updating user's account information into the database (firebase)
   Future<OurUser.User> updateCurrentUser(
       OurUser.User user, BuildContext context) async {
     return await firestore

@@ -113,10 +113,6 @@ showAlertDialog(BuildContext context, String title, String content) {
   );
 }
 
-pushReplacement(BuildContext context, Widget destination) {
-  Navigator.of(context).pushReplacement(
-      new MaterialPageRoute(builder: (context) => destination));
-}
 
 /// Directing to next page
 push(BuildContext context, Widget destination) {

@@ -24,7 +24,7 @@ class _findDoctorsPageState extends State<FindDoctor> {
   bool isSearching = false;
   Stream usersStream;
   TextEditingController searchUsernameEditingController =
-      TextEditingController();
+  TextEditingController();
 
   onSearchBtnClick() async {
     isSearching = true;
@@ -46,20 +46,20 @@ class _findDoctorsPageState extends State<FindDoctor> {
       builder: (context, snapshot) {
         return snapshot.hasData
             ? ListView.builder(
-                itemCount: snapshot.data.docs.length,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  DocumentSnapshot ds = snapshot.data.docs[index];
-                  return searchListUserTile(
-                      profilePictureURL: ds["profilePictureURL"],
-                      firstName: ds["firstName"],
-                      email: ds["email"],
-                      userstate: ds["active"]);
-                },
-              )
+          itemCount: snapshot.data.docs.length,
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            DocumentSnapshot ds = snapshot.data.docs[index];
+            return searchListUserTile(
+                profilePictureURL: ds["profilePictureURL"],
+                firstName: ds["firstName"],
+                email: ds["email"],
+                userstate: ds["active"]);
+          },
+        )
             : Center(
-                child: CircularProgressIndicator(),
-              );
+          child: CircularProgressIndicator(),
+        );
       },
     );
   }
@@ -98,21 +98,21 @@ class _findDoctorsPageState extends State<FindDoctor> {
       builder: (context, snapshot) {
         return snapshot.hasData
             ? ListView.builder(
-                itemCount: snapshot.data.docs.length,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  DocumentSnapshot ds = snapshot.data.docs[index];
-                  return Row(children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(30),
-                      child: Image.network(ds["profilePitureURL"]),
-                    )
-                  ]);
-                },
+          itemCount: snapshot.data.docs.length,
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            DocumentSnapshot ds = snapshot.data.docs[index];
+            return Row(children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(30),
+                child: Image.network(ds["profilePitureURL"]),
               )
+            ]);
+          },
+        )
             : Center(
-                child: CircularProgressIndicator(),
-              );
+          child: CircularProgressIndicator(),
+        );
       },
     );
   }
@@ -240,14 +240,14 @@ class _findDoctorsPageState extends State<FindDoctor> {
                             Row(children: [
                               isSearching
                                   ? GestureDetector(
-                                      onTap: () {
-                                        onBackArrowClick();
-                                      },
-                                      child: Padding(
-                                        padding: EdgeInsets.only(right: 12),
-                                        child: Icon(Icons.arrow_back),
-                                      ),
-                                    )
+                                onTap: () {
+                                  onBackArrowClick();
+                                },
+                                child: Padding(
+                                  padding: EdgeInsets.only(right: 12),
+                                  child: Icon(Icons.arrow_back),
+                                ),
+                              )
                                   : Container(),
                               Expanded(
                                 child: Container(
@@ -266,7 +266,7 @@ class _findDoctorsPageState extends State<FindDoctor> {
                                       Expanded(
                                         child: TextField(
                                           controller:
-                                              searchUsernameEditingController,
+                                          searchUsernameEditingController,
                                           decoration: InputDecoration(
                                             border: InputBorder.none,
                                             hintText: "Doctor's name",
@@ -276,7 +276,7 @@ class _findDoctorsPageState extends State<FindDoctor> {
                                       GestureDetector(
                                           onTap: () {
                                             if (searchUsernameEditingController
-                                                    .text !=
+                                                .text !=
                                                 "") {
                                               onSearchBtnClick();
                                             }
@@ -302,66 +302,70 @@ class _findDoctorsPageState extends State<FindDoctor> {
     );
   }
 
+  /// Container to display all the doctors available in our database
   Container recommendDoctors() {
     final db = FirebaseFirestore.instance;
     return Container(
       height: 398,
-        child: StreamBuilder<QuerySnapshot>(
-          stream: db.collection(Constants.USERS).where("userType", isEqualTo: "Doctor").where("id", isEqualTo: "Doctor").snapshots(),
-          builder: (context, snapshot){
-            if(!snapshot.hasData){
-              return Container();
-            }else if(snapshot.data.size == 0){
-              return Container(color: Color(0xFFF6F8FC),
-                child: Center(
-                  child: Text(
-                    'No Doctors available',
-                    style: TextStyle(
-                      fontSize: 24,
-                      color: Constants.TEXT_SUPER_LIGHT,
-                      fontFamily: Constants.FONTSTYLE,
-                      fontWeight: FontWeight.bold,
-                    ),
+      child: StreamBuilder<QuerySnapshot>(
+        stream: db.collection(Constants.USERS).where("userType", isEqualTo: "Doctor").where("id", isEqualTo: "Doctor").snapshots(),
+        builder: (context, snapshot){
+          if(!snapshot.hasData){
+            return Container();
+          }else if(snapshot.data.size == 0){
+            return Container(color: Color(0xFFF6F8FC),
+              child: Center(
+                child: Text(
+                  'No Doctors available',
+                  style: TextStyle(
+                    fontSize: 24,
+                    color: Constants.TEXT_SUPER_LIGHT,
+                    fontFamily: Constants.FONTSTYLE,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-              );
-            }else{
-              var doc = snapshot.data.documents;
-              return new ListView.builder(
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                itemCount: doc.length,
-                itemBuilder: (context, index){
-                  return Container(
-                      child: DoctorCard(doctor: new Doctor(
-                        email: doc[index].get("email"),
-                        firstName: doc[index].get("firstName"),
-                        lastName: doc[index].get("lastName"),
-                        active: doc[index].get("active"),
-                        lastOnlineTimestamp: doc[index].get("lastOnlineTimestamp"),
-                        settings: null,
-                        phoneNumber: doc[index].get("phoneNumber"),
-                        userID: doc[index].get("id"),
-                        profilePictureURL: doc[index].get("profilePictureURL"),
-                        userType: doc[index].get("userType"),
-                        sex: doc[index].get("sex"),
-                        birthday: doc[index].get("birthday"),
-                        workPlace: doc[index].get("workPlace"),
-                        speciality: doc[index].get("speciality"),
-                        aboutYourself: doc[index].get("aboutYourself"),
-                        doctorID: doc[index].get("doctorID"),
-                      ),),
-                  );
-                },
-              );
-            }
-          },
-        ),
+              ),
+            );
+          }else{
+            var doc = snapshot.data.documents;
+            return new ListView.builder(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              itemCount: doc.length,
+              itemBuilder: (context, index){
+                return Container(
+                  child: DoctorCard(
+                    doctor: new Doctor(
+                      email: doc[index].get("email"),
+                      firstName: doc[index].get("firstName"),
+                      lastName: doc[index].get("lastName"),
+                      active: doc[index].get("active"),
+                      lastOnlineTimestamp: doc[index].get("lastOnlineTimestamp"),
+                      settings: null,
+                      phoneNumber: doc[index].get("phoneNumber"),
+                      userID: doc[index].get("id"),
+                      profilePictureURL: doc[index].get("profilePictureURL"),
+                      userType: doc[index].get("userType"),
+                      sex: doc[index].get("sex"),
+                      birthday: doc[index].get("birthday"),
+                      workPlace: doc[index].get("workPlace"),
+                      speciality: doc[index].get("speciality"),
+                      aboutYourself: doc[index].get("aboutYourself"),
+                      doctorID: doc[index].get("doctorID"),
+                    ),),
+                );
+              },
+            );
+          }
+        },
+      ),
     );
   }
 
 }
 
+
+/// For UI purposes
 class pathPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {

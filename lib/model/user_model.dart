@@ -61,6 +61,7 @@ class User {
     birthday: parsedJson['birthday'] ?? "",);
   }
 
+  /// Convert to json
   Map<String, dynamic> toJson() {
     return {
       "email": this.email,

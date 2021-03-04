@@ -199,6 +199,7 @@ class _doctorSignInPageState extends State<DoctorSignIn> {
         ),
       ),
 
+      /// Wording to redirect users to patient sign in page
       Container(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

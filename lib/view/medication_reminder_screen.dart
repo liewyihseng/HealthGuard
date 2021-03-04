@@ -58,31 +58,6 @@ class _MedicationReminderState extends State<MedicationReminder>{
     initializeNotifications();
   }
 
-  Row addRadioButton(int btnValue, String title){
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: <Widget>[
-        Radio(
-          activeColor: Theme.of(context).primaryColor,
-          value: medicineType[btnValue],
-          groupValue: medicineType,
-          onChanged: (value){
-            setState(() {
-              _medicineType = value;
-            });
-          },
-        ),
-        Text(
-          title,
-          style: TextStyle(
-              fontSize: 20,
-              color: Colors.black,
-              fontWeight: FontWeight.w400
-          ),
-        ),
-      ],
-    );
-  }
 
   @override
   Widget build(BuildContext context){
@@ -143,7 +118,7 @@ class _MedicationReminderState extends State<MedicationReminder>{
     );
   }
 
-
+  /// Handles the pop up once the user pressed onto the add button on the bottom right corner
   Widget _buildPopupDialog(BuildContext context) {
     return new AlertDialog(
       backgroundColor: Constants.BACKGROUND_COLOUR,
@@ -357,6 +332,7 @@ class _MedicationReminderState extends State<MedicationReminder>{
     );
   }
 
+  /// Initializes the display of notification on both Android and iOS
   initializeNotifications() async{
     var initializationSettingsAndroid = AndroidInitializationSettings("@mipmap/ic_launcher");
     var initializationSettingsIOS = IOSInitializationSettings();
@@ -364,6 +340,7 @@ class _MedicationReminderState extends State<MedicationReminder>{
     await flutterLocalNotificationsPlugin.initialize(initializationSettings, onSelectNotification: onSelectNotification);
   }
 
+  /// Redirecting users to the medication reminder screen if they pressed onto the notification
   Future onSelectNotification(String payload) async{
     if(payload != null){
       debugPrint('notification payload: '+ payload);
@@ -371,6 +348,7 @@ class _MedicationReminderState extends State<MedicationReminder>{
     await Navigator.pushNamed(context, MedicationReminder.id);
   }
 
+  /// Handles the submission of data into the database
   _sendToServer() async{
     showProgress(context, "Processing Submission", false);
 
@@ -399,6 +377,7 @@ class _MedicationReminderState extends State<MedicationReminder>{
     ///Show success submit
   }
 
+  /// Assigning a unique id to each of the submitted medicine
   List<int> makeIDs(double n){
     var rng = Random();
     List<int> ids = [];
@@ -408,6 +387,7 @@ class _MedicationReminderState extends State<MedicationReminder>{
     }
   }
 
+  /// Handles the scheduling of notifications
   Future<void> scheduleNotification(Medicine medicine) async {
     var hour = int.parse(medicine.startTime[0] + medicine.startTime[1]);
     var ogValue = hour;
@@ -418,7 +398,6 @@ class _MedicationReminderState extends State<MedicationReminder>{
       'repeatDailyAtTime channel name',
       'repeatDailyAtTime description',
       importance: Importance.max,
-      //sound: 'sound',
       ledColor: Color(0xFF3EB16F),
       ledOffMs: 1000,
       ledOnMs: 1000,
@@ -436,6 +415,8 @@ class _MedicationReminderState extends State<MedicationReminder>{
       }else{
         hour = hour + (medicine.interval * i);
       }
+
+      /// Handles the output of content in the notification
       await flutterLocalNotificationsPlugin.showDailyAtTime(
           int.parse(medicine.notificationIDs[i]),
           'HealthGuard: ${medicine.medicineName}',
@@ -458,6 +439,7 @@ class TopContainer extends StatelessWidget{
       body: Container(
         alignment: Alignment.topCenter,
         child: StreamBuilder<QuerySnapshot>(
+          /// Retrieving of all medicine from the database using snapshots
             stream: db.collection(Constants.USERS).doc(MyAppState.currentUser.userID).collection(Constants.MEDICATION_INFO).snapshots(),
             builder: (context, snapshot){
               if(!snapshot.hasData){
@@ -487,6 +469,7 @@ class TopContainer extends StatelessWidget{
                         child: ListView(
                           scrollDirection: Axis.vertical,
                           children: <Widget>[
+                            /// Passing of medicine being retrieved from the database into medication reminder card large to be displayed on the medication reminder page
                             MedicationReminderCardLarge(
                               title: doc[index].get("medicineName"),
                               value: doc[index].get("dosage"),
@@ -508,6 +491,7 @@ class TopContainer extends StatelessWidget{
   }
 }
 
+/// Capitalizes any Strings
 String capitalize(String string) {
   if (string == null) {
     throw ArgumentError.notNull('string');
@@ -520,12 +504,14 @@ String capitalize(String string) {
   return string[0].toUpperCase() + string.substring(1);
 }
 
+/// To format the time into HH:MM
 String formatTimeOfDay(TimeOfDay tod) {
   final dt = DateTime(tod.hour, tod.minute);
   final format = DateFormat.jm();
   return format.format(dt);
 }
 
+/// Decides which image to be displayed based on the type of the medicine
 String imageLink(String title){
   switch(title){
     case "Pills":
@@ -537,6 +523,7 @@ String imageLink(String title){
   }
 }
 
+/// Changing the time to a format where it has AM or PM
 @override
 String toString(TimeOfDay timeOfDay) {
   String _addLeadingZeroIfNeeded(int value) {

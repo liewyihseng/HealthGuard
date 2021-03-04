@@ -1,4 +1,7 @@
+///  Acting as a frame for the creation of medicine instances
 class Medicine{
+
+  /// variables
   final List<dynamic> notificationIDs;
   String medicineName = "";
   String dosage;
@@ -6,6 +9,7 @@ class Medicine{
   int interval;
   String startTime = "";
 
+  /// Medicine class Constructor
   Medicine({
     this.notificationIDs,
     this.medicineName,
@@ -15,6 +19,7 @@ class Medicine{
     this.interval,
   });
 
+  /// Convert to json
   Map<String, dynamic> toJson(){
     return{
       "id": this.notificationIDs,
@@ -26,6 +31,7 @@ class Medicine{
     };
   }
 
+  /// Passing user input data, then creating a new medicine object containing these data
   factory Medicine.fromJson(Map<String, dynamic>parsedJson){
     return Medicine(
       notificationIDs: parsedJson['id'] ?? "",

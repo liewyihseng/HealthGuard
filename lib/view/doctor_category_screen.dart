@@ -42,8 +42,9 @@ class _DoctorCategoryState extends State<DoctorCategory>{
           Padding(
             padding: EdgeInsets.only(left: 15, right: 15, top: 15),
             child: Container(
-
+              /// Connecting to the database
               child: StreamBuilder<QuerySnapshot>(
+                /// Query to filter
                 stream: db.collection(Constants.USERS)
                     .where("userType", isEqualTo: "Doctor")
                     .where("id", isEqualTo: "Doctor")
@@ -55,6 +56,7 @@ class _DoctorCategoryState extends State<DoctorCategory>{
                   }else if(snapshot.data.size == 0){
                     return Container(color: Color(0xFFF6F8FC),
                       child: Center(
+                        /// If there are no doctors available
                         child: Text(
                           'No Doctors available',
                           style: TextStyle(
@@ -67,6 +69,7 @@ class _DoctorCategoryState extends State<DoctorCategory>{
                       ),
                     );
                   }else{
+                    /// If there are doctors available
                     var doc = snapshot.data.documents;
                     return new ListView.builder(
                       scrollDirection: Axis.vertical,
@@ -74,24 +77,26 @@ class _DoctorCategoryState extends State<DoctorCategory>{
                       itemCount: doc.length,
                       itemBuilder: (context, index){
                         return Container(
-                          child: DoctorCard(doctor: new Doctor(
-                            email: doc[index].get("email"),
-                            firstName: doc[index].get("firstName"),
-                            lastName: doc[index].get("lastName"),
-                            active: doc[index].get("active"),
-                            lastOnlineTimestamp: doc[index].get("lastOnlineTimestamp"),
-                            settings: null,
-                            phoneNumber: doc[index].get("phoneNumber"),
-                            userID: doc[index].get("id"),
-                            profilePictureURL: doc[index].get("profilePictureURL"),
-                            userType: doc[index].get("userType"),
-                            sex: doc[index].get("sex"),
-                            birthday: doc[index].get("birthday"),
-                            workPlace: doc[index].get("workPlace"),
-                            speciality: doc[index].get("speciality"),
-                            aboutYourself: doc[index].get("aboutYourself"),
-                            doctorID: doc[index].get("doctorID"),
-                          ),),
+                          child: DoctorCard(
+                            /// Creating new doctor instances
+                            doctor: new Doctor(
+                              email: doc[index].get("email"),
+                              firstName: doc[index].get("firstName"),
+                              lastName: doc[index].get("lastName"),
+                              active: doc[index].get("active"),
+                              lastOnlineTimestamp: doc[index].get("lastOnlineTimestamp"),
+                              settings: null,
+                              phoneNumber: doc[index].get("phoneNumber"),
+                              userID: doc[index].get("id"),
+                              profilePictureURL: doc[index].get("profilePictureURL"),
+                              userType: doc[index].get("userType"),
+                              sex: doc[index].get("sex"),
+                              birthday: doc[index].get("birthday"),
+                              workPlace: doc[index].get("workPlace"),
+                              speciality: doc[index].get("speciality"),
+                              aboutYourself: doc[index].get("aboutYourself"),
+                              doctorID: doc[index].get("doctorID"),
+                            ),),
                         );
                       },
                     );

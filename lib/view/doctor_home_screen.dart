@@ -193,13 +193,14 @@ class _doctorHomeState extends State<DoctorHome>{
                   child: ListView(
                     scrollDirection: Axis.vertical,
                     children: <Widget>[
+                      /// Card to link to QR Scanner
                       DoctorFeatureCard(
                         image: "assets/Patient Qr Scanner.png",
                         title: "Patient QR Scanner",
                         color: Color(0xFFA1ECBF),
                         onTap: _scanQR,
                       ),
-
+                      /// Card to link to chat with patient
                       DoctorFeatureCard(
                         image: "assets/Chat with Doctor.png",
                         title: "Chat with Patient",
@@ -296,7 +297,7 @@ class _doctorHomeState extends State<DoctorHome>{
     );
   }
 
-
+  /// Function to allow camera to scan QR code
   Future _scanQR() async {
     await Permission.camera.request();
     String barcode = await scanner.scan();
@@ -313,6 +314,7 @@ class _doctorHomeState extends State<DoctorHome>{
 
 }
 
+/// Handles the display of greetings on the home screen page
 String displayGreetings() {
   var hourNow = DateTime.now().hour;
   if (hourNow < 12) {
