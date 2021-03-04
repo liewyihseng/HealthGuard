@@ -7,7 +7,6 @@ import 'package:HealthGuard/main.dart';
 import 'package:HealthGuard/model/pedometer_model.dart';
 import 'package:HealthGuard/net/PedometerService.dart';
 import 'package:HealthGuard/widgets/round_progress_bar.dart';
-import 'package:charts_flutter/flutter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -49,16 +48,7 @@ class _PedometerScreenState extends State<PedometerScreen> {
   }
 
   /// additional init for pedometer
-  Future<void> initPlatformState() async {
-    /// check previous goal settings
-    PedometerData initialData =
-        await pedometerService.receiveFromServer(PedometerScreen.documentID);
-    print(initialData.toJson());
-    if (initialData.steps != -1) {
-      setState(() {
-        _goal = initialData.goal;
-      });
-    }
+  initPlatformState() {
     _stepCountStream = Pedometer.stepCountStream;
     _stepCountStream.listen(onStepCount).onError(onStepCountError);
     if (!mounted) return;
@@ -70,6 +60,23 @@ class _PedometerScreenState extends State<PedometerScreen> {
     super.initState();
     initPlatformState();
     _listenData();
+    _getGoal();
+  }
+
+  _getGoal() async {
+    PedometerData previousData = await pedometerService.receiveFromServer(PedometerScreen.documentID);
+    _goal = previousData.goal;
+  }
+
+  sendPedoData() async {
+    PedometerData currentData = PedometerData(
+        goal: _goal,
+        steps: _steps,
+        water: _water,
+        calories: _calories,
+        date: Timestamp.now());
+    await pedometerService.sendToServer(
+        currentData, PedometerScreen.documentID);
   }
 
   /// step count event handler
@@ -116,102 +123,8 @@ class _PedometerScreenState extends State<PedometerScreen> {
       _water = (_steps.toDouble() * 0.1282).toInt();
     }
 
-    PedometerData currentData = PedometerData(
-        goal: _goal,
-        steps: _steps,
-        water: _water,
-        calories: _calories,
-        date: Timestamp.now());
-    await pedometerService.sendToServer(
-        currentData, PedometerScreen.documentID);
+    await sendPedoData();
   }
-
-  // /// send data to database
-  // _sendToServer(PedometerData data, [String docID]) async {
-  //
-  //   /// variable
-  //   // PedometerData oldPedometerData;
-  //   // String oldDataId;
-  //
-  //   /// database reference
-  //   var pedometerRef = db
-  //       .collection(Constants.USERS)
-  //       .doc(MyAppState.currentUser.userID)
-  //       .collection(Constants.PEDOMETER_INFO);
-  //
-  //   // /// construct updated data
-  //   // PedometerData pedometerData = PedometerData(
-  //   //     goal: goal,
-  //   //     steps: steps,
-  //   //     water: water,
-  //   //     calories: calories,
-  //   //     date: Timestamp.fromDate(TimeHelper.getYesterdayDate())
-  //   // );
-  //
-  //   if (docID == null){
-  //     await pedometerRef.add(data.toJson());
-  //   } else {
-  //     await pedometerRef.doc(docID).set(data.toJson());
-  //   }
-  //
-  //   // await pedometerRef
-  //   //     .orderBy("date",descending: true)
-  //   //     .limit(1)
-  //       // timestamp query not working
-  //       // .where("lastUpdate", isGreaterThanOrEqualTo: Timestamp.fromDate(TimeHelper.getLastMidnightDate()))
-  //       // .where("lastUpdate", isLessThan: Timestamp.fromDate(TimeHelper.getNextMidnightDate()))
-  //   //     .get()
-  //   //     .then((value){
-  //   //       if(value.docs.isNotEmpty){
-  //   //
-  //   //         /// get data
-  //   //         oldDataId = value.docs.single.id;
-  //   //         oldPedometerData = PedometerData.fromJson(value.docs.single.data());
-  //   //
-  //   //         /// display incoming data
-  //   //         print("Existing pedometer document found, id : $oldDataId");
-  //   //         print(oldPedometerData.toJson());
-  //   //
-  //   //         DateTime oldDate = oldPedometerData.date.toDate();
-  //   //         Duration dateDiff = newTimestamp.toDate().difference(oldDate);
-  //   //
-  //   //         print("old date");
-  //   //         print(oldDate);
-  //   //         print("new date");
-  //   //         print(newTimestamp.toDate());
-  //   //         print("diff date");
-  //   //         print(dateDiff);
-  //   //
-  //   //         if(dateDiff.inDays >= 1){
-  //   //           oldDataId = null;
-  //   //           print("old data id set to null : $oldDataId");
-  //   //         }
-  //   //
-  //   //       } else {
-  //   //         print("No existing pedometer document found");
-  //   //       }
-  //   //       print("new data : ${pedometerData.toJson()}");
-  //   // }).catchError((e)=> print("error fetching old pedometer data : $e"));
-  //
-  //   // await pedometerRef
-  //   //     .orderBy("lastUpdate", descending: true)
-  //   //     .get()
-  //   //     .then((value){
-  //   //       if(value.docs.isNotEmpty){
-  //   //         oldDataId = value.docs.first.id;
-  //   //         print("${oldDataId} is the id of documents");
-  //   //         oldPedometerData = PedometerData.fromJson(value.docs.first.data());
-  //   //         print(oldPedometerData.toJson());
-  //   //       }
-  //   // });
-  //
-  //   // if (oldDataId != null){
-  //   //   await pedometerRef.doc(oldDataId).update(pedometerData.toJson());
-  //   // } else {
-  //   //   await pedometerRef.add(pedometerData.toJson());
-  //   // }
-  //
-  // }
 
   _listenData() {
     FirebaseFirestore.instance
@@ -225,7 +138,7 @@ class _PedometerScreenState extends State<PedometerScreen> {
       setState(() {
         snap.docs.forEach((d) {
           // if (d.id != PedometerScreen.documentID) {
-            allHistory.add(PedometerData.fromJson(d.data()));
+          allHistory.add(PedometerData.fromJson(d.data()));
           // }
         });
       });
@@ -241,19 +154,20 @@ class _PedometerScreenState extends State<PedometerScreen> {
           elevation: 3,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                Text(
-                  DateFormat("dd-MM-yyyy").format(allHistory[index].date.toDate()).toString(),
-                  style: TextStyle(
-                    fontSize: 23.0,
-                    color: Colors.black,
-                    fontFamily: Constants.FONTSTYLE,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  textAlign: TextAlign.center,
+            child: Column(children: [
+              Text(
+                DateFormat("dd-MM-yyyy")
+                    .format(allHistory[index].date.toDate())
+                    .toString(),
+                style: TextStyle(
+                  fontSize: 23.0,
+                  color: Colors.black,
+                  fontFamily: Constants.FONTSTYLE,
+                  fontWeight: FontWeight.w600,
                 ),
-                Row(
+                textAlign: TextAlign.center,
+              ),
+              Row(
                 children: [
                   Expanded(
                     child: Column(
@@ -285,7 +199,9 @@ class _PedometerScreenState extends State<PedometerScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          "Water : " + allHistory[index].water.toString() + " ml",
+                          "Water : " +
+                              allHistory[index].water.toString() +
+                              " ml",
                           style: TextStyle(
                             fontSize: 17.0,
                             color: Colors.black,
@@ -294,7 +210,9 @@ class _PedometerScreenState extends State<PedometerScreen> {
                           textAlign: TextAlign.center,
                         ),
                         Text(
-                          "Calories : " + allHistory[index].calories.toString() + " cal",
+                          "Calories : " +
+                              allHistory[index].calories.toString() +
+                              " cal",
                           style: TextStyle(
                             fontSize: 17.0,
                             color: Colors.black,
@@ -306,8 +224,8 @@ class _PedometerScreenState extends State<PedometerScreen> {
                     ),
                   ),
                 ],
-              ),]
-            ),
+              ),
+            ]),
           ),
         );
       },
@@ -317,6 +235,8 @@ class _PedometerScreenState extends State<PedometerScreen> {
   Widget _PopUpDialog(BuildContext context) {
     return AlertDialog(
       backgroundColor: Constants.BACKGROUND_COLOUR,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(32.0))),
       title: Text(
         'Set Goal',
         textAlign: TextAlign.center,
@@ -325,29 +245,60 @@ class _PedometerScreenState extends State<PedometerScreen> {
             fontFamily: Constants.FONTSTYLE,
             fontWeight: FontWeight.w900),
       ),
-      content: Container(
-        child: ConstrainedBox(
-          constraints: BoxConstraints(minWidth: double.infinity),
-          child: Padding(
-            padding: const EdgeInsets.only(top: 16.0, right: 8.0, left: 8.0),
-            child: TextFormField(
-              onChanged: (String val) {
-                setState(() {
-                  _goal = int.parse(val);
-                });
-              },
-              textCapitalization: TextCapitalization.words,
-              onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
-              obscureText: false,
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                hintText: "Steps Number",
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(32.0)),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(minWidth: double.infinity),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 16.0, right: 8.0, left: 8.0),
+                child: TextFormField(
+                  onChanged: (String val) {
+                    setState(() {
+                      _goal = int.parse(val);
+                    });
+                  },
+                  onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
+                  obscureText: false,
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                    hintText: "Steps Number",
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(32.0)),
+                  ),
+                ),
               ),
             ),
           ),
-        ),
+          Padding(
+            padding: const EdgeInsets.only(right: 40, left: 40, top: 20.0),
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(minWidth: double.infinity),
+              child: RaisedButton(
+                color: Constants.BUTTON_COLOUR,
+                child: Text('Set',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w900,
+                    fontFamily: Constants.FONTSTYLE,
+                  ),
+                ),
+                onPressed: () async {
+                  await sendPedoData();
+                  Navigator.pop(context);
+                },
+                textColor: Colors.white,
+                splashColor: Colors.blue,
+                padding: EdgeInsets.only(top: 12, bottom: 12),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25.0),
+                  side: BorderSide(color: Colors.blue),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -359,107 +310,117 @@ class _PedometerScreenState extends State<PedometerScreen> {
       initialIndex: 0,
       length: 2,
       child: Scaffold(
-        backgroundColor: Constants.BACKGROUND_COLOUR,
-        appBar: AppBar(
-          title: Text(
-            'Pedometer',
-            style: TextStyle(
-              color: Colors.white,
-              fontFamily: Constants.FONTSTYLE,
-              fontWeight: Constants.APPBAR_TEXT_WEIGHT,
+          resizeToAvoidBottomPadding: false,
+          backgroundColor: Constants.BACKGROUND_COLOUR,
+          appBar: AppBar(
+            title: Text(
+              'Pedometer',
+              style: TextStyle(
+                color: Colors.white,
+                fontFamily: Constants.FONTSTYLE,
+                fontWeight: Constants.APPBAR_TEXT_WEIGHT,
+              ),
             ),
-          ),
-          bottom: TabBar(
-            tabs: [
-              Tab(
-                icon: Icon(Icons.directions_walk_sharp),
-              ),
-              Tab(
-                icon: Icon(Icons.assignment_sharp),
-              ),
-            ],
-          ),
-          iconTheme: IconThemeData(color: Colors.white),
-          backgroundColor: Constants.APPBAR_COLOUR,
-          centerTitle: true,
-        ),
-        body: TabBarView(children: [
-          Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: 8,
+            bottom: TabBar(
+              tabs: [
+                Tab(
+                  icon: Icon(Icons.directions_walk_sharp),
                 ),
-                Card(
-                  elevation: 2,
-                  margin: EdgeInsets.all(10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      RoundProgressBar(
-                          value: (_calories < 2000) ? _calories : 2000,
-                          max: 2000,
-                          size: 100,
-                          color: Colors.orangeAccent,
-                          innerWidget: (value) {
-                            return Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(Icons.local_fire_department),
-                                Text(
-                                    "${MathHelper.toPrecision(_calories, 2)} cal"),
-                              ],
-                            );
-                          }),
-                      RoundProgressBar(
-                          value: (_water < 3000) ? _water.toDouble() : 3000,
-                          max: 3000,
-                          size: 100,
-                          color: Colors.blue[300],
-                          innerWidget: (value) {
-                            return Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(Icons.opacity),
-                                Text(_water.toString() + " ml"),
-                              ],
-                            );
-                          }),
-                    ],
-                  ),
+                Tab(
+                  icon: Icon(Icons.assignment_sharp),
                 ),
-                RoundProgressBar(
-                    value: ((_steps ?? 0) < _goal)
-                        ? _steps?.toDouble()
-                        : _goal.toDouble(),
-                    max: _goal.toDouble(),
-                    size: 300,
-                    color: Colors.lightGreenAccent,
-                    innerWidget: (double value) {
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.directions_run,
-                            size: 80,
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text("$_steps / $_goal steps"),
-                          Text(
-                              "${MathHelper.toPrecision(value / _goal.toDouble() * 100, 2)} %"),
-                        ],
-                      );
-                    }),
               ],
             ),
+            iconTheme: IconThemeData(color: Colors.white),
+            backgroundColor: Constants.APPBAR_COLOUR,
+            centerTitle: true,
           ),
-          _buildHistory(),
-        ]),
-      ),
+          body: TabBarView(children: [
+            Container(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 8,
+                  ),
+                  Card(
+                    elevation: 2,
+                    margin: EdgeInsets.all(10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        RoundProgressBar(
+                            value: (_calories < 2000) ? _calories : 2000,
+                            max: 2000,
+                            size: 100,
+                            color: Colors.orangeAccent,
+                            innerWidget: (value) {
+                              return Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.local_fire_department),
+                                  Text(
+                                      "${MathHelper.toPrecision(_calories, 2)} cal"),
+                                ],
+                              );
+                            }),
+                        RoundProgressBar(
+                            value: (_water < 3000) ? _water.toDouble() : 3000,
+                            max: 3000,
+                            size: 100,
+                            color: Colors.blue[300],
+                            innerWidget: (value) {
+                              return Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.opacity),
+                                  Text(_water.toString() + " ml"),
+                                ],
+                              );
+                            }),
+                      ],
+                    ),
+                  ),
+                  RoundProgressBar(
+                      value: ((_steps ?? 0) < _goal)
+                          ? _steps?.toDouble()
+                          : _goal.toDouble(),
+                      max: _goal.toDouble(),
+                      size: 300,
+                      color: Colors.lightGreenAccent,
+                      innerWidget: (double value) {
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.directions_run,
+                              size: 80,
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text("$_steps / $_goal steps"),
+                            Text(
+                                "${MathHelper.toPrecision(value / _goal.toDouble() * 100, 2)} %"),
+                          ],
+                        );
+                      }),
+                ],
+              ),
+            ),
+            _buildHistory(),
+          ]),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) => _PopUpDialog(context),
+              );
+            },
+            child: Icon(Icons.settings),
+            backgroundColor: Colors.lightBlue,
+          )),
     );
   }
 }
