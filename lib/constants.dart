@@ -44,9 +44,10 @@ const TextStyle ALERT_DIALOG_TITLE_STYLE = TextStyle(
 );
 
 const TextStyle APP_BAR_TEXT_STYLE = TextStyle(
-color: Colors.white,
-fontFamily: FONTSTYLE,
-fontWeight: APPBAR_TEXT_WEIGHT,
+  color: Colors.white,
+  fontFamily: FONTSTYLE,
+  fontWeight: APPBAR_TEXT_WEIGHT,
+  fontSize: 20,
 );
 
 
