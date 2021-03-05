@@ -44,6 +44,7 @@ class _MyMedicalState extends State<MyMedical> {
               .collection(Constants.USERS)
               .doc(userID)
               .collection(Constants.MED_INFO)
+              .orderBy("uploadedDate", descending: true)
               .snapshots(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {

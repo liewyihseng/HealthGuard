@@ -366,7 +366,7 @@ class _MedicationReminderState extends State<MedicationReminder>{
         .add(newEntryMedicine.toJson());
     scheduleNotification(newEntryMedicine);
     hideProgress();
-    Navigator.pushNamed(context, MedicationReminder.id);
+    Navigator.pop(context);
     ///Show success submit
   }
 

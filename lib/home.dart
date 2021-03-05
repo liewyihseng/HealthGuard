@@ -22,7 +22,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:HealthGuard/model/user_model.dart' as OurUser;
 import 'package:HealthGuard/net/authentication.dart';
 import 'package:HealthGuard/view/patient_sign_in_screen.dart';
 import 'package:HealthGuard/main.dart';
@@ -37,36 +36,23 @@ FireStoreUtils _fireStoreUtils = FireStoreUtils();
 
 class home extends StatefulWidget {
   static const String id = "homePage";
-  final OurUser.User user;
-
-  home({Key key, @required this.user}) : super(key: key);
 
   @override
-  State createState() {
-    print(user.toString());
-    return _home(user);
-  }
+  _homeState createState() => _homeState();
 }
 
-class _home extends State<home> {
-  /// user data
-  final OurUser.User user;
-  _home(this.user);
-
+class _homeState extends State<home> {
   /// variables
   int _selectedIndex = 0;
-  static List<Widget> _bottomNavBarOptions;
+  static List<Widget> _bottomNavBarOptions = [
+    HomeOption(),
+    HealthOption(),
+  ];
   List<String> appBarTitles = ['Home', 'Health'];
 
   /// GUI
   @override
   Widget build(BuildContext context) {
-    /// bottom navigation bar screens
-    _bottomNavBarOptions = [
-      HomeOption(user: user),
-      HealthOption(),
-    ];
-
     return Scaffold(
       backgroundColor: Constants.BACKGROUND_COLOUR,
 
@@ -116,9 +102,10 @@ class _home extends State<home> {
                   angle: pi / 1,
                   child: Icon(Icons.exit_to_app, color: Colors.black)),
               onTap: () async {
-                user.active = false;
-                user.lastOnlineTimestamp = Timestamp.now();
-                _fireStoreUtils.updateCurrentUser(user, context);
+                MyAppState.currentUser.active = false;
+                MyAppState.currentUser.lastOnlineTimestamp = Timestamp.now();
+                _fireStoreUtils.updateCurrentUser(
+                    MyAppState.currentUser, context);
                 await FirebaseAuth.instance.signOut();
                 MyAppState.currentUser = null;
                 pushAndRemoveUntil(context, LoginPage(), false);
@@ -152,7 +139,7 @@ class _home extends State<home> {
   }
 }
 
-/// option 2 in bottom nav bar
+/// Heatlh option in bottom nav bar
 class HealthOption extends StatelessWidget {
   const HealthOption({
     Key key,
@@ -244,35 +231,29 @@ Future<Position> _determinePosition() async {
   return await Geolocator.getCurrentPosition();
 }
 
-String displayGreetings(String name) {
-  var hourNow = DateTime.now().hour;
-  String timePart;
-
-  if (hourNow < 12) {
-    timePart = 'Morning';
-  } else if (hourNow < 17) {
-    timePart = 'Afternoon';
-  } else {
-    timePart = 'Evening';
-  }
-
-  return "Good $timePart,\n$name";
-}
-
 /// home option in bottom nav bar
 class HomeOption extends StatefulWidget {
-  final OurUser.User user;
-
-  HomeOption({Key key, @required this.user}) : super(key: key);
-
   @override
-  _HomeOptionState createState() => _HomeOptionState(user);
+  _HomeOptionState createState() => _HomeOptionState();
 }
 
 class _HomeOptionState extends State<HomeOption> {
-  final OurUser.User user;
   final db = FirebaseFirestore.instance;
-  _HomeOptionState(this.user);
+
+  String _displayGreetings(String name) {
+    var hourNow = DateTime.now().hour;
+    String timePart;
+
+    if (hourNow < 12) {
+      timePart = 'Morning';
+    } else if (hourNow < 17) {
+      timePart = 'Afternoon';
+    } else {
+      timePart = 'Evening';
+    }
+
+    return "Good $timePart,\n$name";
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -307,13 +288,13 @@ class _HomeOptionState extends State<HomeOption> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-
                     /// greetings and profile image
                     Row(
                       children: <Widget>[
                         Expanded(
                           child: Text(
-                            displayGreetings(user.fullName()),
+                            _displayGreetings(
+                                MyAppState.currentUser.fullName()),
                             style: TextStyle(
                               fontSize: 25,
                               fontWeight: FontWeight.w900,
@@ -325,7 +306,9 @@ class _HomeOptionState extends State<HomeOption> {
                         GestureDetector(
                             child: Container(
                                 child: displayCircleImage(
-                                    user.profilePictureURL, 80, false)),
+                                    MyAppState.currentUser.profilePictureURL,
+                                    80,
+                                    false)),
                             onTap: () {
                               Navigator.pushNamed(context, UserProfile.id);
                             }),
@@ -368,7 +351,7 @@ class _HomeOptionState extends State<HomeOption> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget>[
                                     QrImage(
-                                      data: user.userID,
+                                      data: MyAppState.currentUser.userID,
                                       version: QrVersions.auto,
                                       padding: EdgeInsets.all(15.0),
                                       size: 250.0,
@@ -384,8 +367,18 @@ class _HomeOptionState extends State<HomeOption> {
                       ),
                     ),
 
-                    /// Medication Reminder text
-                    Text(
+                    /// add new stuff here
+                  ],
+                ),
+              ),
+
+              /// medication reminder section
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(left: 20),
+                    child: Text(
                       "YOUR DAILY MEDICATION",
                       style: TextStyle(
                         color: Constants.TEXT_LIGHT,
@@ -394,63 +387,76 @@ class _HomeOptionState extends State<HomeOption> {
                         fontFamily: Constants.FONTSTYLE,
                       ),
                     ),
+                  ),
 
-                    /// medication horizontal list
-                    Container(
-                      margin: EdgeInsets.only(top: 10, bottom: 15),
-                      height: 125,
-                      child: StreamBuilder<QuerySnapshot>(
-                        stream: db
-                            .collection(Constants.USERS)
-                            .doc(MyAppState.currentUser.userID)
-                            .collection(Constants.MEDICATION_INFO)
-                            .snapshots(),
-                        builder: (context, snapshot) {
-                          if (!snapshot.hasData) {
-                            return Container();
-                          } else if (snapshot.data.size == 0) {
-                            return GestureDetector(
-                                child: Container(
-                                  color: Color(0xFFF6F8FC),
-                                  child: Center(
-                                    child: Text(
-                                      'Tap to add medication',
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          color: Constants.TEXT_SUPER_LIGHT,
-                                          fontFamily: Constants.FONTSTYLE,
-                                          fontWeight: FontWeight.w600),
-                                    ),
+                  /// medication horizontal list
+                  Container(
+                    margin: EdgeInsets.only(top: 10, bottom: 15),
+                    height: 125,
+                    child: StreamBuilder<QuerySnapshot>(
+                      stream: db
+                          .collection(Constants.USERS)
+                          .doc(MyAppState.currentUser.userID)
+                          .collection(Constants.MEDICATION_INFO)
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        if (!snapshot.hasData) {
+                          return Container();
+                        } else if (snapshot.data.size == 0) {
+                          return GestureDetector(
+                              child: Container(
+                                color: Color(0xFFF6F8FC),
+                                child: Center(
+                                  child: Text(
+                                    'Tap to add medication',
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        color: Constants.TEXT_SUPER_LIGHT,
+                                        fontFamily: Constants.FONTSTYLE,
+                                        fontWeight: FontWeight.w600),
                                   ),
                                 ),
-                                onTap: () {
-                                  Navigator.pushNamed(
-                                      context, MedicationReminder.id);
-                                });
-                          } else {
-                            var doc = snapshot.data.documents;
-                            return new ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: doc.length,
-                              itemBuilder: (context, index) {
-                                return Container(
-                                  child: MedicationReminderCardSmall(
-                                    title: doc[index].get("medicineName"),
-                                    value: doc[index].get("dosage"),
-                                    unit: "mg",
-                                    time: doc[index].get("startTime"),
-                                    image: AssetImage(imageLink(
-                                        doc[index].get("medicineType"))),
-                                    isDone: false,
-                                  ),
-                                );
-                              },
-                            );
-                          }
-                        },
-                      ),
+                              ),
+                              onTap: () {
+                                Navigator.pushNamed(
+                                    context, MedicationReminder.id);
+                              });
+                        } else {
+                          var doc = snapshot.data.documents;
+                          return ListView.separated(
+                            padding: EdgeInsets.only(left: 20, right: 20),
+                            scrollDirection: Axis.horizontal,
+                            itemCount: doc.length,
+                            separatorBuilder: (context, index) => SizedBox(
+                              width: 15,
+                            ),
+                            itemBuilder: (context, index) {
+                              return Container(
+                                child: MedicationReminderCardSmall(
+                                  title: doc[index].get("medicineName"),
+                                  value: doc[index].get("dosage"),
+                                  unit: "mg",
+                                  time: doc[index].get("startTime"),
+                                  image: AssetImage(imageLink(
+                                      doc[index].get("medicineType"))),
+                                  isDone: false,
+                                ),
+                              );
+                            },
+                          );
+                        }
+                      },
                     ),
+                  ),
+                ],
+              ),
 
+              /// pedometer section
+              Padding(
+                padding: EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
                     /// Pedometer text
                     Text(
                       "YOUR ACTIVITY",
@@ -461,8 +467,6 @@ class _HomeOptionState extends State<HomeOption> {
                         fontFamily: Constants.FONTSTYLE,
                       ),
                     ),
-
-                    /// Pedometer status
                     Container(
                       margin: EdgeInsets.only(top: 10, bottom: 15),
                       child: ListView(
@@ -524,8 +528,6 @@ class _HomeOptionState extends State<HomeOption> {
                         ],
                       ),
                     ),
-
-                    /// add new stuff here
                   ],
                 ),
               ),
