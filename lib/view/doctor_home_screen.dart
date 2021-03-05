@@ -206,7 +206,7 @@ class _doctorHomeState extends State<DoctorHome>{
                         title: "Chat with Patient",
                         color: Color(0xFFFFDA7A),
                         onTap: (){
-                          Navigator.pushNamed(context, ChatWithPatient.id);
+                          Navigator.pushNamed(context, Chat.id);
                         },
                       ),
                     ],

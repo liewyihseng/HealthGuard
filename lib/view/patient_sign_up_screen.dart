@@ -471,6 +471,7 @@ class _signupPageState extends State<signup_page> {
           userType: "Patient",
           sex: sex,
           birthday: convertDateTimeDisplay(_dateTime.toString()),
+          chattingWith: null,
           ///This page by default will allow users to create only patient account
         );
 

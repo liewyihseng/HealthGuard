@@ -21,6 +21,7 @@ class User {
   String userType = '';
   String sex = '';
   String birthday = '';
+  String chattingWith = '';
 
   /// User class Constructor
   User(
@@ -35,7 +36,8 @@ class User {
         this.profilePictureURL,
       this.userType,
       this.sex,
-      this.birthday,}
+      this.birthday,
+      this.chattingWith,}
         );
 
   /// helper function combining user's first name and last name to form full name
@@ -58,7 +60,8 @@ class User {
         profilePictureURL: parsedJson['profilePictureURL'] ?? "",
     userType: parsedJson['userType'] ?? "",
     sex: parsedJson['sex'] ?? "",
-    birthday: parsedJson['birthday'] ?? "",);
+    birthday: parsedJson['birthday'] ?? "",
+      chattingWith: parsedJson['chattingWith'] ?? "",);
   }
 
   /// Convert to json
@@ -77,6 +80,7 @@ class User {
       'userType': this.userType,
       'sex': this.sex,
       'birthday': this.birthday,
+      'chattingWith': this.chattingWith,
     };
   }
 }

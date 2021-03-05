@@ -1,5 +1,5 @@
 
-import 'package:HealthGuard/view/chat_with_patient.dart';
+import 'package:HealthGuard/view/chat_list_screen.dart';
 import 'package:HealthGuard/view/doctor_detail_screen.dart';
 import 'package:HealthGuard/view/doctor_sign_in_screen.dart';
 import 'package:HealthGuard/view/doctor_sign_up_screen.dart';
@@ -63,7 +63,7 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
         Chatroom.id: (context) => Chatroom(),
         DoctorSignIn.id: (context) => DoctorSignIn(),
         DoctorSignUp.id: (context) => DoctorSignUp(),
-        ChatWithPatient.id: (context) => ChatWithPatient(),
+        ChatList.id: (context) => ChatList(),
         HospitalSuggestions.id: (context) => HospitalSuggestions(),
       },
       theme: ThemeData(accentColor: Colors.white),

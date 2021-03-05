@@ -1,9 +1,10 @@
 
-import 'package:HealthGuard/chat/chatroom.dart';
 import 'package:HealthGuard/helper/validation_tool.dart';
+import 'package:HealthGuard/view/chat_with_patient.dart';
 import 'package:flutter/material.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
 import 'package:HealthGuard/model/doctor_model.dart' as OurDoctor;
+import 'package:HealthGuard/helper/string_helper.dart';
 
 /// Doctor detail screen page widget class
 class DoctorDetail extends StatefulWidget{
@@ -95,7 +96,7 @@ class _doctorDetailPageState extends State<DoctorDetail>{
                                   fontFamily: Constants.FONTSTYLE,
                                 ),
                               ),
-                              Text(doctor.speciality + " - " + doctor.workPlace,
+                              Text(doctor.speciality.capitalize() + " - " + doctor.workPlace,
                                 style: TextStyle(
                                   fontSize: 17,
                                   fontWeight: FontWeight.w400,
@@ -119,8 +120,15 @@ class _doctorDetailPageState extends State<DoctorDetail>{
                                 textColor: Colors.white,
                                 splashColor: Colors.blue,
                                 onPressed: ()  {
-                                  /// Navigate to chat page
-                                  Navigator.pushNamed(context, Chatroom.id);
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: ((context) => Chat(
+                                        peerId: doctor.userID,
+                                        peerAvatar: doctor.profilePictureURL,
+                                      )),
+                                    ),
+                                  );
                                 },
                                 padding: EdgeInsets.all(10),
                                 shape: RoundedRectangleBorder(

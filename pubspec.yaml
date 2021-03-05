@@ -93,6 +93,8 @@ dependencies:
   location: ^3.2.4
   # Uses google_maps_webservice to search for locations in google
   flutter_google_places: ^0.2.5
+  fluttertoast: ^7.1.8
+  photo_view: ^0.10.3
 
 # Run flutter pub run flutter_launcher_icons:main after flutter pub get
 flutter_icons:
@@ -158,6 +160,7 @@ flutter:
     - assets/docprofile/doc3.png
     - assets/docinfo/bg1.png
     - assets/icons/Walking.png
+    - assets/img_not_available.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

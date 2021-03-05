@@ -12,7 +12,7 @@ class Doctor extends User{
   String doctorID = "";
 
   /// Doctor class Constructor
-  Doctor({String email, String firstName, String lastName, OurUser.Settings settings, String phoneNumber, bool active, Timestamp lastOnlineTimestamp, String userID, String profilePictureURL, String userType, String birthday, String sex, this.workPlace, this.speciality, this.aboutYourself, this.doctorID,}) :
+  Doctor({String email, String firstName, String lastName, OurUser.Settings settings, String phoneNumber, bool active, Timestamp lastOnlineTimestamp, String userID, String profilePictureURL, String userType, String birthday, String sex, String chattingWith, this.workPlace, this.speciality, this.aboutYourself, this.doctorID,}) :
         super(email: email, firstName: firstName, lastName: lastName, settings: settings, phoneNumber: phoneNumber,
           active: active, lastOnlineTimestamp: lastOnlineTimestamp, userID: userType, profilePictureURL: profilePictureURL, userType: "Doctor", sex: sex, birthday: birthday);
 
@@ -32,6 +32,7 @@ class Doctor extends User{
       userType: parsedJson['userType'] ?? "",
       sex: parsedJson['sex'] ?? "",
       birthday: parsedJson['birthday'] ?? "",
+      chattingWith: parsedJson['chattingWith'] ?? "",
       workPlace: parsedJson['workPlace'] ?? "",
       speciality: parsedJson['speciality'] ?? "",
       aboutYourself: parsedJson['aboutYourself'] ?? "",
@@ -53,6 +54,7 @@ class Doctor extends User{
       'appIdentifier': this.appIdentifier,
       "birthday": this.birthday,
       "sex": this.sex,
+      "chattingWith": this.chattingWith,
       "userType": this.userType,
       "workPlace": this.workPlace,
       "speciality": this.speciality,

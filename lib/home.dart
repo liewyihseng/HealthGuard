@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:HealthGuard/helper/math_helper.dart';
 import 'package:HealthGuard/model/pedometer_model.dart';
+import 'package:HealthGuard/view/chat_list_screen.dart';
 import 'package:HealthGuard/view/hospital_suggestions_screen.dart';
 import 'package:HealthGuard/view/medical_feed_screen.dart';
 import 'package:HealthGuard/view/user_profile_screen.dart';
@@ -76,6 +77,15 @@ class _home extends State<home> {
           appBarTitles[_selectedIndex],
           style: Constants.APP_BAR_TEXT_STYLE,
         ),
+        actions: [
+          GestureDetector(
+            child: Padding(
+              padding: EdgeInsets.only(right: 15.0),
+              child: Icon(Icons.chat),
+            ),
+            onTap: () => Navigator.pushNamed(context, ChatList.id),
+          ),
+        ],
         centerTitle: true,
       ),
 
@@ -167,58 +177,58 @@ class HealthOption extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
         child: Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Expanded(
-          child: ListView(
-            scrollDirection: Axis.vertical,
-            children: [
-              NavigatingCard(
-                imageName: "assets/E-Medical Report.png",
-                text: "E-Medical Report",
-                screenID: EMedicalReport.id,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Expanded(
+              child: ListView(
+                scrollDirection: Axis.vertical,
+                children: [
+                  NavigatingCard(
+                    imageName: "assets/E-Medical Report.png",
+                    text: "E-Medical Report",
+                    screenID: EMedicalReport.id,
+                  ),
+                  NavigatingCard(
+                    imageName: "assets/Pedometer.png",
+                    text: "Pedometer",
+                    screenID: PedometerScreen.id,
+                  ),
+                  NavigatingCard(
+                    imageName: "assets/Medical News Update.png",
+                    text: "Medical News Update",
+                    screenID: MedicalFeed.id,
+                  ),
+                  NavigatingCard(
+                    imageName: "assets/Medication Reminder.png",
+                    text: "Medication Reminder",
+                    screenID: MedicationReminder.id,
+                  ),
+                  NavigatingCard(
+                    imageName: "assets/Blood Pressure Diary.png",
+                    text: "Blood Pressure Diary",
+                    screenID: BloodPressureScreen.id,
+                  ),
+                  NavigatingCard(
+                    imageName: "assets/Chat with Doctor.png",
+                    text: "Find a Doctor",
+                    screenID: FindDoctor.id,
+                  ),
+                  TextIconCard(
+                    imageName: "assets/Hospital Suggestions.png",
+                    text: "Hospital Suggestions",
+                    onTap: () {
+                      //_determinePosition();
+                      Navigator.pushNamed(context, HospitalSuggestions.id);
+                    }, // dummy input
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                ],
               ),
-              NavigatingCard(
-                imageName: "assets/Pedometer.png",
-                text: "Pedometer",
-                screenID: PedometerScreen.id,
-              ),
-              NavigatingCard(
-                imageName: "assets/Medical News Update.png",
-                text: "Medical News Update",
-                screenID: MedicalFeed.id,
-              ),
-              NavigatingCard(
-                imageName: "assets/Medication Reminder.png",
-                text: "Medication Reminder",
-                screenID: MedicationReminder.id,
-              ),
-              NavigatingCard(
-                imageName: "assets/Blood Pressure Diary.png",
-                text: "Blood Pressure Diary",
-                screenID: BloodPressureScreen.id,
-              ),
-              NavigatingCard(
-                imageName: "assets/Chat with Doctor.png",
-                text: "Find a Doctor",
-                screenID: FindDoctor.id,
-              ),
-              TextIconCard(
-                imageName: "assets/Hospital Suggestions.png",
-                text: "Hospital Suggestions",
-                onTap: () {
-                  //_determinePosition();
-                  Navigator.pushNamed(context, HospitalSuggestions.id);
-                }, // dummy input
-              ),
-              SizedBox(
-                height: 5,
-              ),
-            ],
-          ),
-        ),
-      ],
-    ));
+            ),
+          ],
+        ));
   }
 }
 
@@ -339,7 +349,7 @@ class _HomeOptionState extends State<HomeOption> {
                   margin: const EdgeInsets.only(
                       top: 15.0, left: 25.0, right: 25.0, bottom: 15.0),
                   width: ((MediaQuery.of(context).size.width -
-                          (30.0 * 2 + 30.0 / 2)) /
+                      (30.0 * 2 + 30.0 / 2)) /
                       2),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(10.0)),
@@ -358,7 +368,7 @@ class _HomeOptionState extends State<HomeOption> {
                               child: Container(
                                 decoration: new BoxDecoration(
                                   borderRadius:
-                                      BorderRadius.all(Radius.circular(10.0)),
+                                  BorderRadius.all(Radius.circular(10.0)),
                                   color: Colors.black.withOpacity(0.03),
                                 ),
                                 height: 120,
@@ -503,7 +513,7 @@ class _HomeOptionState extends State<HomeOption> {
                             );
                           } else {
                             PedometerData pedometerData =
-                                PedometerData.fromJson(snapshot.data.data());
+                            PedometerData.fromJson(snapshot.data.data());
                             int pedometerProgress = MathHelper.intPercentage(
                                 pedometerData.steps, pedometerData.goal);
                             print(pedometerProgress);

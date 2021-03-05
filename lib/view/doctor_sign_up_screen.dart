@@ -581,6 +581,7 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
           speciality: speciality,
           sex: sex,
           birthday: convertDateTimeDisplay(_dateTime.toString()),
+          chattingWith: '',
         );
 
         await FireStoreUtils.firestore
