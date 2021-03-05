@@ -160,58 +160,58 @@ class HealthOption extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
         child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Expanded(
-              child: ListView(
-                scrollDirection: Axis.vertical,
-                children: [
-                  NavigatingCard(
-                    imageName: "assets/E-Medical Report.png",
-                    text: "E-Medical Report",
-                    screenID: EMedicalReport.id,
-                  ),
-                  NavigatingCard(
-                    imageName: "assets/Pedometer.png",
-                    text: "Pedometer",
-                    screenID: PedometerScreen.id,
-                  ),
-                  NavigatingCard(
-                    imageName: "assets/Medical News Update.png",
-                    text: "Medical News Update",
-                    screenID: MedicalFeed.id,
-                  ),
-                  NavigatingCard(
-                    imageName: "assets/Medication Reminder.png",
-                    text: "Medication Reminder",
-                    screenID: MedicationReminder.id,
-                  ),
-                  NavigatingCard(
-                    imageName: "assets/Blood Pressure Diary.png",
-                    text: "Blood Pressure Diary",
-                    screenID: BloodPressureScreen.id,
-                  ),
-                  NavigatingCard(
-                    imageName: "assets/Chat with Doctor.png",
-                    text: "Find a Doctor",
-                    screenID: FindDoctor.id,
-                  ),
-                  TextIconCard(
-                    imageName: "assets/Hospital Suggestions.png",
-                    text: "Hospital Suggestions",
-                    onTap: () {
-                      //_determinePosition();
-                      Navigator.pushNamed(context, HospitalSuggestions.id);
-                    }, // dummy input
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                ],
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Expanded(
+          child: ListView(
+            scrollDirection: Axis.vertical,
+            children: [
+              NavigatingCard(
+                imageName: "assets/E-Medical Report.png",
+                text: "E-Medical Report",
+                screenID: EMedicalReport.id,
               ),
-            ),
-          ],
-        ));
+              NavigatingCard(
+                imageName: "assets/Pedometer.png",
+                text: "Pedometer",
+                screenID: PedometerScreen.id,
+              ),
+              NavigatingCard(
+                imageName: "assets/Medical News Update.png",
+                text: "Medical News Update",
+                screenID: MedicalFeed.id,
+              ),
+              NavigatingCard(
+                imageName: "assets/Medication Reminder.png",
+                text: "Medication Reminder",
+                screenID: MedicationReminder.id,
+              ),
+              NavigatingCard(
+                imageName: "assets/Blood Pressure Diary.png",
+                text: "Blood Pressure Diary",
+                screenID: BloodPressureScreen.id,
+              ),
+              NavigatingCard(
+                imageName: "assets/Chat with Doctor.png",
+                text: "Find a Doctor",
+                screenID: FindDoctor.id,
+              ),
+              TextIconCard(
+                imageName: "assets/Hospital Suggestions.png",
+                text: "Hospital Suggestions",
+                onTap: () {
+                  //_determinePosition();
+                  Navigator.pushNamed(context, HospitalSuggestions.id);
+                }, // dummy input
+              ),
+              SizedBox(
+                height: 5,
+              ),
+            ],
+          ),
+        ),
+      ],
+    ));
   }
 }
 
@@ -319,8 +319,7 @@ class _HomeOptionState extends State<HomeOption> {
                           GestureDetector(
                               child: Container(
                                   child: displayCircleImage(
-                                      MyAppState
-                                          .currentUser.profilePictureURL,
+                                      MyAppState.currentUser.profilePictureURL,
                                       80,
                                       false)),
                               onTap: () {
@@ -330,62 +329,63 @@ class _HomeOptionState extends State<HomeOption> {
                       ),
 
                       /// Green Box and QR Code
-                      Container(
-                        margin: EdgeInsets.fromLTRB(20, 40, 20, 40),
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                          borderRadius:
-                          BorderRadius.all(Radius.circular(10.0)),
-                          shape: BoxShape.rectangle,
-                          color: Constants.LOGO_COLOUR_GREEN_DARK,
-                        ),
-                        child: Material(
-                          child: InkWell(
+                      Center(
+                        child: Container(
+                          margin: EdgeInsets.only(top: 40, bottom: 40),
+                          padding: EdgeInsets.zero,
+                          // width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
                             borderRadius:
-                            BorderRadius.all(Radius.circular(10.0)),
-                            child: Stack(
-                              children: <Widget>[
-                                Positioned(
-                                  child: ClipPath(
-                                    clipper: MyCustomClipper(
-                                        clipType: ClipType.semiCircle),
-                                    child: Container(
-                                      decoration: new BoxDecoration(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(10.0)),
-                                        color: Colors.black.withOpacity(0.03),
+                                BorderRadius.all(Radius.circular(10.0)),
+                            shape: BoxShape.rectangle,
+                            color: Constants.LOGO_COLOUR_GREEN_DARK,
+                          ),
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10.0)),
+                              child: Stack(
+                                children: <Widget>[
+                                  Positioned(
+                                    child: ClipPath(
+                                      clipper: MyCustomClipper(
+                                          clipType: ClipType.semiCircle),
+                                      child: Container(
+                                        decoration: new BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10.0)),
+                                          color: Colors.black.withOpacity(0.03),
+                                        ),
+                                        height: 120,
+                                        width: 120,
                                       ),
-                                      height: 120,
-                                      width: 120,
                                     ),
                                   ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.all(20.0),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.center,
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      QrImage(
-                                        data: MyAppState.currentUser.userID,
-                                        version: QrVersions.auto,
-                                        padding: EdgeInsets.all(15.0),
-                                        size: 270.0,
-                                        backgroundColor: Colors.white,
-                                      ),
-                                    ],
+                                  Padding(
+                                    padding: EdgeInsets.all(20.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        QrImage(
+                                          data: MyAppState.currentUser.userID,
+                                          version: QrVersions.auto,
+                                          padding: EdgeInsets.all(15.0),
+                                          size: 250.0,
+                                          backgroundColor: Colors.white,
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
-                          color: Colors.transparent,
                         ),
                       ),
-
-                      /// add new stuff here
                     ],
                   ),
                 ),
@@ -421,24 +421,32 @@ class _HomeOptionState extends State<HomeOption> {
                           if (!snapshot.hasData) {
                             return Container();
                           } else if (snapshot.data.size == 0) {
-                            return GestureDetector(
-                                child: Container(
-                                  color: Color(0xFFF6F8FC),
-                                  child: Center(
-                                    child: Text(
-                                      'Tap to add medication',
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          color: Constants.TEXT_SUPER_LIGHT,
-                                          fontFamily: Constants.FONTSTYLE,
-                                          fontWeight: FontWeight.w600),
+                            return Padding(
+                              padding: EdgeInsets.only(left: 20, right: 20),
+                              child: GestureDetector(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10.0)),
+                                      shape: BoxShape.rectangle,
+                                      color: Color(0xFFF6F8FC),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        'Tap to add medication',
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            color: Constants.TEXT_SUPER_LIGHT,
+                                            fontFamily: Constants.FONTSTYLE,
+                                            fontWeight: FontWeight.w600),
+                                      ),
                                     ),
                                   ),
-                                ),
-                                onTap: () {
-                                  Navigator.pushNamed(
-                                      context, MedicationReminder.id);
-                                });
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                        context, MedicationReminder.id);
+                                  }),
+                            );
                           } else {
                             var doc = snapshot.data.documents;
                             return ListView.separated(
@@ -518,12 +526,12 @@ class _HomeOptionState extends State<HomeOption> {
                                   );
                                 } else {
                                   PedometerData pedometerData =
-                                  PedometerData.fromJson(
-                                      snapshot.data.data());
+                                      PedometerData.fromJson(
+                                          snapshot.data.data());
                                   int pedometerProgress =
-                                  MathHelper.intPercentage(
-                                      pedometerData.steps,
-                                      pedometerData.goal);
+                                      MathHelper.intPercentage(
+                                          pedometerData.steps,
+                                          pedometerData.goal);
                                   print(pedometerProgress);
                                   return GestureDetector(
                                     onTap: () {
