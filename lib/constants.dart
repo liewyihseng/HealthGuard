@@ -14,7 +14,7 @@ const MEDICATION_INFO = "medication_info";
 const PEDOMETER_INFO = "pedometer_info";
 
 /// Colours
-const BUTTON_COLOUR = Color(0xff01A0C7);
+const BUTTON_COLOUR = Color(0xFF33ac8d);
 
 const LOGO_COLOUR_PINK_LIGHT = Color(0xFFf27184);
 const LOGO_COLOUR_PINK_DARK = Color(0xFFe4848d);
@@ -34,7 +34,7 @@ const FONTSTYLE = "Montserrat";
 /// Appbar
 const APPBAR_TEXT_WEIGHT = FontWeight.w900;
 
-const APPBAR_COLOUR = Colors.blue;
+const APPBAR_COLOUR = Color(0xFF2abb99);
 
 /// TextStyle
 const TextStyle ALERT_DIALOG_TITLE_STYLE = TextStyle(
@@ -44,9 +44,10 @@ const TextStyle ALERT_DIALOG_TITLE_STYLE = TextStyle(
 );
 
 const TextStyle APP_BAR_TEXT_STYLE = TextStyle(
-color: Colors.white,
-fontFamily: FONTSTYLE,
-fontWeight: APPBAR_TEXT_WEIGHT,
+  color: Colors.white,
+  fontFamily: FONTSTYLE,
+  fontWeight: APPBAR_TEXT_WEIGHT,
+  fontSize: 20,
 );
 
 

@@ -58,7 +58,7 @@ class _LoginPageState extends State<LoginPage> {
       final User currentUser = _auth.currentUser;
       assert(user.userID == currentUser.uid);
       Navigator.pushNamedAndRemoveUntil(context, home.id, (route) => false);
-      pushAndRemoveUntil(context, home(user: user), false);
+      pushAndRemoveUntil(context, home(), false);
 
       print('signInWithGoogle succeeded: $user');
 
@@ -144,7 +144,7 @@ class _LoginPageState extends State<LoginPage> {
                     fontWeight: FontWeight.w900,
                   fontFamily: Constants.FONTSTYLE,)),
             textColor: Colors.white,
-            splashColor: Colors.blue,
+            splashColor: Constants.LOGO_COLOUR_PINK_DARK,
             onPressed: () async {
               await onClick(_emailController.text, _passwordController.text);
             },
@@ -176,7 +176,7 @@ class _LoginPageState extends State<LoginPage> {
               child: Text(
                 "Sign up",
                 style:
-                    TextStyle(fontWeight: FontWeight.w800, color: Colors.blue),
+                    TextStyle(fontWeight: FontWeight.w800, color: Constants.BUTTON_COLOUR),
               ),
             )
           ],
@@ -248,7 +248,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: Ink(
                   decoration: new ShapeDecoration(
                     shape: CircleBorder(),
-                    color: Colors.lightBlue,
+                    color: Constants.BUTTON_COLOUR,
                   ),
                   child: IconButton(
                     color: Colors.white,
@@ -270,7 +270,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: Ink(
                   decoration: const ShapeDecoration(
                     shape: CircleBorder(),
-                    color: Colors.lightBlue,
+                    color: Constants.BUTTON_COLOUR,
                   ),
                   child: IconButton(
                     color: Colors.white,
@@ -311,7 +311,7 @@ class _LoginPageState extends State<LoginPage> {
               child: Text(
                 "Yes!",
                 style:
-                TextStyle(fontWeight: FontWeight.w800, color: Colors.blue),
+                TextStyle(fontWeight: FontWeight.w800, color: Constants.BUTTON_COLOUR),
               ),
             )
           ],
@@ -340,7 +340,7 @@ class _LoginPageState extends State<LoginPage> {
                   fontWeight: FontWeight.w600,
                   fontSize: 12,
                   fontStyle: FontStyle.italic,
-                  color: Colors.blue),
+                  color: Constants.BUTTON_COLOUR),
             ),
           ),
         ],
@@ -359,7 +359,7 @@ class _LoginPageState extends State<LoginPage> {
 
       /// Checking if the user is a patient or a doctor
       if (user != null && user.userType == 'Patient' && user.userID != 'Doctor') {
-        pushAndRemoveUntil(context, home(user: user), false);
+        pushAndRemoveUntil(context, home(), false);
       }else{
         user.active = false;
         _fireStoreUtils.updateCurrentUser(user, context);

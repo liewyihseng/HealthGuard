@@ -2,7 +2,6 @@ import 'dart:ui';
 import 'dart:math';
 import 'dart:core';
 
-import 'package:HealthGuard/home.dart';
 import 'package:HealthGuard/main.dart';
 import 'package:HealthGuard/helper/validation_tool.dart';
 import 'package:HealthGuard/widgets/medication_reminder_card_large.dart';
@@ -366,7 +365,7 @@ class _MedicationReminderState extends State<MedicationReminder>{
         .add(newEntryMedicine.toJson());
     scheduleNotification(newEntryMedicine);
     hideProgress();
-    Navigator.pushNamed(context, MedicationReminder.id);
+    Navigator.pop(context);
     ///Show success submit
   }
 

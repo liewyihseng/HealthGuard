@@ -1,4 +1,5 @@
 
+
 import 'package:HealthGuard/view/chat_list_screen.dart';
 import 'package:HealthGuard/view/doctor_detail_screen.dart';
 import 'package:HealthGuard/view/doctor_sign_in_screen.dart';
@@ -45,9 +46,7 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
       initialRoute: LoginPage.id,
       routes: {
         LoginPage.id: (context) => LoginPage(),
-        home.id: (context) => home(
-              user: currentUser,
-            ),
+        home.id: (context) => home(),
         UserProfile.id: (context) => UserProfile(),
         MyAccount.id: (context) => MyAccount(),
         HelpCenter.id: (context) => HelpCenter(),

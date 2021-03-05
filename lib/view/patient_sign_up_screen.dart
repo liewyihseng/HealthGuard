@@ -492,7 +492,7 @@ class _signupPageState extends State<signup_page> {
 
         hideProgress();
         MyAppState.currentUser = user;
-        pushAndRemoveUntil(context, home(user: user), false);
+        pushAndRemoveUntil(context, home(), false);
       } catch (error) {
         hideProgress();
         (error as FirebaseException).code != 'ERROR_EMAIL_ALREADY_IN_USE'

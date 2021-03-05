@@ -272,7 +272,7 @@ class _medicalPageState extends State<EMedicalReport>{
       .collection(Constants.MED_INFO)
       .add(user_medic_info.toJson());
     hideProgress();
-    pushAndRemoveUntil(context, home(user: MyAppState.currentUser), false);
+    pushAndRemoveUntil(context, home(), false);
   }
 
 
