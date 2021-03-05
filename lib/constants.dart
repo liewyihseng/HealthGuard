@@ -43,6 +43,12 @@ const TextStyle ALERT_DIALOG_TITLE_STYLE = TextStyle(
   color: TEXT_DARK,
 );
 
+const TextStyle APP_BAR_TEXT_STYLE = TextStyle(
+color: Colors.white,
+fontFamily: FONTSTYLE,
+fontWeight: APPBAR_TEXT_WEIGHT,
+);
+
 
 /// API Key
 const GoogleApiKey = "AIzaSyCwIvvIxm9yn4JXoEHoaAx7wn2WySONi7M";

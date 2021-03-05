@@ -8,6 +8,7 @@ import 'package:HealthGuard/view/medical_feed_screen.dart';
 import 'package:HealthGuard/view/user_profile_screen.dart';
 import 'package:HealthGuard/view/bloodpressure_screen.dart';
 import 'package:HealthGuard/widgets/card_items.dart';
+import 'package:HealthGuard/widgets/drawerListTile.dart';
 import 'package:HealthGuard/widgets/navigating_card.dart';
 import 'package:HealthGuard/widgets/medication_reminder_card_small.dart';
 import 'package:HealthGuard/view/pedometer_screen.dart';
@@ -47,55 +48,46 @@ class home extends StatefulWidget {
   }
 }
 
-// ignore: camel_case_types
 class _home extends State<home> {
+  /// user data
   final OurUser.User user;
-  // bottom nav bar selected index
-  int _selectedIndex = 0;
-
-  /// list of widgets to switch between for bottom nav bar
-  static List<Widget> _bottomNavBarOptions;
-
   _home(this.user);
 
-  /// bottom nav bar on item tap
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
+  /// variables
+  int _selectedIndex = 0;
+  static List<Widget> _bottomNavBarOptions;
+  List<String> appBarTitles = ['Home', 'Health'];
 
+  /// GUI
   @override
   Widget build(BuildContext context) {
-    /// initialize options with widgets
-    _bottomNavBarOptions = <Widget>[
-      HomeOption(
-        user: user,
-      ),
+    /// bottom navigation bar screens
+    _bottomNavBarOptions = [
+      HomeOption(user: user),
       HealthOption(),
     ];
 
     return Scaffold(
       backgroundColor: Constants.BACKGROUND_COLOUR,
+
+      /// App Bar
       appBar: AppBar(
         title: Text(
-          'Home',
-          style: TextStyle(
-            color: Colors.white,
-            fontFamily: Constants.FONTSTYLE,
-            fontWeight: Constants.APPBAR_TEXT_WEIGHT,
-          ),
+          appBarTitles[_selectedIndex],
+          style: Constants.APP_BAR_TEXT_STYLE,
         ),
-        iconTheme: IconThemeData(color: Colors.white),
-        backgroundColor: Constants.APPBAR_COLOUR,
         centerTitle: true,
       ),
+
+      /// Drawer
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
+
+            /// drawer header
             Container(
-              height: 130.0,
+              height: 120.0,
               child: DrawerHeader(
                 padding: EdgeInsets.only(left: 50.0, top: 25.0),
                 child: Text(
@@ -111,32 +103,21 @@ class _home extends State<home> {
                 ),
               ),
             ),
-            ListTile(
-              title: Text(
-                'My Profile',
-                style: TextStyle(
-                    color: Colors.black,
-                    fontFamily: Constants.FONTSTYLE,
-                    fontWeight: FontWeight.w900),
-              ),
-              leading: SvgPicture.asset(
+
+            /// profile list tile
+            DrawerListTile(
+              text: 'My Profile',
+              icon: SvgPicture.asset(
                 "assets/icons/personal-information.svg",
                 width: 25,
-                color: Colors.black,
               ),
-              onTap: () {
-                Navigator.pushNamed(context, UserProfile.id);
-              },
+              onTap: () => Navigator.pushNamed(context, UserProfile.id),
             ),
-            ListTile(
-              title: Text(
-                'Log Out',
-                style: TextStyle(
-                    color: Colors.black,
-                    fontFamily: Constants.FONTSTYLE,
-                    fontWeight: FontWeight.w900),
-              ),
-              leading: Transform.rotate(
+
+            /// logout list tile
+            DrawerListTile(
+              text: 'Log Out',
+              icon:  Transform.rotate(
                   angle: pi / 1,
                   child: Icon(Icons.exit_to_app, color: Colors.black)),
               onTap: () async {
@@ -151,20 +132,26 @@ class _home extends State<home> {
           ],
         ),
       ),
+
       body: _bottomNavBarOptions.elementAt(_selectedIndex),
+
       bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
+        items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: "Home",
+            label: appBarTitles[0],
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.category),
-            label: "Health",
+            label: appBarTitles[1],
           )
         ],
-        onTap: _onItemTapped,
         currentIndex: _selectedIndex,
+        onTap: (int index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
       ),
     );
   }
@@ -219,7 +206,7 @@ class HealthOption extends StatelessWidget {
               TextIconCard(
                 imageName: "assets/Hospital Suggestions.png",
                 text: "Hospital Suggestions",
-                onTap: (){
+                onTap: () {
                   //_determinePosition();
                   Navigator.pushNamed(context, HospitalSuggestions.id);
                 }, // dummy input
@@ -499,10 +486,11 @@ class _HomeOptionState extends State<HomeOption> {
                             .doc(PedometerScreen.documentID)
                             .snapshots(),
                         builder: (context, snapshot) {
-                          if(!snapshot.hasData){
+                          if (!snapshot.hasData) {
                             return GestureDetector(
-                              onTap: (){
-                                Navigator.pushNamed(context, PedometerScreen.id);
+                              onTap: () {
+                                Navigator.pushNamed(
+                                    context, PedometerScreen.id);
                               },
                               child: CardItems(
                                 image: Image.asset('assets/icons/Walking.png'),
@@ -514,12 +502,15 @@ class _HomeOptionState extends State<HomeOption> {
                               ),
                             );
                           } else {
-                            PedometerData pedometerData = PedometerData.fromJson(snapshot.data.data());
-                            int pedometerProgress = MathHelper.intPercentage(pedometerData.steps, pedometerData.goal);
+                            PedometerData pedometerData =
+                                PedometerData.fromJson(snapshot.data.data());
+                            int pedometerProgress = MathHelper.intPercentage(
+                                pedometerData.steps, pedometerData.goal);
                             print(pedometerProgress);
                             return GestureDetector(
-                              onTap: (){
-                                Navigator.pushNamed(context, PedometerScreen.id);
+                              onTap: () {
+                                Navigator.pushNamed(
+                                    context, PedometerScreen.id);
                               },
                               child: CardItems(
                                 image: Image.asset('assets/icons/Walking.png'),
