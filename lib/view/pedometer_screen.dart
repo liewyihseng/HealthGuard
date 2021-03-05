@@ -414,15 +414,23 @@ class _PedometerScreenState extends State<PedometerScreen> {
             _buildHistory(),
           ]),
           floatingActionButton: FloatingActionButton(
+            backgroundColor: Constants.BUTTON_COLOUR,
+            splashColor: Colors.blue,
+            shape: CircleBorder(
+              side: BorderSide(color: Colors.blue),
+            ),
             onPressed: () {
               showDialog(
                 context: context,
                 builder: (BuildContext context) => _PopUpDialog(context),
               );
             },
-            child: Icon(Icons.settings),
-            backgroundColor: Colors.lightBlue,
-          )),
+            child: Icon(
+              Icons.settings,
+              color: Colors.white,
+            ),
+          ),
+      ),
     );
   }
 }

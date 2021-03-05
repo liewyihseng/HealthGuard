@@ -64,14 +64,6 @@ class _MedicationReminderState extends State<MedicationReminder>{
     return  Scaffold(
       backgroundColor: Constants.BACKGROUND_COLOUR,
       appBar: AppBar(
-        leading: Builder(
-          builder: (BuildContext context){
-            return IconButton(
-              icon: const Icon(Icons.arrow_back),
-              onPressed: () {Navigator.pushNamed(context, home.id);},
-            );
-          },
-        ),
         title: Text(
           'Medication Reminder',
           style: TextStyle(
@@ -102,6 +94,7 @@ class _MedicationReminderState extends State<MedicationReminder>{
         backgroundColor: Constants.BUTTON_COLOUR,
         child: Icon(
           Icons.add,
+          color: Colors.white,
         ),
         splashColor: Colors.blue,
         //padding: EdgeInsets.only(top: 12, bottom: 12),
