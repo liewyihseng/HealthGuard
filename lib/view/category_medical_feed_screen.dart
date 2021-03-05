@@ -18,7 +18,7 @@ class CategoryView extends StatefulWidget{
 
 class _CategoryViewState extends State<CategoryView>{
 
-  List<ArticleModel> articles = new List<ArticleModel>();
+  List<ArticleModel> articles = <ArticleModel>[];
   bool _loading = true;
   var _categoryName;
 

@@ -84,7 +84,7 @@ class _home extends State<home> {
           ),
         ),
         iconTheme: IconThemeData(color: Colors.white),
-        backgroundColor: Constants.LOGO_COLOUR_GREEN_DARK,
+        backgroundColor: Constants.APPBAR_COLOUR,
         centerTitle: true,
       ),
       drawer: Drawer(
@@ -104,7 +104,7 @@ class _home extends State<home> {
                       fontWeight: FontWeight.w900),
                 ),
                 decoration: BoxDecoration(
-                  color: Constants.LOGO_COLOUR_GREEN_DARK,
+                  color: Colors.blue,
                 ),
               ),
             ),
@@ -177,18 +177,8 @@ class HealthOption extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
         child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-        Padding(
-        padding: EdgeInsets.all(20),
-        child: Image.asset(
-          "assets/Logo.png",
-          width: 180,
-          height: 180,
-          fit: BoxFit.contain,
-        ),
-        ),
-
+      mainAxisSize: MainAxisSize.min,
+      children: [
         Expanded(
           child: ListView(
             scrollDirection: Axis.vertical,
@@ -276,7 +266,7 @@ class _HomeOptionState extends State<HomeOption> {
           ClipPath(
             clipper: MyCustomClipper(clipType: ClipType.bottom),
             child: Container(
-              color: Constants.LOGO_COLOUR_PINK_LIGHT,
+              color: Colors.blue,
               height: 228.5 + statusBarHeight,
             ),
           ),

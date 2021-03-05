@@ -84,7 +84,7 @@ class _MyMedicalState extends State<MyMedical> {
                               address: doc[index].get("address"),
                               emergencyContact: doc[index].get("emergencyContact"),
                               insuranceID: doc[index].get("insuranceID"),
-                              uploadedDate: doc[index].get("uploadedDate"),
+                            uploadedDate: doc[index].get("uploadedDate"),
                           ),
                         ],
                       ),

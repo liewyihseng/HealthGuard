@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:HealthGuard/view/add_bloodpressure_screen.dart';
 import 'package:HealthGuard/widgets/bloodpressure_chart.dart';
-import 'package:HealthGuard/constants.dart' as Constants;
 
 class BloodPressureScreen extends StatelessWidget {
   static const String id = "Bloodpressure_screen";
@@ -14,18 +13,8 @@ class BloodPressureScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Blood Pressure Diary',
-        style: TextStyle(
-          color: Colors.white,
-          fontFamily: Constants.FONTSTYLE,
-          fontWeight: Constants.APPBAR_TEXT_WEIGHT,
-        ),
+        title: Text('Blood Pressure Diary'),
       ),
-        iconTheme: IconThemeData(color: Colors.white),
-        backgroundColor: Constants.APPBAR_COLOUR,
-        centerTitle: true,
-      ),
-
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () async {

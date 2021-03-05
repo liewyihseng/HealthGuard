@@ -1,7 +1,7 @@
 import 'dart:io';
 
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:HealthGuard/helper/string_helper.dart';
 
 /// Acting as a frame for the creation of user instances
 class User {
@@ -40,7 +40,7 @@ class User {
 
   /// helper function combining user's first name and last name to form full name
   String fullName() {
-    return '$firstName $lastName';
+    return firstName.capitalize() + " " + lastName.capitalize();
   }
 
   /// Passing user input data, then creating a new user containing these data
@@ -61,6 +61,7 @@ class User {
     birthday: parsedJson['birthday'] ?? "",);
   }
 
+  /// Convert to json
   Map<String, dynamic> toJson() {
     return {
       "email": this.email,

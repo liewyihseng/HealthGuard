@@ -27,7 +27,6 @@ class MedicationReminderCardSmall extends StatelessWidget {
     return Align(
       alignment: Alignment.topLeft,
       child: Container(
-        margin: const EdgeInsets.only(right: 15.0),
         width: 240,
         decoration: new BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(10.0)),
