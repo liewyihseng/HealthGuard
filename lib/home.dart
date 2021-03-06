@@ -372,7 +372,7 @@ class _HomeOptionState extends State<HomeOption> {
                                         data: MyAppState.currentUser.userID,
                                         version: QrVersions.auto,
                                         padding: EdgeInsets.all(15.0),
-                                        size: 270.0,
+                                        size: 280.0,
                                         backgroundColor: Colors.white,
                                       ),
                                     ],
