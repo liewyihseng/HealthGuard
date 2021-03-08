@@ -1,11 +1,11 @@
 import 'package:HealthGuard/helper/validation_tool.dart';
-import 'package:HealthGuard/model/doctor_model.dart';
+import 'package:HealthGuard/model/user_model.dart' as OurUser;
 import 'package:HealthGuard/view/doctor_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
 
 class DoctorCard extends StatelessWidget{
-  final Doctor doctor;
+  final OurUser.User doctor;
 
   DoctorCard({Key key,
   @required this.doctor})

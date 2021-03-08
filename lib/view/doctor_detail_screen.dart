@@ -3,13 +3,13 @@ import 'package:HealthGuard/helper/validation_tool.dart';
 import 'package:HealthGuard/view/chat_with_patient.dart';
 import 'package:flutter/material.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
-import 'package:HealthGuard/model/doctor_model.dart' as OurDoctor;
+import 'package:HealthGuard/model/user_model.dart' as OurUser;
 import 'package:HealthGuard/helper/string_helper.dart';
 
 /// Doctor detail screen page widget class
 class DoctorDetail extends StatefulWidget{
   static const String id = "DoctorDetail";
-  final OurDoctor.Doctor doctor;
+  final OurUser.User doctor;
 
   DoctorDetail({Key key, this.doctor}) : super(key: key);
 
@@ -19,7 +19,7 @@ class DoctorDetail extends StatefulWidget{
 
 /// Doctor detail screen page state class
 class _doctorDetailPageState extends State<DoctorDetail>{
-  final OurDoctor.Doctor doctor;
+  final OurUser.User doctor;
 
   _doctorDetailPageState(this.doctor);
   @override

@@ -1,4 +1,4 @@
-import 'package:HealthGuard/model/doctor_model.dart';
+import 'package:HealthGuard/model/user_model.dart' as OurUser;
 import 'package:HealthGuard/widgets/doctor_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -47,7 +47,6 @@ class _DoctorCategoryState extends State<DoctorCategory>{
                 /// Query to filter
                 stream: db.collection(Constants.USERS)
                     .where("userType", isEqualTo: "Doctor")
-                    .where("id", isEqualTo: "Doctor")
                     .where("speciality", isEqualTo: categoryName)
                     .snapshots(),
                 builder: (context, snapshot){
@@ -79,7 +78,7 @@ class _DoctorCategoryState extends State<DoctorCategory>{
                         return Container(
                           child: DoctorCard(
                             /// Creating new doctor instances
-                            doctor: new Doctor(
+                            doctor: new OurUser.User(
                               email: doc[index].get("email"),
                               firstName: doc[index].get("firstName"),
                               lastName: doc[index].get("lastName"),

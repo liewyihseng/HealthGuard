@@ -6,6 +6,7 @@ import 'package:HealthGuard/helper/validation_tool.dart';
 import 'package:HealthGuard/main.dart';
 import 'package:HealthGuard/net/authentication.dart';
 import 'package:HealthGuard/model/user_model.dart' as OurUser;
+import 'package:HealthGuard/view/chat_list_screen.dart';
 import 'package:HealthGuard/view/doctor_sign_in_screen.dart';
 import 'package:HealthGuard/view/my_medical_screen.dart';
 import 'package:HealthGuard/view/user_profile_screen.dart';
@@ -16,7 +17,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
 import 'package:flutter_svg/svg.dart';
-import 'package:HealthGuard/view/chat_with_patient.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 
@@ -206,7 +206,7 @@ class _doctorHomeState extends State<DoctorHome>{
                         title: "Chat with Patient",
                         color: Color(0xFFFFDA7A),
                         onTap: (){
-                          Navigator.pushNamed(context, Chat.id);
+                          Navigator.pushNamed(context, ChatList.id);
                         },
                       ),
                     ],

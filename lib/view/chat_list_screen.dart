@@ -67,7 +67,7 @@ class _ChatListState extends State<ChatList>{
         children: <Widget>[
           Container(
             child: StreamBuilder(
-              stream: FirebaseFirestore.instance.collection(Constants.USERS).limit(_limit).snapshots(),
+              stream: FirebaseFirestore.instance.collection(Constants.USERS).where("userType", isEqualTo: accountInterested()).limit(_limit).snapshots(),
               builder: (context, snapshot){
                 if(!snapshot.hasData){
                   return Center(
@@ -75,7 +75,22 @@ class _ChatListState extends State<ChatList>{
                       valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
                     ),
                   );
-                }else{
+                }else if(snapshot.data.size == 0){
+                  return Container( color: Color(0xFFF6F8FC),
+                    child: Center(
+                      child:  Text(
+                        'Nothing to be shown',
+                        style: TextStyle(
+                          fontSize: 24,
+                          color: Constants.TEXT_SUPER_LIGHT,
+                          fontFamily: Constants.FONTSTYLE,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  );
+                }
+                else {
                   return ListView.builder(
                     padding: EdgeInsets.all(10.0),
                     itemBuilder: (context, index) => buildItem(context, snapshot.data.documents[index]),
@@ -166,6 +181,14 @@ class _ChatListState extends State<ChatList>{
         ),
         margin: EdgeInsets.only(bottom: 10.0, left: 5.0, right: 5.0),
       );
+    }
+  }
+
+  String accountInterested(){
+    if(MyAppState.currentUser.userType == "Doctor"){
+      return "Patient";
+    }else{
+      return "Doctor";
     }
   }
 }

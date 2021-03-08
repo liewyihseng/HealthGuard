@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:HealthGuard/model/doctor_model.dart';
+import 'package:HealthGuard/model/user_model.dart' as OurUser;
 import 'package:HealthGuard/view/doctor_detail_screen.dart';
 import 'package:HealthGuard/widgets/doctor_card.dart';
 import 'package:HealthGuard/widgets/medicalCategoryCard.dart';
@@ -219,8 +219,6 @@ class _findDoctorsPageState extends State<FindDoctor> {
                                 text: "MRI - Scan"
                             ),
 
-
-
                           ],
                         ),
                       ),
@@ -308,7 +306,7 @@ class _findDoctorsPageState extends State<FindDoctor> {
     return Container(
       height: 398,
       child: StreamBuilder<QuerySnapshot>(
-        stream: db.collection(Constants.USERS).where("userType", isEqualTo: "Doctor").where("id", isEqualTo: "Doctor").snapshots(),
+        stream: db.collection(Constants.USERS).where("userType", isEqualTo: "Doctor").snapshots(),
         builder: (context, snapshot){
           if(!snapshot.hasData){
             return Container();
@@ -335,7 +333,7 @@ class _findDoctorsPageState extends State<FindDoctor> {
               itemBuilder: (context, index){
                 return Container(
                   child: DoctorCard(
-                    doctor: new Doctor(
+                    doctor: new OurUser.User(
                       email: doc[index].get("email"),
                       firstName: doc[index].get("firstName"),
                       lastName: doc[index].get("lastName"),
