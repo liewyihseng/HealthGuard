@@ -58,6 +58,80 @@ String validateConfirmPassword(String password, String confirmPassword) {
   }
 }
 
+/// Validate if the height contains only integers
+String validateHeight(String value){
+  String pattern = r'(^[0-9]*$)';
+  RegExp regExp = new RegExp(pattern);
+  if(value.length == 0){
+    return "Height is required";
+  }else if(!regExp.hasMatch(value)){
+    return "Height must contain only digits";
+  }
+  return null;
+}
+
+/// Validate if the weight contains only integers
+String validateWeight(String value){
+  String pattern = r'(^[0-9]*$)';
+  RegExp regExp = new RegExp(pattern);
+  if(value.length == 0){
+    return "Weight is required";
+  }else if(!regExp.hasMatch(value)){
+    return "Weight must contain only digits";
+  }
+  return null;
+}
+
+/// Validate if the health condition is empty
+String validateHealthCondition(String value){
+  if(value.length == 0){
+    return "Health Condition is required";
+  }
+  return null;
+}
+
+/// Validate if the current medication is empty
+String validateCurrentMedication(String value){
+  if(value.length == 0){
+    return "Current Medication is required";
+  }
+  return null;
+}
+
+/// Validate if the address is empty
+String validateAddress(String value){
+  if(value.length == 0){
+    return "Address is required";
+  }
+  return null;
+}
+
+/// Validate if the insurance id is empty
+String validateInsurance(String value){
+  if(value.length == 0){
+    return "Insurance ID is required";
+  }
+  return null;
+}
+
+/// Validate if the medication name is empty
+String validateMedicationName(String value){
+  if(value.length == 0){
+    return "Medication Name is required";
+  }
+  return null;
+}
+
+/// Validate if the medication name is empty
+String validateDosage(String value){
+  if(value.length == 0){
+    return "Dosage is required";
+  }else if(int.parse(value) > 10000){
+    return "This Dosage is too large";
+  }
+  return null;
+}
+
 ProgressDialog progressDialog;
 
 showProgress(BuildContext context, String message, bool isDismissible) async {
