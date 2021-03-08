@@ -57,7 +57,7 @@ class _doctorDetailPageState extends State<DoctorDetail>{
               width: MediaQuery.of(context).size.width,
               child: Container(
                 padding: EdgeInsets.all(20),
-                child: Image.asset('assets/docinfo/bg1.png'),
+                child: Image.asset('assets/medicalCategory/' + doctor.speciality.capitalize() + 'Big.png'),
                 /// To be altered to follow the category of each doctor
               ),
             ),

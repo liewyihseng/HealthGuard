@@ -175,53 +175,116 @@ class _findDoctorsPageState extends State<FindDoctor> {
 
                             medicalCategoryCard(
                                 imageName:
-                                "category5.png",
+                                "Cardiologist.png",
                                 text: "Cardiologist"
                             ),
 
                             medicalCategoryCard(
                                 imageName:
-                                "category8.png",
+                                "Gynaecologist.png",
                                 text: "Gynaecologist"
                             ),
 
                             medicalCategoryCard(
-                              imageName: "category7.png",
+                              imageName: "CT-Scan.png",
                               text: "CT-Scan",
                             ),
 
                             medicalCategoryCard(
-                                imageName: "category1.png",
-                                text: "Ortho"
-                            ),
-
-                            medicalCategoryCard(
                                 imageName:
-                                "category2.png",
-                                text: "Dietician"
-                            ),
-
-                            medicalCategoryCard(
-                                imageName:
-                                "category3.png",
-                                text: "Physician"
-                            ),
-
-                            medicalCategoryCard(
-                                imageName:
-                                "category4.png",
-                                text: "Paralysis"
-                            ),
-
-                            medicalCategoryCard(
-                                imageName:
-                                "category6.png",
+                                "MRI-Scan.png",
                                 text: "MRI - Scan"
                             ),
 
+                            medicalCategoryCard(
+                                imageName:
+                                "Dentist.png",
+                                text: "Dentist"
+                            ),
+
+                            medicalCategoryCard(
+                                imageName:
+                                "Dermatologist.png",
+                                text: "Dermatologist"
+                            ),
+
+                            medicalCategoryCard(
+                                imageName:
+                                "Emergency.png",
+                                text: "Emergency"
+                            ),
+
+                            medicalCategoryCard(
+                                imageName:
+                                "ENT.png",
+                                text: "ENT"
+                            ),
+
+                            medicalCategoryCard(
+                                imageName:
+                                "Gastroenterologist.png",
+                                text: "Gastroenterologist"
+                            ),
+
+                            medicalCategoryCard(
+                                imageName:
+                                "Hepatologist.png",
+                                text: "Hepatologist"
+                            ),
+
+                            medicalCategoryCard(
+                                imageName:
+                                "Nephrologist.png",
+                                text: "Nephrologist"
+                            ),
+
+                            medicalCategoryCard(
+                                imageName:
+                                "Neurologist.png",
+                                text: "Neurologist"
+                            ),
+
+                            medicalCategoryCard(
+                                imageName:
+                                "Nutritionist.png",
+                                text: "Nutritionist"
+                            ),
+
+                            medicalCategoryCard(
+                                imageName:
+                                "Obsterician.png",
+                                text: "Obsterician"
+                            ),
+
+                            medicalCategoryCard(
+                                imageName:
+                                "Orthopaedic.png",
+                                text: "Orthopaedic"
+                            ),
+
+                            medicalCategoryCard(
+                                imageName:
+                                "Pharmacist.png",
+                                text: "Pharmacist"
+                            ),
+
+                            medicalCategoryCard(
+                                imageName:
+                                "Psychologist.png",
+                                text: "Psychologist"
+                            ),
+
+                            medicalCategoryCard(
+                                imageName:
+                                "Surgeon.png",
+                                text: "Surgeon"
+                            ),
                           ],
                         ),
                       ),
+
+                      SizedBox(height: 15),
+
                       Text(
                         "All Doctors",
                         style: TextStyle(

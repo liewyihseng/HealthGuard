@@ -28,6 +28,8 @@ const TEXT_DARK = Color(0xFF102A43);
 
 const BACKGROUND_COLOUR = Color(0xFFF5F5F7);
 
+const CIRCULAR_PROGRESS_INDICATOR = Colors.blue;
+
 /// Font
 const FONTSTYLE = "Montserrat";
 

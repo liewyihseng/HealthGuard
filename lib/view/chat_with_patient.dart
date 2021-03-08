@@ -221,7 +221,7 @@ class ChatScreenState extends State<ChatScreen> {
                 child: CachedNetworkImage(
                   placeholder: (context, url) => Container(
                     child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                      valueColor: AlwaysStoppedAnimation<Color>(Constants.CIRCULAR_PROGRESS_INDICATOR),
                     ),
                     width: 200.0,
                     height: 200.0,
@@ -272,7 +272,7 @@ class ChatScreenState extends State<ChatScreen> {
                 isLastMessageLeft(index)? Material(child: CachedNetworkImage(placeholder: (context, url) => Container(
                   child: CircularProgressIndicator(
                     strokeWidth: 1.0,
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                    valueColor: AlwaysStoppedAnimation<Color>(Constants.CIRCULAR_PROGRESS_INDICATOR),
                   ),
                   width: 35.0,
                   height: 35.0,
@@ -309,7 +309,7 @@ class ChatScreenState extends State<ChatScreen> {
                       child: CachedNetworkImage(
                         placeholder: (context, url) => Container(
                           child: CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                            valueColor: AlwaysStoppedAnimation<Color>(Constants.CIRCULAR_PROGRESS_INDICATOR),
                           ),
                           width: 200.0,
                           height: 200.0,
@@ -487,7 +487,7 @@ class ChatScreenState extends State<ChatScreen> {
     return Flexible(
       child: groupChatId == ''
           ? Center(child: CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation<Color>(Colors.blue)))
+          valueColor: AlwaysStoppedAnimation<Color>(Constants.CIRCULAR_PROGRESS_INDICATOR)))
           : StreamBuilder(
         stream: FirebaseFirestore.instance
             .collection('messages')
@@ -499,7 +499,7 @@ class ChatScreenState extends State<ChatScreen> {
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return Center(
-                child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.blue)));
+                child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Constants.CIRCULAR_PROGRESS_INDICATOR)));
           } else {
             listMessage.addAll(snapshot.data.documents);
             return ListView.builder(

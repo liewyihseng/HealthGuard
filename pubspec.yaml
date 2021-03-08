@@ -147,18 +147,42 @@ flutter:
     - assets/icons/help-center.svg
     - assets/capsule.png
     - assets/syringe.png
-    - assets/medicalCategory/category1.png
-    - assets/medicalCategory/category2.png
-    - assets/medicalCategory/category3.png
-    - assets/medicalCategory/category4.png
-    - assets/medicalCategory/category5.png
-    - assets/medicalCategory/category6.png
-    - assets/medicalCategory/category7.png
-    - assets/medicalCategory/category8.png
-    - assets/docprofile/doc1.png
-    - assets/docprofile/doc2.png
-    - assets/docprofile/doc3.png
-    - assets/docinfo/bg1.png
+    - assets/medicalCategory/Cardiologist.png
+    - assets/medicalCategory/CT-Scan.png
+    - assets/medicalCategory/MRI-Scan.png
+    - assets/medicalCategory/Gynaecologist.png
+    - assets/medicalCategory/Dentist.png
+    - assets/medicalCategory/Dermatologist.png
+    - assets/medicalCategory/Emergency.png
+    - assets/medicalCategory/ENT.png
+    - assets/medicalCategory/Gastroenterologist.png
+    - assets/medicalCategory/Hepatologist.png
+    - assets/medicalCategory/Nephrologist.png
+    - assets/medicalCategory/Neurologist.png
+    - assets/medicalCategory/Nutritionist.png
+    - assets/medicalCategory/Obsterician.png
+    - assets/medicalCategory/Orthopaedic.png
+    - assets/medicalCategory/Pharmacist.png
+    - assets/medicalCategory/Psychologist.png
+    - assets/medicalCategory/Surgeon.png
+    - assets/medicalCategory/CardiologistBig.png
+    - assets/medicalCategory/CT-ScanBig.png
+    - assets/medicalCategory/MRI-ScanBig.png
+    - assets/medicalCategory/GynaecologistBig.png
+    - assets/medicalCategory/DentistBig.png
+    - assets/medicalCategory/DermatologistBig.png
+    - assets/medicalCategory/EmergencyBig.png
+    - assets/medicalCategory/ENTBig.png
+    - assets/medicalCategory/GastroenterologistBig.png
+    - assets/medicalCategory/HepatologistBig.png
+    - assets/medicalCategory/NephrologistBig.png
+    - assets/medicalCategory/NeurologistBig.png
+    - assets/medicalCategory/NutritionistBig.png
+    - assets/medicalCategory/ObstericianBig.png
+    - assets/medicalCategory/OrthopaedicBig.png
+    - assets/medicalCategory/PharmacistBig.png
+    - assets/medicalCategory/PsychologistBig.png
+    - assets/medicalCategory/SurgeonBig.png
     - assets/icons/Walking.png
     - assets/img_not_available.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see

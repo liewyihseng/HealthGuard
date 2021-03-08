@@ -72,14 +72,14 @@ class _ChatListState extends State<ChatList>{
                 if(!snapshot.hasData){
                   return Center(
                     child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
+                      valueColor: AlwaysStoppedAnimation<Color>(Constants.CIRCULAR_PROGRESS_INDICATOR),
                     ),
                   );
                 }else if(snapshot.data.size == 0){
                   return Container( color: Color(0xFFF6F8FC),
                     child: Center(
                       child:  Text(
-                        'Nothing to be shown',
+                        'Chat with a Doctor Now!',
                         style: TextStyle(
                           fontSize: 24,
                           color: Constants.TEXT_SUPER_LIGHT,
@@ -123,7 +123,7 @@ class _ChatListState extends State<ChatList>{
                   placeholder: (context, url) => Container(
                     child: CircularProgressIndicator(
                       strokeWidth: 1.0,
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                      valueColor: AlwaysStoppedAnimation<Color>(Constants.CIRCULAR_PROGRESS_INDICATOR),
                     ),
                     width: 50.0,
                     height: 50.0,

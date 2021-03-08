@@ -12,21 +12,25 @@ class medicalCategoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       child: Container(
-        width: 130,
-        child: Column(
-          children: <Widget>[
-            Image.asset(
-              "assets/medicalCategory/" + imageName,
-            ),
-            Text(
-              text,
-              style: TextStyle(
-                fontWeight: FontWeight.w800,
-                fontSize: 17,
-                fontFamily: Constants.FONTSTYLE,
+        width: 150,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 7.0, right: 7.0),
+          child: Column(
+            children: <Widget>[
+              Image.asset(
+                "assets/medicalCategory/" + imageName,
+                height: 100,
               ),
-            ),
-          ],
+              Text(
+                text,
+                style: TextStyle(
+                  fontWeight: FontWeight.w800,
+                  fontSize: 14,
+                  fontFamily: Constants.FONTSTYLE,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       onTap: (){

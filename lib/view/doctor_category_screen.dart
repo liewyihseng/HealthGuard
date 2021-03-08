@@ -37,11 +37,9 @@ class _DoctorCategoryState extends State<DoctorCategory>{
         backgroundColor: Constants.APPBAR_COLOUR,
         centerTitle: true,
       ),
-      body: Column(
+      body: Stack(
         children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(left: 15, right: 15, top: 15),
-            child: Container(
+            Container(
               /// Connecting to the database
               child: StreamBuilder<QuerySnapshot>(
                 /// Query to filter
@@ -51,7 +49,11 @@ class _DoctorCategoryState extends State<DoctorCategory>{
                     .snapshots(),
                 builder: (context, snapshot){
                   if(!snapshot.hasData){
-                    return Container();
+                    return Center(
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(Constants.CIRCULAR_PROGRESS_INDICATOR),
+                      ),
+                    );
                   }else if(snapshot.data.size == 0){
                     return Container(color: Color(0xFFF6F8FC),
                       child: Center(
@@ -102,7 +104,6 @@ class _DoctorCategoryState extends State<DoctorCategory>{
                   }
                 },
               ),
-            ),
           ),
         ],
       ),

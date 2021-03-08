@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:HealthGuard/constants.dart' as Constants;
 
 class Loading extends StatelessWidget{
   const Loading();
@@ -8,7 +9,7 @@ class Loading extends StatelessWidget{
     return Container(
       child: Center(
         child: CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
+          valueColor: AlwaysStoppedAnimation<Color>(Constants.CIRCULAR_PROGRESS_INDICATOR),
         ),
       ),
       color: Colors.white.withOpacity(0.8),
