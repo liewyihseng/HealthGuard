@@ -23,6 +23,11 @@ class User {
   String birthday = '';
   String chattingWith = '';
 
+  String workPlace = '';
+  String speciality = '';
+  String aboutYourself = "";
+  String doctorID = "";
+
   /// User class Constructor
   User(
       {this.email,
@@ -37,7 +42,11 @@ class User {
       this.userType,
       this.sex,
       this.birthday,
-      this.chattingWith,}
+      this.chattingWith,
+      this.workPlace,
+      this.speciality,
+      this.aboutYourself,
+      this.doctorID,}
         );
 
   /// helper function combining user's first name and last name to form full name
@@ -61,7 +70,12 @@ class User {
     userType: parsedJson['userType'] ?? "",
     sex: parsedJson['sex'] ?? "",
     birthday: parsedJson['birthday'] ?? "",
-      chattingWith: parsedJson['chattingWith'] ?? "",);
+      chattingWith: parsedJson['chattingWith'] ?? "",
+      workPlace: parsedJson['workPlace'] ?? "",
+      speciality: parsedJson['speciality'] ?? "",
+      aboutYourself: parsedJson['aboutYourself'] ?? "",
+      doctorID: parsedJson['doctorID'] ?? "",
+    );
   }
 
   /// Convert to json
@@ -81,7 +95,16 @@ class User {
       'sex': this.sex,
       'birthday': this.birthday,
       'chattingWith': this.chattingWith,
+      "workPlace": this.workPlace,
+      "speciality": this.speciality,
+      "aboutYourself": this.aboutYourself,
+      "doctorID": this.doctorID,
     };
+  }
+
+  /// helper function combining user's first name and last name to form full name
+  String fullNameDr() {
+    return 'Dr. '+ fullName();
   }
 }
 

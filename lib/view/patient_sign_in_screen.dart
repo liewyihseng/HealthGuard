@@ -358,7 +358,7 @@ class _LoginPageState extends State<LoginPage> {
           await loginWithUserNameAndPassword(email.trim(), password.trim());
 
       /// Checking if the user is a patient or a doctor
-      if (user != null && user.userType == 'Patient' && user.userID != 'Doctor') {
+      if (user != null && user.userType == 'Patient') {
         pushAndRemoveUntil(context, home(), false);
       }else{
         user.active = false;

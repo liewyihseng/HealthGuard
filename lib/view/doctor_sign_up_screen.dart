@@ -12,7 +12,6 @@ import 'package:HealthGuard/constants.dart' as Constants;
 import 'package:intl/intl.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:HealthGuard/model/user_model.dart' as OurUser;
-import 'package:HealthGuard/model/doctor_model.dart' as OurDoctor;
 
 import '../main.dart';
 import 'doctor_home_screen.dart';
@@ -565,7 +564,7 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
         await result.user.sendEmailVerification();
 
         ///Assigning all the user's input information to the user instance
-        OurUser.User user = OurDoctor.Doctor(
+        OurUser.User user = OurUser.User(
           email: email,
           firstName: firstName,
           lastName: lastName,

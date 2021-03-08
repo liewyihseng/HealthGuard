@@ -5,7 +5,7 @@ import 'dart:ui';
 import 'package:HealthGuard/helper/validation_tool.dart';
 import 'package:HealthGuard/main.dart';
 import 'package:HealthGuard/net/authentication.dart';
-import 'package:HealthGuard/model/doctor_model.dart' as OurDoctor;
+import 'package:HealthGuard/model/user_model.dart' as OurUser;
 import 'package:HealthGuard/view/doctor_sign_in_screen.dart';
 import 'package:HealthGuard/view/my_medical_screen.dart';
 import 'package:HealthGuard/view/user_profile_screen.dart';
@@ -25,7 +25,7 @@ FireStoreUtils _fireStoreUtils = FireStoreUtils();
 
 class DoctorHome extends StatefulWidget{
   static const String id = "doctorHomePage";
-  final OurDoctor.Doctor doctor;
+  final OurUser.User doctor;
 
   DoctorHome({Key key, @required this.doctor}) : super(key: key);
 
@@ -37,7 +37,7 @@ class DoctorHome extends StatefulWidget{
 }
 
 class _doctorHomeState extends State<DoctorHome>{
-  final OurDoctor.Doctor doctor;
+  final OurUser.User doctor;
 
   _doctorHomeState(this.doctor);
   TextEditingController _outputController;
