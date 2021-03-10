@@ -255,12 +255,7 @@ class BpGraph extends StatelessWidget{
             if(!snapshot.hasData){
               return Container();
             }else if(snapshot.data.size == 0){
-              return Material(
-                shadowColor: Colors.grey.withOpacity(0.01),
-                type: MaterialType.card,
-                elevation: 10,
-                borderRadius: new BorderRadius.circular(10.0),
-                child: Center(
+              return Center(
                   child:  Text(
                     'No stats to be shown',
                     style: TextStyle(
@@ -270,10 +265,8 @@ class BpGraph extends StatelessWidget{
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                ),
               );
             }else{
-              
               return Material(
                 shadowColor: Colors.grey.withOpacity(0.01),
                 type: MaterialType.card,
