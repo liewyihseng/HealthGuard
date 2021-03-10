@@ -55,8 +55,8 @@ class _MedicalFeedState extends State<MedicalFeed>{
         title: Text(
           'Medical Article',
           style: TextStyle(
-              color: Colors.white,
-              fontFamily: Constants.FONTSTYLE,
+            color: Colors.white,
+            fontFamily: Constants.FONTSTYLE,
             fontWeight: Constants.APPBAR_TEXT_WEIGHT,
           ),
         ),
@@ -67,10 +67,10 @@ class _MedicalFeedState extends State<MedicalFeed>{
       body: _loading ? Center(
         child: Container(
           child: CircularProgressIndicator(),
-       ),
-     ) : SingleChildScrollView(
-       child: Container(
-         padding: EdgeInsets.symmetric(horizontal: 15),
+        ),
+      ) : SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 15),
           child: Column(
             children: <Widget>[
               // Categories
@@ -78,40 +78,40 @@ class _MedicalFeedState extends State<MedicalFeed>{
                 height: 70,
                 padding: EdgeInsets.only(top: 16),
                 child: ListView.builder(
-                  itemCount: categories.length,
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index){
-                    return CategoryTile(
-                      imageUrl: categories[index].imageUrl,
-                      categoryCode: categories[index].categoryCode,
-                      categoryName: categories[index].categoryName,
-                    );
-                  }),
+                    itemCount: categories.length,
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index){
+                      return CategoryTile(
+                        imageUrl: categories[index].imageUrl,
+                        categoryCode: categories[index].categoryCode,
+                        categoryName: categories[index].categoryName,
+                      );
+                    }),
               ),
               /// Blogs
               Container(
                 padding: EdgeInsets.only(top: 16),
                 child: ListView.builder(
-                  itemCount: articles.length,
-                  shrinkWrap: true,
-                  ///Making scroll smooth
-                  physics: ClampingScrollPhysics(),
-                  itemBuilder: (context, index){
-                    return BlogTile(
-                      imageUrl: articles[index].urlToImage,
-                      title: articles[index].title,
-                      description: articles[index].description,
-                      url: articles[index].url,
-                      publishedAt: articles[index].publishedAt,
-                    );
-                  }
+                    itemCount: articles.length,
+                    shrinkWrap: true,
+                    ///Making scroll smooth
+                    physics: ClampingScrollPhysics(),
+                    itemBuilder: (context, index){
+                      return BlogTile(
+                        imageUrl: articles[index].urlToImage,
+                        title: articles[index].title,
+                        description: articles[index].description,
+                        url: articles[index].url,
+                        publishedAt: articles[index].publishedAt,
+                      );
+                    }
                 ),
               )
             ],
           ),
         ),
-     ),
+      ),
     );
   }
 }
@@ -126,38 +126,38 @@ class CategoryTile extends StatelessWidget{
     return GestureDetector(
       onTap: (){
         Navigator.push(context, MaterialPageRoute(
-          builder: (context) => CategoryView(
-            category: categoryCode.toLowerCase(),
-            categoryName: categoryName,
-          )
+            builder: (context) => CategoryView(
+              category: categoryCode.toLowerCase(),
+              categoryName: categoryName,
+            )
         ));
       },
       child: Container(
-      margin: EdgeInsets.only(right: 16),
-      child: Stack(
-        children: <Widget>[
-          ClipRRect(
-            borderRadius: BorderRadius.circular(6),
-            child: CachedNetworkImage(imageUrl: imageUrl, width: 120, height: 60, fit: BoxFit.cover,)
-          ),
-          Container(
-            alignment: Alignment.center,
-            width: 120, height: 60,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(6),
-              color: Colors.black26,
+        margin: EdgeInsets.only(right: 16),
+        child: Stack(
+          children: <Widget>[
+            ClipRRect(
+                borderRadius: BorderRadius.circular(6),
+                child: CachedNetworkImage(imageUrl: imageUrl, width: 120, height: 60, fit: BoxFit.cover,)
             ),
-            child: Text(
-              categoryName,
-              style: TextStyle(
+            Container(
+              alignment: Alignment.center,
+              width: 120, height: 60,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(6),
+                color: Colors.black26,
+              ),
+              child: Text(
+                categoryName,
+                style: TextStyle(
                   color: Colors.white,
                   fontSize: 14,
                   fontWeight: FontWeight.w900,
-                fontFamily: Constants.FONTSTYLE,
+                  fontFamily: Constants.FONTSTYLE,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
         ),
       ),
     );
@@ -178,15 +178,16 @@ class BlogTile extends StatelessWidget {
     return GestureDetector(
       onTap: (){
         Navigator.push(context, MaterialPageRoute(
-          builder: (context) => ArticleView(
-            blogUrl: url,
-          )
+            builder: (context) => ArticleView(
+              blogUrl: url,
+            )
         ));
       },
       child: Card(
-        elevation: 5,
+        color: Colors.white,
+        elevation: 10,
         child: new Padding(
-          padding: new EdgeInsets.all(10.0),
+          padding: new EdgeInsets.all(15.0),
           child: Column(
             children: <Widget>[
               ///Frame for Article Image
@@ -196,20 +197,26 @@ class BlogTile extends StatelessWidget {
               ),
               ///Setting style for Article Title
               Text(title, style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 17,
                   color: Colors.black87,
-                  fontWeight: FontWeight.w600
-              ),),
+                  fontWeight: FontWeight.w800,
+                fontFamily: Constants.FONTSTYLE,
+              ),
+              ),
               new Padding(
                 padding: new EdgeInsets.only(left: 1.0),
-                child: new Text(timeago.format(publishedAt), style: TextStyle(
-                  color: Colors.black54,
-                  fontWeight: FontWeight.w400,
-                ),),
+                child: new Text(timeago.format(publishedAt),
+                  style: TextStyle(
+                    color: Colors.black54,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: Constants.FONTSTYLE,
+                  ),),
               ),
               SizedBox(height: 8),
               ///Setting style for Article description
-              Text(description, style: TextStyle(color: Colors.black54),)
+              Text(description, style:
+              TextStyle(color: Colors.black54, fontWeight: FontWeight.w800,fontFamily: Constants.FONTSTYLE),
+              ),
             ],
           ),
         ),
