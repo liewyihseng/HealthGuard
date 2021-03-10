@@ -10,12 +10,23 @@ class TextIconCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return Container(
+        decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(30),
+    boxShadow: [
+    BoxShadow(
+    color: Colors.grey,
+    blurRadius: 6.0,
+    ),
+    ],
+    color: Colors.white,
+    ),
+    child: InkWell(
         child: Card(
           elevation: 3.0,
           margin: EdgeInsets.only(top: 5, bottom: 5, left: 15, right: 15),
           child: Container(
-            padding: EdgeInsets.all(5),
+            padding: EdgeInsets.all(3),
             child: Column(
               children: <Widget>[
                 Image.asset(
@@ -42,6 +53,7 @@ class TextIconCard extends StatelessWidget {
           ),
         ),
         onTap: onTap,
+    ),
     );
   }
 }

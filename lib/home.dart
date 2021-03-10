@@ -177,8 +177,17 @@ class HealthOption extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
         child: Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.all(20),
+              child: Image.asset(
+                "assets/Logo.png",
+                width: 180,
+                height: 180,
+                fit: BoxFit.contain,
+              ),
+            ),
         Expanded(
           child: ListView(
             scrollDirection: Axis.vertical,
