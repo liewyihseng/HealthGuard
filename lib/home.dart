@@ -3,22 +3,28 @@ import 'dart:ui';
 
 import 'package:HealthGuard/helper/math_helper.dart';
 import 'package:HealthGuard/model/pedometer_model.dart';
+import 'package:HealthGuard/view/add_medication_screen.dart';
+import 'package:HealthGuard/view/chat_list_screen.dart';
+import 'package:HealthGuard/view/hospital_suggestions_screen.dart';
 import 'package:HealthGuard/view/medical_feed_screen.dart';
 import 'package:HealthGuard/view/user_profile_screen.dart';
 import 'package:HealthGuard/view/bloodpressure_screen.dart';
+import 'package:HealthGuard/view/blood_pressure_history_screen.dart';
 import 'package:HealthGuard/widgets/card_items.dart';
+import 'package:HealthGuard/widgets/drawerListTile.dart';
 import 'package:HealthGuard/widgets/navigating_card.dart';
 import 'package:HealthGuard/widgets/medication_reminder_card_small.dart';
 import 'package:HealthGuard/view/pedometer_screen.dart';
 import 'package:HealthGuard/widgets/custom_clipper.dart';
+import 'package:HealthGuard/widgets/text_icon_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/svg.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:HealthGuard/model/user_model.dart' as OurUser;
 import 'package:HealthGuard/net/authentication.dart';
 import 'package:HealthGuard/view/patient_sign_in_screen.dart';
 import 'package:HealthGuard/main.dart';
@@ -33,113 +39,86 @@ FireStoreUtils _fireStoreUtils = FireStoreUtils();
 
 class home extends StatefulWidget {
   static const String id = "homePage";
-  final OurUser.User user;
-
-  home({Key key, @required this.user}) : super(key: key);
 
   @override
-  State createState() {
-    print(user.toString());
-    return _home(user);
-  }
+  _homeState createState() => _homeState();
 }
 
-// ignore: camel_case_types
-class _home extends State<home> {
-  final OurUser.User user;
-  // bottom nav bar selected index
+class _homeState extends State<home> {
+  /// variables
   int _selectedIndex = 0;
+  static List<Widget> _bottomNavBarOptions = [
+    HomeOption(),
+    HealthOption(),
+  ];
+  List<String> appBarTitles = ['Home', 'Health'];
 
-  /// list of widgets to switch between for bottom nav bar
-  static List<Widget> _bottomNavBarOptions;
-
-  _home(this.user);
-
-  /// bottom nav bar on item tap
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
+  /// GUI
   @override
   Widget build(BuildContext context) {
-    /// initialize options with widgets
-    _bottomNavBarOptions = <Widget>[
-      HomeOption(
-        user: user,
-      ),
-      HealthOption(),
-    ];
-
     return Scaffold(
       backgroundColor: Constants.BACKGROUND_COLOUR,
+
+      /// App Bar
       appBar: AppBar(
         title: Text(
-          'Home',
-          style: TextStyle(
-            color: Colors.white,
-            fontFamily: Constants.FONTSTYLE,
-            fontWeight: Constants.APPBAR_TEXT_WEIGHT,
-          ),
+          appBarTitles[_selectedIndex],
+          style: Constants.APP_BAR_TEXT_STYLE,
         ),
-        iconTheme: IconThemeData(color: Colors.white),
-        backgroundColor: Constants.LOGO_COLOUR_PINK_LIGHT,
         centerTitle: true,
+
+        actions: [
+          GestureDetector(
+            child: Padding(
+              padding: EdgeInsets.only(right: 15.0),
+              child: Icon(Icons.chat),
+            ),
+            onTap: () => Navigator.pushNamed(context, ChatList.id),
+          ),
+        ],
       ),
+
+      /// Drawer
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
+            /// drawer header
             Container(
-              height: 130.0,
+              height: 120.0,
               child: DrawerHeader(
                 padding: EdgeInsets.only(left: 50.0, top: 25.0),
                 child: Text(
                   'Main Menu',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontFamily: Constants.FONTSTYLE,
-                      fontWeight: FontWeight.w900),
+                  style: Constants.APP_BAR_TEXT_STYLE,
                 ),
                 decoration: BoxDecoration(
-                  color: Constants.LOGO_COLOUR_PINK_LIGHT,
+                  color: Colors.blue,
                 ),
               ),
             ),
-            ListTile(
-              title: Text(
-                'My Profile',
-                style: TextStyle(
-                    color: Colors.black,
-                    fontFamily: Constants.FONTSTYLE,
-                    fontWeight: FontWeight.w900),
-              ),
-              leading: SvgPicture.asset(
+
+            /// profile list tile
+            DrawerListTile(
+              text: 'My Profile',
+              icon: SvgPicture.asset(
                 "assets/icons/personal-information.svg",
                 width: 25,
-                color: Colors.black,
               ),
-              onTap: () {
-                Navigator.pushNamed(context, UserProfile.id);
-              },
+              onTap: () => Navigator.pushNamed(context, UserProfile.id),
             ),
-            ListTile(
-              title: Text(
-                'Log Out',
-                style: TextStyle(
-                    color: Colors.black,
-                    fontFamily: Constants.FONTSTYLE,
-                    fontWeight: FontWeight.w900),
-              ),
-              leading: Transform.rotate(
+
+            /// logout list tile
+            DrawerListTile(
+              text: 'Log Out',
+              icon: Transform.rotate(
                   angle: pi / 1,
                   child: Icon(Icons.exit_to_app, color: Colors.black)),
               onTap: () async {
-                user.active = false;
-                user.lastOnlineTimestamp = Timestamp.now();
-                _fireStoreUtils.updateCurrentUser(user, context);
+                MyAppState.currentUser.active = false;
+                MyAppState.currentUser.lastOnlineTimestamp = Timestamp.now();
+                _fireStoreUtils.updateCurrentUser(
+                    MyAppState.currentUser, context);
                 await FirebaseAuth.instance.signOut();
                 MyAppState.currentUser = null;
                 pushAndRemoveUntil(context, LoginPage(), false);
@@ -148,26 +127,32 @@ class _home extends State<home> {
           ],
         ),
       ),
+
       body: _bottomNavBarOptions.elementAt(_selectedIndex),
+
       bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
+        items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: "Home",
+            label: appBarTitles[0],
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.category),
-            label: "Health",
+            label: appBarTitles[1],
           )
         ],
-        onTap: _onItemTapped,
         currentIndex: _selectedIndex,
+        onTap: (int index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
       ),
     );
   }
 }
 
-/// option 2 in bottom nav bar
+/// Heatlh option in bottom nav bar
 class HealthOption extends StatelessWidget {
   const HealthOption({
     Key key,
@@ -215,17 +200,21 @@ class HealthOption extends StatelessWidget {
               NavigatingCard(
                 imageName: "assets/Blood Pressure Diary.png",
                 text: "Blood Pressure Diary",
-                screenID: BloodPressureScreen.id,
+                //screenID: BloodPressureScreen.id,
+                screenID: BloodPressureHistory.id,
               ),
               NavigatingCard(
                 imageName: "assets/Chat with Doctor.png",
-                text: "Chat with Doctor",
+                text: "Find a Doctor",
                 screenID: FindDoctor.id,
               ),
-              NavigatingCard(
+              TextIconCard(
                 imageName: "assets/Hospital Suggestions.png",
                 text: "Hospital Suggestions",
-                screenID: EMedicalReport.id, // dummy input
+                onTap: () {
+                  //_determinePosition();
+                  Navigator.pushNamed(context, HospitalSuggestions.id);
+                }, // dummy input
               ),
               SizedBox(
                 height: 5,
@@ -238,285 +227,386 @@ class HealthOption extends StatelessWidget {
   }
 }
 
-String displayGreetings() {
-  var hourNow = DateTime.now().hour;
-  if (hourNow < 12) {
-    return 'Morning';
+Future<Position> _determinePosition() async {
+  bool serviceEnabled;
+  LocationPermission permission;
+
+  serviceEnabled = await Geolocator.isLocationServiceEnabled();
+  if (!serviceEnabled) {
+    return Future.error('Location services are disabled.');
   }
-  if (hourNow < 17) {
-    return 'Afternoon';
+
+  permission = await Geolocator.checkPermission();
+  if (permission == LocationPermission.deniedForever) {
+    return Future.error(
+        'Location permissions are permanently denied, we cannot request permissions.');
   }
-  return 'Evening';
+
+  if (permission == LocationPermission.denied) {
+    permission = await Geolocator.requestPermission();
+    if (permission != LocationPermission.whileInUse &&
+        permission != LocationPermission.always) {
+      return Future.error(
+          'Location permissions are denied (actual value: $permission).');
+    }
+  }
+
+  return await Geolocator.getCurrentPosition();
 }
 
 /// home option in bottom nav bar
 class HomeOption extends StatefulWidget {
-  final OurUser.User user;
-
-  HomeOption({Key key, @required this.user}) : super(key: key);
-
   @override
-  _HomeOptionState createState() => _HomeOptionState(user);
+  _HomeOptionState createState() => _HomeOptionState();
 }
 
 class _HomeOptionState extends State<HomeOption> {
-  final OurUser.User user;
   final db = FirebaseFirestore.instance;
-  _HomeOptionState(this.user);
+
+  String _displayGreetings(String name) {
+    var hourNow = DateTime.now().hour;
+    String timePart;
+
+    if (hourNow < 12) {
+      timePart = 'Morning';
+    } else if (hourNow < 17) {
+      timePart = 'Afternoon';
+    } else {
+      timePart = 'Evening';
+    }
+
+    return "Good $timePart,\n$name";
+  }
 
   @override
   Widget build(BuildContext context) {
     double statusBarHeight = MediaQuery.of(context).padding.top;
-
-    return Scaffold(
-      backgroundColor: Constants.BACKGROUND_COLOUR,
-      body: Stack(
-        children: <Widget>[
-          ClipPath(
-            clipper: MyCustomClipper(clipType: ClipType.bottom),
-            child: Container(
-              color: Constants.LOGO_COLOUR_PINK_LIGHT,
-              height: 228.5 + statusBarHeight,
-            ),
-          ),
-          Positioned(
-            right: -45,
-            top: -30,
-            child: ClipOval(
+    return ListView(
+      children: [
+        Stack(
+          children: <Widget>[
+            ClipPath(
+              clipper: MyCustomClipper(clipType: ClipType.bottom),
               child: Container(
-                color: Colors.black.withOpacity(0.05),
-                height: 220,
-                width: 220,
+                color: Colors.blue,
+                height: 228.5 + statusBarHeight,
               ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(bottom: 35, left: 35, right: 35, top: 35),
-            child: ListView(
+            Positioned(
+              right: -45,
+              top: -30,
+              child: ClipOval(
+                child: Container(
+                  color: Colors.black.withOpacity(0.05),
+                  height: 220,
+                  width: 220,
+                ),
+              ),
+            ),
+            Column(
               children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Expanded(
+
+                /// padding for greetings, profile image, qr code
+                Padding(
+                  padding: EdgeInsets.all(30),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      /// greetings and profile image
+                      Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: Text(
+                              _displayGreetings(
+                                  MyAppState.currentUser.fullName()),
+                              style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.w900,
+                                color: Colors.white,
+                                fontFamily: Constants.FONTSTYLE,
+                              ),
+                            ),
+                          ),
+                          GestureDetector(
+                              child: Container(
+                                  child: displayCircleImage(
+                                      MyAppState.currentUser.profilePictureURL,
+                                      80,
+                                      false)),
+                              onTap: () {
+                                Navigator.pushNamed(context, UserProfile.id);
+                              }),
+                        ],
+                      ),
+
+                      /// Green Box and QR Code
+                      Center(
+                        child: Container(
+                          margin: EdgeInsets.only(top: 40, bottom: 40),
+                          padding: EdgeInsets.zero,
+                          // width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10.0)),
+                            shape: BoxShape.rectangle,
+                            color: Constants.LOGO_COLOUR_GREEN_DARK,
+                          ),
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10.0)),
+                              child: Stack(
+                                children: <Widget>[
+                                  Positioned(
+                                    child: ClipPath(
+                                      clipper: MyCustomClipper(
+                                          clipType: ClipType.semiCircle),
+                                      child: Container(
+                                        decoration: new BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10.0)),
+                                          color: Colors.black.withOpacity(0.03),
+                                        ),
+                                        height: 120,
+                                        width: 120,
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(20.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        QrImage(
+                                          data: MyAppState.currentUser.userID,
+                                          version: QrVersions.auto,
+                                          padding: EdgeInsets.all(15.0),
+                                          size: 250.0,
+                                          backgroundColor: Colors.white,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                /// medication reminder section without padding
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(left: 20),
                       child: Text(
-                        "Good " +
-                            displayGreetings() +
-                            ",\n" +
-                            user.fullName() +
-                            ".",
+                        "YOUR DAILY MEDICATION",
                         style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.w900,
-                          color: Colors.white,
+                          color: Constants.TEXT_LIGHT,
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold,
                           fontFamily: Constants.FONTSTYLE,
                         ),
                       ),
                     ),
-                    GestureDetector(
-                        child: Container(
-                            child: displayCircleImage(
-                                user.profilePictureURL, 55, false)),
-                        onTap: () {
-                          Navigator.pushNamed(context, UserProfile.id);
-                        }),
-                  ],
-                ),
 
-                SizedBox(height: 15),
-
-                /// Green Box containing the user's QR Code
-                Container(
-                  margin: const EdgeInsets.only(
-                      top: 15.0, left: 25.0, right: 25.0, bottom: 15.0),
-                  width: ((MediaQuery.of(context).size.width -
-                          (30.0 * 2 + 30.0 / 2)) /
-                      2),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                    shape: BoxShape.rectangle,
-                    color: Constants.LOGO_COLOUR_GREEN_DARK,
-                  ),
-                  child: Material(
-                    child: InkWell(
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                      child: Stack(
-                        children: <Widget>[
-                          Positioned(
-                            child: ClipPath(
-                              clipper: MyCustomClipper(
-                                  clipType: ClipType.semiCircle),
-                              child: Container(
-                                decoration: new BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10.0)),
-                                  color: Colors.black.withOpacity(0.03),
-                                ),
-                                height: 120,
-                                width: 120,
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(20.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                QrImage(
-                                  data: user.userID,
-                                  version: QrVersions.auto,
-                                  padding: EdgeInsets.all(15.0),
-                                  size: 250.0,
-                                  backgroundColor: Colors.white,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    color: Colors.transparent,
-                  ),
-                ),
-
-                SizedBox(height: 20),
-
-                Text(
-                  "YOUR DAILY MEDICATION",
-                  style: TextStyle(
-                    color: Constants.TEXT_LIGHT,
-                    fontSize: 13,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: Constants.FONTSTYLE,
-                  ),
-                ),
-
-                SizedBox(height: 15),
-
-                /// Working Data Change with medication reminder
-                Container(
-                  height: 125,
-                  child: StreamBuilder<QuerySnapshot>(
-                    stream: db
-                        .collection(Constants.USERS)
-                        .doc(MyAppState.currentUser.userID)
-                        .collection(Constants.MEDICATION_INFO)
-                        .snapshots(),
-                    builder: (context, snapshot) {
-                      if (!snapshot.hasData) {
-                        return Container();
-                      } else if (snapshot.data.size == 0) {
-                        return GestureDetector(
-                            child: Container(
-                              color: Color(0xFFF6F8FC),
-                              child: Center(
-                                child: Text(
-                                  'Tap to add medication',
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      color: Constants.TEXT_SUPER_LIGHT,
-                                      fontFamily: Constants.FONTSTYLE,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                              ),
-                            ),
-                            onTap: () {
-                              Navigator.pushNamed(
-                                  context, MedicationReminder.id);
-                            });
-                      } else {
-                        var doc = snapshot.data.documents;
-                        return new ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: doc.length,
-                          itemBuilder: (context, index) {
-                            return Container(
-                              child: MedicationReminderCardSmall(
-                                title: doc[index].get("medicineName"),
-                                value: doc[index].get("dosage"),
-                                unit: "mg",
-                                time: doc[index].get("startTime"),
-                                image: AssetImage(
-                                    imageLink(doc[index].get("medicineType"))),
-                                isDone: false,
-                              ),
-                            );
-                          },
-                        );
-                      }
-                    },
-                  ),
-                ),
-
-                SizedBox(height: 20),
-
-                Text(
-                  "YOUR ACTIVITY",
-                  style: TextStyle(
-                    color: Constants.TEXT_LIGHT,
-                    fontSize: 13,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: Constants.FONTSTYLE,
-                  ),
-                ),
-
-                SizedBox(height: 15),
-
-                Container(
-                  child: ListView(
-                    scrollDirection: Axis.vertical,
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    children: <Widget>[
-                      StreamBuilder<DocumentSnapshot>(
+                    /// medication horizontal list
+                    Container(
+                      margin: EdgeInsets.only(top: 10, bottom: 15),
+                      height: 135,
+                      child: StreamBuilder<QuerySnapshot>(
                         stream: db
                             .collection(Constants.USERS)
                             .doc(MyAppState.currentUser.userID)
-                            .collection(Constants.PEDOMETER_INFO)
-                            .doc(PedometerScreen.documentID)
+                            .collection(Constants.MEDICATION_INFO)
                             .snapshots(),
                         builder: (context, snapshot) {
-                          if(!snapshot.hasData){
-                            return GestureDetector(
-                              onTap: (){
-                                Navigator.pushNamed(context, PedometerScreen.id);
-                              },
-                              child: CardItems(
-                                image: Image.asset('assets/icons/Walking.png'),
-                                title: "Unknown",
-                                value: "Null",
-                                unit: "",
-                                color: Constants.LOGO_COLOUR_PINK_LIGHT,
-                                progress: 0,
-                              ),
+                          if (!snapshot.hasData) {
+                            return Container();
+                          } else if (snapshot.data.size == 0) {
+                            return Padding(
+                              padding: EdgeInsets.only(left: 20, right: 20),
+                              child: GestureDetector(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10.0)),
+                                      shape: BoxShape.rectangle,
+                                      color: Color(0xFFF6F8FC),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        'Tap to add medication',
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            color: Constants.TEXT_SUPER_LIGHT,
+                                            fontFamily: Constants.FONTSTYLE,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                    ),
+                                  ),
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                        context, MedicationForm.id);
+                                  }),
                             );
                           } else {
-                            PedometerData pedometerData = PedometerData.fromJson(snapshot.data.data());
-                            int pedometerProgress = MathHelper.intPercentage(pedometerData.steps, pedometerData.goal);
-                            print(pedometerProgress);
-                            return GestureDetector(
-                              onTap: (){
-                                Navigator.pushNamed(context, PedometerScreen.id);
-                              },
-                              child: CardItems(
-                                image: Image.asset('assets/icons/Walking.png'),
-                                title: "Walking",
-                                value: pedometerData.steps.toString(),
-                                unit: "steps",
-                                color: Constants.LOGO_COLOUR_PINK_LIGHT,
-                                progress: pedometerProgress,
+                            var doc = snapshot.data.documents;
+                            return ListView.separated(
+                              padding: EdgeInsets.only(left: 20, right: 20),
+                              scrollDirection: Axis.horizontal,
+                              itemCount: doc.length + 1,
+                              separatorBuilder: (context, index) => SizedBox(
+                                width: 15,
                               ),
+                              itemBuilder: (context, index) {
+                                if(doc.length == index){
+                                  return Container(
+                                    color: Colors.transparent,
+                                    margin: EdgeInsets.symmetric(vertical: 5),
+                                    child: InkWell(
+                                      onTap: ()=>Navigator.pushNamed(context, MedicationForm.id),
+                                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                      splashColor: Constants.BUTTON_COLOUR.withOpacity(0.06),
+                                      highlightColor: Constants.BUTTON_COLOUR.withOpacity(0.1),
+                                      child: Ink(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                          shape: BoxShape.rectangle,
+                                          color: Colors.white,
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.grey.withOpacity(0.3),
+                                              spreadRadius: 0.5,
+                                              blurRadius: 1,
+                                              offset: Offset(1, 1),
+                                            ),
+                                          ],
+                                        ),
+                                        child: Padding(
+                                          padding: EdgeInsets.symmetric(horizontal: 30),
+                                          child: Icon(
+                                            Icons.add_rounded,
+                                            size: 30,
+                                            color: Color(0xFF3B72FF),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                }
+                                return MedicationReminderCardSmall(
+                                  title: doc[index].get("medicineName"),
+                                  value: doc[index].get("dosage"),
+                                  unit: "mg",
+                                  time: doc[index].get("startTime"),
+                                  image: AssetImage(imageLink(
+                                      doc[index].get("medicineType"))),
+                                  isDone: false,
+                                );
+                              },
                             );
                           }
                         },
+                      ),
+                    ),
+                  ],
+                ),
+
+                /// padding for pedometer section
+                Padding(
+                  padding: EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      /// Pedometer text
+                      Text(
+                        "YOUR ACTIVITY",
+                        style: TextStyle(
+                          color: Constants.TEXT_LIGHT,
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: Constants.FONTSTYLE,
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(top: 10, bottom: 15),
+                        child: ListView(
+                          scrollDirection: Axis.vertical,
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          children: <Widget>[
+                            StreamBuilder<DocumentSnapshot>(
+                              stream: db
+                                  .collection(Constants.USERS)
+                                  .doc(MyAppState.currentUser.userID)
+                                  .collection(Constants.PEDOMETER_INFO)
+                                  .doc(PedometerScreen.documentID)
+                                  .snapshots(),
+                              builder: (context, snapshot) {
+                                if (!snapshot.hasData) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      Navigator.pushNamed(
+                                          context, PedometerScreen.id);
+                                    },
+                                    child: CardItems(
+                                      image: Image.asset(
+                                          'assets/icons/Walking.png'),
+                                      title: "Unknown",
+                                      value: "Null",
+                                      unit: "",
+                                      color: Constants.LOGO_COLOUR_PINK_LIGHT,
+                                      progress: 0,
+                                    ),
+                                  );
+                                } else {
+                                  PedometerData pedometerData =
+                                      PedometerData.fromJson(
+                                          snapshot.data.data());
+                                  int pedometerProgress =
+                                      MathHelper.intPercentage(
+                                          pedometerData.steps,
+                                          pedometerData.goal);
+                                  print(pedometerProgress);
+                                  return GestureDetector(
+                                    onTap: () {
+                                      Navigator.pushNamed(
+                                          context, PedometerScreen.id);
+                                    },
+                                    child: CardItems(
+                                      image: Image.asset(
+                                          'assets/icons/Walking.png'),
+                                      title: "Walking",
+                                      value: pedometerData.steps.toString(),
+                                      unit: "steps",
+                                      color: Constants.LOGO_COLOUR_PINK_LIGHT,
+                                      progress: pedometerProgress,
+                                    ),
+                                  );
+                                }
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
                 ),
               ],
             ),
-          ),
-        ],
-      ),
+          ],
+        ),
+      ],
     );
   }
 }

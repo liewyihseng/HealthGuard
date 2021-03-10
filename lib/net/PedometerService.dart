@@ -17,7 +17,7 @@ class PedometerService {
     }
   }
 
-  Future<PedometerData> receiveFromServer([String docID]) async {
+  receiveFromServer([String docID]) async {
     PedometerData pedometerData;
     await pedometerRef.doc(docID).get().then((value) {
       if (value.exists) {
@@ -28,4 +28,6 @@ class PedometerService {
     });
     return pedometerData;
   }
+
+
 }

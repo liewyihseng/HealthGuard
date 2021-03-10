@@ -1,4 +1,5 @@
 library constants;
+
 import 'package:flutter/material.dart';
 
 import 'dart:ui';
@@ -11,6 +12,7 @@ const ACC_INFO = "acc_info";
 const MED_INFO = "medical_info";
 const MEDICATION_INFO = "medication_info";
 const PEDOMETER_INFO = "pedometer_info";
+const BLOODPRESSURE_INFO = "bloodpressure_info";
 
 /// Colours
 const BUTTON_COLOUR = Color(0xFF2abb99);
@@ -27,13 +29,15 @@ const TEXT_DARK = Color(0xFF102A43);
 
 const BACKGROUND_COLOUR = Colors.white;
 
+const CIRCULAR_PROGRESS_INDICATOR = Colors.blue;
+
 /// Font
 const FONTSTYLE = "Montserrat";
 
 /// Appbar
 const APPBAR_TEXT_WEIGHT = FontWeight.w900;
 
-const APPBAR_COLOUR = Color(0xFF33ac8d);
+const APPBAR_COLOUR = Color(0xFF2abb99);
 
 /// TextStyle
 const TextStyle ALERT_DIALOG_TITLE_STYLE = TextStyle(
@@ -41,5 +45,16 @@ const TextStyle ALERT_DIALOG_TITLE_STYLE = TextStyle(
   fontWeight: APPBAR_TEXT_WEIGHT,
   color: TEXT_DARK,
 );
+
+const TextStyle APP_BAR_TEXT_STYLE = TextStyle(
+  color: Colors.white,
+  fontFamily: FONTSTYLE,
+  fontWeight: APPBAR_TEXT_WEIGHT,
+  fontSize: 20,
+);
+
+
+/// API Key
+const GoogleApiKey = "AIzaSyCwIvvIxm9yn4JXoEHoaAx7wn2WySONi7M";
 
 

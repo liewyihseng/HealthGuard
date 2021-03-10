@@ -24,7 +24,6 @@ class TextIconCard extends StatelessWidget {
     child: InkWell(
         child: Card(
           elevation: 3.0,
-          margin: EdgeInsets.only(top: 5, bottom: 5, left: 15, right: 15),
           child: Container(
             padding: EdgeInsets.all(3),
             child: Column(

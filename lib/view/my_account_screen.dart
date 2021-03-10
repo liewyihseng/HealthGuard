@@ -1,10 +1,13 @@
+import 'dart:ui';
+
+import 'package:HealthGuard/helper/validation_tool.dart';
 import 'package:HealthGuard/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
 
 /// User's account information screen page widget class
-class MyAccount extends StatefulWidget{
+class MyAccount extends StatefulWidget {
   static const String id = "MyAccountPage";
   const MyAccount({Key key}) : super(key: key);
   @override
@@ -12,11 +15,11 @@ class MyAccount extends StatefulWidget{
 }
 
 /// My account screen page state class
-class _MyAccountState extends State<MyAccount>{
+class _MyAccountState extends State<MyAccount> {
   final db = FirebaseFirestore.instance;
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Constants.BACKGROUND_COLOUR,
       appBar: AppBar(
@@ -33,79 +36,167 @@ class _MyAccountState extends State<MyAccount>{
         centerTitle: true,
       ),
       body: StreamBuilder<QuerySnapshot>(
-        /// Creating a stream connecting to the database (collection is to access the collection, doc is to access the document within the collection)
-          stream: db.collection(Constants.USERS).doc(MyAppState.currentUser.userID).collection(Constants.ACC_INFO).snapshots(),
+
+          /// Creating a stream connecting to the database (collection is to access the collection, doc is to access the document within the collection)
+          stream: db
+              .collection(Constants.USERS)
+              .doc(MyAppState.currentUser.userID)
+              .collection(Constants.ACC_INFO)
+              .snapshots(),
           builder: (context, snapshot) {
-            if(snapshot.hasData){
+            if (snapshot.hasData) {
               var doc = snapshot.data.documents;
-              return new ListView.builder(
-                  itemCount: doc.length,
-                  itemBuilder: (context, index){
-                    return Column(
-                      children: <Widget>[
-                        /// Full Name
-                        Text("Name: " + MyAppState.currentUser.fullName(),
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontFamily: Constants.FONTSTYLE,
-                            fontSize: 15,
+              return ListView(
+                children: [Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          child: Stack(
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.all(20),
+                                  child: displayCircleImage(MyAppState.currentUser.profilePictureURL, 150, false),
+                                ),
+                              ]
                           ),
                         ),
-
-                        /// User id
-                        Text("User ID: " + MyAppState.currentUser.userID,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontFamily: Constants.FONTSTYLE,
-                            fontSize: 15,
+                        Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Text(
+                            MyAppState.currentUser.fullName(),
+                            style: TextStyle(
+                              fontSize: 25.0,
+                              color: Colors.black,
+                              fontFamily: Constants.FONTSTYLE,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-
-                        /// Email Address
-                        Text("Email Address: " + MyAppState.currentUser.email,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontFamily: Constants.FONTSTYLE,
-                            fontSize: 15,
-                          ),
-                        ),
-
-                        /// Phone Number
-                        Text("Phone Number: " + MyAppState.currentUser.phoneNumber,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontFamily: Constants.FONTSTYLE,
-                            fontSize: 15,
-                          ),
-                        ),
-
-                        /// Sex
-                        Text("Gender: " + MyAppState.currentUser.sex,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontFamily: Constants.FONTSTYLE,
-                            fontSize: 15,
-                          ),
-                        ),
-
-                        /// Birthday
-                        Text("Birthday: " + MyAppState.currentUser.birthday,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontFamily: Constants.FONTSTYLE,
-                            fontSize: 15,
-                          ),
-                        ),
-
                       ],
-                    );
-                  }
+                    ),
+
+                    Card(
+                      margin: EdgeInsets.all(10),
+                      elevation: 1,
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(10, 20, 10, 20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "User ID: ",
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                color: Colors.black,
+                                fontFamily: Constants.FONTSTYLE,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            Text(
+                              MyAppState.currentUser.userID,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: Constants.FONTSTYLE,
+                                fontSize: 18,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              "Email Address: ",
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                color: Colors.black,
+                                fontFamily: Constants.FONTSTYLE,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            Text(
+                              MyAppState.currentUser.email,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: Constants.FONTSTYLE,
+                                fontSize: 18,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              "Phone Number: ",
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                color: Colors.black,
+                                fontFamily: Constants.FONTSTYLE,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            Text(
+                              MyAppState.currentUser.phoneNumber,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: Constants.FONTSTYLE,
+                                fontSize: 18,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              "Gender: ",
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                color: Colors.black,
+                                fontFamily: Constants.FONTSTYLE,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            Text(
+                              MyAppState.currentUser.sex,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: Constants.FONTSTYLE,
+                                fontSize: 18,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              "Birthday: ",
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                color: Colors.black,
+                                fontFamily: Constants.FONTSTYLE,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            Text(
+                              MyAppState.currentUser.birthday,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: Constants.FONTSTYLE,
+                                fontSize: 18,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),]
               );
-            }else{
+            } else {
               return Column(
                 children: <Widget>[
                   LinearProgressIndicator(),
-                  Text("Nothing To Show",
+                  Text(
+                    "Nothing To Show",
                     style: TextStyle(
                       color: Colors.black,
                       fontFamily: Constants.FONTSTYLE,
@@ -115,8 +206,7 @@ class _MyAccountState extends State<MyAccount>{
                 ],
               );
             }
-          }
-      ),
+          }),
     );
   }
 }

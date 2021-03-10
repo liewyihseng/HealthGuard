@@ -27,9 +27,17 @@ class MedicationReminderCardSmall extends StatelessWidget {
     return Align(
       alignment: Alignment.topLeft,
       child: Container(
-        margin: const EdgeInsets.only(right: 15.0),
+        margin: EdgeInsets.symmetric(vertical: 5),
         width: 240,
         decoration: new BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.3),
+              spreadRadius: 0.5,
+              blurRadius: 1,
+              offset: Offset(1, 1),
+            ),
+          ],
           borderRadius: BorderRadius.all(Radius.circular(10.0)),
           shape: BoxShape.rectangle,
           color: Colors.white,

@@ -471,6 +471,11 @@ class _signupPageState extends State<signup_page> {
           userType: "Patient",
           sex: sex,
           birthday: convertDateTimeDisplay(_dateTime.toString()),
+          chattingWith: null,
+          workPlace: null,
+          speciality: null,
+          aboutYourself: null,
+          doctorID: null,
           ///This page by default will allow users to create only patient account
         );
 
@@ -491,7 +496,7 @@ class _signupPageState extends State<signup_page> {
 
         hideProgress();
         MyAppState.currentUser = user;
-        pushAndRemoveUntil(context, home(user: user), false);
+        pushAndRemoveUntil(context, home(), false);
       } catch (error) {
         hideProgress();
         (error as FirebaseException).code != 'ERROR_EMAIL_ALREADY_IN_USE'

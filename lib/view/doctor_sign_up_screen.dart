@@ -12,7 +12,6 @@ import 'package:HealthGuard/constants.dart' as Constants;
 import 'package:intl/intl.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:HealthGuard/model/user_model.dart' as OurUser;
-import 'package:HealthGuard/model/doctor_model.dart' as OurDoctor;
 
 import '../main.dart';
 import 'doctor_home_screen.dart';
@@ -80,6 +79,7 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
     );
   }
 
+  /// Radio button to handle the input of gender of doctors
   Row addRadioButton(int btnValue, String title) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -114,6 +114,7 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
     }
   }
 
+  /// Allows doctors to take a picture or to import an image from the gallery
   _onCameraClick() {
     final action = CupertinoActionSheet(
       message: Text(
@@ -542,6 +543,7 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
     );
   }
 
+  /// Handles the submission of data into the database
   _sendToServer() async {
     if (_key.currentState.validate()) {
       _key.currentState.save();
@@ -562,7 +564,7 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
         await result.user.sendEmailVerification();
 
         ///Assigning all the user's input information to the user instance
-        OurUser.User user = OurDoctor.Doctor(
+        OurUser.User user = OurUser.User(
           email: email,
           firstName: firstName,
           lastName: lastName,
@@ -578,6 +580,7 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
           speciality: speciality,
           sex: sex,
           birthday: convertDateTimeDisplay(_dateTime.toString()),
+          chattingWith: '',
         );
 
         await FireStoreUtils.firestore

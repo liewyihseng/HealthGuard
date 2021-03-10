@@ -1,13 +1,15 @@
 
 import 'package:HealthGuard/helper/validation_tool.dart';
+import 'package:HealthGuard/view/chat_with_patient.dart';
 import 'package:flutter/material.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
-import 'package:HealthGuard/model/doctor_model.dart' as OurDoctor;
+import 'package:HealthGuard/model/user_model.dart' as OurUser;
+import 'package:HealthGuard/helper/string_helper.dart';
 
 /// Doctor detail screen page widget class
 class DoctorDetail extends StatefulWidget{
   static const String id = "DoctorDetail";
-  final OurDoctor.Doctor doctor;
+  final OurUser.User doctor;
 
   DoctorDetail({Key key, this.doctor}) : super(key: key);
 
@@ -17,7 +19,7 @@ class DoctorDetail extends StatefulWidget{
 
 /// Doctor detail screen page state class
 class _doctorDetailPageState extends State<DoctorDetail>{
-  final OurDoctor.Doctor doctor;
+  final OurUser.User doctor;
 
   _doctorDetailPageState(this.doctor);
   @override
@@ -55,7 +57,8 @@ class _doctorDetailPageState extends State<DoctorDetail>{
               width: MediaQuery.of(context).size.width,
               child: Container(
                 padding: EdgeInsets.all(20),
-                child: Image.asset('assets/docinfo/bg1.png'),
+                child: Image.asset('assets/medicalCategory/' + doctor.speciality.capitalize() + 'Big.png'),
+                /// To be altered to follow the category of each doctor
               ),
             ),
             Container(
@@ -93,7 +96,7 @@ class _doctorDetailPageState extends State<DoctorDetail>{
                                   fontFamily: Constants.FONTSTYLE,
                                 ),
                               ),
-                              Text(doctor.speciality + " - " + doctor.workPlace,
+                              Text(doctor.speciality.capitalize() + " - " + doctor.workPlace,
                                 style: TextStyle(
                                   fontSize: 17,
                                   fontWeight: FontWeight.w400,
@@ -103,6 +106,7 @@ class _doctorDetailPageState extends State<DoctorDetail>{
 
                               ///
                               /// Chat Now Button Here
+                              /// And code to link to the chat now page should be inserted here
                               ///
                               RaisedButton(
                                 color: Constants.BUTTON_COLOUR,
@@ -116,8 +120,15 @@ class _doctorDetailPageState extends State<DoctorDetail>{
                                 textColor: Colors.white,
                                 splashColor: Colors.blue,
                                 onPressed: ()  {
-                                  /// Navigate to chat page
-                                  /// Navigator.pushNamed(context, Chatroom.id);
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: ((context) => Chat(
+                                        peerId: doctor.userID,
+                                        peerAvatar: doctor.profilePictureURL,
+                                      )),
+                                    ),
+                                  );
                                 },
                                 padding: EdgeInsets.all(10),
                                 shape: RoundedRectangleBorder(
@@ -146,10 +157,10 @@ class _doctorDetailPageState extends State<DoctorDetail>{
 
                             Text(doctor.aboutYourself,
                               style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              fontFamily: Constants.FONTSTYLE,
-                            ),
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                fontFamily: Constants.FONTSTYLE,
+                              ),
                             ),
 
                             SizedBox(height: 20),
@@ -163,7 +174,7 @@ class _doctorDetailPageState extends State<DoctorDetail>{
                             ),
 
                             SizedBox(height: 10),
-
+                            /// To be deleted soon
                             timeSlotWidget("13", "MAY", "Consultation", "Sunday 9 am to 11.30 am"),
                             timeSlotWidget("14", "MAY", "Consultation", "Monday 10 am to 12.30 am"),
                             timeSlotWidget("1", "JUN", "Consultation", "Wednesday 8 am to 12.30 pm"),

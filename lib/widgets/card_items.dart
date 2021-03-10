@@ -33,6 +33,14 @@ class CardItems extends StatelessWidget{
         borderRadius: BorderRadius.all(Radius.circular(10.0)),
         shape: BoxShape.rectangle,
         color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.3),
+            spreadRadius: 0.5,
+            blurRadius: 1,
+            offset: Offset(1, 1),
+          ),
+        ],
       ),
       child: Stack(
         children: <Widget>[

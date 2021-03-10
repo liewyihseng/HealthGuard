@@ -51,6 +51,7 @@ class _HelpCenterState extends State<HelpCenter>{
                 Text(
                   'This project aims to provide people with an all in one Health SuperApp that provides users with various features that enhance the living quality of users. Besides, HealthGuard is a currently undergoing project being developed by Year 2 Computer Science students of University of Nottingham Malaysia Campus.',
                   textAlign: TextAlign.justify,
+                  softWrap: true,
                   style: TextStyle(
                       color: Constants.TEXT_LIGHT,
                       fontFamily: Constants.FONTSTYLE,
@@ -60,7 +61,24 @@ class _HelpCenterState extends State<HelpCenter>{
 
                 SizedBox(height: 25),
                 Text(
-                  'To know more, get in touch with us via healthguard.firebase@gmail.com. Thank you for your support.',
+                  'Contact us via',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Constants.TEXT_LIGHT,
+                      fontFamily: Constants.FONTSTYLE,
+                      fontSize: 19),
+                ),
+                Text(
+                  'healthguard.firebase@gmail.com',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Constants.TEXT_LIGHT,
+                      fontFamily: Constants.FONTSTYLE,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 19),
+                ),
+                Text(
+                  'Thank you for your support.',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: Constants.TEXT_LIGHT,

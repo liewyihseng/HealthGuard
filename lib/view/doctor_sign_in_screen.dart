@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:HealthGuard/model/user_model.dart' as OurUser;
-import 'package:HealthGuard/model/doctor_model.dart' as OurDoctor;
 import 'package:HealthGuard/helper/validation_tool.dart';
 import 'package:HealthGuard/net/authentication.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
@@ -199,6 +198,7 @@ class _doctorSignInPageState extends State<DoctorSignIn> {
         ),
       ),
 
+      /// Wording to redirect users to patient sign in page
       Container(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -264,7 +264,7 @@ class _doctorSignInPageState extends State<DoctorSignIn> {
       await loginWithUserNameAndPassword(email.trim(), password.trim());
 
       /// Checking if the user is a patient of a doctor
-      if (user != null && user.userType == 'Doctor' && user.userID != 'Patient') {
+      if (user != null && user.userType == 'Doctor') {
         pushAndRemoveUntil(context, DoctorHome(doctor: user), false);
       }else{
         user.active = false;
@@ -283,7 +283,7 @@ class _doctorSignInPageState extends State<DoctorSignIn> {
   /// Checking if Doctor's input credential's validity
   /// If valid, allow access to account
   /// Else display error
-  Future<OurDoctor.Doctor> loginWithUserNameAndPassword(
+  Future<OurUser.User> loginWithUserNameAndPassword(
       String email, String password) async {
     try {
       UserCredential result = await FirebaseAuth.instance
@@ -295,7 +295,7 @@ class _doctorSignInPageState extends State<DoctorSignIn> {
           .get();
       OurUser.User user;
       if (documentSnapshot != null && documentSnapshot.exists) {
-        user = OurDoctor.Doctor.fromJson(documentSnapshot.data());
+        user = OurUser.User.fromJson(documentSnapshot.data());
         user.active = true;
         await _fireStoreUtils.updateCurrentUser(user, context);
         hideProgress();

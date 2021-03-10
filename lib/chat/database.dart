@@ -4,8 +4,8 @@ class DatabaseMethods {
   Future<Stream<QuerySnapshot>> getUserByFirstName(String firstName) async {
     return FirebaseFirestore.instance
         .collection("users")
-        .where("firstName", isEqualTo: firstName)
         .where("userType", isEqualTo: "Doctor")
+        .where("firstName", isEqualTo: firstName)
         .snapshots();
   }
 }

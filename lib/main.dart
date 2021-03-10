@@ -1,15 +1,17 @@
-import 'package:HealthGuard/view/chat_with_patient.dart';
+
+
+import 'package:HealthGuard/view/add_medication_screen.dart';
+import 'package:HealthGuard/view/chat_list_screen.dart';
 import 'package:HealthGuard/view/doctor_detail_screen.dart';
 import 'package:HealthGuard/view/doctor_sign_in_screen.dart';
 import 'package:HealthGuard/view/doctor_sign_up_screen.dart';
 import 'package:HealthGuard/view/find_doctor_screen.dart';
 import 'package:HealthGuard/view/bloodpressure_screen.dart';
 import 'package:HealthGuard/view/help_center_screen.dart';
+import 'package:HealthGuard/view/hospital_suggestions_screen.dart';
 import 'package:HealthGuard/view/medical_feed_screen.dart';
 import 'package:HealthGuard/view/medication_reminder_screen.dart';
 import 'package:HealthGuard/view/my_account_screen.dart';
-import 'package:HealthGuard/view/my_medical_screen.dart';
-import 'package:HealthGuard/view/pedometer_history_screen.dart';
 import 'package:HealthGuard/view/user_profile_screen.dart';
 import 'package:HealthGuard/view/forgot_password_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -23,8 +25,10 @@ import 'package:HealthGuard/view/patient_sign_in_screen.dart';
 import 'package:HealthGuard/view/e-medical_report_screen.dart';
 import 'package:HealthGuard/view/pedometer_screen.dart';
 import 'package:HealthGuard/chat/chatroom.dart';
+import 'package:HealthGuard/view/blood_pressure_history_screen.dart';
 
 void main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(new MyApp());
@@ -44,17 +48,14 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
       initialRoute: LoginPage.id,
       routes: {
         LoginPage.id: (context) => LoginPage(),
-        home.id: (context) => home(
-              user: currentUser,
-            ),
+        home.id: (context) => home(),
         UserProfile.id: (context) => UserProfile(),
         MyAccount.id: (context) => MyAccount(),
-        MyMedical.id: (context) => MyMedical(),
         HelpCenter.id: (context) => HelpCenter(),
         PedometerScreen.id: (context) => PedometerScreen(),
-        PedometerHistoryScreen.id: (context) => PedometerHistoryScreen(),
         MedicalFeed.id: (context) => MedicalFeed(),
         EMedicalReport.id: (context) => EMedicalReport(),
+        MedicationForm.id: (context) => MedicationForm(),
         MedicationReminder.id: (context) => MedicationReminder(),
         ForgotPassword.id: (context) => ForgotPassword(),
         FindDoctor.id: (context) => FindDoctor(),
@@ -64,7 +65,10 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
         Chatroom.id: (context) => Chatroom(),
         DoctorSignIn.id: (context) => DoctorSignIn(),
         DoctorSignUp.id: (context) => DoctorSignUp(),
-        ChatWithPatient.id: (context) => ChatWithPatient(),
+        ChatList.id: (context) => ChatList(),
+        HospitalSuggestions.id: (context) => HospitalSuggestions(),
+        BloodPressureHistory.id: (context) => BloodPressureHistory(),
+
       },
       theme: ThemeData(accentColor: Colors.white),
     );

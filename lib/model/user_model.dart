@@ -1,7 +1,7 @@
 import 'dart:io';
 
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:HealthGuard/helper/string_helper.dart';
 
 /// Acting as a frame for the creation of user instances
 class User {
@@ -21,6 +21,12 @@ class User {
   String userType = '';
   String sex = '';
   String birthday = '';
+  String chattingWith = '';
+
+  String workPlace = '';
+  String speciality = '';
+  String aboutYourself = "";
+  String doctorID = "";
 
   /// User class Constructor
   User(
@@ -35,12 +41,17 @@ class User {
         this.profilePictureURL,
       this.userType,
       this.sex,
-      this.birthday,}
+      this.birthday,
+      this.chattingWith,
+      this.workPlace,
+      this.speciality,
+      this.aboutYourself,
+      this.doctorID,}
         );
 
   /// helper function combining user's first name and last name to form full name
   String fullName() {
-    return '$firstName $lastName';
+    return firstName.capitalize() + " " + lastName.capitalize();
   }
 
   /// Passing user input data, then creating a new user containing these data
@@ -58,9 +69,16 @@ class User {
         profilePictureURL: parsedJson['profilePictureURL'] ?? "",
     userType: parsedJson['userType'] ?? "",
     sex: parsedJson['sex'] ?? "",
-    birthday: parsedJson['birthday'] ?? "",);
+    birthday: parsedJson['birthday'] ?? "",
+      chattingWith: parsedJson['chattingWith'] ?? "",
+      workPlace: parsedJson['workPlace'] ?? "",
+      speciality: parsedJson['speciality'] ?? "",
+      aboutYourself: parsedJson['aboutYourself'] ?? "",
+      doctorID: parsedJson['doctorID'] ?? "",
+    );
   }
 
+  /// Convert to json
   Map<String, dynamic> toJson() {
     return {
       "email": this.email,
@@ -76,7 +94,17 @@ class User {
       'userType': this.userType,
       'sex': this.sex,
       'birthday': this.birthday,
+      'chattingWith': this.chattingWith,
+      "workPlace": this.workPlace,
+      "speciality": this.speciality,
+      "aboutYourself": this.aboutYourself,
+      "doctorID": this.doctorID,
     };
+  }
+
+  /// helper function combining user's first name and last name to form full name
+  String fullNameDr() {
+    return 'Dr. '+ fullName();
   }
 }
 

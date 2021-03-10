@@ -1,9 +1,9 @@
 import 'dart:ui';
 
-import 'package:HealthGuard/chat/chatroom.dart';
-import 'package:HealthGuard/model/doctor_model.dart';
+import 'package:HealthGuard/model/user_model.dart' as OurUser;
 import 'package:HealthGuard/view/doctor_detail_screen.dart';
 import 'package:HealthGuard/widgets/doctor_card.dart';
+import 'package:HealthGuard/widgets/medicalCategoryCard.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
@@ -24,7 +24,7 @@ class _findDoctorsPageState extends State<FindDoctor> {
   bool isSearching = false;
   Stream usersStream;
   TextEditingController searchUsernameEditingController =
-      TextEditingController();
+  TextEditingController();
 
   onSearchBtnClick() async {
     isSearching = true;
@@ -46,20 +46,20 @@ class _findDoctorsPageState extends State<FindDoctor> {
       builder: (context, snapshot) {
         return snapshot.hasData
             ? ListView.builder(
-                itemCount: snapshot.data.docs.length,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  DocumentSnapshot ds = snapshot.data.docs[index];
-                  return searchListUserTile(
-                      profilePictureURL: ds["profilePictureURL"],
-                      firstName: ds["firstName"],
-                      email: ds["email"],
-                      userstate: ds["active"]);
-                },
-              )
+          itemCount: snapshot.data.docs.length,
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            DocumentSnapshot ds = snapshot.data.docs[index];
+            return searchListUserTile(
+                profilePictureURL: ds["profilePictureURL"],
+                firstName: ds["firstName"],
+                email: ds["email"],
+                userstate: ds["active"]);
+          },
+        )
             : Center(
-                child: CircularProgressIndicator(),
-              );
+          child: CircularProgressIndicator(),
+        );
       },
     );
   }
@@ -92,44 +92,27 @@ class _findDoctorsPageState extends State<FindDoctor> {
     );
   }
 
-  Doctor docTest = new Doctor(
-    email: "nancydoc@nancydoc.com",
-    firstName: "Nancy",
-    lastName: "Tan",
-    phoneNumber: "0123456789",
-    profilePictureURL:
-        'https://firebasestorage.googleapis.com/v0/b/healthguard-2c4ac.appspot.com/o/images%2Fplaceholder.jpg?alt=media&token=158e23bd-54ed-425e-bac5-c4694214bb3c',
-    userType: "Doctor",
-    sex: "Female",
-    birthday: "20-2-2001",
-    workPlace: "Hospital KL",
-    speciality: "Cardiologist",
-    aboutYourself:
-        "This is a brief thing about myself. TestingTestingTestingTestingTestingTestingTestingTestingTestingTestingTestingTesting",
-    doctorID: "210i239tu43fni",
-  );
-
   Widget searchuserlist(String profilePictureURL, firstName, lastName) {
     return StreamBuilder(
       stream: usersStream,
       builder: (context, snapshot) {
         return snapshot.hasData
             ? ListView.builder(
-                itemCount: snapshot.data.docs.length,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  DocumentSnapshot ds = snapshot.data.docs[index];
-                  return Row(children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(30),
-                      child: Image.network(ds["profilePitureURL"]),
-                    )
-                  ]);
-                },
+          itemCount: snapshot.data.docs.length,
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            DocumentSnapshot ds = snapshot.data.docs[index];
+            return Row(children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(30),
+                child: Image.network(ds["profilePitureURL"]),
               )
+            ]);
+          },
+        )
             : Center(
-                child: CircularProgressIndicator(),
-              );
+          child: CircularProgressIndicator(),
+        );
       },
     );
   }
@@ -189,26 +172,121 @@ class _findDoctorsPageState extends State<FindDoctor> {
                           physics: BouncingScrollPhysics(),
                           scrollDirection: Axis.horizontal,
                           children: <Widget>[
-                            medicalCategoryContainer(
-                                "category7.png", "CT-Scan"),
-                            medicalCategoryContainer("category1.png", "Ortho"),
-                            medicalCategoryContainer(
-                                "category2.png", "Dietician"),
-                            medicalCategoryContainer(
-                                "category3.png", "Physician"),
-                            medicalCategoryContainer(
-                                "category4.png", "Paralysis"),
-                            medicalCategoryContainer(
-                                "category5.png", "Cardiology"),
-                            medicalCategoryContainer(
-                                "category6.png", "MRI - Scan"),
-                            medicalCategoryContainer(
-                                "category8.png", "Gynaecology"),
+
+                            medicalCategoryCard(
+                                imageName:
+                                "Cardiologist.png",
+                                text: "Cardiologist"
+                            ),
+
+                            medicalCategoryCard(
+                                imageName:
+                                "Gynaecologist.png",
+                                text: "Gynaecologist"
+                            ),
+
+                            medicalCategoryCard(
+                              imageName: "CT-Scan.png",
+                              text: "CT-Scan",
+                            ),
+
+                            medicalCategoryCard(
+                                imageName:
+                                "MRI-Scan.png",
+                                text: "MRI - Scan"
+                            ),
+
+                            medicalCategoryCard(
+                                imageName:
+                                "Dentist.png",
+                                text: "Dentist"
+                            ),
+
+                            medicalCategoryCard(
+                                imageName:
+                                "Dermatologist.png",
+                                text: "Dermatologist"
+                            ),
+
+                            medicalCategoryCard(
+                                imageName:
+                                "Emergency.png",
+                                text: "Emergency"
+                            ),
+
+                            medicalCategoryCard(
+                                imageName:
+                                "ENT.png",
+                                text: "ENT"
+                            ),
+
+                            medicalCategoryCard(
+                                imageName:
+                                "Gastroenterologist.png",
+                                text: "Gastroenterologist"
+                            ),
+
+                            medicalCategoryCard(
+                                imageName:
+                                "Hepatologist.png",
+                                text: "Hepatologist"
+                            ),
+
+                            medicalCategoryCard(
+                                imageName:
+                                "Nephrologist.png",
+                                text: "Nephrologist"
+                            ),
+
+                            medicalCategoryCard(
+                                imageName:
+                                "Neurologist.png",
+                                text: "Neurologist"
+                            ),
+
+                            medicalCategoryCard(
+                                imageName:
+                                "Nutritionist.png",
+                                text: "Nutritionist"
+                            ),
+
+                            medicalCategoryCard(
+                                imageName:
+                                "Obsterician.png",
+                                text: "Obsterician"
+                            ),
+
+                            medicalCategoryCard(
+                                imageName:
+                                "Orthopaedic.png",
+                                text: "Orthopaedic"
+                            ),
+
+                            medicalCategoryCard(
+                                imageName:
+                                "Pharmacist.png",
+                                text: "Pharmacist"
+                            ),
+
+                            medicalCategoryCard(
+                                imageName:
+                                "Psychologist.png",
+                                text: "Psychologist"
+                            ),
+
+                            medicalCategoryCard(
+                                imageName:
+                                "Surgeon.png",
+                                text: "Surgeon"
+                            ),
                           ],
                         ),
                       ),
+
+                      SizedBox(height: 15),
+
                       Text(
-                        "Doctors",
+                        "All Doctors",
                         style: TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.w800,
@@ -223,14 +301,14 @@ class _findDoctorsPageState extends State<FindDoctor> {
                             Row(children: [
                               isSearching
                                   ? GestureDetector(
-                                      onTap: () {
-                                        onBackArrowClick();
-                                      },
-                                      child: Padding(
-                                        padding: EdgeInsets.only(right: 12),
-                                        child: Icon(Icons.arrow_back),
-                                      ),
-                                    )
+                                onTap: () {
+                                  onBackArrowClick();
+                                },
+                                child: Padding(
+                                  padding: EdgeInsets.only(right: 12),
+                                  child: Icon(Icons.arrow_back),
+                                ),
+                              )
                                   : Container(),
                               Expanded(
                                 child: Container(
@@ -249,7 +327,7 @@ class _findDoctorsPageState extends State<FindDoctor> {
                                       Expanded(
                                         child: TextField(
                                           controller:
-                                              searchUsernameEditingController,
+                                          searchUsernameEditingController,
                                           decoration: InputDecoration(
                                             border: InputBorder.none,
                                             hintText: "Doctor's name",
@@ -259,7 +337,7 @@ class _findDoctorsPageState extends State<FindDoctor> {
                                       GestureDetector(
                                           onTap: () {
                                             if (searchUsernameEditingController
-                                                    .text !=
+                                                .text !=
                                                 "") {
                                               onSearchBtnClick();
                                             }
@@ -285,86 +363,70 @@ class _findDoctorsPageState extends State<FindDoctor> {
     );
   }
 
-  Container medicalCategoryContainer(String imgName, String title) {
-    return Container(
-      width: 130,
-      child: Column(
-        children: <Widget>[
-          Image.asset('assets/medicalCategory/$imgName'),
-          Text(
-            "$title",
-            style: TextStyle(
-              fontWeight: FontWeight.w800,
-              fontSize: 17,
-              fontFamily: Constants.FONTSTYLE,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
+  /// Container to display all the doctors available in our database
   Container recommendDoctors() {
     final db = FirebaseFirestore.instance;
     return Container(
       height: 398,
-        child: StreamBuilder<QuerySnapshot>(
-          stream: db.collection(Constants.USERS).where("userType", isEqualTo: "Doctor").where("id", isEqualTo: "Doctor").snapshots(),
-          builder: (context, snapshot){
-            if(!snapshot.hasData){
-              return Container();
-            }else if(snapshot.data.size == 0){
-              return Container(color: Color(0xFFF6F8FC),
-                child: Center(
-                  child: Text(
-                    'No Doctors available',
-                    style: TextStyle(
-                      fontSize: 24,
-                      color: Constants.TEXT_SUPER_LIGHT,
-                      fontFamily: Constants.FONTSTYLE,
-                      fontWeight: FontWeight.bold,
-                    ),
+      child: StreamBuilder<QuerySnapshot>(
+        stream: db.collection(Constants.USERS).where("userType", isEqualTo: "Doctor").snapshots(),
+        builder: (context, snapshot){
+          if(!snapshot.hasData){
+            return Container();
+          }else if(snapshot.data.size == 0){
+            return Container(color: Color(0xFFF6F8FC),
+              child: Center(
+                child: Text(
+                  'No Doctors available',
+                  style: TextStyle(
+                    fontSize: 24,
+                    color: Constants.TEXT_SUPER_LIGHT,
+                    fontFamily: Constants.FONTSTYLE,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-              );
-            }else{
-              var doc = snapshot.data.documents;
-              return new ListView.builder(
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                itemCount: doc.length,
-                itemBuilder: (context, index){
-                  return Container(
-                      child: DoctorCard(doctor: new Doctor(
-                        email: doc[index].get("email"),
-                        firstName: doc[index].get("firstName"),
-                        lastName: doc[index].get("lastName"),
-                        active: doc[index].get("active"),
-                        lastOnlineTimestamp: doc[index].get("lastOnlineTimestamp"),
-                        settings: null,
-                        phoneNumber: doc[index].get("phoneNumber"),
-                        userID: doc[index].get("id"),
-                        profilePictureURL: doc[index].get("profilePictureURL"),
-                        userType: doc[index].get("userType"),
-                        sex: doc[index].get("sex"),
-                        birthday: doc[index].get("birthday"),
-                        workPlace: doc[index].get("workPlace"),
-                        speciality: doc[index].get("speciality"),
-                        aboutYourself: doc[index].get("aboutYourself"),
-                        doctorID: doc[index].get("doctorID"),
-                      ),),
-                  );
-                },
-              );
-            }
-          },
-        ),
-
+              ),
+            );
+          }else{
+            var doc = snapshot.data.documents;
+            return new ListView.builder(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              itemCount: doc.length,
+              itemBuilder: (context, index){
+                return Container(
+                  child: DoctorCard(
+                    doctor: new OurUser.User(
+                      email: doc[index].get("email"),
+                      firstName: doc[index].get("firstName"),
+                      lastName: doc[index].get("lastName"),
+                      active: doc[index].get("active"),
+                      lastOnlineTimestamp: doc[index].get("lastOnlineTimestamp"),
+                      settings: null,
+                      phoneNumber: doc[index].get("phoneNumber"),
+                      userID: doc[index].get("id"),
+                      profilePictureURL: doc[index].get("profilePictureURL"),
+                      userType: doc[index].get("userType"),
+                      sex: doc[index].get("sex"),
+                      birthday: doc[index].get("birthday"),
+                      workPlace: doc[index].get("workPlace"),
+                      speciality: doc[index].get("speciality"),
+                      aboutYourself: doc[index].get("aboutYourself"),
+                      doctorID: doc[index].get("doctorID"),
+                    ),),
+                );
+              },
+            );
+          }
+        },
+      ),
     );
   }
 
 }
 
+
+/// For UI purposes
 class pathPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
