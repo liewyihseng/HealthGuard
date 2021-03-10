@@ -179,19 +179,19 @@ class HealthOption extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Padding(
-              padding: EdgeInsets.all(20),
-              child: Image.asset(
-                "assets/Logo.png",
-                width: 180,
-                height: 180,
-                fit: BoxFit.contain,
-              ),
-            ),
         Expanded(
           child: ListView(
             scrollDirection: Axis.vertical,
             children: [
+              Padding(
+                padding: EdgeInsets.all(20),
+                child: Image.asset(
+                  "assets/Logo.png",
+                  width: 180,
+                  height: 180,
+                  fit: BoxFit.contain,
+                ),
+              ),
               NavigatingCard(
                 imageName: "assets/E-Medical Report.png",
                 text: "E-Medical Report",
