@@ -19,14 +19,14 @@ class BloodPressureCardSmall extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 150,
-      height: 130,
+      height: 115,
       decoration: new BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(10.0)),
         shape: BoxShape.rectangle,
         color: Constants.BACKGROUND_COLOUR,
       ),
       child: Padding(
-        padding: EdgeInsets.all(20),
+        padding: EdgeInsets.only(left: 20, right: 20, top: 15, bottom: 15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
@@ -50,7 +50,7 @@ class BloodPressureCardSmall extends StatelessWidget {
                   style: TextStyle(
                       fontWeight:
                       FontWeight.w900,
-                      fontSize: 35,
+                      fontSize: 30,
                       color: Color(0xFF3ABD6F),
                   ),
                 ),

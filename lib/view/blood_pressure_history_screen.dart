@@ -243,6 +243,15 @@ class _BloodPressureHistoryState extends State<BloodPressureHistory>{
 /// Handles the presentation of the upper container
 class BpGraph extends StatelessWidget{
   final db = FirebaseFirestore.instance;
+
+  String avgCalculator(AsyncSnapshot<QuerySnapshot> snapshot, String fieldName){
+    int sum = 0;
+    for (var i = 0; i < snapshot.data.documents.length; i++){
+      sum += int.parse(snapshot.data.documents[i].get(fieldName));
+    }
+    return (sum / snapshot.data.documents.length).toInt().toString();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -256,15 +265,15 @@ class BpGraph extends StatelessWidget{
               return Container();
             }else if(snapshot.data.size == 0){
               return Center(
-                  child:  Text(
-                    'No stats to be shown',
-                    style: TextStyle(
-                      fontSize: 24,
-                      color: Constants.TEXT_SUPER_LIGHT,
-                      fontFamily: Constants.FONTSTYLE,
-                      fontWeight: FontWeight.bold,
-                    ),
+                child:  Text(
+                  'No stats to be shown',
+                  style: TextStyle(
+                    fontSize: 24,
+                    color: Constants.TEXT_SUPER_LIGHT,
+                    fontFamily: Constants.FONTSTYLE,
+                    fontWeight: FontWeight.bold,
                   ),
+                ),
               );
             }else{
               return Material(
@@ -294,7 +303,7 @@ class BpGraph extends StatelessWidget{
                         children: <Widget>[
                           BloodPressureCardSmall(
                               status: "Avg Heartbeat",
-                              value: "76",
+                              value: avgCalculator(snapshot, "pulse"),
                               unit: "bpm",
                               remarks: "ok"
                           ),
@@ -302,7 +311,7 @@ class BpGraph extends StatelessWidget{
 
                           BloodPressureCardSmall(
                               status: "Avg BP",
-                              value: "76",
+                              value: avgCalculator(snapshot, "systolic") + "/" + avgCalculator(snapshot, "diastolic"),
                               unit: "mmHg",
                               remarks: "ok"
                           ),
@@ -328,7 +337,6 @@ class BpGraph extends StatelessWidget{
       ),
     );
   }
-
 }
 
 /// Presents the lower container containing tha blood pressure logs
@@ -342,7 +350,11 @@ class MainContainer extends StatelessWidget{
         alignment: Alignment.topCenter,
         child: StreamBuilder<QuerySnapshot>(
           /// Retrieving of all medicine from the database using snapshots
-            stream: db.collection(Constants.USERS).doc(MyAppState.currentUser.userID).collection(Constants.BLOODPRESSURE_INFO).snapshots(),
+            stream: db.collection(Constants.USERS)
+                .doc(MyAppState.currentUser.userID)
+                .collection(Constants.BLOODPRESSURE_INFO)
+                .orderBy('submittedDate', descending: true)
+                .snapshots(),
             builder: (context, snapshot){
               if(!snapshot.hasData){
                 return Container();
