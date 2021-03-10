@@ -4,6 +4,7 @@ import 'dart:core';
 
 import 'package:HealthGuard/main.dart';
 import 'package:HealthGuard/helper/validation_tool.dart';
+import 'package:HealthGuard/view/add_medication_screen.dart';
 import 'package:HealthGuard/widgets/medication_reminder_card_large.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
@@ -103,14 +104,17 @@ class _MedicationReminderState extends State<MedicationReminder>{
           side: BorderSide(color: Colors.blue),
         ),
         onPressed: (){
-          showDialog(
-            context: context,
-            builder: (BuildContext context) => _buildPopupDialog(context),
-          );
+          Navigator.pushNamed(context, MedicationForm.id);
+          // changing dialog into page
+          // showDialog(
+          //   context: context,
+          //   builder: (BuildContext context) => _buildPopupDialog(context),
+          // );
         },
       ),
     );
   }
+
 
   /// Handles the pop up once the user pressed onto the add button on the bottom right corner
   Widget _buildPopupDialog(BuildContext context) {

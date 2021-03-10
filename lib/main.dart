@@ -1,5 +1,6 @@
 
 
+import 'package:HealthGuard/view/add_medication_screen.dart';
 import 'package:HealthGuard/view/chat_list_screen.dart';
 import 'package:HealthGuard/view/doctor_detail_screen.dart';
 import 'package:HealthGuard/view/doctor_sign_in_screen.dart';
@@ -53,6 +54,7 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
         PedometerScreen.id: (context) => PedometerScreen(),
         MedicalFeed.id: (context) => MedicalFeed(),
         EMedicalReport.id: (context) => EMedicalReport(),
+        MedicationForm.id: (context) => MedicationForm(),
         MedicationReminder.id: (context) => MedicationReminder(),
         ForgotPassword.id: (context) => ForgotPassword(),
         FindDoctor.id: (context) => FindDoctor(),
