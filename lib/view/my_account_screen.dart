@@ -46,148 +46,150 @@ class _MyAccountState extends State<MyAccount> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               var doc = snapshot.data.documents;
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        child: Stack(
-                            children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.all(20),
-                                child: displayCircleImage(MyAppState.currentUser.profilePictureURL, 150, false),
-                              ),
-                            ]
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(10),
-                        child: Text(
-                          MyAppState.currentUser.fullName(),
-                          style: TextStyle(
-                            fontSize: 25.0,
-                            color: Colors.black,
-                            fontFamily: Constants.FONTSTYLE,
-                            fontWeight: FontWeight.bold,
+              return ListView(
+                children: [Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          child: Stack(
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.all(20),
+                                  child: displayCircleImage(MyAppState.currentUser.profilePictureURL, 150, false),
+                                ),
+                              ]
                           ),
                         ),
-                      ),
-                    ],
-                  ),
+                        Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Text(
+                            MyAppState.currentUser.fullName(),
+                            style: TextStyle(
+                              fontSize: 25.0,
+                              color: Colors.black,
+                              fontFamily: Constants.FONTSTYLE,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
 
-                  Card(
-                    margin: EdgeInsets.all(10),
-                    elevation: 1,
-                    child: Padding(
-                      padding: EdgeInsets.fromLTRB(10, 40, 10, 40),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "User ID: ",
-                            style: TextStyle(
-                              fontSize: 20.0,
-                              color: Colors.black,
-                              fontFamily: Constants.FONTSTYLE,
-                              fontWeight: FontWeight.w600,
+                    Card(
+                      margin: EdgeInsets.all(10),
+                      elevation: 1,
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(10, 20, 10, 20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "User ID: ",
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                color: Colors.black,
+                                fontFamily: Constants.FONTSTYLE,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
-                          ),
-                          Text(
-                            MyAppState.currentUser.userID,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontFamily: Constants.FONTSTYLE,
-                              fontSize: 18,
+                            Text(
+                              MyAppState.currentUser.userID,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: Constants.FONTSTYLE,
+                                fontSize: 18,
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            "Email Address: ",
-                            style: TextStyle(
-                              fontSize: 20.0,
-                              color: Colors.black,
-                              fontFamily: Constants.FONTSTYLE,
-                              fontWeight: FontWeight.w600,
+                            SizedBox(
+                              height: 10,
                             ),
-                          ),
-                          Text(
-                            MyAppState.currentUser.email,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontFamily: Constants.FONTSTYLE,
-                              fontSize: 18,
+                            Text(
+                              "Email Address: ",
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                color: Colors.black,
+                                fontFamily: Constants.FONTSTYLE,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            "Phone Number: ",
-                            style: TextStyle(
-                              fontSize: 20.0,
-                              color: Colors.black,
-                              fontFamily: Constants.FONTSTYLE,
-                              fontWeight: FontWeight.w600,
+                            Text(
+                              MyAppState.currentUser.email,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: Constants.FONTSTYLE,
+                                fontSize: 18,
+                              ),
                             ),
-                          ),
-                          Text(
-                            MyAppState.currentUser.phoneNumber,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontFamily: Constants.FONTSTYLE,
-                              fontSize: 18,
+                            SizedBox(
+                              height: 10,
                             ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            "Gender: ",
-                            style: TextStyle(
-                              fontSize: 20.0,
-                              color: Colors.black,
-                              fontFamily: Constants.FONTSTYLE,
-                              fontWeight: FontWeight.w600,
+                            Text(
+                              "Phone Number: ",
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                color: Colors.black,
+                                fontFamily: Constants.FONTSTYLE,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
-                          ),
-                          Text(
-                            MyAppState.currentUser.sex,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontFamily: Constants.FONTSTYLE,
-                              fontSize: 18,
+                            Text(
+                              MyAppState.currentUser.phoneNumber,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: Constants.FONTSTYLE,
+                                fontSize: 18,
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            "Birthday: ",
-                            style: TextStyle(
-                              fontSize: 20.0,
-                              color: Colors.black,
-                              fontFamily: Constants.FONTSTYLE,
-                              fontWeight: FontWeight.w600,
+                            SizedBox(
+                              height: 10,
                             ),
-                          ),
-                          Text(
-                            MyAppState.currentUser.birthday,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontFamily: Constants.FONTSTYLE,
-                              fontSize: 18,
+                            Text(
+                              "Gender: ",
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                color: Colors.black,
+                                fontFamily: Constants.FONTSTYLE,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
-                          ),
-                        ],
+                            Text(
+                              MyAppState.currentUser.sex,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: Constants.FONTSTYLE,
+                                fontSize: 18,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              "Birthday: ",
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                color: Colors.black,
+                                fontFamily: Constants.FONTSTYLE,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            Text(
+                              MyAppState.currentUser.birthday,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: Constants.FONTSTYLE,
+                                fontSize: 18,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),]
               );
             } else {
               return Column(
