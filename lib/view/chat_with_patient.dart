@@ -114,12 +114,11 @@ class ChatScreenState extends State<ChatScreen> {
     id = MyAppState.currentUser.userID;
     if (id.hashCode <= peerId.hashCode) {
       groupChatId = id + '-$peerId';
-      print('1: id');
     } else {
       groupChatId = '$peerId-' + id;
-      print('2: id');
     }
 
+    /// Problem causing Line
     FirebaseFirestore.instance.collection(Constants.USERS).doc(MyAppState.currentUser.userID).update({'chattingWith': peerId});
 
     setState(() {});
