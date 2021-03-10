@@ -25,6 +25,7 @@ import 'package:HealthGuard/view/patient_sign_in_screen.dart';
 import 'package:HealthGuard/view/e-medical_report_screen.dart';
 import 'package:HealthGuard/view/pedometer_screen.dart';
 import 'package:HealthGuard/chat/chatroom.dart';
+import 'package:HealthGuard/view/blood_pressure_history_screen.dart';
 
 void main() async {
 
@@ -66,6 +67,8 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
         DoctorSignUp.id: (context) => DoctorSignUp(),
         ChatList.id: (context) => ChatList(),
         HospitalSuggestions.id: (context) => HospitalSuggestions(),
+        BloodPressureHistory.id: (context) => BloodPressureHistory(),
+
       },
       theme: ThemeData(accentColor: Colors.white),
     );

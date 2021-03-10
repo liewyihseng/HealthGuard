@@ -12,6 +12,7 @@ const ACC_INFO = "acc_info";
 const MED_INFO = "medical_info";
 const MEDICATION_INFO = "medication_info";
 const PEDOMETER_INFO = "pedometer_info";
+const BLOODPRESSURE_INFO = "bloodpressure_info";
 
 /// Colours
 const BUTTON_COLOUR = Color(0xFF33ac8d);
