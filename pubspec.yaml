@@ -184,6 +184,8 @@ flutter:
     - assets/medicalCategory/PsychologistBig.png
     - assets/medicalCategory/SurgeonBig.png
     - assets/icons/Walking.png
+    - assets/icons/blooddrop.png
+    - assets/icons/heartbeat.png
     - assets/img_not_available.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

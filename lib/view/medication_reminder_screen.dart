@@ -376,12 +376,6 @@ class _MedicationReminderState extends State<MedicationReminder>{
       hideProgress();
       Navigator.pop(context);
 
-      ///Show success submit
-    // }else{
-    //   print('false');
-    //   setState(() {
-    //     _validate = true;
-    //   });
      }
   }
 

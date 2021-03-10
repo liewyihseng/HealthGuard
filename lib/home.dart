@@ -8,6 +8,7 @@ import 'package:HealthGuard/view/hospital_suggestions_screen.dart';
 import 'package:HealthGuard/view/medical_feed_screen.dart';
 import 'package:HealthGuard/view/user_profile_screen.dart';
 import 'package:HealthGuard/view/bloodpressure_screen.dart';
+import 'package:HealthGuard/view/blood_pressure_history_screen.dart';
 import 'package:HealthGuard/widgets/card_items.dart';
 import 'package:HealthGuard/widgets/drawerListTile.dart';
 import 'package:HealthGuard/widgets/navigating_card.dart';
@@ -189,7 +190,8 @@ class HealthOption extends StatelessWidget {
               NavigatingCard(
                 imageName: "assets/Blood Pressure Diary.png",
                 text: "Blood Pressure Diary",
-                screenID: BloodPressureScreen.id,
+                //screenID: BloodPressureScreen.id,
+                screenID: BloodPressureHistory.id,
               ),
               NavigatingCard(
                 imageName: "assets/Chat with Doctor.png",

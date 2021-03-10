@@ -132,6 +132,42 @@ String validateDosage(String value){
   return null;
 }
 
+/// Validate if the systolic is empty
+String validateSystolic(String value){
+  String pattern = r'(^[0-9]*$)';
+  RegExp regExp = new RegExp(pattern);
+  if(value.length == 0){
+    return "Systolic is required";
+  }else if (!regExp.hasMatch(value)) {
+    return "Systolic must contain only digits";
+  }
+  return null;
+}
+
+/// Validate if the diastolic is empty
+String validateDiastolic(String value){
+  String pattern = r'(^[0-9]*$)';
+  RegExp regExp = new RegExp(pattern);
+  if(value.length == 0){
+    return "Diastolic is required";
+  }else if (!regExp.hasMatch(value)) {
+    return "Diastolic must contain only digits";
+  }
+  return null;
+}
+
+/// Validate if the Pulse is empty
+String validatePulse(String value){
+  String pattern = r'(^[0-9]*$)';
+  RegExp regExp = new RegExp(pattern);
+  if(value.length == 0){
+    return "Pulse is required";
+  }else if (!regExp.hasMatch(value)) {
+    return "Pulse must contain only digits";
+  }
+  return null;
+}
+
 ProgressDialog progressDialog;
 
 showProgress(BuildContext context, String message, bool isDismissible) async {
