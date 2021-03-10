@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:HealthGuard/helper/math_helper.dart';
 import 'package:HealthGuard/model/pedometer_model.dart';
+import 'package:HealthGuard/view/add_medication_screen.dart';
 import 'package:HealthGuard/view/chat_list_screen.dart';
 import 'package:HealthGuard/view/hospital_suggestions_screen.dart';
 import 'package:HealthGuard/view/medical_feed_screen.dart';
@@ -161,12 +162,21 @@ class HealthOption extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
         child: Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
         Expanded(
           child: ListView(
             scrollDirection: Axis.vertical,
             children: [
+              Padding(
+                padding: EdgeInsets.all(20),
+                child: Image.asset(
+                  "assets/Logo.png",
+                  width: 180,
+                  height: 180,
+                  fit: BoxFit.contain,
+                ),
+              ),
               NavigatingCard(
                 imageName: "assets/E-Medical Report.png",
                 text: "E-Medical Report",
@@ -412,7 +422,7 @@ class _HomeOptionState extends State<HomeOption> {
                     /// medication horizontal list
                     Container(
                       margin: EdgeInsets.only(top: 10, bottom: 15),
-                      height: 125,
+                      height: 135,
                       child: StreamBuilder<QuerySnapshot>(
                         stream: db
                             .collection(Constants.USERS)
@@ -446,7 +456,7 @@ class _HomeOptionState extends State<HomeOption> {
                                   ),
                                   onTap: () {
                                     Navigator.pushNamed(
-                                        context, MedicationReminder.id);
+                                        context, MedicationForm.id);
                                   }),
                             );
                           } else {
@@ -454,21 +464,54 @@ class _HomeOptionState extends State<HomeOption> {
                             return ListView.separated(
                               padding: EdgeInsets.only(left: 20, right: 20),
                               scrollDirection: Axis.horizontal,
-                              itemCount: doc.length,
+                              itemCount: doc.length + 1,
                               separatorBuilder: (context, index) => SizedBox(
                                 width: 15,
                               ),
                               itemBuilder: (context, index) {
-                                return Container(
-                                  child: MedicationReminderCardSmall(
-                                    title: doc[index].get("medicineName"),
-                                    value: doc[index].get("dosage"),
-                                    unit: "mg",
-                                    time: doc[index].get("startTime"),
-                                    image: AssetImage(imageLink(
-                                        doc[index].get("medicineType"))),
-                                    isDone: false,
-                                  ),
+                                if(doc.length == index){
+                                  return Container(
+                                    color: Colors.transparent,
+                                    margin: EdgeInsets.symmetric(vertical: 5),
+                                    child: InkWell(
+                                      onTap: ()=>Navigator.pushNamed(context, MedicationForm.id),
+                                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                      splashColor: Constants.BUTTON_COLOUR.withOpacity(0.06),
+                                      highlightColor: Constants.BUTTON_COLOUR.withOpacity(0.1),
+                                      child: Ink(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                          shape: BoxShape.rectangle,
+                                          color: Colors.white,
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.grey.withOpacity(0.3),
+                                              spreadRadius: 0.5,
+                                              blurRadius: 1,
+                                              offset: Offset(1, 1),
+                                            ),
+                                          ],
+                                        ),
+                                        child: Padding(
+                                          padding: EdgeInsets.symmetric(horizontal: 30),
+                                          child: Icon(
+                                            Icons.add_rounded,
+                                            size: 30,
+                                            color: Color(0xFF3B72FF),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                }
+                                return MedicationReminderCardSmall(
+                                  title: doc[index].get("medicineName"),
+                                  value: doc[index].get("dosage"),
+                                  unit: "mg",
+                                  time: doc[index].get("startTime"),
+                                  image: AssetImage(imageLink(
+                                      doc[index].get("medicineType"))),
+                                  isDone: false,
                                 );
                               },
                             );

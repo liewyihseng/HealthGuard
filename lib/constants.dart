@@ -15,7 +15,7 @@ const PEDOMETER_INFO = "pedometer_info";
 const BLOODPRESSURE_INFO = "bloodpressure_info";
 
 /// Colours
-const BUTTON_COLOUR = Color(0xFF33ac8d);
+const BUTTON_COLOUR = Color(0xFF2abb99);
 
 const LOGO_COLOUR_PINK_LIGHT = Color(0xFFf27184);
 const LOGO_COLOUR_PINK_DARK = Color(0xFFe4848d);
@@ -27,7 +27,7 @@ const TEXT_SUPER_LIGHT = Color(0xFFC9C9C9);
 const TEXT_LIGHT = Color(0xFF486581);
 const TEXT_DARK = Color(0xFF102A43);
 
-const BACKGROUND_COLOUR = Color(0xFFF5F5F7);
+const BACKGROUND_COLOUR = Colors.white;
 
 const CIRCULAR_PROGRESS_INDICATOR = Colors.blue;
 

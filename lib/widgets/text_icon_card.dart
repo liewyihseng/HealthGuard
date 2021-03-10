@@ -10,19 +10,18 @@ class TextIconCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //GestureDetector
     return Container(
-      decoration: BoxDecoration(
+        decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey,
-            blurRadius: 6.0,
-          ),
-        ],
-        color: Colors.white,
-      ),
-        child: InkWell(
+    boxShadow: [
+    BoxShadow(
+    color: Colors.grey,
+    blurRadius: 6.0,
+    ),
+    ],
+    color: Colors.white,
+    ),
+    child: InkWell(
         child: Card(
           elevation: 3.0,
           child: Container(
@@ -53,22 +52,7 @@ class TextIconCard extends StatelessWidget {
           ),
         ),
         onTap: onTap,
-        ),
+    ),
     );
   }
 }
-
-// SliverPadding(
-// padding: const EdgeInsets.all(26.0),
-// sliver: SliverGrid.count(
-// crossAxisCount: 2,
-// mainAxisSpacing: 10,
-// crossAxisSpacing: 10,
-// children: <Widget>[
-// cards(brocoli, 'Brocoli', '30'),
-// cards(cabbage, 'Cabbage', '37'),
-// cards(mango, 'Mango', '22'),
-// cards(
-// pineapple, 'Pineapple', '90'),
-// ),
-// ),
