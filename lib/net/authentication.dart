@@ -1,13 +1,21 @@
+//import 'dart:html';
 import 'dart:io';
-
 import 'dart:async';
+import 'package:HealthGuard/chat/database.dart';
+import 'package:HealthGuard/helper/shared_preferences_services.dart';
+import 'package:HealthGuard/widgets/navigating_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:HealthGuard/constants.dart';
 import 'package:HealthGuard/main.dart';
 import 'package:HealthGuard/helper/validation_tool.dart';
 import 'package:HealthGuard/model/user_model.dart' as OurUser;
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:google_maps_webservice/directions.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:rxdart/rxdart.dart';
+import 'package:HealthGuard/view/patient_sign_in_screen.dart';
 
 class FireStoreUtils {
   static FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -48,5 +56,47 @@ class FireStoreUtils {
     StorageUploadTask uploadTask = upload.putFile(image);
     var downloadUrl = await (await uploadTask.onComplete).ref.getDownloadURL();
     return downloadUrl.toString();
+  }
+
+  final FirebaseAuth auth = FirebaseAuth.instance;
+
+  getCurrentuser() {
+    return auth.currentUser;
+  }
+
+  signInwithgoogle(BuildContext context) async {
+    final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+    final GoogleSignIn _googleSignin = GoogleSignIn();
+
+    final GoogleSignInAccount googleSignInAccount =
+        await _googleSignin.signIn();
+
+    final GoogleSignInAuthentication googleSignInAuthentication =
+        await googleSignInAccount.authentication;
+    final AuthCredential credential = GoogleAuthProvider.credential(
+        idToken: googleSignInAuthentication.idToken,
+        accessToken: googleSignInAuthentication.accessToken);
+    UserCredential result =
+        await _firebaseAuth.signInWithCredential(credential);
+
+    User userDetail = result.user;
+
+    if (result != null) {
+      SharedPrefService().saveDisplayName(userDetail.displayName);
+      SharedPrefService().saveUserEmail(userDetail.email);
+      SharedPrefService().saveUserProfileUrl(userDetail.photoURL);
+      SharedPrefService().saveUserId(userDetail.uid);
+
+      Map<String, dynamic> userinfomap = {
+        "email": userDetail.email,
+        "firstname": userDetail.email.replaceAll("@gmail.com", ""),
+        "lastname": userDetail.displayName,
+        "profilepictureURL": userDetail.photoURL
+      };
+
+      DatabaseMethods().adduserinfo(userinfomap).then((value) {
+        Navigator.pushNamed(context, LoginPage.id);
+      });
+    }
   }
 }

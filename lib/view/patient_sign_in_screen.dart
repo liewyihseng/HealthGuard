@@ -36,43 +36,6 @@ class _LoginPageState extends State<LoginPage> {
 
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final GoogleSignIn googleSignIn = GoogleSignIn();
-
-  Future<String> signInWithGoogle() async {
-    await Firebase.initializeApp();
-
-    final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
-    final GoogleSignInAuthentication googleSignInAuthentication =
-        await googleSignInAccount.authentication;
-
-    final AuthCredential credential = GoogleAuthProvider.credential(
-      accessToken: googleSignInAuthentication.accessToken,
-      idToken: googleSignInAuthentication.idToken,
-    );
-
-    final UserCredential authResult =
-        await _auth.signInWithCredential(credential);
-    final OurUser.User user = authResult.user as OurUser.User;
-
-    if (user != null) {
-      final User currentUser = _auth.currentUser;
-      assert(user.userID == currentUser.uid);
-      Navigator.pushNamedAndRemoveUntil(context, home.id, (route) => false);
-      pushAndRemoveUntil(context, home(), false);
-
-      print('signInWithGoogle succeeded: $user');
-
-      return '$user';
-    }
-
-    return null;
-  }
-
-  Future<void> signOutGoogle() async {
-    await googleSignIn.signOut();
-
-    print("User Signed Out");
-  }
 
   List<Widget> buildInputs() {
     return [
@@ -140,9 +103,10 @@ class _LoginPageState extends State<LoginPage> {
             color: Constants.BUTTON_COLOUR,
             child: Text('Login',
                 style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w900,
-                  fontFamily: Constants.FONTSTYLE,)),
+                  fontSize: 20,
+                  fontWeight: FontWeight.w900,
+                  fontFamily: Constants.FONTSTYLE,
+                )),
             textColor: Colors.white,
             splashColor: Constants.BUTTON_SPLASH_COLOUR,
             onPressed: () async {
@@ -175,8 +139,9 @@ class _LoginPageState extends State<LoginPage> {
               },
               child: Text(
                 "Sign up",
-                style:
-                    TextStyle(fontWeight: FontWeight.w800, color: Constants.BUTTON_COLOUR),
+                style: TextStyle(
+                    fontWeight: FontWeight.w800,
+                    color: Constants.BUTTON_COLOUR),
               ),
             )
           ],
@@ -211,9 +176,10 @@ class _LoginPageState extends State<LoginPage> {
                     child: Text(
                       "Or",
                       style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16.0,
-                        fontFamily: Constants.FONTSTYLE,),
+                        color: Colors.black,
+                        fontSize: 16.0,
+                        fontFamily: Constants.FONTSTYLE,
+                      ),
                     ),
                   ),
                   Container(
@@ -281,7 +247,7 @@ class _LoginPageState extends State<LoginPage> {
                       /// Should be here within the onPressed()
                       ///
                       ///
-                      signInWithGoogle();
+                      FireStoreUtils().signInwithgoogle(context);
                     },
                   ),
                 ),
@@ -310,8 +276,9 @@ class _LoginPageState extends State<LoginPage> {
               },
               child: Text(
                 "Yes!",
-                style:
-                TextStyle(fontWeight: FontWeight.w800, color: Constants.BUTTON_COLOUR),
+                style: TextStyle(
+                    fontWeight: FontWeight.w800,
+                    color: Constants.BUTTON_COLOUR),
               ),
             )
           ],
@@ -360,7 +327,7 @@ class _LoginPageState extends State<LoginPage> {
       /// Checking if the user is a patient or a doctor
       if (user != null && user.userType == 'Patient') {
         pushAndRemoveUntil(context, home(), false);
-      }else{
+      } else {
         user.active = false;
         _fireStoreUtils.updateCurrentUser(user, context);
         await FirebaseAuth.instance.signOut();
