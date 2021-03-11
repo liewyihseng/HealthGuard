@@ -8,7 +8,6 @@ import 'dart:ui';
 /// Database
 const USERS = 'users';
 const RECORDS = "health_records";
-const ACC_INFO = "acc_info";
 const MED_INFO = "medical_info";
 const MEDICATION_INFO = "medication_info";
 const PEDOMETER_INFO = "pedometer_info";
@@ -16,6 +15,7 @@ const BLOODPRESSURE_INFO = "bloodpressure_info";
 
 /// Colours
 const BUTTON_COLOUR = Color(0xFF2abb99);
+const BUTTON_SPLASH_COLOUR = Color(0xFF33ac8d);
 
 const LOGO_COLOUR_PINK_LIGHT = Color(0xFFf27184);
 const LOGO_COLOUR_PINK_DARK = Color(0xFFe4848d);

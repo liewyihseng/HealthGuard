@@ -70,7 +70,7 @@ class _BloodPressureHistoryState extends State<BloodPressureHistory>{
           Icons.add,
           color: Colors.white,
         ),
-        splashColor: Colors.blue,
+        splashColor: Constants.BUTTON_SPLASH_COLOUR,
         shape: CircleBorder(
           side: BorderSide(color: Colors.blue),
         ),
@@ -201,12 +201,12 @@ class _BloodPressureHistoryState extends State<BloodPressureHistory>{
                       ),
                     ),
                     textColor: Colors.white,
-                    splashColor: Colors.blue,
+                    splashColor: Constants.BUTTON_SPLASH_COLOUR,
                     onPressed: _sendToServer,
                     padding: EdgeInsets.only(top: 12, bottom: 12),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25.0),
-                      side: BorderSide(color: Colors.blue),
+                      side: BorderSide(color: Constants.BUTTON_COLOUR),
                     ),
                   ),
                 ),

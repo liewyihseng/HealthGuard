@@ -144,14 +144,14 @@ class _LoginPageState extends State<LoginPage> {
                     fontWeight: FontWeight.w900,
                   fontFamily: Constants.FONTSTYLE,)),
             textColor: Colors.white,
-            splashColor: Constants.LOGO_COLOUR_PINK_DARK,
+            splashColor: Constants.BUTTON_SPLASH_COLOUR,
             onPressed: () async {
               await onClick(_emailController.text, _passwordController.text);
             },
             padding: EdgeInsets.only(top: 12, bottom: 12),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(25.0),
-                side: BorderSide(color: Colors.blue)),
+                side: BorderSide(color: Constants.BUTTON_COLOUR)),
           ),
         ),
       ),

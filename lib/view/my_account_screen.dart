@@ -40,9 +40,8 @@ class _MyAccountState extends State<MyAccount> {
           /// Creating a stream connecting to the database (collection is to access the collection, doc is to access the document within the collection)
           stream: db
               .collection(Constants.USERS)
-              .doc(MyAppState.currentUser.userID)
-              .collection(Constants.ACC_INFO)
               .snapshots(),
+
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               var doc = snapshot.data.documents;

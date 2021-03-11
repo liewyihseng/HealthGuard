@@ -118,7 +118,7 @@ class _doctorDetailPageState extends State<DoctorDetail>{
                                   ),
                                 ),
                                 textColor: Colors.white,
-                                splashColor: Colors.blue,
+                                splashColor: Constants.BUTTON_SPLASH_COLOUR,
                                 onPressed: ()  {
                                   Navigator.push(
                                     context,
@@ -133,7 +133,7 @@ class _doctorDetailPageState extends State<DoctorDetail>{
                                 padding: EdgeInsets.all(10),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(16.0),
-                                  side: BorderSide(color: Colors.blue),
+                                  side: BorderSide(color: Constants.BUTTON_COLOUR),
                                 ),
                               ),
                             ],

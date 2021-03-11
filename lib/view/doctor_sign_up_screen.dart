@@ -194,7 +194,7 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
                     color: Colors.white,
                   ),
                   mini: true,
-                  splashColor: Colors.blue,
+                  splashColor: Constants.BUTTON_SPLASH_COLOUR,
                   onPressed: _onCameraClick,
                 ),
               ),
@@ -269,7 +269,7 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
               ),
               color: Constants.BUTTON_COLOUR,
               textColor: Colors.white,
-              splashColor: Colors.blue,
+              splashColor: Constants.BUTTON_SPLASH_COLOUR,
               padding: EdgeInsets.all(10),
               onPressed: () {
                 showDatePicker(
@@ -530,12 +530,12 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
                 ),
               ),
               textColor: Colors.white,
-              splashColor: Colors.blue,
+              splashColor: Constants.BUTTON_SPLASH_COLOUR,
               onPressed: _sendToServer,
               padding: EdgeInsets.only(top: 12, bottom: 12),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(25.0),
-                  side: BorderSide(color: Colors.blue)),
+                  side: BorderSide(color: Constants.BUTTON_COLOUR)),
             ),
           ),
         ),

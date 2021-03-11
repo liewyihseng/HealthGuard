@@ -366,7 +366,7 @@ class _MedicationFormState extends State<MedicationForm> {
                         ),
                       ),
                       textColor: Colors.white,
-                      splashColor: Colors.blue,
+                      splashColor: Constants.BUTTON_SPLASH_COLOUR,
                       onPressed: _sendToServer,
                       padding: EdgeInsets.only(top: 12, bottom: 12),
                       shape: RoundedRectangleBorder(
