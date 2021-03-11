@@ -72,7 +72,7 @@ class _BloodPressureHistoryState extends State<BloodPressureHistory>{
         ),
         splashColor: Constants.BUTTON_SPLASH_COLOUR,
         shape: CircleBorder(
-          side: BorderSide(color: Colors.blue),
+          side: BorderSide(color: Constants.BUTTON_COLOUR),
         ),
         onPressed: (){
           showDialog(

@@ -6,7 +6,6 @@ import 'package:HealthGuard/view/doctor_detail_screen.dart';
 import 'package:HealthGuard/view/doctor_sign_in_screen.dart';
 import 'package:HealthGuard/view/doctor_sign_up_screen.dart';
 import 'package:HealthGuard/view/find_doctor_screen.dart';
-import 'package:HealthGuard/view/bloodpressure_screen.dart';
 import 'package:HealthGuard/view/help_center_screen.dart';
 import 'package:HealthGuard/view/hospital_suggestions_screen.dart';
 import 'package:HealthGuard/view/medical_feed_screen.dart';
@@ -60,8 +59,6 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
         ForgotPassword.id: (context) => ForgotPassword(),
         FindDoctor.id: (context) => FindDoctor(),
         DoctorDetail.id: (context) => DoctorDetail(),
-        BloodPressureScreen.id: (context) =>
-            BloodPressureScreen(sys: 60, dia: 70, pul: 80),
         Chatroom.id: (context) => Chatroom(),
         DoctorSignIn.id: (context) => DoctorSignIn(),
         DoctorSignUp.id: (context) => DoctorSignUp(),

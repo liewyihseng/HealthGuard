@@ -371,7 +371,7 @@ class _MedicationFormState extends State<MedicationForm> {
                       padding: EdgeInsets.only(top: 12, bottom: 12),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25.0),
-                        side: BorderSide(color: Colors.blue),
+                        side: BorderSide(color: Constants.BUTTON_COLOUR),
                       ),
                     ),
                   ),

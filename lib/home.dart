@@ -8,7 +8,6 @@ import 'package:HealthGuard/view/chat_list_screen.dart';
 import 'package:HealthGuard/view/hospital_suggestions_screen.dart';
 import 'package:HealthGuard/view/medical_feed_screen.dart';
 import 'package:HealthGuard/view/user_profile_screen.dart';
-import 'package:HealthGuard/view/bloodpressure_screen.dart';
 import 'package:HealthGuard/view/blood_pressure_history_screen.dart';
 import 'package:HealthGuard/widgets/card_items.dart';
 import 'package:HealthGuard/widgets/drawerListTile.dart';
