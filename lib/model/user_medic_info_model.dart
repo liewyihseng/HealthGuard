@@ -2,7 +2,6 @@
 class user_medic_info{
   String height = "";
   String weight = "";
-  String birthday = '';
   String healthCondition = '';
   String currentMedication = '';
   String address = '';

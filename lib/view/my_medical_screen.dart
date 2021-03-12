@@ -1,3 +1,4 @@
+import 'package:HealthGuard/model/user_medic_info_model.dart';
 import 'package:HealthGuard/widgets/medical_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -65,6 +66,7 @@ class _MyMedicalState extends State<MyMedical> {
               );
             } else {
               var doc = snapshot.data.documents;
+
               return Padding(
                 padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                 child: ListView.builder(
@@ -72,15 +74,19 @@ class _MyMedicalState extends State<MyMedical> {
                   itemCount: doc.length,
                   scrollDirection: Axis.vertical,
                   itemBuilder: (context, index) {
+
                     return MedicalCard(
-                      height: doc[index].get("height"),
-                      weight: doc[index].get("weight"),
-                      healthCondition: doc[index].get("healthCondition"),
-                      currentMedication: doc[index].get("currentMedication"),
-                      address: doc[index].get("address"),
-                      emergencyContact: doc[index].get("emergencyContact"),
-                      insuranceID: doc[index].get("insuranceID"),
-                      uploadedDate: doc[index].get("uploadedDate"),
+                      medicInfo: new user_medic_info(
+                        height: doc[index].get("height"),
+                        weight: doc[index].get("weight"),
+                        healthCondition: doc[index].get("healthCondition"),
+                        currentMedication: doc[index].get("currentMedication"),
+                        address: doc[index].get("address"),
+                        emergencyContact: doc[index].get("emergencyContact"),
+                        insuranceID: doc[index].get("insuranceID"),
+                        uploadedDate: doc[index].get("uploadedDate"),
+                        medicalReportImage: doc[index].get("medicalReportImage"),
+                      ),
                     );
                   },
                 ),
