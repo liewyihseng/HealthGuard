@@ -26,6 +26,7 @@ import 'package:HealthGuard/view/pedometer_screen.dart';
 import 'package:HealthGuard/chat/chatroom.dart';
 import 'package:HealthGuard/view/blood_pressure_history_screen.dart';
 
+
 void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
@@ -65,7 +66,6 @@ class MyAppState extends State<MyApp> with WidgetsBindingObserver {
         ChatList.id: (context) => ChatList(),
         HospitalSuggestions.id: (context) => HospitalSuggestions(),
         BloodPressureHistory.id: (context) => BloodPressureHistory(),
-
       },
       theme: ThemeData(accentColor: Colors.white),
     );

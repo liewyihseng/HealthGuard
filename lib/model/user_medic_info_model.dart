@@ -3,13 +3,13 @@ class user_medic_info{
   String height = "";
   String weight = "";
   String birthday = '';
-  String sex = '';
   String healthCondition = '';
   String currentMedication = '';
   String address = '';
   String emergencyContact = '';
   String insuranceID = '';
   String uploadedDate = '';
+  String medicalReportImage = '';
 
 
 
@@ -17,13 +17,13 @@ class user_medic_info{
 user_medic_info(
     {this.height,
       this.weight,
-      this.sex,
       this.healthCondition,
       this.currentMedication,
       this.address,
       this.emergencyContact,
       this.insuranceID,
       this.uploadedDate,
+      this.medicalReportImage,
     });
 
   /// Passing user input data, then creating a new user medic info object containing these data
@@ -37,6 +37,7 @@ user_medic_info(
       emergencyContact: parsedJson['emergencyContact'] ?? "",
       insuranceID: parsedJson['insuranceID'] ?? "",
       uploadedDate: parsedJson['uploadedDate'] ?? "",
+      medicalReportImage: parsedJson['medicalReportImage'] ?? "",
     );
   }
 
@@ -45,13 +46,13 @@ user_medic_info(
     return{
       "height": this.height,
       "weight": this.weight,
-      "sex": this.sex,
       "healthCondition": this.healthCondition,
       "currentMedication": this.currentMedication,
       "address": this.address,
       "emergencyContact": this.emergencyContact,
       "insuranceID": this.insuranceID,
       "uploadedDate": this.uploadedDate,
+      "medicalReportImage": this.medicalReportImage,
     };
   }
 }

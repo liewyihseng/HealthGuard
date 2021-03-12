@@ -1,9 +1,8 @@
-//import 'dart:html';
+
 import 'dart:io';
 import 'dart:async';
 import 'package:HealthGuard/chat/database.dart';
 import 'package:HealthGuard/helper/shared_preferences_services.dart';
-import 'package:HealthGuard/widgets/navigating_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -12,9 +11,7 @@ import 'package:HealthGuard/main.dart';
 import 'package:HealthGuard/helper/validation_tool.dart';
 import 'package:HealthGuard/model/user_model.dart' as OurUser;
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:google_maps_webservice/directions.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:HealthGuard/view/patient_sign_in_screen.dart';
 
 class FireStoreUtils {

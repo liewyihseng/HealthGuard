@@ -1,13 +1,21 @@
 
+import 'dart:io';
+
 import 'package:HealthGuard/net/authentication.dart';
 import 'package:HealthGuard/main.dart';
 import 'package:HealthGuard/helper/validation_tool.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:HealthGuard/home.dart';
 import 'package:HealthGuard/model/user_medic_info_model.dart' as medic_info;
 import 'package:HealthGuard/constants.dart' as Constants;
 import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:HealthGuard/helper/time_helper.dart';
+
 
 /// Medical report screen page widget class
 class EMedicalReport extends StatefulWidget{
@@ -21,10 +29,15 @@ class _medicalPageState extends State<EMedicalReport> {
   String height, weight, birthday, sex, healthCondition, currentMedication,
       address, emergencyContact, insuranceID;
   bool _validate = false;
+  File _image;
+  StorageReference storage = FirebaseStorage.instance.ref();
+
+
   GlobalKey<FormState> _key = new GlobalKey();
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: Constants.BACKGROUND_COLOUR,
       appBar: AppBar(
@@ -119,7 +132,7 @@ class _medicalPageState extends State<EMedicalReport> {
           child: Padding(
               padding: const EdgeInsets.only(top: 16.0, right: 8.0, left: 8.0),
               child: TextFormField(
-                validator: validateHealthCondition,
+                  validator: validateHealthCondition,
                   onSaved: (String val) {
                     setState(() {
                       healthCondition = val;
@@ -146,7 +159,7 @@ class _medicalPageState extends State<EMedicalReport> {
           child: Padding(
               padding: const EdgeInsets.only(top: 16.0, right: 8.0, left: 8.0),
               child: TextFormField(
-                validator: validateCurrentMedication,
+                  validator: validateCurrentMedication,
                   onSaved: (String val) {
                     setState(() {
                       currentMedication = val;
@@ -173,7 +186,7 @@ class _medicalPageState extends State<EMedicalReport> {
           child: Padding(
               padding: const EdgeInsets.only(top: 16.0, right: 8.0, left: 8.0),
               child: TextFormField(
-                validator: validateAddress,
+                  validator: validateAddress,
                   onSaved: (String val) {
                     setState(() {
                       address = val;
@@ -227,7 +240,7 @@ class _medicalPageState extends State<EMedicalReport> {
           child: Padding(
               padding: const EdgeInsets.only(top: 16.0, right: 8.0, left: 8.0),
               child: TextFormField(
-                validator: validateInsurance,
+                  validator: validateInsurance,
                   onSaved: (String val) {
                     setState(() {
                       insuranceID = val;
@@ -247,6 +260,38 @@ class _medicalPageState extends State<EMedicalReport> {
               )
           ),
         ),
+
+        /// To handle submission of Medical Report in the form of an image
+        Padding(
+          padding: const EdgeInsets.only(right: 10.0),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minWidth: double.infinity),
+            child: Padding(
+              padding: const EdgeInsets.only(
+                  top: 8.0, bottom: 8.0, right: 8.0, left: 8.0),
+              child: RaisedButton(
+                  child: Text(
+                    'Submit your medical report?',
+                    style: TextStyle(
+                      fontFamily: Constants.FONTSTYLE,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                    ),
+                  ),
+                  color: Constants.BUTTON_COLOUR,
+                  textColor: Colors.white,
+                  splashColor: Constants.BUTTON_SPLASH_COLOUR,
+                  padding: EdgeInsets.all(10),
+                  onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) => _buildPopupDialog(context),
+                      );
+                  }),
+            ),
+          ),
+        ),
+
 
         /// Button to press after user has finished filling in their medical information
         Padding(
@@ -276,11 +321,94 @@ class _medicalPageState extends State<EMedicalReport> {
     );
   }
 
+  Widget _buildPopupDialog(BuildContext context) {
+    return new AlertDialog(
+        backgroundColor: Constants.BACKGROUND_COLOUR,
+        title:  Text(
+          'Select an option',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              color: Constants.TEXT_DARK,
+              fontFamily: Constants.FONTSTYLE,
+              fontWeight: FontWeight.w900),
+        ),
+        content: Container(
+          height: 150,
+            width: 150,
+            child: ListView(
+              shrinkWrap: true,
+              padding: EdgeInsets.symmetric(horizontal: 0),
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(right: 10.0, left: 10.0, top: 20.0),
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(minWidth: double.infinity),
+                    child: RaisedButton(
+                      color: Constants.BUTTON_COLOUR,
+                      child: Text('Scan report',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w900,
+                          fontFamily: Constants.FONTSTYLE,),
+                      ),
+                      textColor: Colors.white,
+                      splashColor: Constants.BUTTON_SPLASH_COLOUR,
+                      onPressed: _imgFromCamera,
+                      padding: EdgeInsets.only(top: 12, bottom: 12),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                          side: BorderSide(color: Constants.BUTTON_COLOUR)
+                      ),
+                    ),
+                  ),
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.only(right: 10.0, left: 10.0, top: 20.0),
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(minWidth: double.infinity),
+                    child: RaisedButton(
+                      color: Constants.BUTTON_COLOUR,
+                      child: Text('Import from gallery',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w900,
+                          fontFamily: Constants.FONTSTYLE,),
+                      ),
+                      textColor: Colors.white,
+                      splashColor: Constants.BUTTON_SPLASH_COLOUR,
+                      onPressed: _imageFromGallery,
+                      padding: EdgeInsets.only(top: 12, bottom: 12),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                          side: BorderSide(color: Constants.BUTTON_COLOUR)
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+        ),
+    );
+
+  }
+
+  Future<String> uploadImageToFireStorage(File image, String userID) async {
+    StorageReference upload = storage.child("medicalReport/$userID" + DateTime.now().toString() +".png");
+    StorageUploadTask uploadTask = upload.putFile(image);
+    var downloadUrl = await (await uploadTask.onComplete).ref.getDownloadURL();
+    return downloadUrl.toString();
+  }
+
   /// Sending user's medical information to server (firebase)
   _sendToServer() async {
     if (_key.currentState.validate()) {
       _key.currentState.save();
       showProgress(context, "Processing Submission", false);
+      var medicalReportImage;
+      if(_image != null){
+        medicalReportImage = await uploadImageToFireStorage(_image, MyAppState.currentUser.userID);
+      }
 
       /// Assigning all the user's input medical information to the user_medic_info instance
       medic_info.user_medic_info user_medic_info = medic_info.user_medic_info(
@@ -292,6 +420,8 @@ class _medicalPageState extends State<EMedicalReport> {
         emergencyContact: emergencyContact,
         insuranceID: insuranceID,
         uploadedDate: convertDateTimeDisplay(DateTime.now().toString()),
+        medicalReportImage: medicalReportImage,
+
       );
 
       await FireStoreUtils.firestore
@@ -308,6 +438,22 @@ class _medicalPageState extends State<EMedicalReport> {
       });
     }
   }
+
+  _imgFromCamera() async{
+    File image = await ImagePicker.pickImage(source: ImageSource.camera, imageQuality: 50);
+    setState(() {
+      _image = image;
+    });
+  }
+
+  _imageFromGallery() async{
+    File image = await ImagePicker.pickImage(source: ImageSource.gallery, imageQuality: 50);
+    setState(() {
+      _image = image;
+    });
+  }
+
+
 
   /// Converting dateTime that shows hours: minutes: seconds to date only
   String convertDateTimeDisplay(String date) {
