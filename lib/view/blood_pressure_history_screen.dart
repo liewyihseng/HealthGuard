@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:HealthGuard/model/bloodpressure_model.dart';
 import 'package:HealthGuard/widgets/bloodpressure_card.dart';
 import 'package:HealthGuard/widgets/bloodpressure_card_small.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
 
 import '../main.dart';
 
@@ -240,9 +241,45 @@ class _BloodPressureHistoryState extends State<BloodPressureHistory>{
   }
 }
 
+class SalesData {
+  final int year;
+  final int sales;
+
+  SalesData(this.year, this.sales);
+}
+
 /// Handles the presentation of the upper container
 class BpGraph extends StatelessWidget{
   final db = FirebaseFirestore.instance;
+
+  final data = [
+    /// Must contain something in a list so it is set to a random value then will be deleted
+    new SalesData(19, 5),
+  ];
+
+
+  List<SalesData> addData(AsyncSnapshot<QuerySnapshot> snapshot, String value){
+    data.clear();
+    for (var i = 0; i< snapshot.data.documents.length; i++){
+      data.add(new SalesData(i, int.parse(snapshot.data.documents[i].get(value))));
+    }
+    return data;
+  }
+
+  _getSeriesData(AsyncSnapshot<QuerySnapshot> snapshot) {
+    addData(snapshot, "pulse");
+    List<charts.Series<SalesData, int>> series = [
+      charts.Series(
+        id: "Sales",
+        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+        domainFn: (SalesData series, _) => series.year,
+        measureFn: (SalesData series, _) => series.sales,
+        data: data,
+      ),
+    ];
+    return series;
+  }
+
 
   String avgCalculator(AsyncSnapshot<QuerySnapshot> snapshot, String fieldName){
     int sum = 0;
@@ -325,8 +362,9 @@ class BpGraph extends StatelessWidget{
                             shape: BoxShape.rectangle,
                             color: Color(0xFFA1ECBF),
                           ),
+                          child: new charts.LineChart(_getSeriesData(snapshot), animate: true,)
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
