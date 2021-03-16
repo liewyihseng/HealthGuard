@@ -7,6 +7,7 @@ import 'package:HealthGuard/widgets/medicalCategoryCard.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
+import 'package:HealthGuard/helper/string_helper.dart';
 
 import 'package:HealthGuard/chat/database.dart';
 
@@ -30,7 +31,7 @@ class _findDoctorsPageState extends State<FindDoctor> {
     isSearching = true;
     setState(() {});
     usersStream = await DatabaseMethods()
-        .getUserByFirstName(searchUsernameEditingController.text);
+        .getUserByFirstName(searchUsernameEditingController.text.capitalize());
     setState(() {});
   }
 
@@ -41,26 +42,63 @@ class _findDoctorsPageState extends State<FindDoctor> {
   }
 
   Widget searchUsersList() {
-    return StreamBuilder(
-      stream: usersStream,
-      builder: (context, snapshot) {
-        return snapshot.hasData
-            ? ListView.builder(
-          itemCount: snapshot.data.docs.length,
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            DocumentSnapshot ds = snapshot.data.docs[index];
-            return searchListUserTile(
-                profilePictureURL: ds["profilePictureURL"],
-                firstName: ds["firstName"],
-                email: ds["email"],
-                userstate: ds["active"]);
-          },
-        )
-            : Center(
-          child: CircularProgressIndicator(),
-        );
-      },
+    return Container(
+      height: 350,
+      child: StreamBuilder(
+        stream: usersStream,
+        builder: (context, snapshot) {
+          if(!snapshot.hasData){
+            print("NAMEEEEEE 1" +searchUsernameEditingController.text);
+            return Container();
+          }else if(snapshot.data.size == 0){
+            print("NAME @@@@@@" + searchUsernameEditingController.text);
+            return Container(
+              color: Color(0xFFF6F8FC),
+              child: Center(
+                child: Text(
+                  'There is no such doctor',
+                  style: TextStyle(
+                    fontSize: 24,
+                    color: Constants.TEXT_SUPER_LIGHT,
+                    fontFamily: Constants.FONTSTYLE,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            );
+          }else{
+            return new ListView.builder(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemCount: snapshot.data.docs.length,
+                itemBuilder: (context, index){
+                  DocumentSnapshot ds = snapshot.data.docs[index];
+                  return DoctorCard(
+                    doctor:  OurUser.User(
+                      email: ds["email"],
+                      firstName: ds["firstName"],
+                      lastName: ds["lastName"],
+                      active: ds["active"],
+                      lastOnlineTimestamp: ds["lastOnlineTimestamp"],
+                      settings: null,
+                      phoneNumber: ds["phoneNumber"],
+                      userID: ds["id"],
+                      profilePictureURL: ds["profilePictureURL"],
+                      userType: ds["userType"],
+                      sex: ds["sex"],
+                      birthday: ds["birthday"],
+                      workPlace: ds["workPlace"],
+                      speciality: ds["speciality"],
+                      aboutYourself: ds["aboutYourself"],
+                      doctorID: ds["doctorID"],
+                    ),
+
+                  );
+                }
+            );
+          }
+        },
+      ),
     );
   }
 
@@ -89,31 +127,6 @@ class _findDoctorsPageState extends State<FindDoctor> {
           ],
         ),
       ),
-    );
-  }
-
-  Widget searchuserlist(String profilePictureURL, firstName, lastName) {
-    return StreamBuilder(
-      stream: usersStream,
-      builder: (context, snapshot) {
-        return snapshot.hasData
-            ? ListView.builder(
-          itemCount: snapshot.data.docs.length,
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            DocumentSnapshot ds = snapshot.data.docs[index];
-            return Row(children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(30),
-                child: Image.network(ds["profilePitureURL"]),
-              )
-            ]);
-          },
-        )
-            : Center(
-          child: CircularProgressIndicator(),
-        );
-      },
     );
   }
 
@@ -286,7 +299,7 @@ class _findDoctorsPageState extends State<FindDoctor> {
                       SizedBox(height: 15),
 
                       Text(
-                        "All Doctors",
+                        "Search Doctor",
                         style: TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.w800,
@@ -351,7 +364,22 @@ class _findDoctorsPageState extends State<FindDoctor> {
                           ],
                         ),
                       ),
-                      isSearching ? searchUsersList() : recommendDoctors()
+                      SizedBox(height: 25),
+
+                      isSearching ? searchUsersList() : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            "All Doctor",
+                            style: TextStyle(
+                              fontSize: 25,
+                              fontWeight: FontWeight.w800,
+                              fontFamily: Constants.FONTSTYLE,
+                            ),
+                          ) ,
+                          recommendDoctors()
+                        ],
+                      )
                     ],
                   ),
                 ),
@@ -367,14 +395,15 @@ class _findDoctorsPageState extends State<FindDoctor> {
   Container recommendDoctors() {
     final db = FirebaseFirestore.instance;
     return Container(
-      height: 398,
+      height: 350,
       child: StreamBuilder<QuerySnapshot>(
         stream: db.collection(Constants.USERS).where("userType", isEqualTo: "Doctor").snapshots(),
         builder: (context, snapshot){
           if(!snapshot.hasData){
             return Container();
           }else if(snapshot.data.size == 0){
-            return Container(color: Color(0xFFF6F8FC),
+            return Container(
+              color: Color(0xFFF6F8FC),
               child: Center(
                 child: Text(
                   'No Doctors available',
@@ -396,7 +425,7 @@ class _findDoctorsPageState extends State<FindDoctor> {
               itemBuilder: (context, index){
                 return Container(
                   child: DoctorCard(
-                    doctor: new OurUser.User(
+                    doctor: OurUser.User(
                       email: doc[index].get("email"),
                       firstName: doc[index].get("firstName"),
                       lastName: doc[index].get("lastName"),

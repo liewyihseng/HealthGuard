@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:HealthGuard/constants.dart' as Constants;
+
 
 class DatabaseMethods {
   Future<Stream<QuerySnapshot>> getUserByFirstName(String firstName) async {
     return FirebaseFirestore.instance
-        .collection("users")
+        .collection(Constants.USERS)
         .where("userType", isEqualTo: "Doctor")
         .where("firstName", isEqualTo: firstName)
         .snapshots();
@@ -12,7 +13,7 @@ class DatabaseMethods {
 
   Future adduserinfo(Map<String, dynamic> userinfomap) async {
     return FirebaseFirestore.instance
-        .collection("users")
+        .collection(Constants.USERS)
         .doc()
         .set(userinfomap);
   }

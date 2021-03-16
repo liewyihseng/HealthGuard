@@ -2,6 +2,7 @@ import 'package:google_maps_webservice/places.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
+import 'package:HealthGuard/helper/string_helper.dart';
 
 /// Passing the Google CLoud api key into google map function
 GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: Constants.GoogleApiKey);
@@ -153,7 +154,7 @@ class PlaceDetailState extends State<PlaceDetailScreen>{
           itemCount: photos.length,
           itemBuilder: (context, index){
             return Padding(
-                padding: EdgeInsets.only(right: 1.0),
+                padding: EdgeInsets.all(2.0),
                 child: SizedBox(
                   height: 100,
                   child: Image.network(buildPhotoURL(photos[index].photoReference)),
@@ -165,29 +166,63 @@ class PlaceDetailState extends State<PlaceDetailScreen>{
     }
 
 
-    list.add(Padding(
-      padding: EdgeInsets.only(top: 4.0, left: 8.0, right: 8.0, bottom: 4.0),
-      child: Text(
-        placeDetail.name,
-        style: TextStyle(
-          color: Colors.black,
-          fontFamily: Constants.FONTSTYLE,
-          fontWeight: Constants.APPBAR_TEXT_WEIGHT,
-        ),
+    list.add( Padding(
+      padding: EdgeInsets.only(top: 30.0, left: 4.0, bottom: 4.0),
+      child: Column(
+        children: <Widget>[
+          Text(
+            "Name : ",
+            style: TextStyle(
+              fontSize: 20.0,
+              color: Colors.black,
+              fontFamily: Constants.FONTSTYLE,
+              fontWeight: Constants.APPBAR_TEXT_WEIGHT,
+            ),
+          ),
+
+          Text(
+            placeDetail.name,
+            style: TextStyle(
+              fontSize: 18.0,
+              color: Constants.TEXT_LIGHT,
+              fontFamily: Constants.FONTSTYLE,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          SizedBox(height: 10,),
+        ],
       ),
-    ));
+    )
+    );
 
     if(placeDetail.formattedAddress != null){
       list.add(
           Padding(
-            padding: EdgeInsets.only(top: 4.0, left: 8.0, right: 8.0, bottom: 4.0),
-            child: Text(
-              placeDetail.formattedAddress,
-              style: TextStyle(
-                color: Colors.black,
-                fontFamily: Constants.FONTSTYLE,
-                fontWeight: Constants.APPBAR_TEXT_WEIGHT,
-              ),
+            padding: EdgeInsets.only(left: 4.0, bottom: 4.0),
+            child: Column(
+              children: <Widget>[
+                Text(
+                  "Address : ",
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    color: Colors.black,
+                    fontFamily: Constants.FONTSTYLE,
+                    fontWeight: Constants.APPBAR_TEXT_WEIGHT,
+                  ),
+                ),
+
+                Text(
+                  placeDetail.formattedAddress,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    color: Constants.TEXT_LIGHT,
+                    fontFamily: Constants.FONTSTYLE,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 10,),
+              ],
             ),
           )
       );
@@ -196,32 +231,64 @@ class PlaceDetailState extends State<PlaceDetailScreen>{
     if (placeDetail.types?.first != null) {
       list.add(
         Padding(
-            padding:
-            EdgeInsets.only(top: 4.0, left: 8.0, right: 8.0, bottom: 0.0),
-            child: Text(
-              placeDetail.types.first.toUpperCase(),
-              style: TextStyle(
-                color: Colors.black,
-                fontFamily: Constants.FONTSTYLE,
-                fontWeight: Constants.APPBAR_TEXT_WEIGHT,
+          padding: EdgeInsets.only(left: 4.0, bottom: 4.0),
+          child: Column(
+            children: <Widget>[
+              Text(
+                "Type : ",
+                style: TextStyle(
+                  fontSize: 20.0,
+                  color: Colors.black,
+                  fontFamily: Constants.FONTSTYLE,
+                  fontWeight: Constants.APPBAR_TEXT_WEIGHT,
+                ),
               ),
-            )),
+
+              Text(
+                placeDetail.types.first.capitalize(),
+                style: TextStyle(
+                  fontSize: 18.0,
+                  color: Constants.TEXT_LIGHT,
+                  fontFamily: Constants.FONTSTYLE,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 10,),
+            ],
+          ),
+        ),
       );
     }
 
     if (placeDetail.formattedPhoneNumber != null) {
       list.add(
         Padding(
-            padding:
-            EdgeInsets.only(top: 4.0, left: 8.0, right: 8.0, bottom: 4.0),
-            child: Text(
-              placeDetail.formattedPhoneNumber,
-              style: TextStyle(
-                color: Colors.black,
-                fontFamily: Constants.FONTSTYLE,
-                fontWeight: Constants.APPBAR_TEXT_WEIGHT,
+          padding: EdgeInsets.only(left: 4.0, bottom: 4.0),
+          child: Column(
+            children: <Widget>[
+              Text(
+                "Phone Number : ",
+                style: TextStyle(
+                  fontSize: 20.0,
+                  color: Colors.black,
+                  fontFamily: Constants.FONTSTYLE,
+                  fontWeight: Constants.APPBAR_TEXT_WEIGHT,
+                ),
               ),
-            )),
+
+              Text(
+                placeDetail.formattedPhoneNumber,
+                style: TextStyle(
+                  fontSize: 18.0,
+                  color: Constants.TEXT_LIGHT,
+                  fontFamily: Constants.FONTSTYLE,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 10,),
+            ],
+          ),
+        ),
       );
     }
 
@@ -234,49 +301,98 @@ class PlaceDetailState extends State<PlaceDetailScreen>{
         text = 'Closed';
       }
       list.add(
-        Padding(
-            padding:
-            EdgeInsets.only(top: 0.0, left: 8.0, right: 8.0, bottom: 4.0),
-            child: Text(
-              text,
-              style: TextStyle(
-                color: Colors.black,
-                fontFamily: Constants.FONTSTYLE,
-                fontWeight: Constants.APPBAR_TEXT_WEIGHT,
-              ),
-            )),
-      );
+          Padding(
+            padding: EdgeInsets.only(left: 4.0, bottom: 4.0),
+            child: Column(
+              children: <Widget>[
+                Text(
+                  "Availability : ",
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    color: Colors.black,
+                    fontFamily: Constants.FONTSTYLE,
+                    fontWeight: Constants.APPBAR_TEXT_WEIGHT,
+                  ),
+                ),
+
+                Text(
+                  text,
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    color: Constants.TEXT_LIGHT,
+                    fontFamily: Constants.FONTSTYLE,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 10,),
+              ],
+            ),
+          )
+          );
     }
 
     if (placeDetail.website != null) {
       list.add(
         Padding(
-            padding:
-            EdgeInsets.only(top: 0.0, left: 8.0, right: 8.0, bottom: 4.0),
-            child: Text(
-              placeDetail.website,
-              style: TextStyle(
-                color: Colors.black,
-                fontFamily: Constants.FONTSTYLE,
-                fontWeight: Constants.APPBAR_TEXT_WEIGHT,
+          padding: EdgeInsets.only(left: 4.0, bottom: 4.0),
+          child: Column(
+            children: <Widget>[
+              Text(
+                "Website : ",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 20.0,
+                  color: Colors.black,
+                  fontFamily: Constants.FONTSTYLE,
+                  fontWeight: Constants.APPBAR_TEXT_WEIGHT,
+                ),
               ),
-            )),
+
+              Text(
+                placeDetail.website,
+                style: TextStyle(
+                  fontSize: 18.0,
+                  color: Constants.TEXT_LIGHT,
+                  fontFamily: Constants.FONTSTYLE,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 10,),
+            ],
+          ),
+        ),
       );
     }
 
     if (placeDetail.rating != null) {
       list.add(
-        Padding(
-            padding:
-            EdgeInsets.only(top: 0.0, left: 8.0, right: 8.0, bottom: 4.0),
-            child: Text(
-              "Rating: ${placeDetail.rating}",
+      Padding(
+        padding: EdgeInsets.only(left: 4.0, bottom: 4.0),
+        child: Column(
+          children: <Widget>[
+            Text(
+              "Ratings : ",
               style: TextStyle(
+                fontSize: 20.0,
                 color: Colors.black,
                 fontFamily: Constants.FONTSTYLE,
                 fontWeight: Constants.APPBAR_TEXT_WEIGHT,
               ),
-            )),
+            ),
+
+            Text(
+              '${placeDetail.rating}',
+              style: TextStyle(
+                fontSize: 18.0,
+                color: Constants.TEXT_LIGHT,
+                fontFamily: Constants.FONTSTYLE,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 10,),
+          ],
+        ),
+      )
       );
     }
 

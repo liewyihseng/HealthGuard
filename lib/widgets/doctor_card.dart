@@ -16,9 +16,8 @@ class DoctorCard extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Align(
-      alignment: Alignment.center,
       child: Container(
-        margin: const EdgeInsets.only(right: 15.0, left: 15.0, top: 20.0),
+        margin: const EdgeInsets.only(right: 15.0, left: 15.0,bottom: 10.0),
         width: (MediaQuery.of(context).size.width),
         decoration: new BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(10.0)),
