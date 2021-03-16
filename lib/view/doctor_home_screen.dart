@@ -20,7 +20,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 
-
 FireStoreUtils _fireStoreUtils = FireStoreUtils();
 
 class DoctorHome extends StatefulWidget{
@@ -189,7 +188,7 @@ class _doctorHomeState extends State<DoctorHome>{
                 SizedBox(height: 50),
 
                 Container(
-                  height: 350,
+                  height: 380,
                   child: ListView(
                     scrollDirection: Axis.vertical,
                     children: <Widget>[
@@ -209,6 +208,7 @@ class _doctorHomeState extends State<DoctorHome>{
                           Navigator.pushNamed(context, ChatList.id);
                         },
                       ),
+
                     ],
                   ),
                 ),
@@ -217,83 +217,7 @@ class _doctorHomeState extends State<DoctorHome>{
             ),
           ),
         ],
-        // child: Column(
-        //   mainAxisAlignment: MainAxisAlignment.center,
-        //   mainAxisSize: MainAxisSize.max,
-        //   crossAxisAlignment: CrossAxisAlignment.center,
-        //   children: <Widget>[
-        //     displayCircleImage(doctor.profilePictureURL, 125, false),
-        //     Padding(
-        //       padding: const EdgeInsets.all(5.0),
-        //       child: Text("Full Name: " + doctor.fullName(), style: TextStyle(fontFamily: Constants.FONTSTYLE),),
-        //     ),
-        //
-        //     Padding(
-        //       padding: const EdgeInsets.all(5.0),
-        //       child: Text("Email: " + doctor.email, style: TextStyle(fontFamily: Constants.FONTSTYLE),),
-        //     ),
-        //
-        //     Padding(
-        //       padding: const EdgeInsets.all(5.0),
-        //       child: Text("Phone Number: " + doctor.phoneNumber, style: TextStyle(fontFamily: Constants.FONTSTYLE),),
-        //     ),
-        //
-        //     Padding(
-        //       padding: const EdgeInsets.all(5.0),
-        //       child: Text("User ID: " + doctor.userID, style: TextStyle(fontFamily: Constants.FONTSTYLE),),
-        //     ),
-        //
-        //     Padding(
-        //       padding: const EdgeInsets.all(5.0),
-        //       child: Text("User Type: " + doctor.userType, style: TextStyle(fontFamily: Constants.FONTSTYLE),),
-        //     ),
-        //
-        //     Padding(
-        //       padding: const EdgeInsets.all(5.0),
-        //       child: Text("Gender: " + doctor.sex, style: TextStyle(fontFamily: Constants.FONTSTYLE),),
-        //     ),
-        //
-        //     Padding(
-        //       padding: const EdgeInsets.all(5.0),
-        //       child: Text("Birthday: " + doctor.birthday, style: TextStyle(fontFamily: Constants.FONTSTYLE),),
-        //     ),
-        //
-        //     Padding(
-        //       padding: const EdgeInsets.all(5.0),
-        //       child: Text("Workplace: " + doctor.workPlace, style: TextStyle(fontFamily: Constants.FONTSTYLE),),
-        //     ),
-        //
-        //     Padding(
-        //       padding: const EdgeInsets.all(5.0),
-        //       child: Text("Speciality: " + doctor.speciality, style: TextStyle(fontFamily: Constants.FONTSTYLE),),
-        //     ),
-        //
-        //     Padding(
-        //       padding: const EdgeInsets.all(5.0),
-        //       child: Text("About Yourself: " + doctor.aboutYourself, style: TextStyle(fontFamily: Constants.FONTSTYLE),),
-        //     ),
-        //
-        //     Padding(
-        //       padding: const EdgeInsets.all(5.0),
-        //       child: Text("Doctor ID: " + doctor.doctorID, style: TextStyle(fontFamily: Constants.FONTSTYLE),),
-        //     ),
-        //
-        //     TextIconCard(
-        //       text: "Patient Qr Scanner",
-        //       imageName: "assets/Patient Qr Scanner.png",
-        //       onTap: _scanQR,
-        //     ),
-        //
-        //     NavigatingCard(
-        //       imageName: "assets/Chat with Doctor.png",
-        //       text: "Chat with Patient",
-        //       screenID: ChatWithPatient.id,
-        //     ),
-        //
-        //   ],
-        // ),
       ),
-
     );
   }
 

@@ -4,71 +4,118 @@ import 'package:HealthGuard/view/doctor_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
 
+import 'custom_clipper.dart';
+
 class DoctorCard extends StatelessWidget{
   final OurUser.User doctor;
 
   DoctorCard({Key key,
-  @required this.doctor})
-  : super(key: key);
+    @required this.doctor})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: InkWell(
-        child: Container(
-          margin: EdgeInsets.only(bottom: 15),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(
-              Radius.circular(12),
-            ),
-            color: Color(0xffECF0F5),
-          ),
-          child: Container(
-            padding: EdgeInsets.all(8),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
+    return Align(
+      alignment: Alignment.center,
+      child: Container(
+        margin: const EdgeInsets.only(right: 15.0, left: 15.0, top: 20.0),
+        width: (MediaQuery.of(context).size.width),
+        decoration: new BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+          shape: BoxShape.rectangle,
+          color: Colors.white,
+        ),
+        child: Material(
+          child: InkWell(
+            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+            child: Stack(
+              overflow: Overflow.clip,
               children: <Widget>[
-
-                displayCircleImage(doctor.profilePictureURL, 70, true),
-
-                SizedBox(width: 20),
-
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    SizedBox(height: 5,),
-
-                    Text(
-                      doctor.fullNameDr(),
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                        fontFamily: Constants.FONTSTYLE,
+                Positioned(
+                  child: ClipPath(
+                    clipper: MyCustomClipper(clipType: ClipType.semiCircle),
+                    child: Container(
+                      decoration: new BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                        color: Colors.black.withOpacity(0.07),
                       ),
+                      height: 120,
+                      width: 120,
                     ),
-                    SizedBox(height: 5),
-                    Container(
-                      width: 250,
-                      height: 50,
-                      child: Text(
-                        doctor.aboutYourself,
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
-                          fontFamily: Constants.FONTSTYLE,
-                        ),
-                        overflow: TextOverflow.clip,
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
+                Padding(
+                  padding: EdgeInsets.only(left: 20.0, top: 15.0, bottom: 15.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(top: 8.0, bottom: 8.0, left: 3.0),
+                            child: displayCircleImage(doctor.profilePictureURL, 75, true),
+                          ),
+
+                          SizedBox(width: 20.0),
+
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+
+                              SizedBox(height: 5.0),
+
+                              Text(
+                                doctor.fullNameDr(),
+                                style: TextStyle(
+                                  fontSize: 19,
+                                  fontWeight: FontWeight.w900,
+                                  fontFamily: Constants.FONTSTYLE,
+                                ),
+                              ),
+
+                              Padding(
+                                padding: const EdgeInsets.only(top: 10.0),
+                                child: Text(
+                                  doctor.speciality,
+                                  style: TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w400,
+                                    fontFamily: Constants.FONTSTYLE,
+                                  ),
+                                  overflow: TextOverflow.clip,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 3.0),
+                                child: Text(
+                                  doctor.workPlace,
+                                  style: TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w400,
+                                    fontFamily: Constants.FONTSTYLE,
+                                  ),
+                                  overflow: TextOverflow.clip,
+                                ),
+                              ),
+
+                            ],
+                          ),
+
+                        ],
+                      ),
+
+                    ],
+                  ),
+                )
               ],
             ),
+            onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context) => DoctorDetail(doctor: doctor,)));
+            },
           ),
+          color: Colors.transparent,
         ),
-        onTap: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => DoctorDetail(doctor: doctor,)));
-        },
       ),
     );
   }

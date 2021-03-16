@@ -8,7 +8,7 @@ import 'package:HealthGuard/widgets/bloodpressure_card.dart';
 import 'package:HealthGuard/widgets/bloodpressure_card_small.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
-import '../main.dart';
+import 'package:HealthGuard/main.dart';
 
 class BloodPressureHistory extends StatefulWidget{
   /// Screen ID for navigator routing

@@ -82,7 +82,6 @@ class _doctorDetailPageState extends State<DoctorDetail>{
                           Padding(
                             padding: const EdgeInsets.only(top: 10.0, left: 8.0, right: 15.0, bottom: 10.0),
                             child: Container(
-
                               child: displayCircleImage(doctor.profilePictureURL, 100, false),
                             ),
                           ),
@@ -96,7 +95,7 @@ class _doctorDetailPageState extends State<DoctorDetail>{
                                   fontFamily: Constants.FONTSTYLE,
                                 ),
                               ),
-                              Text(doctor.speciality.capitalize() + " - " + doctor.workPlace,
+                              Text(doctor.speciality + " - " + doctor.workPlace,
                                 style: TextStyle(
                                   fontSize: 17,
                                   fontWeight: FontWeight.w400,

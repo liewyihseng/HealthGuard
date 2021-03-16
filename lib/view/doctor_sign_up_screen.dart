@@ -12,8 +12,10 @@ import 'package:HealthGuard/constants.dart' as Constants;
 import 'package:intl/intl.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:HealthGuard/model/user_model.dart' as OurUser;
+import 'package:HealthGuard/helper/string_helper.dart';
 
-import '../main.dart';
+import 'package:HealthGuard/main.dart';
+import 'package:smart_select/smart_select.dart';
 import 'doctor_home_screen.dart';
 
 File _image;
@@ -43,6 +45,26 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
       speciality;
   DateTime _dateTime;
   List gender = ["Male", "Female", "Other"];
+  List<Map<String, dynamic>> specialityType = [
+    {'title': 'Cardiologist', 'value': 'Cardiologist'},
+    {'title': 'Gynaecologist', 'value': 'Gynaecologist'},
+    {'title': 'CT-Scan', 'value': 'CT-Scan'},
+    {'title': 'MRI-Scan', 'value': 'MRI-Scan'},
+    {'title': 'Dentist', 'value': 'Dentist'},
+    {'title': 'Dermatologist', 'value': 'Dermatologist'},
+    {'title': 'Emergency', 'value': 'Emergency'},
+    {'title': 'ENT', 'value': 'ENT'},
+    {'title': 'Gastroenterologist', 'value': 'Gastroenterologist'},
+    {'title': 'Hepatologist', 'value': 'Hepatologist'},
+    {'title': 'Nephrologist', 'value': 'Nephrologist'},
+    {'title': 'Neurologist', 'value': 'Neurologist'},
+    {'title': 'Nutritionist', 'value': 'Nutritionist'},
+    {'title': 'Obsterician', 'value': 'Obsterician'},
+    {'title': 'Orthopaedic', 'value': 'Orthopaedic'},
+    {'title': 'Pharmacist', 'value': 'Pharmacist'},
+    {'title': 'Psychologist', 'value': 'Psychologist'},
+    {'title': 'Surgeon', 'value': 'Surgeon'},
+  ];
 
   /// build
   @override
@@ -361,23 +383,24 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
         /// Field for doctor's speciality input
         ConstrainedBox(
           constraints: BoxConstraints(minWidth: double.infinity),
-          child: Padding(
-            padding: const EdgeInsets.only(
-                top: 8.0, bottom: 8.0, right: 8.0, left: 8.0),
-            child: TextFormField(
-              textInputAction: TextInputAction.next,
-              onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
-              onSaved: (String val) {
-                speciality = val;
-              },
-              decoration: InputDecoration(
-                contentPadding: new EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                fillColor: Colors.white,
-                hintText: 'Speciality e.g. Cardiologist',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(32.0),
-                ),
-              ),
+          child:
+          SmartSelect<String>.single(
+            title: 'Speciality',
+            value: speciality,
+            choiceItems: S2Choice.listFrom<String, Map>
+              (source: specialityType,
+              value: (index, item) => item['value'],
+              title: (index, item) => item['title'],
+            ),
+            modalTitle: 'Speciality',
+            modalType: S2ModalType.popupDialog,
+            choiceType: S2ChoiceType.chips,
+            choiceGrouped: true,
+            choiceDirection: Axis.vertical,
+            onChange: (selected) => setState(() => speciality = selected.value),
+            tileBuilder: (context, state) => S2Tile.fromState(
+              state,
+              onTap: state.showModal,
             ),
           ),
         ),
@@ -566,17 +589,17 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
         ///Assigning all the user's input information to the user instance
         OurUser.User user = OurUser.User(
           email: email,
-          firstName: firstName,
-          lastName: lastName,
+          firstName: firstName.capitalize(),
+          lastName: lastName.capitalize(),
           phoneNumber: mobile,
           userID: result.user.uid,
           active: true,
           settings: Settings(allowPushNotifications: true),
           profilePictureURL: profilePicUrl,
           userType: "Doctor",
-          aboutYourself: aboutYourself,
+          aboutYourself: aboutYourself.capitalize(),
           doctorID: doctorID,
-          workPlace: workplace,
+          workPlace: workplace.capitalize(),
           speciality: speciality,
           sex: sex,
           birthday: convertDateTimeDisplay(_dateTime.toString()),
