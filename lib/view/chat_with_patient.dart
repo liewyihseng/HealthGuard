@@ -23,10 +23,12 @@ class Chat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
       appBar:AppBar(
         title: Text(
-          'Chat',
+          "Chat",
           style: TextStyle(
             color: Colors.white,
             fontFamily: Constants.FONTSTYLE,
@@ -43,6 +45,7 @@ class Chat extends StatelessWidget {
       ),
     );
   }
+
 }
 
 class ChatScreen extends StatefulWidget {
@@ -206,7 +209,7 @@ class ChatScreenState extends State<ChatScreen> {
                 fontFamily: Constants.FONTSTYLE,
                 fontWeight: Constants.APPBAR_TEXT_WEIGHT,
               ),
-          ),
+            ),
             padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
             width: 200.0,
             decoration: BoxDecoration(
@@ -341,10 +344,10 @@ class ChatScreenState extends State<ChatScreen> {
                     ),
                     onPressed: (){
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => PreviewPhoto(url: document.data()['content'])
-                          ),
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => PreviewPhoto(url: document.data()['content'])
+                        ),
                       );
                     },
                     padding: EdgeInsets.all(0),
@@ -489,7 +492,7 @@ class ChatScreenState extends State<ChatScreen> {
           valueColor: AlwaysStoppedAnimation<Color>(Constants.CIRCULAR_PROGRESS_INDICATOR)))
           : StreamBuilder(
         stream: FirebaseFirestore.instance
-            .collection('messages')
+            .collection(Constants.MESSAGES)
             .doc(groupChatId)
             .collection(groupChatId)
             .orderBy('timestamp', descending: true)

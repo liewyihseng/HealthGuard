@@ -48,10 +48,8 @@ class _findDoctorsPageState extends State<FindDoctor> {
         stream: usersStream,
         builder: (context, snapshot) {
           if(!snapshot.hasData){
-            print("NAMEEEEEE 1" +searchUsernameEditingController.text);
             return Container();
           }else if(snapshot.data.size == 0){
-            print("NAME @@@@@@" + searchUsernameEditingController.text);
             return Container(
               color: Color(0xFFF6F8FC),
               child: Center(

@@ -148,11 +148,6 @@ class _MedicationFormState extends State<MedicationForm> {
       Navigator.pop(context);
 
       ///Show success submit
-      // }else{
-      //   print('false');
-      //   setState(() {
-      //     _validate = true;
-      //   });
     }
   }
 
@@ -397,25 +392,6 @@ String capitalize(String string) {
 
   return string[0].toUpperCase() + string.substring(1);
 }
-//
-// /// To format the time into HH:MM
-// String formatTimeOfDay(TimeOfDay tod) {
-//   final dt = DateTime(tod.hour, tod.minute);
-//   final format = DateFormat.jm();
-//   return format.format(dt);
-// }
-//
-// /// Decides which image to be displayed based on the type of the medicine
-// String imageLink(String title){
-//   switch(title){
-//     case "Pills":
-//       return "assets/capsule.png";
-//     case "Syringe":
-//       return "assets/syringe.png";
-//     default:
-//       return "null";
-//   }
-// }
 
 /// Changing the time to a format where it has AM or PM
 @override

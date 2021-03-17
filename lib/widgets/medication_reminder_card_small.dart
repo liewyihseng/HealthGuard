@@ -1,9 +1,12 @@
 import 'dart:ui';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:HealthGuard/widgets/custom_clipper.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
+
+import '../main.dart';
 
 class MedicationReminderCardSmall extends StatelessWidget {
   final String title;
@@ -122,18 +125,16 @@ class MedicationReminderCardSmall extends StatelessWidget {
                             height: 44,
                             child: Center(
                               child: Icon(
-                                Icons.check,
+                                Icons.delete_outline_outlined,
                                 color: isDone ? Colors.white :  Color(0xFF3B72FF),
                               ),
                             ),
                           ),
                           onTap: (){
-                            if(!isDone) {
-                              this.isDone = true;
-                              debugPrint(
-                                  "Button clicked. Handle button setState"
-                              );
-                            }
+                            FirebaseFirestore.instance.collection(Constants.USERS).doc(MyAppState.currentUser.userID).collection(Constants.MEDICATION_INFO).where("medicineName", isEqualTo: this.title).get().then((value){value.docs.forEach((element){
+                              FirebaseFirestore.instance.collection(Constants.USERS).doc(MyAppState.currentUser.userID).collection(Constants.MEDICATION_INFO).doc(element.id).delete();
+                            });
+                            });
                           }
                       ),
                     ],

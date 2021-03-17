@@ -320,7 +320,7 @@ class BpGraph extends StatelessWidget{
                 borderRadius: new BorderRadius.circular(10.0),
                 child: Container(
                   padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 20.0),
-                  height: 300.0,
+                  height: 500.0,
                   child: Column(
                     children: <Widget>[
                       Padding(
@@ -355,6 +355,18 @@ class BpGraph extends StatelessWidget{
                         ],
                       ),
                       SizedBox(height: 10,),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 10.0),
+                        child: Text(
+                          "Pulse",
+                          style: TextStyle(
+                            color: Constants.TEXT_LIGHT,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: Constants.FONTSTYLE,
+                          ),
+                        ),
+                      ),
                       Expanded(
                         child: Container(
                           decoration: new BoxDecoration(
@@ -362,7 +374,7 @@ class BpGraph extends StatelessWidget{
                             shape: BoxShape.rectangle,
                             color: Color(0xFFA1ECBF),
                           ),
-                          child: new charts.LineChart(_getSeriesData(snapshot), animate: true,)
+                          child: charts.LineChart(_getSeriesData(snapshot), animate: true,),
                         ),
                       ),
                     ],

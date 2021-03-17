@@ -7,6 +7,7 @@ import 'dart:ui';
 
 /// Database
 const USERS = 'users';
+const MESSAGES = 'messages';
 const RECORDS = "health_records";
 const MED_INFO = "medical_info";
 const MEDICATION_INFO = "medication_info";

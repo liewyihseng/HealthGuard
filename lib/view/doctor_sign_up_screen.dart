@@ -150,7 +150,7 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
           onPressed: () async {
             Navigator.pop(context);
             var image =
-                await ImagePicker.pickImage(source: ImageSource.gallery);
+            await ImagePicker.pickImage(source: ImageSource.gallery);
             setState(() {
               _image = image;
             });
@@ -196,13 +196,13 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
                     height: 170,
                     child: _image == null
                         ? Image.asset(
-                            'assets/placeholder.jpg',
-                            fit: BoxFit.cover,
-                          )
+                      'assets/placeholder.jpg',
+                      fit: BoxFit.cover,
+                    )
                         : Image.file(
-                            _image,
-                            fit: BoxFit.cover,
-                          ),
+                      _image,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               ),
@@ -295,10 +295,10 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
               padding: EdgeInsets.all(10),
               onPressed: () {
                 showDatePicker(
-                        context: context,
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime(1900),
-                        lastDate: DateTime(2050))
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(1900),
+                    lastDate: DateTime(2050))
                     .then((date) {
                   setState(() {
                     _dateTime = date;
@@ -383,8 +383,7 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
         /// Field for doctor's speciality input
         ConstrainedBox(
           constraints: BoxConstraints(minWidth: double.infinity),
-          child:
-          SmartSelect<String>.single(
+          child: SmartSelect<String>.single(
             title: 'Speciality',
             value: speciality,
             choiceItems: S2Choice.listFrom<String, Map>
@@ -395,12 +394,14 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
             modalTitle: 'Speciality',
             modalType: S2ModalType.popupDialog,
             choiceType: S2ChoiceType.chips,
-            choiceGrouped: true,
             choiceDirection: Axis.vertical,
             onChange: (selected) => setState(() => speciality = selected.value),
             tileBuilder: (context, state) => S2Tile.fromState(
-              state,
-              onTap: state.showModal,
+                state,
+                onTap: (){
+                  FocusScope.of(context).unfocus();
+                  state.showModal();
+                }
             ),
           ),
         ),
@@ -619,7 +620,7 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
         (error as FirebaseException).code != 'ERROR_EMAIL_ALREADY_IN_USE'
             ? showAlertDialog(context, 'Failed', 'Couldn\'t sign up')
             : showAlertDialog(context, 'Failed',
-                'Email already in user. Please pick another email address');
+            'Email already in user. Please pick another email address');
         print(error.toString());
       }
     } else {

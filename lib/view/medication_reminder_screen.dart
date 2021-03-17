@@ -31,22 +31,10 @@ class _MedicationReminderState extends State<MedicationReminder>{
   String medName;
   String dosage;
   String startTime;
-  bool _clicked = false;
-  var _intervals = [
-    6,
-    8,
-    12,
-    24,
-  ];
-  var _selected = 0;
-  TimeOfDay _time = TimeOfDay(hour: 0, minute: 00);
-  String _checker = "None";
-  String _medicineType = '';
   List<Map<String, dynamic>> medicineType = [
     {'title': 'Pills', 'value': 'Pills'},
     {'title': 'Syringe', 'value': 'Syringe'},
   ];
-  bool _validate = false;
   GlobalKey<FormState> _key = new GlobalKey();
 
 
@@ -105,236 +93,12 @@ class _MedicationReminderState extends State<MedicationReminder>{
         ),
         onPressed: (){
           Navigator.pushNamed(context, MedicationForm.id);
-          // changing dialog into page
-          // showDialog(
-          //   context: context,
-          //   builder: (BuildContext context) => _buildPopupDialog(context),
-          // );
         },
       ),
     );
   }
 
 
-  /// Handles the pop up once the user pressed onto the add button on the bottom right corner
-  Widget _buildPopupDialog(BuildContext context) {
-    return new AlertDialog(
-      backgroundColor: Constants.BACKGROUND_COLOUR,
-      title:  Text(
-        'Add Medication',
-        textAlign: TextAlign.center,
-        style: TextStyle(
-            color: Constants.TEXT_DARK,
-            fontFamily: Constants.FONTSTYLE,
-            fontWeight: FontWeight.w900),
-      ),
-      content:
-      Form(
-        key: _key,
-        autovalidate: _validate,
-        child: Container(
-          height: 430,
-          width: 290,
-          child: ListView(
-            shrinkWrap: true,
-            padding: EdgeInsets.symmetric(horizontal: 25),
-            children: <Widget>[
-              ConstrainedBox(
-                constraints: BoxConstraints(minWidth: double.infinity),
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 16.0, right: 8.0, left: 8.0),
-                  child: TextFormField(
-                    validator: validateMedicationName,
-                    onChanged: (String val) {
-                      setState(() {
-                        medName = val;
-                      });
-                    },
-                    textCapitalization: TextCapitalization.words,
-                    onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
-                    obscureText: false,
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                      hintText: "Medication Name",
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(32.0)),
-                    ),
-                  ),
-                ),
-              ),
-
-              SizedBox(height: 5),
-
-              ConstrainedBox(
-                constraints: BoxConstraints(minWidth: double.infinity),
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 16.0, right: 8.0, left: 8.0),
-                  child: TextFormField(
-                    validator: validateDosage,
-                    onChanged: (String val) {
-                      setState(() {
-                        dosage = val;
-                      });
-                    },
-                    onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
-                    obscureText: false,
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                      hintText: "Dosage in mg",
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(32.0)),
-                    ),
-                  ),
-                ),
-              ),
-
-              SizedBox(height: 5),
-
-              ConstrainedBox(
-                constraints: BoxConstraints(minWidth: double.infinity),
-
-                child:
-                SmartSelect<String>.single(
-                  title: 'Medicine Type',
-                  value: _medicineType,
-                  choiceItems: S2Choice.listFrom<String, Map>
-                    (source: medicineType,
-                    value: (index, item) => item['value'],
-                    title: (index, item) => item['title'],
-                  ),
-                  modalTitle: 'Medicine',
-                  modalType: S2ModalType.popupDialog,
-                  choiceType: S2ChoiceType.chips,
-                  choiceGrouped: true,
-                  choiceDirection: Axis.horizontal,
-                  onChange: (selected) => setState(() => _medicineType = selected.value),
-                  tileBuilder: (context, state) => S2Tile.fromState(
-                    state,
-                    onTap: state.showModal,
-                  ),
-                ),
-              ),
-
-              SizedBox(height: 5),
-
-              Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    DropdownButton<int>(
-                      iconEnabledColor: Constants.BUTTON_COLOUR,
-                      hint: _selected == 0 ? Text("Interval",
-                        style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w400
-                        ),
-                      ): null,
-                      elevation: 4,
-                      value: _selected == 0 ? null: _selected,
-                      items: _intervals.map((int value) {
-                        return DropdownMenuItem<int>(
-                          value: value,
-                          child: Text(
-                            value.toString(),
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        );
-                      }).toList(),
-                      onChanged: (newVal){
-                        setState((){
-                          _selected = newVal;
-                        });
-                      },
-                    ),
-                    Text(
-                      _selected == 1 ? " hour" : " hours",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-              SizedBox(height: 5),
-
-              Container(
-                child: Padding(
-                    padding: EdgeInsets.only(top: 10.0, bottom: 4.0),
-                    child: RaisedButton(
-                      color: Constants.LOGO_COLOUR_PINK_LIGHT,
-                      child: Text(_clicked == false ? "Pick Time": "${convertTime(_time.hour.toString())} : ${convertTime(_time.minute.toString())}",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w900,
-                            fontFamily: Constants.FONTSTYLE,)
-                      ),
-                      textColor: Colors.white,
-                      splashColor: Constants.LOGO_COLOUR_PINK_DARK,
-                      onPressed: () async{
-                        final TimeOfDay picked = await showTimePicker(
-                          context: context,
-                          initialTime: _time,
-                        );
-                        if(picked != null && picked != _time){
-                          setState((){
-                            _time = picked;
-                            _clicked = true;
-                            _checker = toString(_time);
-                          });
-                        }
-                        return picked;
-                      },
-                      padding: EdgeInsets.only(top: 12, bottom: 12),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25.0),
-                        side: BorderSide(
-                          color: Constants.LOGO_COLOUR_PINK_LIGHT,
-                        ),
-                      ),
-                    )
-                ),
-              ),
-
-              SizedBox(height: 7),
-
-              Padding(
-                padding: const EdgeInsets.only(right: 40.0, left: 40.0, top: 40.0),
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(minWidth: double.infinity),
-                  child: RaisedButton(
-                    color: Constants.BUTTON_COLOUR,
-                    child: Text('Submit',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w900,
-                        fontFamily: Constants.FONTSTYLE,
-                      ),
-                    ),
-                    textColor: Colors.white,
-                    splashColor: Constants.BUTTON_SPLASH_COLOUR,
-                    onPressed: _sendToServer,
-                    padding: EdgeInsets.only(top: 12, bottom: 12),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25.0),
-                      side: BorderSide(color: Constants.BUTTON_COLOUR),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
 
   /// Initializes the display of notification on both Android and iOS
   initializeNotifications() async{
@@ -350,37 +114,6 @@ class _MedicationReminderState extends State<MedicationReminder>{
       debugPrint('notification payload: '+ payload);
     }
     await Navigator.pushNamed(context, MedicationReminder.id);
-  }
-
-  /// Handles the submission of data into the database
-  _sendToServer() async {
-    if (_key.currentState.validate()) {
-      showProgress(context, "Processing Submission", false);
-
-      /// Watchout
-      List<int> intIDs = makeIDs(24 / 10);
-      List<String> notificationIDs = intIDs.map((i) => i.toString()).toList();
-      int interval = _selected;
-
-      Medicine newEntryMedicine = Medicine(
-        notificationIDs: notificationIDs,
-        medicineName: capitalize(medName),
-        dosage: dosage,
-        interval: interval,
-        medicineType: _medicineType,
-        startTime: _checker,
-      );
-
-      await FireStoreUtils.firestore
-          .collection(Constants.USERS)
-          .doc(MyAppState.currentUser.userID)
-          .collection(Constants.MEDICATION_INFO)
-          .add(newEntryMedicine.toJson());
-      scheduleNotification(newEntryMedicine);
-      hideProgress();
-      Navigator.pop(context);
-
-     }
   }
 
   /// Assigning a unique id to each of the submitted medicine

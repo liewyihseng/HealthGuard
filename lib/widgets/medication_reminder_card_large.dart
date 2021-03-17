@@ -108,36 +108,7 @@ class MedicationReminderCardLarge extends StatelessWidget {
                         ),
                         SizedBox(width: 10),
 
-                        /// Function to mark medicine has been taken should be added here
-                        InkWell(
-                            child: Container(
-                              decoration: new BoxDecoration(
-                                borderRadius:
-                                BorderRadius.all(Radius.circular(10.0)),
-                                shape: BoxShape.rectangle,
-                                color: isDone
-                                    ? Color(0xFF3B72FF)
-                                    : Color(0xFFF0F4F8),
-                              ),
-                              width: 44,
-                              height: 44,
-                              child: Center(
-                                child: Icon(
-                                  Icons.check,
-                                  color:
-                                  isDone ? Colors.white : Color(0xFF3B72FF),
-                                ),
-                              ),
-                            ),
-                            onTap: () {
-                              //Navigator.pushNamed(context, MedicineDetail.id);
-                              if (!isDone) {
-                                this.isDone = true;
-                                debugPrint(
-                                    "Button clicked. Handle button setState");
-                              }
-                            }),
-                        SizedBox(width: 10),
+                        
 
                         /// Functions to delete the medicine to be added here
                         InkWell(
@@ -178,5 +149,4 @@ class MedicationReminderCardLarge extends StatelessWidget {
       ),
     );
   }
-
 }
