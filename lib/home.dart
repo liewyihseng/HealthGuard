@@ -160,13 +160,9 @@ class HealthOption extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-        Expanded(
-          child: ListView(
+        child: ListView(
             scrollDirection: Axis.vertical,
-            children: [
+            children: <Widget>[
               Padding(
                 padding: EdgeInsets.all(20),
                 child: Image.asset(
@@ -176,6 +172,7 @@ class HealthOption extends StatelessWidget {
                   fit: BoxFit.contain,
                 ),
               ),
+
               NavigatingCard(
                 imageName: "assets/E-Medical Report.png",
                 text: "E-Medical Report",
@@ -220,9 +217,7 @@ class HealthOption extends StatelessWidget {
               ),
             ],
           ),
-        ),
-      ],
-    ));
+      );
   }
 }
 

@@ -72,7 +72,7 @@ class _HospitalSuggestionsState extends State<HospitalSuggestions>{
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Hospital Suggestions',
+          'Hospitals Nearby',
           style: TextStyle(
             color: Colors.white,
             fontFamily: Constants.FONTSTYLE,
@@ -97,7 +97,7 @@ class _HospitalSuggestionsState extends State<HospitalSuggestions>{
               padding: const EdgeInsets.only(bottom: 15.0, left: 5.0, right: 5.0),
               child: Container(
                 child: SizedBox(
-                  height: 400.0,
+                  height: 630.0,
                   width: 400.0,
                   child: Container(
                     /// Displays the google map widget
@@ -323,7 +323,7 @@ class _HospitalSuggestionsState extends State<HospitalSuggestions>{
         ));
       }
 
-      return Padding(
+      return Container(
         padding: EdgeInsets.only(top: 4.0, bottom: 4.0, left: 8.0, right: 8.0),
         child: Card(
           child: InkWell(
@@ -331,7 +331,7 @@ class _HospitalSuggestionsState extends State<HospitalSuggestions>{
               showDetailPlace(f.placeId);
             },
             highlightColor: Colors.lightBlueAccent,
-            splashColor: Colors.red,
+            splashColor: Constants.LOGO_COLOUR_GREEN_DARK,
             child: Padding(
               padding: EdgeInsets.all(8.0),
               child: Column(
@@ -344,7 +344,7 @@ class _HospitalSuggestionsState extends State<HospitalSuggestions>{
         ),
       );
     }).toList();
-    return ListView(shrinkWrap: true, children: placesWidget);
+    return ListView(shrinkWrap: true, children: placesWidget, scrollDirection: Axis.horizontal);
   }
 
 }
