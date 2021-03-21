@@ -3,6 +3,7 @@ import 'package:HealthGuard/model/user_medic_info_model.dart';
 import 'package:flutter/material.dart';
 import 'package:HealthGuard/view/detailed_medical_screen.dart';
 
+
 class MedicalCard extends StatelessWidget {
   final user_medic_info medicInfo;
 

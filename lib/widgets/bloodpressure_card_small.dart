@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
 
+/// Handles the creation of card that displays the average of pulse and blood pressure on the top of the Blood Pressure History Screen
 class BloodPressureCardSmall extends StatelessWidget {
   final String status;
   final String value;

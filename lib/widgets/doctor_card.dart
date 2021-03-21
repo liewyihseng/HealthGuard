@@ -6,6 +6,7 @@ import 'package:HealthGuard/constants.dart' as Constants;
 
 import 'custom_clipper.dart';
 
+/// Handles the display of the doctor card containing the information of the doctor where the users will be able to click onto it to have more insights to the doctor
 class DoctorCard extends StatelessWidget{
   final OurUser.User doctor;
 

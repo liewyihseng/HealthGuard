@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'custom_clipper.dart';
 
 
+/// Class that handles the creation of the blood pressure card in the Blood Pressure History Screen
 class BloodPressureCard extends StatelessWidget {
   final String BPvalue;
   final String HRvalue;

@@ -8,6 +8,7 @@ import 'package:HealthGuard/constants.dart' as Constants;
 
 import '../main.dart';
 
+/// Medication card that will be displayed in the homepage of the user
 class MedicationReminderCardSmall extends StatelessWidget {
   final String title;
   final String value;

@@ -85,8 +85,6 @@ class _BloodPressureHistoryState extends State<BloodPressureHistory>{
     );
   }
 
-
-  /// Dont have to touch here
   /// Handles the pop up once the user pressed onto the add button on the bottom right corner
   Widget _buildPopupDialog(BuildContext context) {
     return new AlertDialog(
@@ -219,6 +217,7 @@ class _BloodPressureHistoryState extends State<BloodPressureHistory>{
     );
   }
 
+  /// The function that handles the process of submitting data to the database when the button to submit has been pressed
   _sendToServer() async{
     if(_key.currentState.validate()){
       showProgress(context, "Processing Submission", false);
@@ -241,6 +240,7 @@ class _BloodPressureHistoryState extends State<BloodPressureHistory>{
   }
 }
 
+/// Class instance to handle the data inside the chart
 class SalesData {
   final int year;
   final int sales;
@@ -259,13 +259,16 @@ class BpGraph extends StatelessWidget{
 
 
   List<SalesData> addData(AsyncSnapshot<QuerySnapshot> snapshot, String value){
+    /// Clears the list as a list cannot be empty upon creation
     data.clear();
     for (var i = 0; i< snapshot.data.documents.length; i++){
+      /// Looping through every element within the database, then add into the list
       data.add(new SalesData(i, int.parse(snapshot.data.documents[i].get(value))));
     }
     return data;
   }
 
+  /// Handles the creation of the chart
   _getSeriesData(AsyncSnapshot<QuerySnapshot> snapshot) {
     addData(snapshot, "pulse");
     List<charts.Series<SalesData, int>> series = [
@@ -281,6 +284,7 @@ class BpGraph extends StatelessWidget{
   }
 
 
+  /// Handles the calculation of average figures of systolic, diastolic and pulse
   String avgCalculator(AsyncSnapshot<QuerySnapshot> snapshot, String fieldName){
     int sum = 0;
     for (var i = 0; i < snapshot.data.documents.length; i++){

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
 
+/// Handles the display of features that is available to the doctor in the Doctor's Homepage
 class DoctorFeatureCard extends StatelessWidget{
   final String image;
   final String title;

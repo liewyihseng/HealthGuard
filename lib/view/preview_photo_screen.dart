@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 
+/// Class to allow the preview of photo in the chat when the users clicked onto the image
 class PreviewPhoto extends StatelessWidget{
   final String url;
 

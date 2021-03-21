@@ -77,6 +77,7 @@ class _signupPageState extends State<signup_page> {
     );
   }
 
+  /// The radio buttons that handles the input of gender by the user when signing up
   Row addRadioButton(int btnValue, String title) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,

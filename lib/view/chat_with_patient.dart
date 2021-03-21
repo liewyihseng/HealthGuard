@@ -121,12 +121,12 @@ class ChatScreenState extends State<ChatScreen> {
       groupChatId = '$peerId-' + id;
     }
 
-    /// Problem causing Line
     FirebaseFirestore.instance.collection(Constants.USERS).doc(MyAppState.currentUser.userID).update({'chattingWith': peerId});
 
     setState(() {});
   }
 
+  /// Handles the process of receiving image from the person who sent this image
   Future getImage() async {
     ImagePicker imagePicker = ImagePicker();
     PickedFile pickedFile;
@@ -142,7 +142,7 @@ class ChatScreenState extends State<ChatScreen> {
     }
   }
 
-
+  /// Handles the process of sending an image to the person in the other side of the chat
   Future uploadFile() async{
     String fileName = DateTime.now().millisecondsSinceEpoch.toString();
     StorageReference reference = FirebaseStorage.instance.ref().child(fileName);
@@ -163,6 +163,7 @@ class ChatScreenState extends State<ChatScreen> {
         });
   }
 
+  /// Determines the type of the message (text or images)
   void onSendMessage(String content, int type) {
     /// type: 0 = text, 1 = image,
     if (content.trim() != '') {
@@ -197,6 +198,7 @@ class ChatScreenState extends State<ChatScreen> {
     }
   }
 
+  /// Displays the format of container containing each message
   Widget buildItem(int index, DocumentSnapshot document){
     if(document.data()['idFrom'] == id){
       return Row(
@@ -357,7 +359,7 @@ class ChatScreenState extends State<ChatScreen> {
               ],
             ),
 
-            /// Time
+            /// Display the time below the message
             isLastMessageLeft(index) ? Container(
               child: Text(
                 DateFormat('dd MMM kk:mm').format(DateTime.fromMillisecondsSinceEpoch(int.parse(document.data()['timestamp']))),
@@ -373,6 +375,7 @@ class ChatScreenState extends State<ChatScreen> {
     }
   }
 
+  /// Checks if the last message is on the left side
   bool isLastMessageLeft(int index) {
     if ((index > 0 && listMessage != null && listMessage[index - 1].data()['idFrom'] == id) || index == 0) {
       return true;
@@ -381,6 +384,7 @@ class ChatScreenState extends State<ChatScreen> {
     }
   }
 
+  /// Checks if the last message is on the right side
   bool isLastMessageRight(int index) {
     if ((index > 0 && listMessage != null && listMessage[index - 1].data()['idFrom'] != id) || index == 0) {
       return true;
@@ -389,6 +393,8 @@ class ChatScreenState extends State<ChatScreen> {
     }
   }
 
+  /// Handles the process of pressing the back button
+  /// Setting the chatWith variable in the database to null meaning the user is not chatting with anyone right now
   Future<bool> onBackPress() {
     if (isShowSticker) {
       setState(() {
@@ -420,12 +426,14 @@ class ChatScreenState extends State<ChatScreen> {
     );
   }
 
+  /// Handles the process of loading messages
   Widget buildLoading(){
     return Positioned(
       child: isLoading ? const Loading() : Container(),
     );
   }
 
+  /// Handles the input area for user to type the content of the message
   Widget buildInput(){
     return Container(
       child: Row(
@@ -485,6 +493,7 @@ class ChatScreenState extends State<ChatScreen> {
     );
   }
 
+  /// Handles the display of all messages by retrieving all the messages from the database (Firestore)
   Widget buildListMessage() {
     return Flexible(
       child: groupChatId == ''

@@ -39,15 +39,15 @@ class User {
         this.settings,
         this.userID,
         this.profilePictureURL,
-      this.userType,
-      this.sex,
-      this.birthday,
-      this.chattingWith,
-      this.workPlace,
-      this.speciality,
-      this.aboutYourself,
-      this.doctorID,}
-        );
+        this.userType,
+        this.sex,
+        this.birthday,
+        this.chattingWith,
+        this.workPlace,
+        this.speciality,
+        this.aboutYourself,
+        this.doctorID,}
+      );
 
   /// helper function combining user's first name and last name to form full name
   String fullName() {
@@ -57,19 +57,19 @@ class User {
   /// Passing user input data, then creating a new user containing these data
   factory User.fromJson(Map<String, dynamic> parsedJson) {
     return new User(
-        email: parsedJson['email'] ?? "",
-        firstName: parsedJson['firstName'] ?? '',
-        lastName: parsedJson['lastName'] ?? '',
-        active: parsedJson['active'] ?? false,
-        lastOnlineTimestamp: parsedJson['lastOnlineTimestamp'],
-        settings: Settings.fromJson(
-            parsedJson['settings'] ?? {'allowPushNotifications': true}),
-        phoneNumber: parsedJson['phoneNumber'] ?? "",
-        userID: parsedJson['id'] ?? parsedJson['userID'] ?? '',
-        profilePictureURL: parsedJson['profilePictureURL'] ?? "",
-    userType: parsedJson['userType'] ?? "",
-    sex: parsedJson['sex'] ?? "",
-    birthday: parsedJson['birthday'] ?? "",
+      email: parsedJson['email'] ?? "",
+      firstName: parsedJson['firstName'] ?? '',
+      lastName: parsedJson['lastName'] ?? '',
+      active: parsedJson['active'] ?? false,
+      lastOnlineTimestamp: parsedJson['lastOnlineTimestamp'],
+      settings: Settings.fromJson(
+          parsedJson['settings'] ?? {'allowPushNotifications': true}),
+      phoneNumber: parsedJson['phoneNumber'] ?? "",
+      userID: parsedJson['id'] ?? parsedJson['userID'] ?? '',
+      profilePictureURL: parsedJson['profilePictureURL'] ?? "",
+      userType: parsedJson['userType'] ?? "",
+      sex: parsedJson['sex'] ?? "",
+      birthday: parsedJson['birthday'] ?? "",
       chattingWith: parsedJson['chattingWith'] ?? "",
       workPlace: parsedJson['workPlace'] ?? "",
       speciality: parsedJson['speciality'] ?? "",

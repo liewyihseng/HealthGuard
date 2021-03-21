@@ -3,8 +3,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
 
-import '../main.dart';
+import 'package:HealthGuard/main.dart';
 
+/// Screen that handles the display of detailed medical information of the user
 class DetailedMedical extends StatelessWidget{
   final user_medic_info medicInfo;
 
@@ -211,10 +212,9 @@ class DetailedMedical extends StatelessWidget{
       ),
     );
 
-
-
   }
 
+  /// Handles the display of the scanned medical report by the user
   Widget scannedDoc(){
     if(medicInfo.medicalReportImage != null) {
       return Column(
@@ -240,6 +240,7 @@ class DetailedMedical extends StatelessWidget{
     }
   }
 
+  /// Displays the medical report scanned by the user
   Widget displayMedicalReport(String picUrl, hasBorder) =>
       CachedNetworkImage(
           imageBuilder: (context, imageProvider) => _getMedicalReportProvider(imageProvider, false),
@@ -248,8 +249,8 @@ class DetailedMedical extends StatelessWidget{
           errorWidget: (context, url, error) => _getPlaceholderOrErrorImage(hasBorder),
       );
 
+  /// If there is an error retrieving the scanned medical report uploaded by the user
   Widget _getPlaceholderOrErrorImage(hasBorder) => Container(
-
     decoration: BoxDecoration(
       color: const Color(0xff7c94b6),
       border: new Border.all(
@@ -263,6 +264,7 @@ class DetailedMedical extends StatelessWidget{
 
         )),
   );
+
 
   Widget _getMedicalReportProvider(
       ImageProvider provider, bool hasBorder) {

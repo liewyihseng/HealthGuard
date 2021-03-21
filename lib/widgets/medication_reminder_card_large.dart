@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:HealthGuard/widgets/custom_clipper.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
 
+/// Medication reminder card that will be displayed in the Medication Reminder Screen
 class MedicationReminderCardLarge extends StatelessWidget {
   final String title;
   final String value;

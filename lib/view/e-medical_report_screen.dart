@@ -321,6 +321,7 @@ class _medicalPageState extends State<EMedicalReport> {
     );
   }
 
+  /// Pop up dialog to ask if users want to scan or upload their medical report
   Widget _buildPopupDialog(BuildContext context) {
     return new AlertDialog(
         backgroundColor: Constants.BACKGROUND_COLOUR,
@@ -393,6 +394,7 @@ class _medicalPageState extends State<EMedicalReport> {
 
   }
 
+  /// Method to upload the image into the database (Firestore)
   Future<String> uploadImageToFireStorage(File image, String userID) async {
     StorageReference upload = storage.child("medicalReport/$userID" + DateTime.now().toString() +".png");
     StorageUploadTask uploadTask = upload.putFile(image);
@@ -439,6 +441,7 @@ class _medicalPageState extends State<EMedicalReport> {
     }
   }
 
+  /// Handles the image from the camera when users want to take a picture
   _imgFromCamera() async{
     File image = await ImagePicker.pickImage(source: ImageSource.camera, imageQuality: 50);
     setState(() {
@@ -446,14 +449,13 @@ class _medicalPageState extends State<EMedicalReport> {
     });
   }
 
+  /// Handles the selection of images from the gallery
   _imageFromGallery() async{
     File image = await ImagePicker.pickImage(source: ImageSource.gallery, imageQuality: 50);
     setState(() {
       _image = image;
     });
   }
-
-
 
   /// Converting dateTime that shows hours: minutes: seconds to date only
   String convertDateTimeDisplay(String date) {

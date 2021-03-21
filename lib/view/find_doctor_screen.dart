@@ -41,6 +41,7 @@ class _findDoctorsPageState extends State<FindDoctor> {
     setState(() {});
   }
 
+  /// Displays the list of doctors when the user has entered the name of the doctor to be searched
   Widget searchUsersList() {
     return Container(
       height: 350,
@@ -100,6 +101,7 @@ class _findDoctorsPageState extends State<FindDoctor> {
     );
   }
 
+  /// The card that contains the details of the doctor being searched by the user
   Widget searchListUserTile(
       {String profilePictureURL, firstName, userstate, email}) {
     return GestureDetector(

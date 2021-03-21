@@ -55,8 +55,10 @@ class FireStoreUtils {
     return downloadUrl.toString();
   }
 
+  /// Can be deleted
   final FirebaseAuth auth = FirebaseAuth.instance;
 
+  /// Can be deleted
   getCurrentuser() {
     return auth.currentUser;
   }

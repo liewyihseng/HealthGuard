@@ -36,6 +36,7 @@ class _ChatListState extends State<ChatList>{
     listScrollController.addListener(scrollListener);
   }
 
+  /// Setting the limit of number of doctor accounts to be shown per screen
   void scrollListener() {
     if (listScrollController.offset >= listScrollController.position.maxScrollExtent &&
         !listScrollController.position.outOfRange) {
@@ -109,6 +110,7 @@ class _ChatListState extends State<ChatList>{
     );
   }
 
+  /// Handles the display of each doctor's account
   Widget buildItem(BuildContext context, DocumentSnapshot document){
     if(document.data()['userId'] == MyAppState.currentUser.userID){
       return Container();
@@ -184,6 +186,7 @@ class _ChatListState extends State<ChatList>{
     }
   }
 
+  /// Determines which type of account to be displayed in the chat list screen
   String accountInterested(){
     if(MyAppState.currentUser.userType == "Doctor"){
       return "Patient";

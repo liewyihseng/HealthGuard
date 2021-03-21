@@ -248,6 +248,7 @@ Widget displayCircleImage(String picUrl, double size, hasBorder) =>
             _getPlaceholderOrErrorImage(size, hasBorder));
 
 
+/// Display a placeholder image in the Oval Clip
 Widget _getPlaceholderOrErrorImage(double size, hasBorder) => Container(
   width: size,
   height: size,
@@ -268,6 +269,7 @@ Widget _getPlaceholderOrErrorImage(double size, hasBorder) => Container(
       )),
     );
 
+/// Gets the latest image that users have set as the profile picture
 Widget _getCircularImageProvider(
     ImageProvider provider, double size, bool hasBorder) {
   return Container(
