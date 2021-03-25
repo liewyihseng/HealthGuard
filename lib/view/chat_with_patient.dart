@@ -257,8 +257,12 @@ class ChatScreenState extends State<ChatScreen> {
                 clipBehavior: Clip.hardEdge,
               ),
               onPressed: (){
-                // Navigator.push(context,
-                //     MaterialPageRoute(builder: (context) => FullPhoto(url: document.data()['content'])));
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => PreviewPhoto(url: document.data()['content'])
+                  ),
+                );
               },
               padding: EdgeInsets.all(0),
             ),

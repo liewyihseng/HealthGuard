@@ -13,15 +13,17 @@ class PreviewPhoto extends StatelessWidget{
   Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(
-      title: Text(
-      'Preview',
-      style: TextStyle(
-        color: Colors.white,
-        fontFamily: Constants.FONTSTYLE,
-        fontWeight: Constants.APPBAR_TEXT_WEIGHT,
-      ),
-    ),
-    centerTitle: true,
+        title: Text(
+          'Preview',
+          style: TextStyle(
+            color: Colors.white,
+            fontFamily: Constants.FONTSTYLE,
+            fontWeight: Constants.APPBAR_TEXT_WEIGHT,
+          ),
+        ),
+        iconTheme: IconThemeData(color: Colors.white),
+        backgroundColor: Constants.APPBAR_COLOUR,
+        centerTitle: true,
       ),
       body: PreviewPhotoScreen(url: url),
     );
@@ -50,7 +52,7 @@ class PreviewPhotoScreenState extends State<PreviewPhotoScreen>{
   @override
   Widget build(BuildContext context){
     return Container(
-      child: PhotoView(imageProvider: CachedNetworkImageProvider(url))
+        child: PhotoView(imageProvider: CachedNetworkImageProvider(url))
     );
   }
 }
