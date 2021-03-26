@@ -424,6 +424,7 @@ class BpGraph extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                             fontFamily: Constants.FONTSTYLE,
                           ),
+                          textAlign: TextAlign.center,
                         ),
                       ),
                       Row(

@@ -160,7 +160,7 @@ class _LoginPageState extends State<LoginPage> {
                     decoration: BoxDecoration(
                       gradient: new LinearGradient(
                           colors: [
-                            Colors.lightBlue[200],
+                            Constants.BUTTON_COLOUR,
                             Colors.black,
                           ],
                           begin: const FractionalOffset(0.0, 0.0),
@@ -187,7 +187,7 @@ class _LoginPageState extends State<LoginPage> {
                       gradient: new LinearGradient(
                           colors: [
                             Colors.black,
-                            Colors.lightBlue[200],
+                            Constants.BUTTON_COLOUR,
                           ],
                           begin: const FractionalOffset(0.0, 0.0),
                           end: const FractionalOffset(1.0, 1.0),
@@ -203,61 +203,6 @@ class _LoginPageState extends State<LoginPage> {
           ],
         ),
       ),
-      Container(
-        margin: EdgeInsets.all(15.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Material(
-              color: Colors.transparent,
-              child: Center(
-                child: Ink(
-                  decoration: new ShapeDecoration(
-                    shape: CircleBorder(),
-                    color: Constants.BUTTON_COLOUR,
-                  ),
-                  child: IconButton(
-                    color: Colors.white,
-                    icon: FaIcon(FontAwesomeIcons.facebookF),
-                    onPressed: () {},
-
-                    ///
-                    /// Codes linking sign-in for Facebook
-                    /// Should be here within the onPressed()
-                    ///
-                    ///
-                  ),
-                ),
-              ),
-            ),
-            Material(
-              color: Colors.transparent,
-              child: Center(
-                child: Ink(
-                  decoration: const ShapeDecoration(
-                    shape: CircleBorder(),
-                    color: Constants.BUTTON_COLOUR,
-                  ),
-                  child: IconButton(
-                    color: Colors.white,
-                    icon: FaIcon(FontAwesomeIcons.google),
-                    onPressed: () {
-                      ///
-                      /// Codes linking sign-in for Google
-                      /// Should be here within the onPressed()
-                      ///
-                      ///
-                      FireStoreUtils().signInwithgoogle(context);
-                    },
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-
-      //SizedBox(height: 5),
 
       Container(
         child: Row(

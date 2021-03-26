@@ -136,7 +136,7 @@ class _doctorSignInPageState extends State<DoctorSignIn> {
               child: Text(
                 "Register Now",
                 style:
-                TextStyle(fontWeight: FontWeight.w800, color: Colors.blue),
+                TextStyle(fontWeight: FontWeight.w800, color: Constants.BUTTON_COLOUR),
               ),
             )
           ],
@@ -155,7 +155,7 @@ class _doctorSignInPageState extends State<DoctorSignIn> {
                     decoration: BoxDecoration(
                       gradient: new LinearGradient(
                           colors: [
-                            Colors.lightBlue[200],
+                            Constants.BUTTON_COLOUR,
                             Colors.black,
                           ],
                           begin: const FractionalOffset(0.0, 0.0),
@@ -181,7 +181,7 @@ class _doctorSignInPageState extends State<DoctorSignIn> {
                       gradient: new LinearGradient(
                           colors: [
                             Colors.black,
-                            Colors.lightBlue[200],
+                            Constants.BUTTON_COLOUR,
                           ],
                           begin: const FractionalOffset(0.0, 0.0),
                           end: const FractionalOffset(1.0, 1.0),
@@ -217,7 +217,7 @@ class _doctorSignInPageState extends State<DoctorSignIn> {
               child: Text(
                 "Yes!",
                 style:
-                TextStyle(fontWeight: FontWeight.w800, color: Colors.blue),
+                TextStyle(fontWeight: FontWeight.w800, color: Constants.BUTTON_COLOUR),
               ),
             )
           ],
@@ -246,7 +246,8 @@ class _doctorSignInPageState extends State<DoctorSignIn> {
                   fontWeight: FontWeight.w600,
                   fontSize: 12,
                   fontStyle: FontStyle.italic,
-                  color: Colors.blue),
+                  color: Constants.BUTTON_COLOUR
+              ),
             ),
           ),
         ],
