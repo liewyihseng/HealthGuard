@@ -11,16 +11,6 @@ class TextIconCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30),
-    boxShadow: [
-    BoxShadow(
-    color: Colors.grey,
-    blurRadius: 6.0,
-    ),
-    ],
-    color: Colors.white,
-    ),
     child: InkWell(
         child: Card(
           elevation: 3.0,

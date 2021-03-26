@@ -1,7 +1,6 @@
 
 import 'dart:io';
 import 'dart:async';
-import 'file:///C:/Users/liewy/StudioProjects/HealthGuard/lib/helper/database_helper.dart';
 import 'package:HealthGuard/helper/shared_preferences_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';

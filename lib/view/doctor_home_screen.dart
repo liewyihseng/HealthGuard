@@ -196,7 +196,7 @@ class _doctorHomeState extends State<DoctorHome>{
                       DoctorFeatureCard(
                         image: "assets/Patient Qr Scanner.png",
                         title: "Patient QR Scanner",
-                        color: Color(0xFFA1ECBF),
+                        color: Constants.LOGO_COLOUR_PINK_LIGHT,
                         onTap: _scanQR,
                       ),
                       /// Card to link to chat with patient

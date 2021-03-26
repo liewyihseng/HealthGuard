@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
 import 'package:HealthGuard/helper/string_helper.dart';
 
-import 'file:///C:/Users/liewy/StudioProjects/HealthGuard/lib/helper/database_helper.dart';
+import 'file:///C:/Users/USER/HealthGuard/lib/helper/database_helper.dart';
 
 /// Find doctor screen page widget class
 class FindDoctor extends StatefulWidget {
