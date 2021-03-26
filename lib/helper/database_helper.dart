@@ -11,10 +11,4 @@ class DatabaseMethods {
         .snapshots();
   }
 
-  Future adduserinfo(Map<String, dynamic> userinfomap) async {
-    return FirebaseFirestore.instance
-        .collection(Constants.USERS)
-        .doc()
-        .set(userinfomap);
-  }
 }

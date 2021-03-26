@@ -1,7 +1,7 @@
 
 import 'dart:io';
 import 'dart:async';
-import 'package:HealthGuard/chat/database.dart';
+import 'file:///C:/Users/liewy/StudioProjects/HealthGuard/lib/helper/database_helper.dart';
 import 'package:HealthGuard/helper/shared_preferences_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -63,39 +63,4 @@ class FireStoreUtils {
     return auth.currentUser;
   }
 
-  signInwithgoogle(BuildContext context) async {
-    final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-    final GoogleSignIn _googleSignin = GoogleSignIn();
-
-    final GoogleSignInAccount googleSignInAccount =
-        await _googleSignin.signIn();
-
-    final GoogleSignInAuthentication googleSignInAuthentication =
-        await googleSignInAccount.authentication;
-    final AuthCredential credential = GoogleAuthProvider.credential(
-        idToken: googleSignInAuthentication.idToken,
-        accessToken: googleSignInAuthentication.accessToken);
-    UserCredential result =
-        await _firebaseAuth.signInWithCredential(credential);
-
-    User userDetail = result.user;
-
-    if (result != null) {
-      SharedPrefService().saveDisplayName(userDetail.displayName);
-      SharedPrefService().saveUserEmail(userDetail.email);
-      SharedPrefService().saveUserProfileUrl(userDetail.photoURL);
-      SharedPrefService().saveUserId(userDetail.uid);
-
-      Map<String, dynamic> userinfomap = {
-        "email": userDetail.email,
-        "firstname": userDetail.email.replaceAll("@gmail.com", ""),
-        "lastname": userDetail.displayName,
-        "profilepictureURL": userDetail.photoURL
-      };
-
-      DatabaseMethods().adduserinfo(userinfomap).then((value) {
-        Navigator.pushNamed(context, LoginPage.id);
-      });
-    }
-  }
 }
