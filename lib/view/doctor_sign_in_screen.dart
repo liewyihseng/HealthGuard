@@ -136,7 +136,7 @@ class _doctorSignInPageState extends State<DoctorSignIn> {
               child: Text(
                 "Register Now",
                 style:
-                TextStyle(fontWeight: FontWeight.w800, color: Colors.blue),
+                TextStyle(fontWeight: FontWeight.w800, color: Constants.BUTTON_COLOUR),
               ),
             )
           ],
@@ -217,7 +217,7 @@ class _doctorSignInPageState extends State<DoctorSignIn> {
               child: Text(
                 "Yes!",
                 style:
-                TextStyle(fontWeight: FontWeight.w800, color: Colors.blue),
+                TextStyle(fontWeight: FontWeight.w800, color: Constants.BUTTON_COLOUR),
               ),
             )
           ],
@@ -246,7 +246,7 @@ class _doctorSignInPageState extends State<DoctorSignIn> {
                   fontWeight: FontWeight.w600,
                   fontSize: 12,
                   fontStyle: FontStyle.italic,
-                  color: Colors.blue),
+                  color: Constants.BUTTON_COLOUR),
             ),
           ),
         ],
