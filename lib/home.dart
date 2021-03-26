@@ -65,7 +65,7 @@ class _homeState extends State<home> {
           style: Constants.APP_BAR_TEXT_STYLE,
         ),
         centerTitle: true,
-
+        backgroundColor: Constants.APPBAR_COLOUR_HOME,
         actions: [
           GestureDetector(
             child: Padding(
@@ -92,7 +92,7 @@ class _homeState extends State<home> {
                   style: Constants.APP_BAR_TEXT_STYLE,
                 ),
                 decoration: BoxDecoration(
-                  color: Constants.APPBAR_COLOUR
+                  color: Constants.APPBAR_COLOUR_HOME,
                 ),
               ),
             ),

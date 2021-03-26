@@ -41,7 +41,7 @@ class _UserProfileState extends State<UserProfile>{
           ),
         ),
         iconTheme: IconThemeData(color: Colors.white),
-        backgroundColor: Constants.LOGO_COLOUR_PINK_DARK,
+        backgroundColor: Constants.APPBAR_COLOUR,
         centerTitle: true,
       ),
       body: Column(
