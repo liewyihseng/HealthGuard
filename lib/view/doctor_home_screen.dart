@@ -85,7 +85,7 @@ class _doctorHomeState extends State<DoctorHome>{
                   ),
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.blue,
+                  color: Constants.APPBAR_COLOUR,
                 ),
               ),
             ),
@@ -138,7 +138,7 @@ class _doctorHomeState extends State<DoctorHome>{
           ClipPath(
             clipper: MyCustomClipper(clipType: ClipType.bottom),
             child: Container(
-              color: Colors.blue,
+              color: Constants.LOGO_COLOUR_GREEN_DARK,
               height: 228.5 + statusBarHeight,
             ),
           ),

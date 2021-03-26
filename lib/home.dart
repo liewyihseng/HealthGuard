@@ -92,7 +92,7 @@ class _homeState extends State<home> {
                   style: Constants.APP_BAR_TEXT_STYLE,
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.blue,
+                  color: Constants.APPBAR_COLOUR
                 ),
               ),
             ),
@@ -282,7 +282,7 @@ class _HomeOptionState extends State<HomeOption> {
             ClipPath(
               clipper: MyCustomClipper(clipType: ClipType.bottom),
               child: Container(
-                color: Colors.blue,
+                color: Constants.LOGO_COLOUR_PINK_LIGHT,
                 height: 228.5 + statusBarHeight,
               ),
             ),
