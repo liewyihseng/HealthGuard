@@ -94,11 +94,11 @@ class _HospitalSuggestionsState extends State<HospitalSuggestions>{
         children: <Widget>[
           Container(
             child: Padding(
-              padding: const EdgeInsets.only(bottom: 15.0, left: 5.0, right: 5.0),
+              padding: const EdgeInsets.only(bottom: 13.0, left: 5.0, right: 5.0),
               child: Container(
                 child: SizedBox(
-                  height: 630.0,
-                  width: 400.0,
+                  height: 170.0 * MediaQuery.of(context).devicePixelRatio,
+                  width: 400.0 * MediaQuery.of(context).devicePixelRatio,
                   child: Container(
                     /// Displays the google map widget
                     child: GoogleMap(
@@ -323,8 +323,10 @@ class _HospitalSuggestionsState extends State<HospitalSuggestions>{
         ));
       }
 
+      ///hospital location cards
       return Container(
-        padding: EdgeInsets.only(top: 4.0, bottom: 4.0, left: 8.0, right: 8.0),
+        width: 180 * MediaQuery.of(context).devicePixelRatio,
+        padding: EdgeInsets.only(top: 4.0, bottom: 4.0, left: 4.0, right: 4.0),
         child: Card(
           child: InkWell(
             onTap: (){
