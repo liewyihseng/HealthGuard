@@ -110,7 +110,6 @@ class _ForgotPasswordPageState extends State<ForgotPassword>{
                         splashColor: Constants.BUTTON_SPLASH_COLOUR,
                         onPressed: () async {
                           resetPassword(email);
-                          //await onClick(_emailController.text, _passwordController.text);
                         },
                         padding: EdgeInsets.only(top: 12, bottom: 12),
                         shape: RoundedRectangleBorder(

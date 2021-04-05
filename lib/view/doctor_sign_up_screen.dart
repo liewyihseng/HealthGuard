@@ -135,8 +135,7 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
       });
     }
   }
-
-  /// Allows doctors to take a picture or to import an image from the gallery
+  /// Serving the user after user clicked on the button to add profile picture
   _onCameraClick() {
     final action = CupertinoActionSheet(
       message: Text(
@@ -157,6 +156,7 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
           },
         ),
         CupertinoActionSheetAction(
+          child: Text("Take a picture"),
           isDestructiveAction: false,
           onPressed: () async {
             Navigator.pop(context);
@@ -165,7 +165,6 @@ class _doctorSignUpPageState extends State<DoctorSignUp> {
               _image = image;
             });
           },
-          child: null,
         )
       ],
       cancelButton: CupertinoActionSheetAction(
