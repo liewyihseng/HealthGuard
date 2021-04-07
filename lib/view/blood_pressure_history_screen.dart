@@ -30,7 +30,7 @@ class _BloodPressureHistoryState extends State<BloodPressureHistory> {
       backgroundColor: Constants.BACKGROUND_COLOUR,
       appBar: AppBar(
         title: Text(
-          'Blood Pressure History',
+          'Blood Pressure Diary',
           style: TextStyle(
             color: Colors.white,
             fontFamily: Constants.FONTSTYLE,
