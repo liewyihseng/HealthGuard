@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:HealthGuard/helper/shared_preferences_services.dart';
 import 'package:HealthGuard/helper/time_helper.dart';
+import 'package:HealthGuard/helper/validation_tool.dart';
 import 'package:HealthGuard/main.dart';
 import 'package:HealthGuard/model/pedometer_model.dart';
 import 'package:HealthGuard/net/PedometerService.dart';
@@ -256,6 +257,8 @@ class _PedometerScreenState extends State<PedometerScreen> {
               child: Padding(
                 padding: const EdgeInsets.only(top: 16.0, right: 8.0, left: 8.0),
                 child: TextFormField(
+                  keyboardType: TextInputType.number,
+                  validator: numberValidator,
                   onChanged: (String val) {
                     setState(() {
                       _goal = int.parse(val);

@@ -168,6 +168,18 @@ String validatePulse(String value){
   return null;
 }
 
+/// validate int number
+String numberValidator(String value) {
+  if(value == null) {
+    return 'input cannot be empty';
+  }
+  final n = num.tryParse(value);
+  if(n == null) {
+    return '"$value" is not a valid number';
+  }
+  return null;
+}
+
 ProgressDialog progressDialog;
 
 showProgress(BuildContext context, String message, bool isDismissible) async {
