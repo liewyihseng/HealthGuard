@@ -450,7 +450,10 @@ class _signupPageState extends State<signup_page> {
           'https://firebasestorage.googleapis.com/v0/b/healthguard-2c4ac.appspot.com/o/images%2Fplaceholder.jpg?alt=media&token=158e23bd-54ed-425e-bac5-c4694214bb3c';
       try {
         UserCredential result = await FirebaseAuth.instance
-            .createUserWithEmailAndPassword(email: email, password: password);
+            .createUserWithEmailAndPassword(
+            email: email,
+            password: password
+        );
         if (_image != null) {
           updateProgress('Uploading image...');
           profilePicUrl = await FireStoreUtils()
