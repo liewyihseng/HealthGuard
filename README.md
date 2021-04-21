@@ -1,13 +1,15 @@
 # HealthGuard for Android  & iOS
+  
+<img src="https://user-images.githubusercontent.com/63183176/115517462-bdafda00-a2b9-11eb-9c49-c685bfdde1f2.png" width="150">
+
 
 ### Application Description
-#### What it does?
+
+#### What is HealthGuard?
 HealthGuard is a revolutionary app that centralizes all useful features that you might be able to find in other apps into one singular app. There are many useful features that are readily available on the app which can be enjoyed by users.  HealthGuard takes useful features that are available on other healthcare apps, improve it and make it very user friendly for the users. It also has a revolutionary feature called e-medical health report. This report can be retrieved by doctors using the QR scanner feature in the app. All they have to do is scan the QR code that comes with every patients’ account and their previous medical records will be displayed. Finally, HealthGuard also aims to save precious time in case of emergencies. For example, before anesthesia is given to the patient, doctors have to run a blood test on the patient to make sure that they won’t get an allergic reaction from the anesthesia as it can be deadly. HealthGuard can save the doctor that kind of time in case of an emergency by getting their e-medical health record and knowing the allergies they might have beforehand.
 
 #### Technology
 This application has been fully developed using Flutter, an open source cross-platform framework that allows developers to only prepare a single version that reacts the same in both the leading mobile OS in the market: Android and iOS. The implementation of this cross-platform framework has encouraged us, the developers to practice a fast paced development of application as all necessary debugging and development work were to be done only on a single codebase. Besides, this application has been incorporated with the latest state-of-the-art Backend-as-a-Service (BaaS) provider, Firebase where it handles all the backend transactions being carried out within this application. The implementation of Firebase has allowed transactions of data, read and write to be perform rapidly under a reasonably smooth Internet connection. 
-
-c) Challenges Faced
 
 
 
