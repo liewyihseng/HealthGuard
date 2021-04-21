@@ -1,29 +1,100 @@
-# HealthGuard
+# HealthGuard for Android  & iOS
 
-A new Flutter project.
+### Application Description
+a) What it does?
+b) What Technology being used?
+c) Challenges Faced
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+# Prerequisites
+### Selection of IDE
+a) Windows
+* The preferred IDE to run this code is Android Studio as it has an extensive range of tools available including an Android Emulator where users can run their application on while debugging the source code.
+* Installation of Android Studio can be accessible through this link : https://developer.android.com/studio?gclid=Cj0KCQjw9_mDBhCGARIsAN3PaFMeaXZcM6NR-zA4MPqwjbdndZh-xirXtVcdf4tG1yFUYiqkAj5LVD4aAvlwEALw_wcB&gclsrc=aw.ds
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+b) MacOS
+* The preferred IDE to run this code is Xcode where it supports the execution of iOS simulator.
+* Installation the latest stable version of Xcode can be accessible through this link: https://developer.apple.com/xcode/
+* Configuration of Xcode can be done as follows in the command line: 
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+		$ sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
+		$ sudo xcodebuild -runFirstLaunch
+	
+> However, Window users will only be capable of running .apk files in their machine as Window OS only supports Android Emulator. Whereas for the MacOS users, they are able to run both the .apk file and .app file as MacOS supports both the Android Emulator and iOS Simulator
+
+### Installation of Emulators
+a) Android Emulator
+*  To install, head to Android Studio (Both Window and macOS). Select the Android Emulator component in the SDK Tools tab of the SDK Manager. Select the SDK Platform you wished to download, then click on Apply which the Download will start immediately.
+* Then head over to AVD Manager within the Tools section located within the tab. Select the button Create Virtual Device followed by the configuration of all your desired settings.
+
+b) iOS Simulator
+* On your Mac, find Simulator via Spotlight or by using the following command:
+
+		$ open -a Simulator
+* Make sure your simulator is using a 64-bit device(iPhone 5s or later) by checking the settings in the simulator's Hardware > Device menu.
+* Depending on your machine's screen size, simulated high-screen-density iOS devices might overflow your screen. Grab the corner of the simulator and drag it to change the scale. You can also use the Window > Physical Size or Window > Pixel Accurate options if your computer's resolution is high enough.
+
+### Installation of Flutter
+The version of Flutter that has been used is 1.26.0-1.0.pre.
+a) Windows
+* Accessible via: https://storage.googleapis.com/flutter_infra/releases/dev/windows/flutter_windows_1.26.0-1.0.pre-dev.zip
+* Extract the files to the desired location.
+* Head to Android Studio, select File in the Toolbar.
+* Select Settings followed by Flutter.
+* In the Flutter SDK path section, please enter the path that direct to the files that you have previously extracted.
+* After that, click on OK.
+
+b) MacOS
+* Accessible via:
+https://storage.googleapis.com/flutter_infra/releases/dev/macos/flutter_macos_1.26.0-1.0.pre-dev.zip
+* Extract the files in the desired location, for example:
+
+		$ cd ~/development
+		$ unzip ~/Downloads/flutter_macos_2.0.5-stable.zip
+* Add the flutter tool to your path:
+
+		export PATH="$PATH:`pwd`/flutter/bin"
+
+* After that, you are ready to run Flutter commands.
+
+
+### Installation of  Git
+a) Windows
+* Go to this link:
+[https://git-scm.com/download/win](https://git-scm.com/download/win)
+* Select the version based on your machine's information.
+* Extract the files followed by running of the installer.
+
+b) MacOS
+* In Xcode's Command Line Tools. Run:
+
+		$ git --version
+* It checks the presence of Git in the machine and will prompt users for installation if Git has not been installed in the machine.
 
 ### Working on Real Devices
 a) Android Devices
-Step 1: Connect android device to the development machine via a USB cable.
-Step 2: On the android device, go to settings, scroll to the bottom and select About Phone
-Step 3: Go to software information and tap Build number seven times. This should enable developer mode on the phone.
-Step 4: Return to the main settings page, scroll to the bottom, and developer options should be available 
-Step 5: In the developer options, turn on USB debugging.
-Step 6: In Android Studio, select your app to run/debug configurations drop-down menu in the toolbar
-Step 7: In the toolbar, select the device you want to run the app on from the target device drop-down menu. If Step 1-5 is performed correctly, the android device connected should appear in the drop-down menu.
-Step 8: Click Run.
+>Applicable for both users running Windows and MacOS
+* Connect the Android device to the machine via a USB cable
+* On the Android device, go to settings, scroll to the bottom and select About Phone
+* Select software information and tap Build number 7 times. By doing this, it should enable developer mode on the phone.
+* Return to the main settings page, scroll to the bottom and Developer Options should be made available.
+* In the Developer Options, turn on USB debugging.
+*  Once successfully connected, the Android device is now ready to run the app.
 
 b) iOS Devices
+>Only applicable for users running MacOS
+* Connect your iOS device to your machine running MacOS via a cable.
+* Choose the device that has been connected in the run destination menu in Xcode
+* Add your Apple ID in Accounts preferences and assign the project to a team on the Signing & Capabilities pane of the project editor.
+* Once successfully being paired, the iOS device is now ready to run the app.
+
+### Cloning of HealthGuard Repository on Github
+* Using the Command Line Tool in your desired IDE, run:
+
+		git clone https://github.com/liewyihseng177/HealthGuard.git
+* This will allow the latest version of source code to be cloned into the workspace.
+* If you are facing any issue on cloning this file, do drop me an email at liewyihseng177@gmail.com as this repository is currently still in private mode.
+
+
+# Running of Source Code
