@@ -2,7 +2,9 @@
 
 ### Application Description
 a) What it does?
-b) What Technology being used?
+#### Technology
+This application has been fully developed using Flutter, an open source cross-platform framework that allows developers to only prepare a single version that reacts the same in both the leading mobile OS in the market: Android and iOS. The implementation of this cross-platform framework has encouraged us, the developers to practice a fast paced development of application as all necessary debugging and development work were to be done only on a single codebase. Besides, this application has been incorporated with the latest state-of-the-art Backend-as-a-Service (BaaS) provider, Firebase where it handles all the backend transactions being carried out within this application. The implementation of Firebase has allowed transactions of data, read and write to be perform rapidly under a reasonably smooth Internet connection. 
+
 c) Challenges Faced
 
 
