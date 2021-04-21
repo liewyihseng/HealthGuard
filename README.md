@@ -1,3 +1,4 @@
+![Logo](https://user-images.githubusercontent.com/63183176/115516147-6c531b00-a2b8-11eb-8ea7-33fea855a720.png =100x20)
 # HealthGuard for Android  & iOS
 
 ### Application Description
