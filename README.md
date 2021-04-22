@@ -139,3 +139,13 @@ b) iOS Devices
 * Make sure that the terminal is in the right directory that has access to the file main.dart in the cloned repository.
 * Launch the Simulator or connect to an iOS device accordingly.
 * Once successfully connected, enter flutter run in the terminal which will lead to the running of the application. 
+
+
+# Running of Test Cases
+>After having all the prerequisites done, you are now ready to run the test cases in the cloned source code.
+
+### Make sure the run configuration has been properly created.
+* Click on Edit Configuration on the toolbar.
+* Select the + on the top left corner.
+* Scroll the lists to look for Flutter Test, then path the Flutter Test to the file that you are testing.
+* Once completed, you can now run your desired test cases.
