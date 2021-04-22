@@ -10,7 +10,21 @@ HealthGuard is a revolutionary app that centralizes all useful features that you
 ### Technology
 This application has been fully developed using Flutter, an open source cross-platform framework that allows developers to only prepare a single version that reacts the same in both the leading mobile OS in the market: Android and iOS. The implementation of this cross-platform framework has encouraged us, the developers to practice a fast paced development of application as all necessary debugging and development work were to be done only on a single codebase. Besides, this application has been incorporated with the latest state-of-the-art Backend-as-a-Service (BaaS) provider, Firebase where it handles all the backend transactions being carried out within this application. The implementation of Firebase has allowed transactions of data, read and write to be perform rapidly under a reasonably smooth Internet connection. 
 
+# Screenshots
 
+<p align="center" float="left">
+  <img src="screenshots/login.png" width="179"/>
+  <img src="screenshots/home.png" width="142"/>
+  <img src="screenshots/health.png" width="142"/>
+  <img src="screenshots/doctoracc.png" width="179"/>
+</p>
+
+<p align="center" float="left">
+  <img src="screenshots/medicalnews.png" width="179"/>
+  <img src="screenshots/bloodpressure.png" width="179"/>
+  <img src="screenshots/finddoctor.png" width="179"/>
+  <img src="screenshots/findhospital.png" width="179"/>
+</p>
 
 # Prerequisites
 ### Selection of IDE
