@@ -56,6 +56,7 @@ b) iOS Simulator
 
 ### Installation of Flutter
 The version of Flutter that has been used is 1.26.0-1.0.pre.
+
 a) Windows
 * Accessible via: https://storage.googleapis.com/flutter_infra/releases/dev/windows/flutter_windows_1.26.0-1.0.pre-dev.zip
 * Extract the files to the desired location.
