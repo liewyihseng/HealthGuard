@@ -153,9 +153,9 @@ b) iOS Devices
 >After having all the prerequisites done, you are now ready to run the test cases in the cloned source code.
 
 ### Make sure the run configuration has been properly created.
-* Click on Edit Configuration on the toolbar.
+* Click on Run then followed by Edit Configuration on the toolbar.
 * Select the + on the top left corner.
-* Scroll the lists to look for Flutter Test, then path the Flutter Test to the file that you are testing.
+* Scroll the lists to look for Flutter Test, then select the path of the test file included in the "test" folder.
 * Once completed, you can now run your desired test cases.
 
 # Attribute
