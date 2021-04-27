@@ -134,7 +134,7 @@ b) iOS Devices
 
 # Attribute
 > All files included inside the lib folder are written in-house.
-### List of packages that has been included into the project are as follow:
+### List of packages (Standard Libraries) that has been included into the project are as follow:
   * charts_flutter: ^0.8.1
   * intl: ^0.16.1
   * firebase_core: 0.5.0+1
