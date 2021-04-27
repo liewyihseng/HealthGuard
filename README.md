@@ -151,3 +151,44 @@ b) iOS Devices
 * Select the + on the top left corner.
 * Scroll the lists to look for Flutter Test, then path the Flutter Test to the file that you are testing.
 * Once completed, you can now run your desired test cases.
+
+# All files included inside the lib folder are written by us.
+# List of packages that has been included into the project are as follow:
+  * charts_flutter: ^0.8.1
+  * intl: ^0.16.1
+  * firebase_core: 0.5.0+1
+  * firebase_auth: 0.18.1+2
+  * cached_network_image: ^2.5.0
+  * image_picker: ^0.6.5
+  * progress_dialog: ^1.2.2
+  * cloud_firestore: 0.14.1+3
+  * firebase_storage: ^4.0.1
+  * json_annotation: 3.1.0
+  * sleek_circular_slider: ^1.2.0+web
+  * pedometer: ^2.0.2
+  * jiffy: ^3.0.1
+  * shared_preferences: ^0.5.12+4
+  * http: ^0.12.2
+  * webview_flutter: ^1.0.7
+  * timeago: ^2.0.29
+  * qr_flutter: ^3.2.0
+  * flutter_svg: ^0.19.2
+  * flutter_local_notifications: ^4.0.1+1
+  * rxdart: ^0.24.0
+  * provider: ^4.3.3
+  * cupertino_icons: ^1.0.0
+  * flutter_launcher_icons: ^0.8.1
+  * smart_select: ^4.3.2
+  * google_sign_in: ^4.5.9
+  * qrscan: ^0.2.22
+  * permission_handler: ^5.1.0+2
+  * image_gallery_saver: ^1.6.8
+  * google_maps_flutter: ^1.2.0
+  * google_maps_webservice: ^0.0.19
+  * geolocator: ^6.2.1
+  * url_launcher: ^5.7.10
+  * flutter_rating_bar: ^3.2.0+1
+  * location: ^3.2.4
+  * flutter_google_places: ^0.2.5
+  * fluttertoast: ^7.1.8
+  * photo_view: ^0.10.3
