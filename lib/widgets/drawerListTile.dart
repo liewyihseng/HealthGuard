@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:HealthGuard/constants.dart' as Constants;
-import 'package:flutter_svg/svg.dart';
 
 class DrawerListTile extends StatelessWidget {
   final String text;

@@ -1,11 +1,9 @@
 import 'dart:async';
 import 'package:HealthGuard/constants.dart' as Constants;
-
-///Article view when being clicked
-
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+///Article view when being clicked
 class ArticleView extends StatefulWidget {
 
   final String blogUrl;

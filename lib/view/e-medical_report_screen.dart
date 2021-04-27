@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:HealthGuard/net/authentication.dart';
 import 'package:HealthGuard/main.dart';
 import 'package:HealthGuard/helper/validation_tool.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:HealthGuard/home.dart';
 import 'package:HealthGuard/model/user_medic_info_model.dart' as medic_info;
@@ -14,7 +13,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:HealthGuard/helper/time_helper.dart';
+
 
 
 /// Medical report screen page widget class
