@@ -94,7 +94,9 @@ b) iOS Devices
 		git clone https://github.com/liewyihseng177/HealthGuard.git
 * This will allow the latest version of source code to be cloned into the workspace.
 * If you are facing any issue on cloning this file, do drop me an email at liewyihseng177@gmail.com as this repository is currently still in private mode.
+* After cloning, you are required to type the following code in the terminal to retrieve all the necessary open source packages.
 
+		flutter pub get
 
 # Running of Source Code
 >After having all the prerequisites done, you are now ready to run the cloned source code.
