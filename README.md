@@ -158,8 +158,9 @@ b) iOS Devices
 * Scroll the lists to look for Flutter Test, then path the Flutter Test to the file that you are testing.
 * Once completed, you can now run your desired test cases.
 
-# All files included inside the lib folder are written in-house.
-# List of packages that has been included into the project are as follow:
+# Attribute
+> All files included inside the lib folder are written in-house.
+### List of packages that has been included into the project are as follow:
   * charts_flutter: ^0.8.1
   * intl: ^0.16.1
   * firebase_core: 0.5.0+1
