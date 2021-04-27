@@ -59,6 +59,9 @@ The version of Flutter that has been used is 1.26.0-1.0.pre.
 a) Windows
 * Accessible via: https://storage.googleapis.com/flutter_infra/releases/dev/windows/flutter_windows_1.26.0-1.0.pre-dev.zip
 * Extract the files to the desired location.
+* Head to System Environment in your machine, select Environment Variables.
+* Select Path in User variable then click on New.
+* Enter the path which leads to the bin folder within the Flutter file you have extracted just now
 * Head to Android Studio, select File in the Toolbar.
 * Select Settings followed by Flutter.
 * In the Flutter SDK path section, please enter the path that direct to the files that you have previously extracted.
